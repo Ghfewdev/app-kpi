@@ -1,0 +1,19 @@
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+textarea {
+  width: 60%;
+}
+
+input {
+  width: 60%;
+}
