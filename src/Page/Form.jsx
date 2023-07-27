@@ -42,7 +42,7 @@ const Form = () => {
         if (data.status === "ok") {
           window.location = "post";
         } else {
-          alert("add form failed");
+          alert("บันทึกไม่สำเร็จ");
         }
       })
       .catch((error) => {
@@ -196,8 +196,16 @@ const Form = () => {
                   </select>
                   <br /><br />
                   {n}
+                  <div>
+                  <label>คำอธิบายการดำเนินการ และ อัพโหลดไฟล์แนบ</label>
+                  <br />
+                  <textarea type='text'/>
+                  <br />
+                  <input type='file' />
+                  <br />
                   <label>ยืนยัน: <input type="checkbox" value={secec.check} onClick={e => dis()} /> </label>
                   <br />
+                  </div>
 
                 </div>
 

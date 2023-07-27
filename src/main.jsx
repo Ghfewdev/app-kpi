@@ -31,7 +31,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='profile' element={<Profile />} />
       <Route path='post' element={<Post />} />
       <Route path='calform' element={<CalForm />} />
-      <Route path='Tests' element={<Tests/>} />
+      <Route path='tests' element={<Tests/>} />
+      <Route path='home' element={<Home/>} />
     </Routes>
   </BrowserRouter>
 )

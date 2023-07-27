@@ -7,11 +7,12 @@ li a {
 }
 
 li a:hover:not(.active) {
-  background-color: #111;
+  background-color: #000000;
 }
 
 textarea {
   width: 60%;
+  height: 100px;
 }
 
 input {

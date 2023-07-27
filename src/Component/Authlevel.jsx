@@ -27,7 +27,7 @@ const Authlevel = () => {
                             console.log("ok");
                         else {
                             alert("คุณไม่มีสิทธ์เข้าถึงหน้านี้");
-                            window.location = "/login";
+                            window.location = "/";
                         }
                             
                     }

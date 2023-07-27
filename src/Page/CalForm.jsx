@@ -3,6 +3,7 @@ import Fetch from "../Component/Fetch";
 import Navbar from "../Component/Navbar";
 import parse from "html-react-parser";
 import Footer from "../Component/Footer";
+import Solve from "../Component/Solve";
 
 const CalForm = () => {
   const [param, setParam] = useState("");
@@ -28,23 +29,23 @@ const CalForm = () => {
     if (select !== null) {
       q = select[0].fm_solve
       var w = select[0].fm_method
-       var a = select.map(aa => aa.de_paras.split(", "))
-       var s = select.map(ss => ss.fm_paras.split(", "))[0]
-       var b = a[0]
-       var c = []
-       for (var i = 0; i < b.length; i++) {
-         c.push(parseFloat(b[i]))
-       }
-       var f = []
-       for (var i = 0; i < b.length; i++) {
-        f.push(String.fromCharCode(i+65)+" = "+s[i])
-       }
-       var d = c.reduce((a, b) => a + b, 0)
-       var e = d / b.length
-       z = select.map(zz => zz.fm_name)[0]
-       p = e.toFixed(2)
-       r = d
-       v = select.map(vv => vv.fm_define)[0]
+      var a = select.map(aa => aa.de_paras.split(", "))
+      var s = select.map(ss => ss.fm_paras.split(", "))[0]
+      var b = a[0]
+      var c = []
+      for (var i = 0; i < b.length; i++) {
+        c.push(parseFloat(b[i]))
+      }
+      var f = []
+      for (var i = 0; i < b.length; i++) {
+        f.push(String.fromCharCode(i + 65) + " = " + s[i])
+      }
+      var d = c.reduce((a, b) => a + b, 0)
+      var e = d / b.length
+      z = select.map(zz => zz.fm_name)[0]
+      p = e.toFixed(2)
+      r = d
+      v = select.map(vv => vv.fm_define)[0]
     } else
       console.log("err")
   } catch {
@@ -58,13 +59,13 @@ const CalForm = () => {
       try {
         a = <div>
           <h3>รายละเอียด </h3>
-        <br />
+          <br />
           <div className='container mt-3'>
-            <label>ชื่อตัวชี้วัด: </label> <input id="namesum" disabled value={z}/>
-        <br /><br />
-        <label>ค่าเป้าหมาย: </label> <input id="solve" disabled value={q} />
-        <br /><br />
-            <div>หมายเหตุ:&nbsp;&nbsp; {f.map(ff => <a key={ff}><br/>{ff}</a>)}</div>
+            <label>ชื่อตัวชี้วัด: </label> <input id="namesum" disabled value={z} />
+            <br /><br />
+            <label>ค่าเป้าหมาย: </label> <input id="solve" disabled value={q} />
+            <br /><br />
+            <div>หมายเหตุ:&nbsp;&nbsp; {f.map(ff => <a key={ff}><br />{ff}</a>)}</div>
             <br />
             <table className='table table-bordered border-primary'>
 
@@ -87,17 +88,17 @@ const CalForm = () => {
                 {props.map((item, index) => {
                   var y = "";
                   var x = 0;
-                  var u = <h4 className="bi bi-x-circle"></h4>;
+                  var u = <h4 className="bi bi-x-circle redt"></h4>;
                   for (var i = 1; i <= props[0].fm_paras.split(', ').length; i++) {
                     y += `<td>${item.de_paras.split(", ")[i - 1]}</td>`
                     x += parseFloat(item.de_paras.split(", ")[i - 1])
                   }
-                  if(w === "ค่าเฉลี่ย")
-                  x = (x/props[0].fm_paras.split(', ').length).toFixed(2)
+                  if (w === "ค่าเฉลี่ย")
+                    x = (x / props[0].fm_paras.split(', ').length).toFixed(2)
                   else if (w === "ผลรวม")
-                  x = x
-                  if(item.de_result === "ผ่าน")
-                  u = <h4 className="bi bi-check-circle"></h4>
+                    x = x
+                  if (item.de_result === "ผ่าน")
+                    u = <h4 className="bi bi-check-circle greent"></h4>
                   return (
                     <tr key={index}>
                       <td>{item.us_agency}</td>
@@ -114,9 +115,34 @@ const CalForm = () => {
             </table>
             <br /><br />
             <label>นิยามตัวชี้วัด: </label><br /><textarea id="solve" disabled value={v} />
-        <br /><br />
+            <br /><br />
+
           </div>
+<br /><br />
+<div className="row">
+    <div className="col-6 col-md-7 textr">
+      สรุปผลภาพรวมตัวชี้วัด
+      <br />80
+    </div>
+    <div className="col-6 col-md-5">
+      <Solve />
+      </div>
+      
+  </div>
+  <br /><br />
+  <div className="row">
+    <div className="col-6 col-md-7 textr">
+      สรุปผลภาพรวมตัวชี้วัด
+      <br />80
+    </div>
+    <div className="col-6 col-md-5">
+      <Solve />
+      </div>
+      
+  </div>
+                
         </div>
+
       } catch {
         a = <h1>ไม่พบการส่งข้อมูลเข้ามา</h1>
       }
@@ -125,7 +151,7 @@ const CalForm = () => {
 
     return a
 
-    
+
   }
 
   var b = param.split("ลำดับที่: ")[1];
@@ -147,8 +173,9 @@ const CalForm = () => {
       <br />
 
       <div>{show(select)}</div>
-      
+
       <br /><br />
+
 
       <Footer />
     </>

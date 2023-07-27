@@ -37,14 +37,16 @@ Authlevel();
             })
             .then(data => {
                 if (data.status === "ok") {
-                    alert("add form sucess");
+                    alert("ทำรายการสำเร็จ");
+                    window.location = "/";
                 } else {
-                    alert("add form failed")
+                    alert("บันทึกไม่สำเร็จ");
                 }
             })
             .catch((error) => {
                 console.log("error", error);
-            })
+            });
+            
     }
 
     var par = (val) => {
@@ -109,7 +111,7 @@ Authlevel();
                             <br /><br />
                             <label>ค่าเป้าหมาย:&nbsp;&nbsp; </label><br /><input type="text" name="solve" />
                             <br /><br />
-                            <label>สรุปด้วย: &nbsp;&nbsp;</label>
+                            <label>วิธีการสรุปผล: &nbsp;&nbsp;</label>
                             <select name='method' value={solv} onChange={e => setSolv(e.target.value)} >
                                 <option>ค่าเฉลี่ย</option>
                                 <option>ผลรวม</option>

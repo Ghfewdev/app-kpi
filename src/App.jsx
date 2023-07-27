@@ -1,32 +1,27 @@
 import React from 'react';
+import img from "./img/sbpbar.png"
 import './App.css';
 import Navbar from './Component/Navbar';
 import Footer from './Component/Footer';
+import Formtemplate from './Component/Formtemplate';
 
 function App() {
 
   return (
     <>
       <Navbar />
-       
-
-<div className="card">
-  <div className="container">
-    <br />
-    <h1>
-        ระบบเก็บข้อมูล และ รายงานผลตัวชี้วัด
-      </h1>
-      <br />  
-      <form>
-        <label>Username </label><br /> <input type='text' name='name' autoFocus /> 
-        <br /><br />
-        <label>Password <br /> <input type='password' name='password' /> </label>
-        <br /><br />
-        <button type='submit'>Submit</button>
-        <br /><br />
-      </form>
-  </div>
-</div>
+      <div className='bc'>
+      <img style={{ width: "100%", height: 250 }} src={img} className="img-fluid" alt="bar" ></img>
+        <div className="container textc">
+          <br />
+          <h1>
+            ระบบเก็บข้อมูล และ รายงานผลตัวชี้วัด
+          </h1>
+          <br />
+          <Formtemplate />
+        </div>
+      <br /><br />
+      </div>
       <Footer />
     </>
   )

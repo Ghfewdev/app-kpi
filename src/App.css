@@ -26,6 +26,15 @@
   .red {
     background-color: red;
   }
+  .redt {
+    color: red;
+  }
+  .greent {
+    color: green;
+  }
+  .bc {
+    background-color: #d4ecd4;
+  }
   .dropbtn {
     background-color: #4CAF50;
     color: white;
