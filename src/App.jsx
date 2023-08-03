@@ -11,7 +11,9 @@ function App() {
     <>
       <Navbar />
       <div className='bc'>
-      <img style={{ width: "100%", height: 250 }} src={img} className="img-fluid" alt="bar" ></img>
+        <div className='textc'>
+      <img style={{ width: "auto", height: 250 }} src={img} className="img-fluid" alt="bar" ></img>
+      </div>
         <div className="container textc">
           <br />
           <h1>

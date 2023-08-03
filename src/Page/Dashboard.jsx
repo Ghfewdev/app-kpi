@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import Navbar from '../Component/Navbar';
 import Footer from '../Component/Footer';
-import Authen from '../Component/Authen';
+import Authlevel from '../Component/Authlevel';
 
 const columns = [
   { field: 'fm_id', headerName: 'ตัวชี้วัด' },
@@ -16,7 +16,7 @@ const columns = [
 
 const Dashboard = () => {
 
-  Authen();
+  Authlevel();
 
   const [tableData, setTableData] = useState([])
 

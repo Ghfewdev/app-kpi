@@ -105,17 +105,17 @@ Authlevel();
 
                             <label>ชื่อตัวชี้วัด:&nbsp;&nbsp; </label><br /><textarea type="text" name="name" autoFocus />
                             <br /><br />
-                            <label>นิยามของตัวชี้วัด:&nbsp;&nbsp; </label><br /><textarea type="text" name="define" autoFocus />
+                            <label>นิยามของตัวชี้วัด:&nbsp;&nbsp; </label><br /><textarea className='tacf' type="text" name="define" autoFocus />
                             <br /><br />
                             <label>ลำดับตัวชี้วัด:&nbsp;&nbsp; </label><br /><input type="number" name="id" />
                             <br /><br />
                             <label>ค่าเป้าหมาย:&nbsp;&nbsp; </label><br /><input type="text" name="solve" />
                             <br /><br />
-                            <label>วิธีการสรุปผล: &nbsp;&nbsp;</label>
+                            <label>วิธีการคำนวณ: &nbsp;&nbsp;</label>
                             <select name='method' value={solv} onChange={e => setSolv(e.target.value)} >
                                 <option>ค่าเฉลี่ย</option>
                                 <option>ผลรวม</option>
-                                
+                                <option>ร้อยละ</option>
                             </select>
                             <br /><br />
                             <label>จำนวนค่าที่ใช้ประเมิน:&nbsp;&nbsp; </label><br /><input type="number" name="numpara" value={numpara}

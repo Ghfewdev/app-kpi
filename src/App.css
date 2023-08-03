@@ -5,6 +5,9 @@
     text-align: left ;
     width: 50%;
   }
+  .textl3{
+    text-align: left ;
+  }
   .textr{
     text-align: right;
     width: 50%;
@@ -115,4 +118,8 @@
   background-size:     cover;
   background-repeat:   no-repeat;
   background-position: center center;
+}
+.tacf{
+  width: 60%;
+  height: 500px;
 }

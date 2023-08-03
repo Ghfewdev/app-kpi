@@ -16,7 +16,7 @@ const Authlevel = () => {
                 })
                 .then(data => {
                     if (data.status != "ok") {
-                        alert("You can login before")
+                        alert("คุณต้องเข้าสู่ระบบก่อน")
                         sessionStorage.removeItem("id");
                         sessionStorage.removeItem("name");
                         sessionStorage.removeItem("department");
@@ -37,7 +37,7 @@ const Authlevel = () => {
                     console.log("Error: ", error)
                 })
         } catch {
-            alert("You have to login before");
+            alert("คุณต้องเข้าสู่ระบบก่อน");
             window.location = "/login";
         }
 

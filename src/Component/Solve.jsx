@@ -2,12 +2,11 @@ import React from "react";
 import { PieChart, Pie, Sector, Cell } from "recharts";
 
 const data = [
-  { name: "Group A", value: 4 },
-  { name: "Group B", value: 2 },
-  { name: "Group C", value: 2 },
-  { name: "Group D", value: 2 },
+  { name: "Group A", value: 48 },
+  { name: "Group B", value: 4 },
+  { name: "Group C", value: 48 },
 ];
-const COLORS = ["red", "#FF8042", "#FFBB28", "green"];
+const COLORS = ["red", "black", "green"];
 
 
 export default function Solve() {

@@ -4,13 +4,19 @@ import Navbar from "../Component/Navbar";
 import parse from "html-react-parser";
 import Footer from "../Component/Footer";
 import Solve from "../Component/Solve";
+import Authen from "../Component/Authen";
+
 
 const CalForm = () => {
+
+  Authen();
+
   const [param, setParam] = useState("");
   const [select, setSelect] = useState(null);
   var fetc = Fetch();
   const handleonChange = (val) => {
 
+    if(localStorage.getItem("token").split("$")[1] === "9") {
     fetch(`https://kpi-api.onrender.com/all/${val}`)
       .then(response => {
         return response.json();
@@ -18,15 +24,26 @@ const CalForm = () => {
       .then(data => {
         setSelect(data)
       })
+    } else {
+      fetch(`https://kpi-api.onrender.com/all/hp/${sessionStorage.getItem("id")}/${val}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        setSelect(data)
+      })
+    }
 
   }
 
   var v = "นิยามตัวชี้วัด"
   var z = "ชื่อตัวชี้วัด";
   var q = "ค่าเป้าหมาย";
+  
 
   try {
     if (select !== null) {
+      v = select.map(vv => vv.fm_define)[0]
       q = select[0].fm_solve
       var w = select[0].fm_method
       var a = select.map(aa => aa.de_paras.split(", "))
@@ -44,8 +61,8 @@ const CalForm = () => {
       var e = d / b.length
       z = select.map(zz => zz.fm_name)[0]
       p = e.toFixed(2)
+      
       r = d
-      v = select.map(vv => vv.fm_define)[0]
     } else
       console.log("err")
   } catch {
@@ -61,9 +78,13 @@ const CalForm = () => {
           <h3>รายละเอียด </h3>
           <br />
           <div className='container mt-3'>
-            <label>ชื่อตัวชี้วัด: </label> <input id="namesum" disabled value={z} />
+            <label>ชื่อตัวชี้วัด: </label><br /> <input disabled value={z} />
             <br /><br />
-            <label>ค่าเป้าหมาย: </label> <input id="solve" disabled value={q} />
+            <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
+            <br /><br />
+            <label>ค่าเป้าหมาย: </label><br /> <input disabled value={q} />
+            <br /><br />
+            <label>วิธีการคำนวณ: </label><br /> <input disabled value={w} />
             <br /><br />
             <div>หมายเหตุ:&nbsp;&nbsp; {f.map(ff => <a key={ff}><br />{ff}</a>)}</div>
             <br />
@@ -88,15 +109,22 @@ const CalForm = () => {
                 {props.map((item, index) => {
                   var y = "";
                   var x = 0;
+                  var x2 = 0;
                   var u = <h4 className="bi bi-x-circle redt"></h4>;
                   for (var i = 1; i <= props[0].fm_paras.split(', ').length; i++) {
                     y += `<td>${item.de_paras.split(", ")[i - 1]}</td>`
                     x += parseFloat(item.de_paras.split(", ")[i - 1])
+                    if (x2 === 0)
+                    x2 += parseFloat(item.de_paras.split(", ")[i - 1])
+                    else
+                    x2 *= parseFloat(item.de_paras.split(", ")[i - 1])
                   }
                   if (w === "ค่าเฉลี่ย")
                     x = (x / props[0].fm_paras.split(', ').length).toFixed(2)
                   else if (w === "ผลรวม")
                     x = x
+                  else if (w === "ร้อยละ")
+                    x = (x2/100).toFixed(2)
                   if (item.de_result === "ผ่าน")
                     u = <h4 className="bi bi-check-circle greent"></h4>
                   return (
@@ -114,8 +142,7 @@ const CalForm = () => {
               </tbody>
             </table>
             <br /><br />
-            <label>นิยามตัวชี้วัด: </label><br /><textarea id="solve" disabled value={v} />
-            <br /><br />
+            
 
           </div>
 <br /><br />

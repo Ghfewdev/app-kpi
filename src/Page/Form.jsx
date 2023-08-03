@@ -117,13 +117,20 @@ const Form = () => {
 
   function q(val) {
     var q = 0;
+    var p = 0;
     for (var i = 1; i <= val.length; i++) {
       q += Number(document.getElementById(`${val[i - 1]}`).value);
+      if(p === 0)
+      p += Number(document.getElementById(`${val[i - 1]}`).value);
+      else
+      p *= Number(document.getElementById(`${val[i - 1]}`).value);
     }
     if (t[1] === "ผลรวม")
     q = q
     else if (t[1] === "ค่าเฉลี่ย")
     q = q/val.length
+    else if (t[1] === "ร้อยละ")
+    q = p/100
     return q
     
   }
@@ -197,7 +204,7 @@ const Form = () => {
                   <br /><br />
                   {n}
                   <div>
-                  <label>คำอธิบายการดำเนินการ และ อัพโหลดไฟล์แนบ</label>
+                  <label>ความก้าวหน้ารายโครงการ/กิจกรรม และ อัพโหลดไฟล์แนบ</label>
                   <br />
                   <textarea type='text'/>
                   <br />

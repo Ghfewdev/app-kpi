@@ -29,7 +29,7 @@ const Login = () => {
           localStorage.setItem("token", data.token);
           window.location = "/";
         } else {
-          alert("failed")
+          alert("รหัสผ่าน หรือ ชื่อผู้ใช้ไม่ถูกต้อง")
         }
       })
       .catch((error) => {
