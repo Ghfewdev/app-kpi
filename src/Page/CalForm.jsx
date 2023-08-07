@@ -14,6 +14,7 @@ const CalForm = () => {
   const [param, setParam] = useState("");
   const [select, setSelect] = useState(null);
   var fetc = Fetch();
+  console.log("FE", fetc)
   const handleonChange = (val) => {
 
     if(localStorage.getItem("token").split("$")[1] === "9") {
@@ -61,7 +62,6 @@ const CalForm = () => {
       var e = d / b.length
       z = select.map(zz => zz.fm_name)[0]
       p = e.toFixed(2)
-      
       r = d
     } else
       console.log("err")

@@ -17,6 +17,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import EditForm from './Page/EditForm.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -31,8 +32,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='profile' element={<Profile />} />
       <Route path='post' element={<Post />} />
       <Route path='calform' element={<CalForm />} />
-      <Route path='tests' element={<Tests/>} />
-      <Route path='home' element={<Home/>} />
+      <Route path='tests' element={<Tests />} />
+      <Route path='home' element={<Home />} />
+      <Route path='EditForm' element={<EditForm />} />
     </Routes>
   </BrowserRouter>
 )
