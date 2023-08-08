@@ -121,11 +121,11 @@ const Form = () => {
     var p = 0;
     for (var i = 1; i <= val.length; i++) {
       if (`${z[i-1]}`[(z[i-1].length)-1] === "*") {
-      q += Number(document.getElementById(`${val[i - 1]}`).value);
+      q += parseFloat(document.getElementById(`${val[i - 1]}`).value);
       if(p === 0)
-      p += Number(document.getElementById(`${val[i - 1]}`).value);
+      p += parseFloat(document.getElementById(`${val[i - 1]}`).value);
       else
-      p /= Number(document.getElementById(`${val[i - 1]}`).value);
+      p /= parseFloat(document.getElementById(`${val[i - 1]}`).value);
     }
   }
     if (t[1] === "ผลรวม")

@@ -108,27 +108,10 @@ const CalForm = () => {
               <tbody>
                 {props.map((item, index) => {
                   var y = "";
-                  var x = 0;
-                  var x2 = 0;
                   var u = <h4 className="bi bi-x-circle redt"></h4>;
                   for (var i = 1; i <= props[0].fm_paras.split(', ').length; i++) {
                     y += `<td>${item.de_paras.split(", ")[i - 1]}</td>`
-                    x += parseFloat(item.de_paras.split(", ")[i - 1])
-                    if (x2 === 0)
-                    x2 += parseFloat(item.de_paras.split(", ")[i - 1])
-                    else
-                    x2 /= parseFloat(item.de_paras.split(", ")[i - 1])
                   }
-
-                  if(x2*100 > 100)
-                  x2 = x2**(-1)
-
-                  if (w === "ค่าเฉลี่ย")
-                    x = (x / props[0].fm_paras.split(', ').length).toFixed(2)
-                  else if (w === "ผลรวม")
-                    x = x
-                  else if (w === "ร้อยละ")
-                    x = (x2*100).toFixed(2)
                   if (item.de_result === "ผ่าน")
                     u = <h4 className="bi bi-check-circle greent"></h4>
                   return (
@@ -136,7 +119,7 @@ const CalForm = () => {
                       <td>{item.us_agency}</td>
                       <td>{item.de_qur}</td>
                       {parse(y)}
-                      <td>{x}</td>
+                      <td>{item.de_ans.toFixed(2)}</td>
                       <td>{item.fd_date}</td>
                       <td>{item.fd_time}</td>
                       <td className="textc">{u}</td>
