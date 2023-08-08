@@ -24,6 +24,7 @@ const Form = () => {
       formid: d[1],
       qur: data.get("qur"),
       paras: g(z),
+      des: data.get("des"),
       ans: q(z),
       result: h(z)
     };
@@ -119,18 +120,20 @@ const Form = () => {
     var q = 0;
     var p = 0;
     for (var i = 1; i <= val.length; i++) {
+      if (`${z[i-1]}`[(z[i-1].length)-1] === "*") {
       q += Number(document.getElementById(`${val[i - 1]}`).value);
       if(p === 0)
       p += Number(document.getElementById(`${val[i - 1]}`).value);
       else
-      p *= Number(document.getElementById(`${val[i - 1]}`).value);
+      p /= Number(document.getElementById(`${val[i - 1]}`).value);
     }
+  }
     if (t[1] === "ผลรวม")
     q = q
     else if (t[1] === "ค่าเฉลี่ย")
     q = q/val.length
     else if (t[1] === "ร้อยละ")
-    q = p/100
+    q = p*100
     return q
     
   }
@@ -139,9 +142,14 @@ const Form = () => {
     var h;
     var g = 0;
     for (var i = 1; i <= val.length; i++) {
-      g += Number(document.getElementById(`${val[i - 1]}`).value);
+      if (`${z[i-1]}`[(z[i-1].length)-1] === "*") {
+        if(g === 0)
+        g += Number(document.getElementById(`${val[i - 1]}`).value);
+        else
+        g /= Number(document.getElementById(`${val[i - 1]}`).value);
+      }
     }
-    if (g >= t[0].split(" ")[1]) {
+    if (g <= t[0].split(" ")[1]) {
       h = "ผ่าน"
     } else {
       h = "ไม่ผ่าน"
@@ -151,8 +159,10 @@ const Form = () => {
 
   const dis = () => {
     console.log(q(z), h(z));
-    if (document.getElementById("submit").disabled === true)
+    if (document.getElementById("submit").disabled === true) {
       document.getElementById("submit").disabled = false
+      console.log("n[1]", `${z[0]}`[(z[0].length)-1])
+    }
     else document.getElementById("submit").disabled = true
   }
 
@@ -206,7 +216,7 @@ const Form = () => {
                   <div>
                   <label>ความก้าวหน้ารายโครงการ/กิจกรรม และ อัพโหลดไฟล์แนบ</label>
                   <br />
-                  <textarea type='text'/>
+                  <textarea name='des' type='text'/>
                   <br />
                   <input type='file' />
                   <br />

@@ -6,7 +6,7 @@ const Post = () => {
 
   setTimeout(() => {
     location = "/"
-  }, 1000)
+  }, 2000)
 
   return (
     <>

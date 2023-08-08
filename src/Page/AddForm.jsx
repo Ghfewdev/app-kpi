@@ -54,7 +54,7 @@ Authlevel();
         let pas = '';
         for (let i = 1; i <= val; i++) {
             pas = `para${i}`
-            ht += `<label>ค่าการประเมินที่ ${i}&nbsp;&nbsp;</label><br /> <input type="text" name=${pas} id=${i} /><br /><br />`;
+            ht += `<label>ค่าการประเมินที่ ${i}&nbsp;&nbsp;</label><input type="checkbox" id=${i*10}><br /> <input type="text" name=${pas} id=${i} /><br /><br />`;
         }
         return ht
     }
@@ -64,9 +64,14 @@ Authlevel();
         try {
             for (var i = 1; i <= ve; i++) {
                 o += document.getElementById(`${i}`).value;
+
+                if (document.getElementById(`${i*10}`).checked === true) {
+                    o += "*"
+                }
                 if (i != ve) {
                     o += ", "
                 }
+                
             }
             // console.log(o)
             // document.getElementById("sum").value = o
@@ -81,6 +86,7 @@ Authlevel();
     const dis = () => {
         if (document.getElementById("submit").disabled === true) {
             g(numpara)
+            console.log(g(numpara))
             document.getElementById("submit").disabled = false
         }
         else {
