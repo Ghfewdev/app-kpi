@@ -38,8 +38,8 @@ const Formtemplate = () => {
               <th scope="col">รพก</th>
               <th scope="col">รพต</th>
               <th scope="col">รพจ</th>
-              <th scope="col">รพว</th>
               <th scope="col">รพท</th>
+              <th scope="col">รพว</th>
               <th scope="col">รพล</th>
               <th scope="col">รพร</th>
               <th scope="col">รพส</th>
