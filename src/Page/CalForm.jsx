@@ -119,6 +119,10 @@ const CalForm = () => {
                     else
                     x2 /= parseFloat(item.de_paras.split(", ")[i - 1])
                   }
+
+                  if(x2*100 > 100)
+                  x2 = x2**(-1)
+
                   if (w === "ค่าเฉลี่ย")
                     x = (x / props[0].fm_paras.split(', ').length).toFixed(2)
                   else if (w === "ผลรวม")
