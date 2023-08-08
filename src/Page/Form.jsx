@@ -132,8 +132,13 @@ const Form = () => {
     q = q
     else if (t[1] === "ค่าเฉลี่ย")
     q = q/val.length
-    else if (t[1] === "ร้อยละ")
-    q = p*100
+    else if (t[1] === "ร้อยละ") {
+      if (p*100 <= 100)
+      q = p*100
+      else 
+      q = (p**(-1))*100
+    }
+    
     return q
     
   }
@@ -145,11 +150,16 @@ const Form = () => {
       if (`${z[i-1]}`[(z[i-1].length)-1] === "*") {
         if(g === 0)
         g += Number(document.getElementById(`${val[i - 1]}`).value);
-        else
+        else {
         g /= Number(document.getElementById(`${val[i - 1]}`).value);
       }
+      }
     }
-    if (g <= t[0].split(" ")[1]) {
+
+    if (g*100 >= 100)
+    g = g**(-1)
+
+    if (g*100 >= t[0].split(" ")[1]) {
       h = "ผ่าน"
     } else {
       h = "ไม่ผ่าน"
