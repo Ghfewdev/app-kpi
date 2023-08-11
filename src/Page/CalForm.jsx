@@ -5,6 +5,7 @@ import parse from "html-react-parser";
 import Footer from "../Component/Footer";
 import Solve from "../Component/Solve";
 import Authen from "../Component/Authen";
+import Users from "../Component/Users";
 
 
 const CalForm = () => {
@@ -14,33 +15,35 @@ const CalForm = () => {
   const [param, setParam] = useState("");
   const [select, setSelect] = useState(null);
   var fetc = Fetch();
+  var fusers = Users();
   console.log("FE", fetc)
   const handleonChange = (val) => {
 
-    if(localStorage.getItem("token").split("$")[1] === "9") {
-    fetch(`https://kpi-api.onrender.com/all/${val}`)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        setSelect(data)
-      })
+    if (localStorage.getItem("token").split("$")[1] === "9") {
+      fetch(`https://kpi-api.onrender.com/all/${val}`)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setSelect(data)
+        })
     } else {
       fetch(`https://kpi-api.onrender.com/all/hp/${sessionStorage.getItem("id")}/${val}`)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        setSelect(data)
-      })
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setSelect(data)
+        })
     }
 
   }
 
+
+  const agen = fusers.map(u => u.us_agency)
   var v = "นิยามตัวชี้วัด"
   var z = "ชื่อตัวชี้วัด";
   var q = "ค่าเป้าหมาย";
-  
 
   try {
     if (select !== null) {
@@ -75,7 +78,7 @@ const CalForm = () => {
     if (props !== null) {
       try {
         a = <div>
-          <h3>รายละเอียด </h3>
+          <h3>รายละเอียดการส่งตัวชี้วัด </h3>
           <br />
           <div className='container mt-3'>
             <label>ชื่อตัวชี้วัด: </label><br /> <input disabled value={z} />
@@ -129,32 +132,81 @@ const CalForm = () => {
               </tbody>
             </table>
             <br /><br />
-            
 
           </div>
-<br /><br />
-<div className="row">
-    <div className="col-6 col-md-7 textr">
-      สรุปผลภาพรวมตัวชี้วัด
-      <br />80
-    </div>
-    <div className="col-6 col-md-5">
-      <Solve />
-      </div>
-      
-  </div>
-  <br /><br />
-  <div className="row">
-    <div className="col-6 col-md-7 textr">
-      สรุปผลภาพรวมตัวชี้วัด
-      <br />80
-    </div>
-    <div className="col-6 col-md-5">
-      <Solve />
-      </div>
-      
-  </div>
-                
+          <h3>สรุปผล</h3>
+          <div className='container mt-3'>
+          <br />
+            <table className='table table-bordered border-primary'>
+
+              <thead className="table-dark">
+                <tr>
+                  <th scope="col">ส่วนราชการ</th>
+                  <th scope='col' colSpan="2">ไตรมาสที่ 1</th>
+                  <th scope='col' colSpan="2">ไตรมาสที่ 2</th>
+                  <th scope='col' colSpan="2">ครี่งปี</th>
+                  <th scope='col' colSpan="2">ไตรมาสที่ 3</th>
+                  <th scope='col' colSpan="2">ไตรมาสที่ 4</th>
+                  <th scope="col" colSpan="2">ทั้งปี</th>
+                  <th scope="col">รายละเอียด</th>
+
+                </tr>
+              </thead>
+              <tbody>
+              <tr>
+                {props.map((item, index) => {
+                  var y = "";
+                  var u = <h4 className="bi bi-x-circle redt"></h4>;
+                  for (var i = 1; i <= props[0].fm_paras.split(', ').length; i++) {
+                    y += `<td>${item.de_paras.split(", ")[i - 1]}</td>`
+                  }
+                  var an = [];
+                  for (var i = 0; i <= agen.length-4; i++) {
+                    an.push(agen[i])
+                  }
+                  if (item.de_result === "ผ่าน")
+                    u = <h4 className="bi bi-check-circle greent"></h4>
+                  return (
+                    <>
+                      <td key={index}>{an[0]}</td>
+                      <td>{item.de_qur}</td>
+                      {parse(y)}
+                      <td>{item.de_ans.toFixed(2)}</td>
+                      <td>{item.fd_date}</td>
+                      <td>{item.fd_time}</td>
+                      <td className="textc">{u}</td>
+                      <td className="textc">{u}</td>
+                      <td className="textc">{u}</td>
+                    </>
+                  );
+                })}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <br /><br />
+          <div className="row">
+            <div className="col-6 col-md-7 textr">
+              สรุปผลภาพรวมตัวชี้วัด
+              <br />80
+            </div>
+            <div className="col-6 col-md-5">
+              <Solve />
+            </div>
+
+          </div>
+          <br /><br />
+          <div className="row">
+            <div className="col-6 col-md-7 textr">
+              สรุปผลภาพรวมตัวชี้วัด
+              <br />80
+            </div>
+            <div className="col-6 col-md-5">
+              <Solve />
+            </div>
+
+          </div>
+
         </div>
 
       } catch {
