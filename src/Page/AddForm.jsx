@@ -25,7 +25,7 @@ Authlevel();
             paras: g(numpara)
         };
 
-        fetch("https://kpi-api.onrender.com/form/add", {
+        fetch("http://localhost:3000/form/add", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

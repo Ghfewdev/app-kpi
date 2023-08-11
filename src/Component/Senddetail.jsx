@@ -8,7 +8,7 @@ const Senddetail = () => {
         user: user,
         detail: detail
       };
-      fetch("https://kpi-api.onrender.com/formed/fill", {
+      fetch("http://localhost:3000/formed/fill", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

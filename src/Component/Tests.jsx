@@ -9,7 +9,7 @@ const Tests = () => {
   var fetc = Table1();
   const handleonChange = (val) => {
 
-    fetch(`https://kpi-api.onrender.com/all/${val}`)
+    fetch(`http://localhost:3000/all/${val}`)
       .then(response => {
         return response.json();
       })

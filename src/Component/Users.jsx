@@ -13,7 +13,7 @@ const Users = () => {
     
           useEffect(()=> {
             
-            fetch("https://kpi-api.onrender.com/users")
+            fetch("http://localhost:3000/users")
               .then(response => {
                 return response.json();
               })
