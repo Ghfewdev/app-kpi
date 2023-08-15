@@ -17,15 +17,21 @@ const CalForm = () => {
   const [select, setSelect] = useState(null);
   var fetc = Fetch();
   var fusers = Users();
-  var q1 = AllSolve(1).map(q => [q.us_id, q.de_ans])
-  var q2 = AllSolve(2).map(q => [q.us_id, q.de_result])
-  var q3 = AllSolve(3).map(q => q.de_ans)
-  var q4 = AllSolve(4).map(q => q.de_ans)
+  var q1 = AllSolve(1).map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
+  var r1 = AllSolve(1).map(q => q.de_paras)
+  var q2 = AllSolve(2).map(q => [q.us_id, q.de_ans])
+  var r2 = AllSolve(2).map(q => [q.us_id, q.de_result])
+  var q3 = AllSolve(3).map(q => [q.us_id, q.de_ans])
+  var r3 = AllSolve(3).map(q => [q.us_id, q.de_result])
+  var q4 = AllSolve(4).map(q => [q.us_id, q.de_ans])
+  var r4 = AllSolve(4).map(q => [q.us_id, q.de_result])
+  var ta = [];
+  var cou = 0;
 
   const handleonChange = (val) => {
 
     if (localStorage.getItem("token").split("$")[1] === "9") {
-      fetch(`http://localhost:3000/all/${val}`)
+      fetch(`https://kpi-api.onrender.com/all/${val}`)
         .then(response => {
           return response.json();
         })
@@ -33,7 +39,7 @@ const CalForm = () => {
           setSelect(data)
         })
     } else {
-      fetch(`http://localhost:3000/all/hp/${sessionStorage.getItem("id")}/${val}`)
+      fetch(`https://kpi-api.onrender.com/all/hp/${sessionStorage.getItem("id")}/${val}`)
         .then(response => {
           return response.json();
         })
@@ -49,32 +55,109 @@ const CalForm = () => {
   var an = [];
   for (var i = 0; i <= agen.length - 4; i++) {
     an.push(agen[i])
-    if(i === agen.length - 4) {
-    an.push("**ผลรวมทุกหน่วยงาน**")
-  }
-  }
-
-  try{
-    var qq1 = [];
-    var nqq1 = 0;
-  for (var i = 10; i <= 20; i++) {
-    for (var j = 0; j < q1.length; j++) {
-    if((q1[j])[0] === i){
-      qq1.push(((q1[j])[1]).toFixed(2))
-      if(nqq1 === 0)
-      nqq1 += (q1[j])[1]
-      else nqq1 /= (q1[j])[1]
+    if (i === agen.length - 4) {
+      an.push("**ผลรวมทุกหน่วยงาน**")
     }
   }
-  if(qq1.length <= i-10)
-  qq1.push("-")
-  if(i === 20)
-  qq1.push((nqq1*100).toFixed(2))
-  }
 
-  console.log("qq1",qq1)
-  }catch{
-    console.log("qq1",qq1)
+  try {
+    
+    var par1 = 0;
+    var par2 = 0;
+    //qq1
+    var qq1 = [];
+    var nqq1 = 0;
+    var re1 = [];
+    var pr1 = [];
+    for (var i = 10; i <= 20; i++) {
+      for (var j = 0; j < q1.length; j++) {
+        if ((q1[j])[0] === i) {
+          qq1.push(((q1[j])[1]).toFixed(2))
+          re1.push((q1[j])[3])
+          
+        if (ta[j] != 0) {
+          if (cou === 0)
+          console.log(1)
+        }
+      
+
+
+         
+          if (nqq1 === 0)
+            nqq1 += (q1[j])[1]
+          else nqq1 /= (q1[j])[1]
+        }
+      }
+      
+      if (qq1.length <= i - 10) {
+        qq1.push("-")
+        re1.push("-")
+      }
+      if (i === 20) {
+        qq1.push((nqq1 * 100).toFixed(2))
+        re1.push("ผ่าน")
+      }
+    }
+    console.log("re1 = ", re1)
+    console.log("tests = ", (q1[0])[2].split(", ")[2])
+
+    //qq2
+    var qq2 = [];
+    var nqq2 = 0;
+    for (var i = 10; i <= 20; i++) {
+      for (var j = 0; j < q2.length; j++) {
+        if ((q2[j])[0] === i) {
+          qq2.push(((q2[j])[1]).toFixed(2))
+          if (nqq2 === 0)
+            nqq2 += (q2[j])[1]
+          else nqq2 /= (q2[j])[1]
+        }
+      }
+      if (qq2.length <= i - 10)
+        qq2.push("-")
+      if (i === 20)
+        qq2.push((nqq2 * 100).toFixed(2))
+    }
+
+    //qq3
+    var qq3 = [];
+    var nqq3 = 0;
+    for (var i = 10; i <= 20; i++) {
+      for (var j = 0; j < q3.length; j++) {
+        if ((q3[j])[0] === i) {
+          qq3.push(((q3[j])[1]).toFixed(2))
+          if (nqq3 === 0)
+            nqq3 += (q3[j])[1]
+          else nqq3 /= (q3[j])[1]
+        }
+      }
+      if (qq3.length <= i - 10)
+        qq3.push("-")
+      if (i === 20)
+        qq3.push((nqq3 * 100).toFixed(2))
+    }
+
+    //qq4
+    var qq4 = [];
+    var nqq4 = 0;
+    for (var i = 10; i <= 20; i++) {
+      for (var j = 0; j < q4.length; j++) {
+        if ((q4[j])[0] === i) {
+          qq4.push(((q4[j])[1]).toFixed(2))
+          if (nqq4 === 0)
+            nqq4 += (q4[j])[1]
+          else nqq4 /= (q4[j])[1]
+        }
+      }
+      if (qq4.length <= i - 10)
+        qq4.push("-")
+      if (i === 20)
+        qq4.push((nqq4 * 100).toFixed(2))
+    }
+
+
+  } catch {
+    console.log("qq1", qq1)
   }
 
 
@@ -109,6 +192,47 @@ const CalForm = () => {
   } catch {
     console.log("err2")
   }
+
+  try {
+
+    for (var i = 0; i <= s.length - 1; i++) {
+      if ((s[i])[(s[i].length - 1)] === "*") {
+        ta.push(i)
+      } else 
+      ta.push(0)
+    }
+
+    console.log("ta = ", ta)
+
+    var rr = r1[0].split(", ")
+    console.log("rr = ", rr)
+    console.log("s = ", (s[0])[(s[0].length - 1)])
+    var tat = ta.map((t, i) => [t, rr[i]])
+    console.log("tat =", tat)
+
+    //r1
+    var rr1 = [];
+    var nrr1 = 0;
+
+      for (var j = 0; j < tat.length; j++) {
+        if ((tat[j])[0] === 1) {
+          rr1.push((tat[j])[1])
+          if (nrr1 === 0)
+            nrr1 += (tat[j])[1]
+          else nrr1 /= (tat[j])[1]
+        }
+      }
+      if (nrr1 >= 1) {
+        nrr1 = nrr1**-1
+      }
+      
+    console.log("rr1 = ", rr1)
+    console.log("nrr1 = ", nrr1)
+
+  } catch {
+    console.log("rr = err = ", rr)
+  }
+
 
   const handlesum = (val) => {
 
@@ -194,9 +318,9 @@ const CalForm = () => {
                   <th scope="col" rowSpan="2">รายละเอียด</th>
 
                 </tr>
-                
+
                 <tr>
-                <th scope='col'>ผล</th>
+                  <th scope='col'>ผล</th>
                   <th scope='col'>สรุป</th>
                   <th scope='col'>ผล</th>
                   <th scope='col'>สรุป</th>
@@ -215,26 +339,32 @@ const CalForm = () => {
               <tbody>
 
                 {an.map((item, index) => {
-                  var u = <h4 className="bi bi-x-circle redt"></h4>;
-                  if (item.de_result === "ผ่าน")
-                    u = <h4 className="bi bi-check-circle greent"></h4>
+                  var uu1 = <h4 className="bi bi-x-circle redt"></h4>;
+                  var uu2 = <h4 className="bi bi-x-circle redt"></h4>;
+                  var uu3 = <h4 className="bi bi-x-circle redt"></h4>;
+                  var uu4 = <h4 className="bi bi-x-circle redt"></h4>;
+
+                  if (re1[index] === "ผ่าน")
+                    uu1 = <h4 className="bi bi-check-circle greent"></h4>
+
+
                   return (
                     <tr key={index}>
                       <td>{an[index]}</td>
                       <td className="textc">{qq1[index]}</td>
-                      <td className="textc">{u}</td>
-                      <td className="textc">98</td>
-                      <td className="textc">{u}</td>
+                      <td className="textc">{uu1}</td>
+                      <td className="textc">{qq2[index]}</td>
+                      <td className="textc">{uu2}</td>
                       <td className="textc">97</td>
-                      <td className="textc">{u}</td>
-                      <td className="textc">96</td>
-                      <td className="textc">{u}</td>
-                      <td className="textc">95</td>
-                      <td className="textc">{u}</td>
+                      <td className="textc">{uu1}</td>
+                      <td className="textc">{qq3[index]}</td>
+                      <td className="textc">{uu3}</td>
+                      <td className="textc">{qq4[index]}</td>
+                      <td className="textc">{uu4}</td>
                       <td className="textc">94</td>
-                      <td className="textc">{u}</td>
+                      <td className="textc">{uu1}</td>
                       <td className="textc">93</td>
-                      <td className="textc">{u}</td>
+                      <td className="textc">{uu1}</td>
                       <td className="textc"><button className="btn btn-success" onClick={e => handlesum(index)}>เรียกดู</button></td>
                     </tr>
                   );

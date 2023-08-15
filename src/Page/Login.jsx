@@ -10,7 +10,7 @@ const Login = () => {
       name: data.get("name"),
       password: data.get("password")
     };
-    fetch("http://localhost:3000/login", {
+    fetch("https://kpi-api.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

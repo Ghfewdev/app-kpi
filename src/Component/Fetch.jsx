@@ -13,7 +13,7 @@ const Fetch = () => {
     
           useEffect(()=> {
             
-            fetch("http://localhost:3000/form")
+            fetch("https://kpi-api.onrender.com/form")
               .then(response => {
                 return response.json();
               })

@@ -21,7 +21,7 @@ const Dashboard = () => {
   const [tableData, setTableData] = useState([])
 
   useEffect(() => {
-    fetch("http://localhost:3000/all")
+    fetch("https://kpi-api.onrender.com/all")
       .then((data) => data.json())
       .then((data) => setTableData(data))
 

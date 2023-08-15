@@ -80,7 +80,7 @@ const Home = () => {
             paras: g(z.length)
         };
 
-        fetch("http://localhost:3000/update/form", {
+        fetch("https://kpi-api.onrender.com/update/form", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -106,7 +106,7 @@ const Home = () => {
 
   const fetchUserDataForm = () => {
 
-    fetch("http://localhost:3000/form")
+    fetch("https://kpi-api.onrender.com/form")
       .then(response => {
         return response.json();
       })
@@ -154,7 +154,7 @@ const Home = () => {
 
   const handleonChange = (val) => {
 
-    fetch(`http://localhost:3000/form/${val}`)
+    fetch(`https://kpi-api.onrender.com/form/${val}`)
       .then(response2 => {
         return response2.json();
       })

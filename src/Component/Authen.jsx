@@ -4,7 +4,7 @@ const Authen = () => {
     useEffect(() => {
         try{
             const token = localStorage.getItem("token").split("$")[0]
-            fetch("http://localhost:3000/authen", {
+            fetch("https://kpi-api.onrender.com/authen", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

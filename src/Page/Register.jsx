@@ -16,7 +16,7 @@ const Register = () => {
       name: data.get("name"),
       agency: data.get("agency")
     };
-    fetch("http://localhost:3000/register", {
+    fetch("https://kpi-api.onrender.com/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

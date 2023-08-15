@@ -5,7 +5,7 @@ function Details() {
   const [num, setNum] = useState([]);
 
   const f = () => {
-    fetch("http://localhost:3000/detail")
+    fetch("https://kpi-api.onrender.com/detail")
       .then(response => {
         return response.json();
       })

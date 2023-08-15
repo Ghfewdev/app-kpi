@@ -30,7 +30,7 @@ const EditForm = () => {
 
   const fetchUserDataForm = () => {
 
-    fetch("http://localhost:3000/form")
+    fetch("https://kpi-api.onrender.com/form")
       .then(response => {
         return response.json();
       })
@@ -78,7 +78,7 @@ const EditForm = () => {
 
   const handleonChange = (val) => {
 
-    fetch(`http://localhost:3000/form/${val}`)
+    fetch(`https://kpi-api.onrender.com/form/${val}`)
       .then(response2 => {
         return response2.json();
       })

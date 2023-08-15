@@ -13,7 +13,7 @@ const Table1 = () => {
     
           useEffect(()=> {
             
-            fetch("http://localhost:3000/all")
+            fetch("https://kpi-api.onrender.com/all")
               .then(response => {
                 return response.json();
               })

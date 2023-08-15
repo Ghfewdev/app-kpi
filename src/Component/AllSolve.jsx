@@ -13,7 +13,7 @@ const AllSolve = (defm) => {
     
           useEffect(()=> {
             
-            fetch(`http://localhost:3000/checked/${defm}`)
+            fetch(`https://kpi-api.onrender.com/checked/${defm}`)
               .then(response => {
                 return response.json();
               })
