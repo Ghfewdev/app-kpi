@@ -18,15 +18,10 @@ const CalForm = () => {
   var fetc = Fetch();
   var fusers = Users();
   var q1 = AllSolve(1).map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
-  var r1 = AllSolve(1).map(q => q.de_paras)
-  var q2 = AllSolve(2).map(q => [q.us_id, q.de_ans])
-  var r2 = AllSolve(2).map(q => [q.us_id, q.de_result])
-  var q3 = AllSolve(3).map(q => [q.us_id, q.de_ans])
-  var r3 = AllSolve(3).map(q => [q.us_id, q.de_result])
-  var q4 = AllSolve(4).map(q => [q.us_id, q.de_ans])
-  var r4 = AllSolve(4).map(q => [q.us_id, q.de_result])
+  var q2 = AllSolve(2).map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
+  var q3 = AllSolve(3).map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
+  var q4 = AllSolve(4).map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
   var ta = [];
-  var cou = 0;
 
   const handleonChange = (val) => {
 
@@ -60,105 +55,6 @@ const CalForm = () => {
     }
   }
 
-  try {
-    
-    var par1 = 0;
-    var par2 = 0;
-    //qq1
-    var qq1 = [];
-    var nqq1 = 0;
-    var re1 = [];
-    var pr1 = [];
-    for (var i = 10; i <= 20; i++) {
-      for (var j = 0; j < q1.length; j++) {
-        if ((q1[j])[0] === i) {
-          qq1.push(((q1[j])[1]).toFixed(2))
-          re1.push((q1[j])[3])
-          
-        if (ta[j] != 0) {
-          if (cou === 0)
-          console.log(1)
-        }
-      
-
-
-         
-          if (nqq1 === 0)
-            nqq1 += (q1[j])[1]
-          else nqq1 /= (q1[j])[1]
-        }
-      }
-      
-      if (qq1.length <= i - 10) {
-        qq1.push("-")
-        re1.push("-")
-      }
-      if (i === 20) {
-        qq1.push((nqq1 * 100).toFixed(2))
-        re1.push("ผ่าน")
-      }
-    }
-    console.log("re1 = ", re1)
-    console.log("tests = ", (q1[0])[2].split(", ")[2])
-
-    //qq2
-    var qq2 = [];
-    var nqq2 = 0;
-    for (var i = 10; i <= 20; i++) {
-      for (var j = 0; j < q2.length; j++) {
-        if ((q2[j])[0] === i) {
-          qq2.push(((q2[j])[1]).toFixed(2))
-          if (nqq2 === 0)
-            nqq2 += (q2[j])[1]
-          else nqq2 /= (q2[j])[1]
-        }
-      }
-      if (qq2.length <= i - 10)
-        qq2.push("-")
-      if (i === 20)
-        qq2.push((nqq2 * 100).toFixed(2))
-    }
-
-    //qq3
-    var qq3 = [];
-    var nqq3 = 0;
-    for (var i = 10; i <= 20; i++) {
-      for (var j = 0; j < q3.length; j++) {
-        if ((q3[j])[0] === i) {
-          qq3.push(((q3[j])[1]).toFixed(2))
-          if (nqq3 === 0)
-            nqq3 += (q3[j])[1]
-          else nqq3 /= (q3[j])[1]
-        }
-      }
-      if (qq3.length <= i - 10)
-        qq3.push("-")
-      if (i === 20)
-        qq3.push((nqq3 * 100).toFixed(2))
-    }
-
-    //qq4
-    var qq4 = [];
-    var nqq4 = 0;
-    for (var i = 10; i <= 20; i++) {
-      for (var j = 0; j < q4.length; j++) {
-        if ((q4[j])[0] === i) {
-          qq4.push(((q4[j])[1]).toFixed(2))
-          if (nqq4 === 0)
-            nqq4 += (q4[j])[1]
-          else nqq4 /= (q4[j])[1]
-        }
-      }
-      if (qq4.length <= i - 10)
-        qq4.push("-")
-      if (i === 20)
-        qq4.push((nqq4 * 100).toFixed(2))
-    }
-
-
-  } catch {
-    console.log("qq1", qq1)
-  }
 
 
 
@@ -198,40 +94,205 @@ const CalForm = () => {
     for (var i = 0; i <= s.length - 1; i++) {
       if ((s[i])[(s[i].length - 1)] === "*") {
         ta.push(i)
-      } else 
-      ta.push(0)
+      }
+
     }
 
-    console.log("ta = ", ta)
+  } catch {
+  }
 
-    var rr = r1[0].split(", ")
-    console.log("rr = ", rr)
-    console.log("s = ", (s[0])[(s[0].length - 1)])
-    var tat = ta.map((t, i) => [t, rr[i]])
-    console.log("tat =", tat)
+  try {
+    //qq1
+    var q1par1 = 0;
+    var q1par2 = 0;
+    var qq1 = [];
+    var nqq1 = 0;
+    var re1 = [];
 
-    //r1
-    var rr1 = [];
-    var nrr1 = 0;
+    for (var i = 10; i <= 20; i++) {
+      for (var j = 0; j < q1.length; j++) {
+        if ((q1[j])[0] === i) {
+          qq1.push(((q1[j])[1]).toFixed(2))
+          re1.push((q1[j])[3])
+          q1par1 += Number((q1[j])[2].split(", ")[ta[0]])
+          q1par2 += Number((q1[j])[2].split(", ")[ta[1]])
 
-      for (var j = 0; j < tat.length; j++) {
-        if ((tat[j])[0] === 1) {
-          rr1.push((tat[j])[1])
-          if (nrr1 === 0)
-            nrr1 += (tat[j])[1]
-          else nrr1 /= (tat[j])[1]
+          if (nqq1 === 0)
+            nqq1 += (q1[j])[1]
+          else nqq1 /= (q1[j])[1]
         }
       }
-      if (nrr1 >= 1) {
-        nrr1 = nrr1**-1
+
+      if (qq1.length <= i - 10) {
+        qq1.push("-")
+        re1.push("-")
       }
-      
-    console.log("rr1 = ", rr1)
-    console.log("nrr1 = ", nrr1)
+      if (i === 20) {
+        if (q1par1 > q1par2) {
+          qq1.push(((q1par2 / q1par1) * 100).toFixed(2))
+          if ((q1par2 / q1par1) * 100 > q.split(" ")[1])
+            re1.push("ผ่าน")
+          else re1.push("ไม่ผ่าน")
+        }
+        else {
+          qq1.push(((q1par1 / q1par2) * 100).toFixed(2))
+          if ((q1par1 / q1par2) * 100 > q.split(" ")[1])
+            re1.push("ผ่าน")
+          else re1.push("ไม่ผ่าน")
+        }
+      }
+    }
+    console.log("re1 = ", re1)
+    console.log("tests = ", q1par1, (q1par2 / q1par1) * 100)
+
+    //qq2
+    var q2par1 = 0;
+    var q2par2 = 0;
+    var qq2 = [];
+    var nqq2 = 0;
+    var re2 = [];
+
+    for (var i = 10; i <= 20; i++) {
+      for (var j = 0; j < q2.length; j++) {
+        if ((q2[j])[0] === i) {
+          qq2.push(((q2[j])[1]).toFixed(2))
+          re2.push((q2[j])[3])
+          q2par1 += Number((q2[j])[2].split(", ")[ta[0]])
+          q2par2 += Number((q2[j])[2].split(", ")[ta[1]])
+
+          if (nqq2 === 0)
+            nqq2 += (q2[j])[1]
+          else nqq2 /= (q2[j])[1]
+        }
+      }
+
+      if (qq2.length <= i - 10) {
+        qq2.push("-")
+        re2.push("-")
+      }
+      if (i === 20) {
+        if (q2par1 > q2par2) {
+          qq2.push(((q2par2 / q2par1) * 100).toFixed(2))
+          if ((q2par2 / q2par1) * 100 > q.split(" ")[1])
+            re2.push("ผ่าน")
+          else re2.push("ไม่ผ่าน")
+        }
+        else {
+          qq2.push(((q2par1 / q2par2) * 100).toFixed(2))
+          if ((q2par1 / q2par2) * 100 > q.split(" ")[1])
+            re2.push("ผ่าน")
+          else re2.push("ไม่ผ่าน")
+        }
+      }
+    }
+
+    //qq3
+    var q3par1 = 0;
+    var q3par2 = 0;
+    var qq3 = [];
+    var nqq3p1 = [];
+    var nqq3p2 = [];
+    var re3 = [];
+
+    for (var i = 10; i <= 20; i++) {
+      for (var j = 0; j < q3.length; j++) {
+        if ((q3[j])[0] === i) {
+          qq3.push(((q3[j])[1]).toFixed(2))
+          re3.push((q3[j])[3])
+          q3par1 += Number((q3[j])[2].split(", ")[ta[0]])
+          q3par2 += Number((q3[j])[2].split(", ")[ta[1]])
+          nqq3p1.push(Number((q3[j])[2].split(", ")[ta[0]]))
+          nqq3p2.push(Number((q3[j])[2].split(", ")[ta[1]]))
+
+        }
+      }
+
+      if (qq3.length <= i - 10) {
+        qq3.push("-")
+        re3.push("-")
+        nqq3p1.push(0)
+        nqq3p2.push(0)
+      }
+      if (i === 20) {
+        nqq3p1.push(q3par1)
+        nqq3p2.push(q3par2)
+        if (q3par1 > q3par2) {
+          qq3.push(((q3par2 / q3par1) * 100).toFixed(2))
+          if ((q3par2 / q3par1) * 100 > q.split(" ")[1])
+            re2.push("ผ่าน")
+          else re2.push("ไม่ผ่าน")
+        }
+        else {
+          qq3.push(((q3par1 / q3par2) * 100).toFixed(2))
+          if ((q3par1 / q3par2) * 100 > q.split(" ")[1])
+            re2.push("ผ่าน")
+          else re2.push("ไม่ผ่าน")
+        }
+      }
+    }
+
+    //qq4
+    var q4par1 = 0;
+    var q4par2 = 0;
+    var qq4 = [];
+    var nqq4p1 = [];
+    var nqq4p2 = [];
+    var re4 = [];
+
+    for (var i = 10; i <= 20; i++) {
+      for (var j = 0; j < q4.length; j++) {
+        if ((q4[j])[0] === i) {
+          qq4.push(((q4[j])[1]).toFixed(2))
+          re4.push((q4[j])[3])
+          q4par1 += Number((q4[j])[2].split(", ")[ta[0]])
+          q4par2 += Number((q4[j])[2].split(", ")[ta[1]])
+          nqq4p1.push(Number((q4[j])[2].split(", ")[ta[0]]))
+          nqq4p2.push(Number((q4[j])[2].split(", ")[ta[1]]))
+        }
+      }
+
+      if (qq4.length <= i - 10) {
+        qq4.push("-")
+        re4.push("-")
+        nqq4p1.push(0)
+        nqq4p2.push(0)
+      }
+      if (i === 20) {
+        nqq4p1.push(q4par1)
+        nqq4p2.push(q4par2)
+        if (q4par1 > q4par2) {
+          qq4.push(((q4par2 / q4par1) * 100).toFixed(2))
+          if ((q4par2 / q4par1) * 100 > q.split(" ")[1])
+            re4.push("ผ่าน")
+          else re4.push("ไม่ผ่าน")
+        }
+        else {
+          qq4.push(((q4par1 / q4par2) * 100).toFixed(2))
+          if ((q4par1 / q4par2) * 100 > q.split(" ")[1])
+            re4.push("ผ่าน")
+          else re4.push("ไม่ผ่าน")
+        }
+      }
+    }
+
+    //qq3-4
+    var q34par1 = q3par1 + q4par1;
+    var q34par2 = q3par2 + q4par2;
+    var qqn1p34 = nqq3p1.map((q, i) => q + nqq4p1[i]);
+    var qqn2p34 = nqq3p2.map((q, i) => q + nqq4p2[i]);
+    var qq34 = qqn1p34.map((q, i) => [((q / qqn2p34[i])*100).toFixed(2)]);
+    var nqq34 = 0;
+    var re34 = [];
+
+    console.log("qqn1p34", qqn1p34, qqn2p34)
+    console.log("qq34", qq34)
+
+
 
   } catch {
-    console.log("rr = err = ", rr)
+    console.log("qq1", qq1)
   }
+
 
 
   const handlesum = (val) => {
@@ -346,6 +407,15 @@ const CalForm = () => {
 
                   if (re1[index] === "ผ่าน")
                     uu1 = <h4 className="bi bi-check-circle greent"></h4>
+                  if (re2[index] === "ผ่าน")
+                    uu2 = <h4 className="bi bi-check-circle greent"></h4>
+                  if (re3[index] === "ผ่าน")
+                    uu3 = <h4 className="bi bi-check-circle greent"></h4>
+                  if (re4[index] === "ผ่าน")
+                    uu4 = <h4 className="bi bi-check-circle greent"></h4>
+
+                    if (qq34[index] > 100)
+                    qq34[index] = ((qq34[index]**-1)*10000).toFixed(2)
 
 
                   return (
@@ -355,13 +425,13 @@ const CalForm = () => {
                       <td className="textc">{uu1}</td>
                       <td className="textc">{qq2[index]}</td>
                       <td className="textc">{uu2}</td>
-                      <td className="textc">97</td>
+                      <td className="textc">{qq2[index] + qq1[index]}</td>
                       <td className="textc">{uu1}</td>
                       <td className="textc">{qq3[index]}</td>
                       <td className="textc">{uu3}</td>
                       <td className="textc">{qq4[index]}</td>
                       <td className="textc">{uu4}</td>
-                      <td className="textc">94</td>
+                      <td className="textc">{qq34[index]}</td>
                       <td className="textc">{uu1}</td>
                       <td className="textc">93</td>
                       <td className="textc">{uu1}</td>
