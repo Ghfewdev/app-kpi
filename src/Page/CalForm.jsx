@@ -51,12 +51,9 @@ const CalForm = () => {
   for (var i = 0; i <= agen.length - 4; i++) {
     an.push(agen[i])
     if (i === agen.length - 4) {
-      an.push("**ผลรวมทุกหน่วยงาน**")
+      an.push("ภาพรวมทั้งสำนักการแพทพ์")
     }
   }
-
-
-
 
   var v = "นิยามตัวชี้วัด"
   var z = "ชื่อตัวชี้วัด";
@@ -102,11 +99,13 @@ const CalForm = () => {
   }
 
   try {
+
     //qq1
     var q1par1 = 0;
     var q1par2 = 0;
     var qq1 = [];
-    var nqq1 = 0;
+    var nqq1p1 = [];
+    var nqq1p2 = [];
     var re1 = [];
 
     for (var i = 10; i <= 20; i++) {
@@ -116,18 +115,21 @@ const CalForm = () => {
           re1.push((q1[j])[3])
           q1par1 += Number((q1[j])[2].split(", ")[ta[0]])
           q1par2 += Number((q1[j])[2].split(", ")[ta[1]])
-
-          if (nqq1 === 0)
-            nqq1 += (q1[j])[1]
-          else nqq1 /= (q1[j])[1]
+          nqq1p1.push(Number((q2[j])[2].split(", ")[ta[0]]))
+          nqq1p2.push(Number((q2[j])[2].split(", ")[ta[1]]))
+          
         }
       }
 
       if (qq1.length <= i - 10) {
         qq1.push("-")
         re1.push("-")
+        nqq1p1.push(0)
+        nqq1p2.push(0)
       }
       if (i === 20) {
+        nqq1p1.push(q1par1)
+        nqq1p2.push(q1par2)
         if (q1par1 > q1par2) {
           qq1.push(((q1par2 / q1par1) * 100).toFixed(2))
           if ((q1par2 / q1par1) * 100 > q.split(" ")[1])
@@ -142,14 +144,16 @@ const CalForm = () => {
         }
       }
     }
-    console.log("re1 = ", re1)
-    console.log("tests = ", q1par1, (q1par2 / q1par1) * 100)
+
+    //console.log("re1 = ", re1)
+    //console.log("tests = ", q1par1, (q1par2 / q1par1) * 100)
 
     //qq2
     var q2par1 = 0;
     var q2par2 = 0;
     var qq2 = [];
-    var nqq2 = 0;
+    var nqq2p1 = [];
+    var nqq2p2 = [];
     var re2 = [];
 
     for (var i = 10; i <= 20; i++) {
@@ -159,18 +163,22 @@ const CalForm = () => {
           re2.push((q2[j])[3])
           q2par1 += Number((q2[j])[2].split(", ")[ta[0]])
           q2par2 += Number((q2[j])[2].split(", ")[ta[1]])
+          nqq2p1.push(Number((q2[j])[2].split(", ")[ta[0]]))
+          nqq2p2.push(Number((q2[j])[2].split(", ")[ta[1]]))
 
-          if (nqq2 === 0)
-            nqq2 += (q2[j])[1]
-          else nqq2 /= (q2[j])[1]
+          
         }
       }
 
       if (qq2.length <= i - 10) {
         qq2.push("-")
         re2.push("-")
+        nqq2p1.push(0)
+        nqq2p2.push(0)
       }
       if (i === 20) {
+        nqq2p1.push(q2par1)
+        nqq2p2.push(q2par2)
         if (q2par1 > q2par2) {
           qq2.push(((q2par2 / q2par1) * 100).toFixed(2))
           if ((q2par2 / q2par1) * 100 > q.split(" ")[1])
@@ -275,19 +283,26 @@ const CalForm = () => {
       }
     }
 
+    //qq1-2
+    var qqn1p12 = nqq1p1.map((q, i) => q + nqq2p1[i]);
+    var qqn2p12 = nqq1p2.map((q, i) => q + nqq2p2[i]);
+    var qq12 = qqn1p12.map((q, i) => [((q / qqn2p12[i])*100).toFixed(2)]);
+    var re12 = [];
+
     //qq3-4
-    var q34par1 = q3par1 + q4par1;
-    var q34par2 = q3par2 + q4par2;
     var qqn1p34 = nqq3p1.map((q, i) => q + nqq4p1[i]);
     var qqn2p34 = nqq3p2.map((q, i) => q + nqq4p2[i]);
     var qq34 = qqn1p34.map((q, i) => [((q / qqn2p34[i])*100).toFixed(2)]);
-    var nqq34 = 0;
     var re34 = [];
 
-    console.log("qqn1p34", qqn1p34, qqn2p34)
-    console.log("qq34", qq34)
+    //qq1-4
+    var qqn1p14 = qqn1p12.map((q, i) => q + qqn1p34[i]);
+    var qqn2p14 = qqn2p12.map((q, i) => q + qqn2p34[i]);
+    var qq14 = qqn1p14.map((q, i) => [((q / qqn2p14[i])*100).toFixed(2)]);
+    var re14 = [];
 
-
+    console.log("qqn1p12", qqn1p12, qqn2p12)
+    console.log("qq12", qq12)
 
   } catch {
     console.log("qq1", qq1)
@@ -404,6 +419,7 @@ const CalForm = () => {
                   var uu2 = <h4 className="bi bi-x-circle redt"></h4>;
                   var uu3 = <h4 className="bi bi-x-circle redt"></h4>;
                   var uu4 = <h4 className="bi bi-x-circle redt"></h4>;
+                  
 
                   if (re1[index] === "ผ่าน")
                     uu1 = <h4 className="bi bi-check-circle greent"></h4>
@@ -414,9 +430,42 @@ const CalForm = () => {
                   if (re4[index] === "ผ่าน")
                     uu4 = <h4 className="bi bi-check-circle greent"></h4>
 
-                    if (qq34[index] > 100)
-                    qq34[index] = ((qq34[index]**-1)*10000).toFixed(2)
+                    //q12
+                    if (qq12[index] > 100) 
+                    qq12[index] = [((qq12[index]**-1)*10000).toFixed(2)]
+                    if (isNaN(qq12[index]))
+                    qq12[index] = "-"
+                    if (qq12[index] > q.split(" ")[1])
+                    re12.push("ผ่าน")
+                    else re12.push("ไม่ผ่าน")
+                    if (re12[index] === "ผ่าน")
+                    re12[index] = <h4 className="bi bi-check-circle greent"></h4>
+                    else re12[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
+                    //q34
+                    if (qq34[index] > 100) 
+                    qq34[index] = [((qq34[index]**-1)*10000).toFixed(2)]
+                    if (isNaN(qq34[index]))
+                    qq34[index] = "-"
+                    if (qq34[index] > q.split(" ")[1])
+                    re34.push("ผ่าน")
+                    else re34.push("ไม่ผ่าน")
+                    if (re34[index] === "ผ่าน")
+                    re34[index] = <h4 className="bi bi-check-circle greent"></h4>
+                    else re34[index] = <h4 className="bi bi-x-circle redt"></h4>;
+
+                    //q14
+                    if (qq14[index] > 100) 
+                    qq14[index] = [((qq14[index]**-1)*10000).toFixed(2)]
+                    if (isNaN(qq14[index]))
+                    qq14[index] = "-"
+                    if (qq14[index] > q.split(" ")[1])
+                    re14.push("ผ่าน")
+                    else re14.push("ไม่ผ่าน")
+                    if (re14[index] === "ผ่าน")
+                    re14[index] = <h4 className="bi bi-check-circle greent"></h4>
+                    else re14[index] = <h4 className="bi bi-x-circle redt"></h4>;
+                  
 
                   return (
                     <tr key={index}>
@@ -425,16 +474,16 @@ const CalForm = () => {
                       <td className="textc">{uu1}</td>
                       <td className="textc">{qq2[index]}</td>
                       <td className="textc">{uu2}</td>
-                      <td className="textc">{qq2[index] + qq1[index]}</td>
-                      <td className="textc">{uu1}</td>
+                      <td className="textc">{qq12[index]}</td>
+                      <td className="textc">{re12[index]}</td>
                       <td className="textc">{qq3[index]}</td>
                       <td className="textc">{uu3}</td>
                       <td className="textc">{qq4[index]}</td>
                       <td className="textc">{uu4}</td>
                       <td className="textc">{qq34[index]}</td>
-                      <td className="textc">{uu1}</td>
-                      <td className="textc">93</td>
-                      <td className="textc">{uu1}</td>
+                      <td className="textc">{re34[index]}</td>
+                      <td className="textc">{qq14[index]}</td>
+                      <td className="textc">{re14[index]}</td>
                       <td className="textc"><button className="btn btn-success" onClick={e => handlesum(index)}>เรียกดู</button></td>
                     </tr>
                   );
