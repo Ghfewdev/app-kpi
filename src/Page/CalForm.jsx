@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Fetch from "../Component/Fetch";
 import Navbar from "../Component/Navbar";
 import parse from "html-react-parser";
@@ -6,24 +6,26 @@ import Footer from "../Component/Footer";
 import Solve from "../Component/Solve";
 import Authen from "../Component/Authen";
 import Users from "../Component/Users";
-import AllSolve from "../Component/AllSolve";
 
 
 const CalForm = () => {
 
   Authen();
-
   const [param, setParam] = useState("");
   const [select, setSelect] = useState(null);
+  const [qt1, setQt1] = useState([]);
+  const [qt2, setQt2] = useState([]);
+  const [qt3, setQt3] = useState([]);
+  const [qt4, setQt4] = useState([]);
+
   var fetc = Fetch();
   var fusers = Users();
-  var q1 = AllSolve(1).map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
-  var q2 = AllSolve(2).map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
-  var q3 = AllSolve(3).map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
-  var q4 = AllSolve(4).map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
+
+
   var ta = [];
 
   const handleonChange = (val) => {
+    console.log("n = ", n)
 
     if (localStorage.getItem("token").split("$")[1] === "9") {
       fetch(`https://kpi-api.onrender.com/all/${val}`)
@@ -43,8 +45,48 @@ const CalForm = () => {
         })
     }
 
-  }
+    if (n != []) {
+      fetch(`https://kpi-api.onrender.com/checked/id/${n}/1`)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setQt1(data);
+        });
 
+      fetch(`https://kpi-api.onrender.com/checked/id/${n}/2`)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setQt2(data);
+        });
+
+      fetch(`https://kpi-api.onrender.com/checked/id/${n}/3`)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setQt3(data);
+        });
+
+      fetch(`https://kpi-api.onrender.com/checked/id/${n}/4`)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setQt4(data);
+        });
+
+
+      console.log("qt1 = ", qt1)
+      console.log("qt2 = ", qt2)
+      console.log("qt3 = ", qt3)
+      console.log("qt4 = ", qt4)
+    }
+
+
+  }
 
   const agen = fusers.map(u => u.us_agency)
   var an = [];
@@ -83,7 +125,7 @@ const CalForm = () => {
     } else
       console.log("err")
   } catch {
-    console.log("err2")
+    //console.log("err2")
   }
 
   try {
@@ -99,6 +141,11 @@ const CalForm = () => {
   }
 
   try {
+
+    var q1 = qt1.map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
+    var q2 = qt2.map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
+    var q3 = qt3.map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
+    var q4 = qt4.map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
 
     //qq1
     var q1par1 = 0;
@@ -117,7 +164,7 @@ const CalForm = () => {
           q1par2 += Number((q1[j])[2].split(", ")[ta[1]])
           nqq1p1.push(Number((q2[j])[2].split(", ")[ta[0]]))
           nqq1p2.push(Number((q2[j])[2].split(", ")[ta[1]]))
-          
+
         }
       }
 
@@ -166,7 +213,7 @@ const CalForm = () => {
           nqq2p1.push(Number((q2[j])[2].split(", ")[ta[0]]))
           nqq2p2.push(Number((q2[j])[2].split(", ")[ta[1]]))
 
-          
+
         }
       }
 
@@ -286,26 +333,26 @@ const CalForm = () => {
     //qq1-2
     var qqn1p12 = nqq1p1.map((q, i) => q + nqq2p1[i]);
     var qqn2p12 = nqq1p2.map((q, i) => q + nqq2p2[i]);
-    var qq12 = qqn1p12.map((q, i) => [((q / qqn2p12[i])*100).toFixed(2)]);
+    var qq12 = qqn1p12.map((q, i) => [((q / qqn2p12[i]) * 100).toFixed(2)]);
     var re12 = [];
 
     //qq3-4
     var qqn1p34 = nqq3p1.map((q, i) => q + nqq4p1[i]);
     var qqn2p34 = nqq3p2.map((q, i) => q + nqq4p2[i]);
-    var qq34 = qqn1p34.map((q, i) => [((q / qqn2p34[i])*100).toFixed(2)]);
+    var qq34 = qqn1p34.map((q, i) => [((q / qqn2p34[i]) * 100).toFixed(2)]);
     var re34 = [];
 
     //qq1-4
     var qqn1p14 = qqn1p12.map((q, i) => q + qqn1p34[i]);
     var qqn2p14 = qqn2p12.map((q, i) => q + qqn2p34[i]);
-    var qq14 = qqn1p14.map((q, i) => [((q / qqn2p14[i])*100).toFixed(2)]);
+    var qq14 = qqn1p14.map((q, i) => [((q / qqn2p14[i]) * 100).toFixed(2)]);
     var re14 = [];
 
-    console.log("qqn1p12", qqn1p12, qqn2p12)
-    console.log("qq12", qq12)
+    //console.log("qqn1p12", qqn1p12, qqn2p12)
+    //console.log("qq12", qq12)
 
   } catch {
-    console.log("qq1", qq1)
+    //console.log("qq1", qq1)
   }
 
 
@@ -316,7 +363,7 @@ const CalForm = () => {
 
   function show(props) {
     var a;
-    console.log(props)
+    //console.log(props)
     if (props !== null) {
       try {
         a = <div>
@@ -419,7 +466,7 @@ const CalForm = () => {
                   var uu2 = <h4 className="bi bi-x-circle redt"></h4>;
                   var uu3 = <h4 className="bi bi-x-circle redt"></h4>;
                   var uu4 = <h4 className="bi bi-x-circle redt"></h4>;
-                  
+
 
                   if (re1[index] === "ผ่าน")
                     uu1 = <h4 className="bi bi-check-circle greent"></h4>
@@ -430,42 +477,53 @@ const CalForm = () => {
                   if (re4[index] === "ผ่าน")
                     uu4 = <h4 className="bi bi-check-circle greent"></h4>
 
-                    //q12
-                    if (qq12[index] > 100) 
-                    qq12[index] = [((qq12[index]**-1)*10000).toFixed(2)]
-                    if (isNaN(qq12[index]))
+
+                  //q1-4
+                    if (isNaN(qq1[index]))
+                    qq1[index] = "-"
+                    if (isNaN(qq2[index]))
+                    qq2[index] = "-"
+                    if (isNaN(qq3[index]))
+                    qq3[index] = "-"
+                    if (isNaN(qq4[index]))
+                    qq4[index] = "-"
+
+                  //q12
+                  if (qq12[index] > 100)
+                    qq12[index] = [((qq12[index] ** -1) * 10000).toFixed(2)]
+                  if (isNaN(qq12[index]))
                     qq12[index] = "-"
-                    if (qq12[index] > q.split(" ")[1])
+                  if (qq12[index] > q.split(" ")[1])
                     re12.push("ผ่าน")
-                    else re12.push("ไม่ผ่าน")
-                    if (re12[index] === "ผ่าน")
+                  else re12.push("ไม่ผ่าน")
+                  if (re12[index] === "ผ่าน")
                     re12[index] = <h4 className="bi bi-check-circle greent"></h4>
-                    else re12[index] = <h4 className="bi bi-x-circle redt"></h4>;
+                  else re12[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
-                    //q34
-                    if (qq34[index] > 100) 
-                    qq34[index] = [((qq34[index]**-1)*10000).toFixed(2)]
-                    if (isNaN(qq34[index]))
+                  //q34
+                  if (qq34[index] > 100)
+                    qq34[index] = [((qq34[index] ** -1) * 10000).toFixed(2)]
+                  if (isNaN(qq34[index]))
                     qq34[index] = "-"
-                    if (qq34[index] > q.split(" ")[1])
+                  if (qq34[index] > q.split(" ")[1])
                     re34.push("ผ่าน")
-                    else re34.push("ไม่ผ่าน")
-                    if (re34[index] === "ผ่าน")
+                  else re34.push("ไม่ผ่าน")
+                  if (re34[index] === "ผ่าน")
                     re34[index] = <h4 className="bi bi-check-circle greent"></h4>
-                    else re34[index] = <h4 className="bi bi-x-circle redt"></h4>;
+                  else re34[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
-                    //q14
-                    if (qq14[index] > 100) 
-                    qq14[index] = [((qq14[index]**-1)*10000).toFixed(2)]
-                    if (isNaN(qq14[index]))
+                  //q14
+                  if (qq14[index] > 100)
+                    qq14[index] = [((qq14[index] ** -1) * 10000).toFixed(2)]
+                  if (isNaN(qq14[index]))
                     qq14[index] = "-"
-                    if (qq14[index] > q.split(" ")[1])
+                  if (qq14[index] > q.split(" ")[1])
                     re14.push("ผ่าน")
-                    else re14.push("ไม่ผ่าน")
-                    if (re14[index] === "ผ่าน")
+                  else re14.push("ไม่ผ่าน")
+                  if (re14[index] === "ผ่าน")
                     re14[index] = <h4 className="bi bi-check-circle greent"></h4>
-                    else re14[index] = <h4 className="bi bi-x-circle redt"></h4>;
-                  
+                  else re14[index] = <h4 className="bi bi-x-circle redt"></h4>;
+
 
                   return (
                     <tr key={index}>
@@ -528,7 +586,10 @@ const CalForm = () => {
 
   }
 
-  var b = param.split("ลำดับที่: ")[1];
+  const n = param.split("ลำดับที่: ")[1];
+
+
+
 
   return (
     <>
@@ -537,7 +598,7 @@ const CalForm = () => {
       <h1>การสรุปผลตัวชี้วัด</h1>
       <br />
       <br />
-      <select value={param} onClick={e => handleonChange(b)} onChange={e => setParam(e.target.value)} >
+      <select value={param} onClick={e => handleonChange(n)} onChange={e => setParam(e.target.value)} >
         <option>เลือกดูตัวชี้วัด</option>
         {fetc.map(form => (
           <option key={form.fm_id}>ตัวชี้วัด ลำดับที่: {form.fm_id}</option>

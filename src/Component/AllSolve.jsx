@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
 
-function out(para) {
-    if(para !== null)
-    return para
-    else
-    console.log("now loading")
-}
+// function out(para) {
+//     if(para !== null)
+//     return para
+//     else
+//     console.log("now loading")
+// }
 
-const AllSolve = (defm) => {
+const AllSolve = (fmid, defm) => {
 
-    const [fetchs,setFetchs] = useState([]);
-    
+  const [fetchs,setFetchs] = useState([]);
+
           useEffect(()=> {
-            
-            fetch(`https://kpi-api.onrender.com/checked/${defm}`)
+
+            fetch(`https://kpi-api.onrender.com/checked/id/${fmid}/${defm}`)
               .then(response => {
                 return response.json();
               })
@@ -21,10 +21,11 @@ const AllSolve = (defm) => {
                 setFetchs(data);
               });
     
-        
-          }, [])
 
-    return out(fetchs)
+          }, [])
+        
+
+    return fetchs
 
 }
 

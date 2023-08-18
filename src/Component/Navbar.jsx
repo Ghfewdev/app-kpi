@@ -48,8 +48,8 @@ const Navbar = () => {
         <li className='navli'><a className='navli a' href="calform">สรุปผลตัวชี้วัด</a></li>
       </>
   }
-console.log(a)
-console.log(c)
+//console.log(a)
+//console.log(c)
 
   return (
     <>
