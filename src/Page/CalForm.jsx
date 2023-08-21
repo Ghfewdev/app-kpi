@@ -79,10 +79,6 @@ const CalForm = () => {
         });
 
 
-      console.log("qt1 = ", qt1)
-      console.log("qt2 = ", qt2)
-      console.log("qt3 = ", qt3)
-      console.log("qt4 = ", qt4)
     }
 
 
@@ -333,21 +329,28 @@ const CalForm = () => {
     //qq1-2
     var qqn1p12 = nqq1p1.map((q, i) => q + nqq2p1[i]);
     var qqn2p12 = nqq1p2.map((q, i) => q + nqq2p2[i]);
-    var qq12 = qqn1p12.map((q, i) => [((q / qqn2p12[i]) * 100).toFixed(2)]);
+    var qq12 = qqn1p12.map((q, i) => ((q / qqn2p12[i]) * 100).toFixed(2));
     var re12 = [];
+    if (qq12[11] >= 100)
+    qq12[11] = ((qq12[11]**-1)*10000).toFixed(2)
 
     //qq3-4
     var qqn1p34 = nqq3p1.map((q, i) => q + nqq4p1[i]);
     var qqn2p34 = nqq3p2.map((q, i) => q + nqq4p2[i]);
-    var qq34 = qqn1p34.map((q, i) => [((q / qqn2p34[i]) * 100).toFixed(2)]);
+    var qq34 = qqn1p34.map((q, i) => ((q / qqn2p34[i]) * 100).toFixed(2));
     var re34 = [];
+    if (qq34[11] >= 100)
+    qq34[11] = ((qq34[11]**-1)*10000).toFixed(2)
 
     //qq1-4
     var qqn1p14 = qqn1p12.map((q, i) => q + qqn1p34[i]);
     var qqn2p14 = qqn2p12.map((q, i) => q + qqn2p34[i]);
-    var qq14 = qqn1p14.map((q, i) => [((q / qqn2p14[i]) * 100).toFixed(2)]);
+    var qq14 = qqn1p14.map((q, i) => ((q / qqn2p14[i]) * 100).toFixed(2));
     var re14 = [];
+    if (qq14[11] >= 100)
+    qq14[11] = ((qq14[11]**-1)*10000).toFixed(2)
 
+    var qqall = qq1.map(q => [qq1[11], qq2[11], qq3[11], qq4[11], qq12[11], qq34[11], qq14[11]])
     //console.log("qqn1p12", qqn1p12, qqn2p12)
     //console.log("qq12", qq12)
 
@@ -438,7 +441,7 @@ const CalForm = () => {
                   <th scope='col' colSpan="2">ไตรมาสที่ 4</th>
                   <th scope='col' colSpan="2">ครี่งปีหลัง</th>
                   <th scope="col" colSpan="2">ทั้งปี</th>
-                  <th scope="col" rowSpan="2">รายละเอียด</th>
+                  {/* <th scope="col" rowSpan="2">รายละเอียด</th> */}
 
                 </tr>
 
@@ -524,7 +527,7 @@ const CalForm = () => {
                     re14[index] = <h4 className="bi bi-check-circle greent"></h4>
                   else re14[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
-
+                  console.log("qqall" ,qqall)
                   return (
                     <tr key={index}>
                       <td>{an[index]}</td>
@@ -542,7 +545,7 @@ const CalForm = () => {
                       <td className="textc">{re34[index]}</td>
                       <td className="textc">{qq14[index]}</td>
                       <td className="textc">{re14[index]}</td>
-                      <td className="textc"><button className="btn btn-success" onClick={e => handlesum(index)}>เรียกดู</button></td>
+                      {/* <td className="textc"><button className="btn btn-success" onClick={e => handlesum(index)}>เรียกดู</button></td> */}
                     </tr>
                   );
                 })}

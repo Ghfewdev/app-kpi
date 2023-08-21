@@ -123,3 +123,9 @@
   width: 60%;
   height: 500px;
 }
+
+.chart-container {
+  width: 50%;
+  height: 50%;
+  margin: auto;
+}
