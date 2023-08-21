@@ -6,6 +6,7 @@ import Footer from "../Component/Footer";
 import Solve from "../Component/Solve";
 import Authen from "../Component/Authen";
 import Users from "../Component/Users";
+import ChartCom from "../Component/ChartCom";
 
 
 const CalForm = () => {
@@ -350,7 +351,26 @@ const CalForm = () => {
     if (qq14[11] >= 100)
     qq14[11] = ((qq14[11]**-1)*10000).toFixed(2)
 
-    var qqall = qq1.map(q => [qq1[11], qq2[11], qq3[11], qq4[11], qq12[11], qq34[11], qq14[11]])
+    var qqall = qq1.map(q => [qq1[11], qq2[11], qq12[11], qq3[11], qq4[11], qq34[11], qq14[11]])[0]
+
+    var cha = {
+      labels: ["ไตรมาสที่ 1", "ไตรมาสที่ 2", "ครึ่งปีแรก", "ไตรมาสที่ 3", "ไตรมาสที่ 4", "ครึ่งปีหลัง", "ผลรวมทั้งปี"],
+      datasets: [
+        {
+          label: "ภาพรวมสำนักการแพทย์",
+          data: qqall,
+          backgroundColor: [
+            "rgba(75,192,192,1)",
+            "#ecf0f1",
+            "#50AF95",
+            "#f3ba2f",
+            "#2a71d0",
+          ],
+          borderColor: "black",
+          borderWidth: 2,
+        },
+      ],
+    }
     //console.log("qqn1p12", qqn1p12, qqn2p12)
     //console.log("qq12", qq12)
 
@@ -555,23 +575,12 @@ const CalForm = () => {
           </div>
           <br /><br />
           <div className="row">
-            <div className="col-6 col-md-7 textr">
-              สรุปผลภาพรวมตัวชี้วัด
-              <br />80
+            <div className="col-3 textc">
             </div>
-            <div className="col-6 col-md-5">
-              <Solve />
-            </div>
-
-          </div>
-          <br /><br />
-          <div className="row">
-            <div className="col-6 col-md-7 textr">
-              สรุปผลภาพรวมตัวชี้วัด
-              <br />80
-            </div>
-            <div className="col-6 col-md-5">
-              <Solve />
+            <div className="col-1 col-md-5">
+            <div style={{ width: 700 }}>
+        <ChartCom chartData={cha} />
+      </div>
             </div>
 
           </div>
@@ -595,7 +604,7 @@ const CalForm = () => {
 
 
   return (
-    <>
+    <div className="textc">
       <Navbar />
       <br />
       <h1>การสรุปผลตัวชี้วัด</h1>
@@ -616,7 +625,7 @@ const CalForm = () => {
 
 
       <Footer />
-    </>
+    </div>
   )
 
 
