@@ -33,23 +33,23 @@ const Home = () => {
   const dis = () => {
     if (document.getElementById("submit").disabled === true) {
       g(z.length)
-      for (var i = 0;i < z.length;i++) {
-        document.getElementById(`hd${i}`).hidden = false
-      }
+      // for (var i = 0;i < z.length;i++) {
+      //   document.getElementById(`hd${i}`).hidden = false
+      // }
       document.getElementById("hd11").hidden = false
       document.getElementById("hd22").hidden = false
       document.getElementById("hd33").hidden = false
-      document.getElementById("hd44").hidden = false
+      //document.getElementById("hd44").hidden = false
       document.getElementById("submit").disabled = false
     }
     else {
-      for (var i = 0;i < z.length;i++) {
-        document.getElementById(`hd${i}`).hidden = true
-      }
+      // for (var i = 0;i < z.length;i++) {
+      //   document.getElementById(`hd${i}`).hidden = true
+      // }
       document.getElementById("hd11").hidden = true
       document.getElementById("hd22").hidden = true
       document.getElementById("hd33").hidden = true
-      document.getElementById("hd44").hidden = true
+      //document.getElementById("hd44").hidden = true
       document.getElementById("submit").disabled = true
 
     }
@@ -59,8 +59,8 @@ const Home = () => {
   try {
     if (localStorage.getItem("token").split("$")[1] === "9") {
       co1 = <>
-      <label>ต้องการแก้ไขข้อมูลตัวชี้วัด:</label> <input type="checkbox" value={secec.check} onClick={e => dis()} /> 
-        <br /><br /></>
+      <label>ต้องการแก้ไขข้อมูลตัวชี้วัด:&nbsp;&nbsp;</label> <input type="checkbox" value={secec.check} onClick={e => dis()} /> 
+        <br /></>
       co2 = <>
         <button id="submit" type="submit" className='btn btn-success' disabled> แก้ไขข้อมูล </button>
       </>
@@ -75,9 +75,8 @@ const Home = () => {
         const JsonData = {
             name: data.get("name"),
             solve: data.get("solve"),
-            method: data.get("method"),
             def: data.get("define"),
-            paras: g(z.length)
+            id: Number(d[1])
         };
 
         fetch("https://kpi-api.onrender.com/update/form", {
@@ -162,6 +161,8 @@ const Home = () => {
         setForms({ ...forms, fill: data2 })
       })
 
+      console.log(d[1])
+
   }
 
   var w = forms.fill.map(fil => fil.fm_paras)
@@ -173,7 +174,7 @@ const Home = () => {
     var n = z.map((m, i) => (
       <div key={i}>
 
-        <label>ข้อมูลที่ใช้สรุปตัวชี้วัด {i + 1}: </label> <br /> <input value={m} disabled /> <br /> <div id={"hd"+i} hidden><input id={i} /></div>
+        <label>ข้อมูลที่ใช้สรุปตัวชี้วัด {i + 1}: </label> <br /> <input className='input60' value={m} disabled /> <br /> <div className='input60' id={"hd"+i} hidden><input id={i} /></div>
         <br /><br />
       </div>
     )
@@ -201,7 +202,7 @@ const Home = () => {
             </h1>
             <br /><br />
 
-            <div className="textl">
+            <div className="textl2">
               <h4>เลือกดูรายละเอียดของตัวชี้วัด</h4>
               <select value={secec.sece} onClick={e => handleonChange(d[1])} onChange={e => setSececs({ ...secec, sece: e.target.value })} >
                 <option> ตัวชี้วัดทั้งหมด </option>
@@ -211,7 +212,7 @@ const Home = () => {
               </select>
             </div>
             <br />
-            <div className="textc">{c}</div>
+            <div>{c}</div>
 
             <form onSubmit={handleSubmit} className='textl2'>
 
@@ -219,23 +220,20 @@ const Home = () => {
 
                 <div key={fill.fm_id}>
                   {co1}
-                  <br /><label>ชื่อตัวชี้วัด: </label> <br /> <input value={fill.fm_name} disabled /> <br /> <div id='hd11' hidden><input id='fname' /></div>
+                  <br /><label>ชื่อตัวชี้วัด: </label> <br /> <input className='input60' value={fill.fm_name} disabled /> <br /> <div id='hd11' hidden><input className='input60' name='name' /></div>
                   <br /><br />
-                  <label>นิยามตัวชี้วัด :&nbsp;</label> <br /><textarea value={fill.fm_define} disabled /><br /><div id='hd22' hidden><textarea id='define' /></div>
+                  <label>นิยามตัวชี้วัด :&nbsp;</label> <br /><textarea className='tarea610' value={fill.fm_define} disabled /><br /><div id='hd22' hidden><textarea className='tarea610' name='define' /></div>
                   <br /><br />
-                  <label>ค่าเป้าหมาย: </label> <br /> <input value={fill.fm_solve} disabled /> <br /> <div id='hd33' hidden> <input id='solve' /></div>
+                  <label>ค่าเป้าหมาย: </label> <br /> <input className='input60' value={fill.fm_solve} disabled /> <br /> <div id='hd33' hidden> <input className='input60' name='solve' /></div>
                   <br /><br />
-                  <label>วิธีการคำนวณ: </label> <br /><input value={fill.fm_method} disabled /> <br /> <div id='hd44' hidden> <input id='method' /></div>
+                  <label>วิธีการคำนวณ: </label> <br /><input className='input60' value={fill.fm_method} disabled /> <br /> <div id='hd44' hidden> <input className='input60' name='method' /></div>
                   <br /><br />
                   {n}
-                  <br />
-                  <div className='textc'>{co2}</div>
+                  <div className='textr2'>{co2}</div>
                 </div>
 
               ))}
               <br />
-
-
 
             </form>
             <br />

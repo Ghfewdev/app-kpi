@@ -22,11 +22,16 @@ const CalForm = () => {
   var fetc = Fetch();
   var fusers = Users();
 
-
   var ta = [];
 
+  // const dis = () => {
+  //    console.log(gg(s))
+  //    console.log(qg(s))
+  //    console.log(hg(s))
+  //    console.log(deid)
+  //  } 
+
   const handleonChange = (val) => {
-    console.log("n = ", n)
 
     if (localStorage.getItem("token").split("$")[1] === "9") {
       fetch(`https://kpi-api.onrender.com/all/${val}`)
@@ -100,11 +105,20 @@ const CalForm = () => {
 
   try {
     if (select !== null) {
+      var t = select.map(f => [f.fm_solve, f.fm_method])[0]
       v = select.map(vv => vv.fm_define)[0]
       q = select[0].fm_solve
       var w = select[0].fm_method
       var a = select.map(aa => aa.de_paras.split(", "))
       var s = select.map(ss => ss.fm_paras.split(", "))[0]
+      var ss = s.map((m, i) => (
+        <div key={i}>
+        <div><p className='inline p2'><label>{m}: &nbsp;&nbsp;</label></p>
+          <p className='inline textr p2'><input className='input30' type="number" id={m} required /></p>
+        </div>
+      </div>
+      )
+      );
       var b = a[0]
       var c = []
       for (var i = 0; i < b.length; i++) {
@@ -333,7 +347,7 @@ const CalForm = () => {
     var qq12 = qqn1p12.map((q, i) => ((q / qqn2p12[i]) * 100).toFixed(2));
     var re12 = [];
     if (qq12[11] >= 100)
-    qq12[11] = ((qq12[11]**-1)*10000).toFixed(2)
+      qq12[11] = ((qq12[11] ** -1) * 10000).toFixed(2)
 
     //qq3-4
     var qqn1p34 = nqq3p1.map((q, i) => q + nqq4p1[i]);
@@ -341,7 +355,7 @@ const CalForm = () => {
     var qq34 = qqn1p34.map((q, i) => ((q / qqn2p34[i]) * 100).toFixed(2));
     var re34 = [];
     if (qq34[11] >= 100)
-    qq34[11] = ((qq34[11]**-1)*10000).toFixed(2)
+      qq34[11] = ((qq34[11] ** -1) * 10000).toFixed(2)
 
     //qq1-4
     var qqn1p14 = qqn1p12.map((q, i) => q + qqn1p34[i]);
@@ -349,7 +363,7 @@ const CalForm = () => {
     var qq14 = qqn1p14.map((q, i) => ((q / qqn2p14[i]) * 100).toFixed(2));
     var re14 = [];
     if (qq14[11] >= 100)
-    qq14[11] = ((qq14[11]**-1)*10000).toFixed(2)
+      qq14[11] = ((qq14[11] ** -1) * 10000).toFixed(2)
 
     var qqall = qq1.map(q => [qq1[11], qq2[11], qq12[11], qq3[11], qq4[11], qq34[11], qq14[11]])[0]
 
@@ -361,10 +375,10 @@ const CalForm = () => {
           data: qqall,
           backgroundColor: [
             "rgba(75,192,192,1)",
-            "#ecf0f1",
-            "#50AF95",
-            "#f3ba2f",
-            "#2a71d0",
+            // "#ecf0f1",
+            // "#50AF95",
+            // "#f3ba2f",
+            // "#2a71d0",
           ],
           borderColor: "black",
           borderWidth: 2,
@@ -378,9 +392,43 @@ const CalForm = () => {
     //console.log("qq1", qq1)
   }
 
+  var deid;
+  const setid = (id) => {
+    deid = id
+    console.log("deid = ", deid)
+  }
 
+  const handlesum = (event) => {
+    event.preventDefault();
 
-  const handlesum = (val) => {
+    const data = new FormData(event.currentTarget);
+    const JsonData = {
+      paras: gg(s),
+      ans: qg(s),
+      result: hg(s),
+      deid: deid
+    };
+
+    fetch("https://kpi-api.onrender.com/update/detail", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(JsonData)
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        if (data.status === "ok") {
+          window.location = "calform";
+        } else {
+          alert("บันทึกไม่สำเร็จ");
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      })
 
   }
 
@@ -390,34 +438,36 @@ const CalForm = () => {
     if (props !== null) {
       try {
         a = <div>
-          <h3>รายละเอียดการส่งตัวชี้วัด </h3>
-          <br />
+
           <div className='container mt-3'>
-            <label>ชื่อตัวชี้วัด: </label><br /> <input disabled value={z} />
+            <h3>รายละเอียดการส่งตัวชี้วัด </h3>
+            <br />
+            <label>ชื่อตัวชี้วัด: </label><br /> <input className="input100" disabled value={z} />
             <br /><br />
             <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
             <br /><br />
-            <label>ค่าเป้าหมาย: </label><br /> <input disabled value={q} />
+            <label>ค่าเป้าหมาย: </label><br /> <input className="input10" disabled value={q} />
             <br /><br />
-            <label>วิธีการคำนวณ: </label><br /> <input disabled value={w} />
-            <br /><br />
+            {/* <label>วิธีการคำนวณ: </label><br /> <input className="input10" disabled value={w} />
+            <br /><br /> */}
             <div>หมายเหตุ:&nbsp;&nbsp; {f.map(ff => <a key={ff}><br />{ff}</a>)}</div>
             <br />
             <table className='table table-bordered border-primary'>
 
               <thead className="table-dark">
                 <tr>
-                  <th scope="col">ส่วนราชการ</th>
-                  <th scope='col'>ไตรมาส</th>
+                  <th className="textc" scope="col">ส่วนราชการ</th>
+                  <th className="textc" scope='col'>ไตรมาส</th>
                   {f.map(p => {
                     return (
-                      <th key={p}>{p[0]}</th>
+                      <th className="textc" key={p}>{p[0]}</th>
                     );
                   })}
-                  <th scope="col">{w}</th>
-                  <th scope="col">วันที่ส่ง</th>
-                  <th scope="col">เวลา</th>
-                  <th scope="col">สรุปผล</th>
+                  <th className="textc" scope="col">{w}</th>
+                  <th className="textc" scope="col">วันที่ส่ง</th>
+                  {/* <th scope="col">เวลา</th> */}
+                  <th className="textc" scope="col">สรุปผล</th>
+                  <th className="textc" scope="col">แก้ไขการส่งข้อมูล</th>
                 </tr>
               </thead>
               <tbody>
@@ -436,8 +486,9 @@ const CalForm = () => {
                       {parse(y)}
                       <td>{item.de_ans.toFixed(2)}</td>
                       <td>{item.fd_date}</td>
-                      <td>{item.fd_time}</td>
+                      {/*  <td>{item.fd_time}</td> */}
                       <td className="textc">{u}</td>
+                      <td className="textc"><button onClick={e => setid(item.de_id)} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
                     </tr>
                   );
                 })}
@@ -446,7 +497,7 @@ const CalForm = () => {
             <br /><br />
 
           </div>
-          <h3>สรุปผล</h3>
+          <div className="textc"><h3>สรุปผล</h3></div>
           <div className='container mt-3'>
             <br />
             <table className='table table-bordered border-primary'>
@@ -502,13 +553,13 @@ const CalForm = () => {
 
 
                   //q1-4
-                    if (isNaN(qq1[index]))
+                  if (isNaN(qq1[index]))
                     qq1[index] = "-"
-                    if (isNaN(qq2[index]))
+                  if (isNaN(qq2[index]))
                     qq2[index] = "-"
-                    if (isNaN(qq3[index]))
+                  if (isNaN(qq3[index]))
                     qq3[index] = "-"
-                    if (isNaN(qq4[index]))
+                  if (isNaN(qq4[index]))
                     qq4[index] = "-"
 
                   //q12
@@ -547,7 +598,7 @@ const CalForm = () => {
                     re14[index] = <h4 className="bi bi-check-circle greent"></h4>
                   else re14[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
-                  console.log("qqall" ,qqall)
+                  //console.log("qqall" ,qqall)
                   return (
                     <tr key={index}>
                       <td>{an[index]}</td>
@@ -578,9 +629,9 @@ const CalForm = () => {
             <div className="col-3 textc">
             </div>
             <div className="col-1 col-md-5">
-            <div style={{ width: 700 }}>
-        <ChartCom chartData={cha} />
-      </div>
+              <div style={{ width: 700 }}>
+                <ChartCom chartData={cha} />
+              </div>
             </div>
 
           </div>
@@ -588,46 +639,212 @@ const CalForm = () => {
         </div>
 
       } catch {
-        a = <h1>ไม่พบการส่งข้อมูลเข้ามา</h1>
+        a = <div className="textc"><h1>ไม่พบการส่งข้อมูลเข้ามา</h1></div>
       }
     } else
-      a = <h1>เลือกตัวชี้วัด</h1>
+      a = <div className="textc"><h1>เลือกตัวชี้วัด</h1></div>
 
     return a
 
 
   }
 
+
+
   const n = param.split("ลำดับที่: ")[1];
 
+  function gg(val) {
+    var g = "";
+    for (var i = 1; i <= val.length; i++) {
+      g += document.getElementById(`${val[i - 1]}`).value;
+      if (i != val.length) {
+        g += ", "
+      }
+    }
+    return g
+  }
 
+  function qg(val) {
+    var q = 0;
+    var p = 0;
+    for (var i = 1; i <= val.length; i++) {
+      if (`${s[i - 1]}`[(s[i - 1].length) - 1] === "*") {
+        q += parseFloat(document.getElementById(`${val[i - 1]}`).value);
+        if (p === 0)
+          p += parseFloat(document.getElementById(`${val[i - 1]}`).value);
+        else
+          p /= parseFloat(document.getElementById(`${val[i - 1]}`).value);
+      }
+    }
+    if (t[1] === "ผลรวม")
+      q = q
+    else if (t[1] === "ค่าเฉลี่ย")
+      q = q / val.length
+    else if (t[1] === "ร้อยละ") {
+      if (p * 100 <= 100)
+        q = p * 100
+      else
+        q = (p ** (-1)) * 100
+    }
 
+    return q
+
+  }
+
+  function hg(val) {
+    var h;
+    var g = 0;
+    for (var i = 1; i <= val.length; i++) {
+      if (`${s[i - 1]}`[(s[i - 1].length) - 1] === "*") {
+        if (g === 0)
+          g += Number(document.getElementById(`${val[i - 1]}`).value);
+        else {
+          g /= Number(document.getElementById(`${val[i - 1]}`).value);
+        }
+      }
+    }
+
+    if (g * 100 >= 100)
+      g = g ** (-1)
+
+    if (g * 100 >= t[0].split(" ")[1]) {
+      h = "ผ่าน"
+    } else {
+      h = "ไม่ผ่าน"
+    }
+    return h
+  }
 
   return (
-    <div className="textc">
-      <Navbar />
-      <br />
-      <h1>การสรุปผลตัวชี้วัด</h1>
-      <br />
-      <br />
-      <select value={param} onClick={e => handleonChange(n)} onChange={e => setParam(e.target.value)} >
-        <option>เลือกดูตัวชี้วัด</option>
-        {fetc.map(form => (
-          <option key={form.fm_id}>ตัวชี้วัด ลำดับที่: {form.fm_id}</option>
-        ))}
-      </select>
-      <br />
-      <br />
+    <div>
+      <div className="d-print-none">
+        <Navbar />
+        <div className="textc">
+          <br />
+          <h1>การสรุปผลตัวชี้วัด</h1>
+          <br />
+          <select value={param} onClick={e => handleonChange(n)} onChange={e => setParam(e.target.value)} >
+            <option>เลือกดูตัวชี้วัด</option>
+            {fetc.map(form => (
+              <option key={form.fm_id}>ตัวชี้วัด ลำดับที่: {form.fm_id}</option>
+            ))}
+          </select>
+          <br />
+          <br />
+        </div>
+        <div>{show(select)}</div>
 
-      <div>{show(select)}</div>
-
-      <br /><br />
+        <br /><br />
 
 
-      <Footer />
+        <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div className="modal-dialog modal-lg">
+            <form onSubmit={handlesum}>
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel">แก้ไขการส่งข้อมูล</h5>
+                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div className="modal-body textl4">
+                  {ss}
+                  {/* <br /><label>ยืนยัน: <input type="checkbox" onClick={e => dis()} /> </label><br /> */}
+                </div>
+
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                  <button id="submit" type="submit" className="btn btn-primary">แก้ไขข้อมูล</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+
+        <Footer />
+      </div>
+      <div>
+
+        {/* page1 */}
+
+
+        <pre className='d-none d-print-block fonts'>
+          <br />                                                                                                                                                                             ไตรมาสที่ 1 <input type="checkbox" /> ต.ค.-ธ.ค. ๖๖
+          <br />                                                                                                                                                                             ไตรมาสที่ 2 <input type="checkbox" /> ม.ค.-มี.ค. ๖๗
+          <br />                                                                      แบบรายงานความก้าวหน้ารายโครงการ/กิจกรรม                        ไตรมาสที่ 3 <input type="checkbox" /> เม.ย.-มิ.ย. ๖๗
+          <br />                                                                                 <b>ส่วนราชการ....................................</b>                                   ไตรมาสที่ 4 <input type="checkbox" /> ก.ค.-ก.ย. ๖๗
+          <br />                  ชื่อโครงการ/กิจกรรม.........................................................................................................................................................
+          <br />                                                    ..........................................................................................................................................................
+          <br />                  ลำดับที่โครงการ/กิจกรรม..............................................(ตามแผน สนพ.)..................................................(ตามแผน รพ.)
+          <br />                  <b>หน่วยงานที่รับผิดชอบ</b>
+          <br />                  กลุ่มงาน/ผ่าย.....................................................................................................................................................................
+          <br />                  เจ้าหน้าที่ผู้รับผิดชอบ.....................................................................................โทรศัพท์......................................................
+          <br />                  <b>ผลการดำเนินงาน</b>
+          <br />                  สถานะของโครงการ               <input type="checkbox" />         แล้วเสร็จ                     <input type="checkbox" />         ยังไม่เริ่มดำเนินการ               <input type="checkbox" />         ยกเลิก
+          <br />                                                                 <input type="checkbox" />         กำลังดำเนินการ          <input type="checkbox" />         ชะลอ
+          <br />                  รายละเอียดการดำเนินงานในไตรมาสนี้ บอกถึงเป้าหมาย วัตถุประสงค์ วิธีดำเนินการและผล (ถ้ามี) รวมถึงความก้าวหน้า
+          <br />                  ของโครงการ (%)
+          <div className='border border-dark mb-2 mt-1 m-5 p-2'>  <b><u>วัตถุประสงค์</u></b>
+            <br />          โรงเรียนโสตศึกษาจังหวัดนนทบุรี มีนักเรียนที่บกพร่องทางการได้ยิน และบกพร่องทางสติปัญญานักเรียนส่วนใหญ่
+            <br />  เป็นนักเรียนประจำพักอยู่ที่เรือนนอนภายในโรงเรียน ปัญหาที่พบได้บ่อย คือนักเรียนที่เข้าห้องน้ำมักจะลืมปิดน้ำเมื่อใช้
+            <br />  แล้วโดยเฉพาะนักเรียนที่มีความบกพร่องทางการได้ยิน จะมีปัญหาในการไม่ได้ยินเสียงน้ำไหล และหากเกิดพฤติกรรมที่
+            <br />  ลืมปิดน้ำบ่อยครั้ง จะทำให้ค่าน้ำปะปาของโรงเรียนเพิ่มสูงขึ้นตามมา
+            <br />  <b><u>เป้าหมาย</u></b>
+            <br />          โรงเรียนโสตศึกษาจังหวัดนนทบุรี มีนักเรียนที่บกพร่องทางการได้ยิน และบกพร่องทางสติปัญญานักเรียนส่วนใหญ่
+            <br />  เป็นนักเรียนประจำพักอยู่ที่เรือนนอนภายในโรงเรียน ปัญหาที่พบได้บ่อย คือนักเรียนที่เข้าห้องน้ำมักจะลืมปิดน้ำเมื่อใช้
+            <br />  แล้วโดยเฉพาะนักเรียนที่มีความบกพร่องทางการได้ยิน จะมีปัญหาในการไม่ได้ยินเสียงน้ำไหล และหากเกิดพฤติกรรมที่
+            <br />  ลืมปิดน้ำบ่อยครั้ง จะทำให้ค่าน้ำปะปาของโรงเรียนเพิ่มสูงขึ้นตามมาด้วย
+            <br />  <b><u>ผลการดำเนินโครงการ</u></b>
+            <br />          โรงเรียนโสตศึกษาจังหวัดนนทบุรี มีนักเรียนที่บกพร่องทางการได้ยิน และบกพร่องทางสติปัญญานักเรียนส่วนใหญ่
+            <br />  เป็นนักเรียนประจำพักอยู่ที่เรือนนอนภายในโรงเรียน ปัญหาที่พบได้บ่อย คือนักเรียนที่เข้าห้องน้ำมักจะลืมปิดน้ำเมื่อใช้
+            <br />  แล้วโดยเฉพาะนักเรียนที่มีความบกพร่องทางการได้ยิน จะมีปัญหาในการไม่ได้ยินเสียงน้ำไหล และหากเกิดพฤติกรรมที่
+            <br />  ลืมปิดน้ำบ่อยครั้ง จะทำให้ค่าน้ำปะปาของโรงเรียนเพิ่มสูงขึ้นตามมา
+            <br /><table className='table table-bordered border-primary'>
+              <thead><tr><th>เดือน</th><th>ค่าที่1</th><th>ค่าที่2</th><th>รวม</th></tr></thead>
+              <tbody>
+                <tr><th>12</th><th>123</th><th>321</th><th>321</th></tr>
+                <tr><th>12</th><th>123</th><th>321</th><th>321</th></tr>
+                <tr><th>12</th><th>123</th><th>321</th><th>321</th></tr>
+                <tr><th>12</th><th>123</th><th>321</th><th>321</th></tr>
+                <tr><th>12</th><th>123</th><th>321</th><th>321</th></tr>
+              </tbody>
+            </table>  <b>หมายเหตุ</b>
+            <br />  ..
+            <br />  ..
+          </div>
+          <br />
+          <br />                  <b>การใช้จ่ายงบประมาณ</b>             <input type="checkbox" />         ไม่ได้ใช้งบประมาณ                     <input type="checkbox" />         ใช้งบประมาณ
+          <br /><div className='m-5 mt-1 mb-0'><table className='table table-bordered border-primary textc'>
+            <thead><tr><th colSpan="2">งบประมาณและแหล่งที่มาของ<br />งบประมาณ</th><th colSpan="3">งบประมาณที่ใช้ไป<br />ในรอบการรายงานครั้งนี้</th><th colSpan="3">งบประมาณที่ใช้ไป<br />ทั้งหมด</th></tr></thead>
+            <tbody>
+              <tr><th>งบฯกทม.</th><th>งบฯอุดหนุน<br />/อื่นๆ</th><th>งบฯ<br />ดำเนินการ</th><th>งบฯลงทุน</th><th>รวม</th><th>งบฯ<br />ดำเนินการ</th><th>งบฯลงทุน</th><th>รวม</th></tr>
+              <tr><th>..</th><th>..</th><th>..</th><th>..</th><th>..</th><th>..</th><th>..</th><th>..</th></tr>
+
+            </tbody>
+          </table></div>                  <b>สรุปผลการดำเนินงาน</b> ( <input type="checkbox" /> ) เป็นไปตามแผน ( <input type="checkbox" /> ) เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ ( <input type="checkbox" /> ) ไม่เป็นไปตามแผน
+          <br />
+          <br />                  <b>ข้อคิดเห็นเพิ่มเติม / ปัญหาและอุปสรรค</b>
+          <br />                            โรงเรียนโสตศึกษาจังหวัดนนทบุรี มีนักเรียนที่บกพร่องทางการได้ยิน และบกพร่องทางสติปัญญานักเรียนส่วนใหญ่
+          <br />                  เป็นนักเรียนประจำพักอยู่ที่เรือนนอนภายในโรงเรียน ปัญหาที่พบได้บ่อย คือนักเรียนที่เข้าห้องน้ำมักจะลืมปิดน้ำเมื่อใช้
+          <br />                  แล้วโดยเฉพาะนักเรียนที่มีความบกพร่องทางการได้ยิน จะมีปัญหาในการไม่ได้ยินเสียงน้ำไหล และหากเกิดพฤติกรรมที่
+          <br />                  ลืมปิดน้ำบ่อยครั้ง จะทำให้ค่าน้ำปะปาของโรงเรียนเพิ่มสูงขึ้นตามมา
+          <br />                            โรงเรียนโสตศึกษาจังหวัดนนทบุรี มีนักเรียนที่บกพร่องทางการได้ยิน และบกพร่องทางสติปัญญานักเรียนส่วนใหญ่
+          <br />                  เป็นนักเรียนประจำพักอยู่ที่เรือนนอนภายในโรงเรียน ปัญหาที่พบได้บ่อย คือนักเรียนที่เข้าห้องน้ำมักจะลืมปิดน้ำเมื่อใช้
+          <br />                  แล้วโดยเฉพาะนักเรียนที่มีความบกพร่องทางการได้ยิน จะมีปัญหาในการไม่ได้ยินเสียงน้ำไหล และหากเกิดพฤติกรรมที่
+          <br />                  ลืมปิดน้ำบ่อยครั้ง จะทำให้ค่าน้ำปะปาของโรงเรียนเพิ่มสูงขึ้นตามมา
+          <br />                            โรงเรียนโสตศึกษาจังหวัดนนทบุรี มีนักเรียนที่บกพร่องทางการได้ยิน และบกพร่องทางสติปัญญานักเรียนส่วนใหญ่
+          <br />                  เป็นนักเรียนประจำพักอยู่ที่เรือนนอนภายในโรงเรียน ปัญหาที่พบได้บ่อย คือนักเรียนที่เข้าห้องน้ำมักจะลืมปิดน้ำเมื่อใช้
+          <br />                  แล้วโดยเฉพาะนักเรียนที่มีความบกพร่องทางการได้ยิน จะมีปัญหาในการไม่ได้ยินเสียงน้ำไหล และหากเกิดพฤติกรรมที่
+          <br />                  ลืมปิดน้ำบ่อยครั้ง จะทำให้ค่าน้ำปะปาของโรงเรียนเพิ่มสูงขึ้นตามมา
+          <br />                            โรงเรียนโสตศึกษาจังหวัดนนทบุรี มีนักเรียนที่บกพร่องทางการได้ยิน และบกพร่องทางสติปัญญานักเรียนส่วนใหญ่
+          <br />                  เป็นนักเรียนประจำพักอยู่ที่เรือนนอนภายในโรงเรียน ปัญหาที่พบได้บ่อย คือนักเรียนที่เข้าห้องน้ำมักจะลืมปิดน้ำเมื่อใช้
+          <br />                  แล้วโดยเฉพาะนักเรียนที่มีความบกพร่องทางการได้ยิน จะมีปัญหาในการไม่ได้ยินเสียงน้ำไหล และหากเกิดพฤติกรรมที่
+          <br />                  ลืมปิดน้ำบ่อยครั้ง จะทำให้ค่าน้ำปะปาของโรงเรียนเพิ่มสูงขึ้นตามมา
+        </pre>
+
+      </div>
     </div>
-  )
 
+  )
 
 }
 

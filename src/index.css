@@ -10,12 +10,19 @@ li a:hover:not(.active) {
   background-color: #000000;
 }
 
-textarea {
+/* textarea {
   width: 60%;
   height: 100px;
-}
+} */
 
-input {
+/* input {
   width: 60%;
-}
+} */
 
+/* p {
+  width: 30%;
+} */
+
+body {
+	font-family: 'Sarabun', sans-serif;
+}
