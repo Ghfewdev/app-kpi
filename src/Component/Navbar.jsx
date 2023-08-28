@@ -23,7 +23,7 @@ const Navbar = () => {
       b = <>
         <li style={{ float: "right" }}><a className="active" href="login">เข้าสู่ระบบ</a></li>
         <li className='navli'><a className='navli a' href="Home">ตัวชี้วัดทั้งหมด</a></li>
-        <li className='navli'><a className='navli a' href="login">ส่งรายงานตัวชี้วัด</a></li>
+        <li className='navli'><a className='navli a' href="login">รายงานตัวชี้วัด</a></li>
         <li className='navli'><a className='navli a' href="login">ดูรายงานตัวชี้วัด</a></li>
       </>
       
@@ -33,7 +33,7 @@ const Navbar = () => {
         <li style={{ float: "right" }}><a className="red" href='' onClick={handleLogout}>ออกจากระบบ</a></li>
         <li style={{ float: "right" }}><a className="active">ส่วนราชการ: {a}</a></li>
         <li className='navli'><a className='navli a' href="Home">ตัวชี้วัดทั้งหมด</a></li>
-        <li className='navli'><a className='navli a' href="form">ส่งรายงานตัวชี้วัด</a></li>
+        <li className='navli'><a className='navli a' href="form">รายงานตัวชี้วัด</a></li>
         <li className='navli'><a className='navli a' href="calform">ดูรายงานตัวชี้วัด</a></li>
       </>
 

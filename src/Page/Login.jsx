@@ -51,9 +51,9 @@ const Login = () => {
             </h1>
             <br /><br />
             <form onSubmit={handleSubmit} className='textc'>
-              <label><p>ชื่อผู้ใช้งาน</p> <input className='form-control' type='text' name='name' autoFocus /> </label>
+              <label><p>ชื่อผู้ใช้งาน</p> <input className='form-control' type='text' name='name' autoFocus required/> </label>
               <br /><br />
-              <label><p>รหัสผ่าน</p> <input className='form-control' type='password' name='password' /> </label>
+              <label><p>รหัสผ่าน</p> <input className='form-control' type='password' name='password' required/> </label>
               <br /><br />
               <button type='submit' className='btn btn-success'>เข้าสู่ระบบ</button>
               <br /><br />

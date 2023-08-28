@@ -52,13 +52,13 @@ const Register = () => {
             </h1>
             <br /><br />
             <form onSubmit={handleSubmit} className='textc'>
-              <label> <p>ชื่อผู้ใช้งาน</p><input className='form-control' type="text" name='name' autoFocus /> </label>
+              <label> <p>ชื่อผู้ใช้งาน</p><input className='form-control' type="text" name='name' autoFocus required/> </label>
               &nbsp;&nbsp;&nbsp;
-              <label> <p>อีเมล</p><input className='form-control' type="email" name='email' /></label>
+              <label> <p>อีเมล</p><input className='form-control' type="email" name='email' required/></label>
               <br />
-              <label> <p>รหัสผ่าน</p><input className='form-control' type="password" name="password" /></label>
+              <label> <p>รหัสผ่าน</p><input className='form-control' type="password" name="password" required/></label>
               &nbsp;&nbsp;&nbsp;
-              <label> <p>ส่วนราชการ</p><input className='form-control' type="text" name='agency' /></label>
+              <label> <p>ส่วนราชการ</p><input className='form-control' type="text" name='agency' required/></label>
               <br /><br /><br />
               <button type='submit' className='btn btn-success'>ลงทะเบียน</button>
             </form>

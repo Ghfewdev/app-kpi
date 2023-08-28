@@ -34,7 +34,7 @@ const CalForm = () => {
   const handleonChange = (val) => {
 
     if (localStorage.getItem("token").split("$")[1] === "9") {
-      fetch(`https://kpi-api.onrender.com/all/${val}`)
+      fetch(`http://localhost:3000/all/${val}`)
         .then(response => {
           return response.json();
         })
@@ -42,7 +42,7 @@ const CalForm = () => {
           setSelect(data)
         })
     } else {
-      fetch(`https://kpi-api.onrender.com/all/hp/${sessionStorage.getItem("id")}/${val}`)
+      fetch(`http://localhost:3000/all/hp/${sessionStorage.getItem("id")}/${val}`)
         .then(response => {
           return response.json();
         })
@@ -52,7 +52,7 @@ const CalForm = () => {
     }
 
     if (n != []) {
-      fetch(`https://kpi-api.onrender.com/checked/id/${n}/1`)
+      fetch(`http://localhost:3000/checked/id/${n}/1`)
         .then(response => {
           return response.json();
         })
@@ -60,7 +60,7 @@ const CalForm = () => {
           setQt1(data);
         });
 
-      fetch(`https://kpi-api.onrender.com/checked/id/${n}/2`)
+      fetch(`http://localhost:3000/checked/id/${n}/2`)
         .then(response => {
           return response.json();
         })
@@ -68,7 +68,7 @@ const CalForm = () => {
           setQt2(data);
         });
 
-      fetch(`https://kpi-api.onrender.com/checked/id/${n}/3`)
+      fetch(`http://localhost:3000/checked/id/${n}/3`)
         .then(response => {
           return response.json();
         })
@@ -76,7 +76,7 @@ const CalForm = () => {
           setQt3(data);
         });
 
-      fetch(`https://kpi-api.onrender.com/checked/id/${n}/4`)
+      fetch(`http://localhost:3000/checked/id/${n}/4`)
         .then(response => {
           return response.json();
         })
@@ -409,7 +409,7 @@ const CalForm = () => {
       deid: deid
     };
 
-    fetch("https://kpi-api.onrender.com/update/detail", {
+    fetch("http://localhost:3000/update/detail", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -467,7 +467,9 @@ const CalForm = () => {
                   <th className="textc" scope="col">วันที่ส่ง</th>
                   {/* <th scope="col">เวลา</th> */}
                   <th className="textc" scope="col">สรุปผล</th>
-                  <th className="textc" scope="col">แก้ไขการส่งข้อมูล</th>
+                  <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
+                  <th className="textc" scope="col">ข้อมูลโครงการ</th>
+                  <th className="textc" scope="col">พิมพ์รายงาน</th>
                 </tr>
               </thead>
               <tbody>
@@ -488,7 +490,9 @@ const CalForm = () => {
                       <td>{item.fd_date}</td>
                       {/*  <td>{item.fd_time}</td> */}
                       <td className="textc">{u}</td>
-                      <td className="textc"><button onClick={e => setid(item.de_id)} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      <td className="textc"><button onClick={e => setid(item.de_id)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      <td className="textc"><button onClick={e => setid(item.de_id)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">รายละเอียด</button></td>
+                      <td className="textc"><button className="btn btn-primary" onClick={window.print}><i className="bi bi-printer"> พิมพ์</i></button></td>
                     </tr>
                   );
                 })}
@@ -497,7 +501,7 @@ const CalForm = () => {
             <br /><br />
 
           </div>
-          <div className="textc"><h3>สรุปผล</h3></div>
+          <div className="textc"><h3>สรุปผล</h3> <button className="btn btn-primary" onClick={window.print}><i className="bi bi-printer"> ออกรายงาน</i></button></div>
           <div className='container mt-3'>
             <br />
             <table className='table table-bordered border-primary'>

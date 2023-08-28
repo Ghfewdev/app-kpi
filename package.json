@@ -20,6 +20,8 @@
     "@mui/x-data-grid-generator": "^6.9.2",
     "axios": "^1.4.0",
     "chart.js": "^4.3.3",
+    "chartjs-gauge": "^0.3.0",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "echarts": "^5.4.3",
     "html-react-parser": "^4.0.0",
     "react": "^18.2.0",
@@ -27,6 +29,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.4",
     "react-router-dom": "^6.13.0",
+    "react-scripts": "^5.0.1",
     "recharts": "^2.7.2",
     "styled-components": "^5.3.11"
   },

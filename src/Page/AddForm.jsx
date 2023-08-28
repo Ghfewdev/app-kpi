@@ -54,7 +54,7 @@ Authlevel();
         let pas = '';
         for (let i = 1; i <= val; i++) {
             pas = `para${i}`
-            ht += `<label>ค่าการประเมินที่ ${i}&nbsp;&nbsp;</label><input type="checkbox" id=${i*10}><br /> <input type="text" name=${pas} id=${i} /><br /><br />`;
+            ht += `<label>ค่าการประเมินที่ ${i}:&nbsp;&nbsp;</label> ( กรณีใช้ค่านี้ในการประเมินผลตัวชี้วัดติ๊กถูกตรงนี้ <input type="checkbox" id=${i*10}> )<br /> <input required type="text1" name=${pas} id=${i} /><br /><br />`;
         }
         return ht
     }
@@ -109,13 +109,13 @@ Authlevel();
                         <br /><br />
                         <form onSubmit={handleSubmit} className='textl2'>
 
-                            <label>ชื่อตัวชี้วัด:&nbsp;&nbsp; </label><br /><textarea type="text" name="name" autoFocus />
+                            <label>ชื่อตัวชี้วัด:&nbsp;&nbsp; </label><br /><textarea className='tarea70' type="text" name="name" autoFocus required/>
                             <br /><br />
-                            <label>นิยามของตัวชี้วัด:&nbsp;&nbsp; </label><br /><textarea className='tacf' type="text" name="define" autoFocus />
+                            <label>นิยามของตัวชี้วัด:&nbsp;&nbsp; </label><br /><textarea className='textarea60100' type="text" name="define" autoFocus required/>
                             <br /><br />
-                            <label>ลำดับตัวชี้วัด:&nbsp;&nbsp; </label><br /><input type="number" name="id" />
+                            <label>ลำดับตัวชี้วัด:&nbsp;&nbsp; </label><input className='input10' type="number" name="id" required/>
                             <br /><br />
-                            <label>ค่าเป้าหมาย:&nbsp;&nbsp; </label><br /><input type="text" name="solve" />
+                            <label>ค่าเป้าหมาย:&nbsp;&nbsp; </label><input type="text" name="solve" required/>
                             <br /><br />
                             <label>วิธีการคำนวณ: &nbsp;&nbsp;</label>
                             <select name='method' value={solv} onChange={e => setSolv(e.target.value)} >
@@ -124,22 +124,24 @@ Authlevel();
                                 <option>ร้อยละ</option>
                             </select>
                             <br /><br />
-                            <label>จำนวนค่าที่ใช้ประเมิน:&nbsp;&nbsp; </label><br /><input type="number" name="numpara" value={numpara}
+                            <label>จำนวนค่าที่ใช้ประเมิน:&nbsp;&nbsp; </label><input className='input10' type="number" name="numpara" value={numpara}
                                 onChange={e => setNumpara(e.target.value)} />
                             <br /><br />
 
                             <div dangerouslySetInnerHTML={{ __html: par(numpara) }}>
                             </div>
-
+                            <div className='textr2'>
                             <label>ยืนยัน: <input type="checkbox" value={parass}
                                 onClick={e => { setParass(e.target.value), dis() }} /> </label>
                             <br /><br />
+                            
                             {/* <label>ค่าการประเมินทั้งหมด <br /><input type='text' name='paras' id='sum' disabled /></label>
                             <br /> */}
 
-                            <br />
                             <button id='submit' type='submit' className='btn btn-success' disabled> เพิ่มตัวชี้วัด </button>
+                            </div>
                         </form>
+                        <br />
                         <br />
                         <div className='textc'><p className='inline textl'><a href="/">กลับหน้าหลัก</a></p>
                             <p className='inline textr'><a href="/"></a></p>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Authen from '../Component/Authen';
 import Footer from '../Component/Footer';
+import Details from '../Component/Details';
 
 
 const Form = () => {
@@ -16,6 +17,8 @@ const Form = () => {
     check: ""
   });
 
+  const detail = Details();
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -24,9 +27,22 @@ const Form = () => {
       formid: d[1],
       qur: data.get("qur"),
       paras: g(z),
-      des: data.get("des"),
       ans: q(z),
       result: h(z)
+    };
+    const JsonData2 = {
+      deid: detail + 1,
+      fmsid: data.get("fmsid"),
+      evname: data.get("evname"),
+      evres: data.get("evres"),
+      evstatus: data.get("evstatus"),
+      evbudget: dcdd("dc"),
+      evbuded: dcdd("dd"),
+      evpoint: data.get("evpoint"),
+      evtarget: data.get("evtarget"),
+      result: data.get("result"),
+      problem: data.get("problem"),
+      evimg: data.get("evimg")
     };
 
     fetch("https://kpi-api.onrender.com/form/fill", {
@@ -35,6 +51,28 @@ const Form = () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(JsonData)
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        if (data.status === "ok") {
+          //window.location = "post";
+        } else {
+          alert("บันทึกไม่สำเร็จ");
+          return;
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      })
+
+    fetch("https://kpi-api.onrender.com/ev/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(JsonData2)
     })
       .then(response => {
         return response.json();
@@ -97,13 +135,13 @@ const Form = () => {
   var w = forms.fill.map(fil => fil.fm_paras)
   var y = w[0]
   var t = forms.fill.map(f => [f.fm_solve, f.fm_method])[0]
-  console.log(t)
+  //console.log(t)
   try {
     var z = y.split(", ")
     var n = z.map((m, i) => (
       <div key={i}>
         <div><p className='inline p'><label>{m}: &nbsp;&nbsp;</label></p>
-          <p className='inline textr p'><input className='input30' type="number" id={m} /></p>
+          <p className='inline textr p'><input className='input30' type="number" id={m} required /></p>
         </div>
       </div>
     )
@@ -117,6 +155,20 @@ const Form = () => {
     for (var i = 1; i <= val.length; i++) {
       g += document.getElementById(`${val[i - 1]}`).value;
       if (i != val.length) {
+        g += ", "
+      }
+    }
+    return g
+  }
+
+  function dcdd(id) {
+    var g = "";
+    for (var i = 1; i <= 3; i++) {
+      if (document.getElementById(`${id + i}`).value === "")
+        g += 0
+      else
+        g += document.getElementById(`${id + i}`).value;
+      if (i != 3) {
         g += ", "
       }
     }
@@ -175,10 +227,10 @@ const Form = () => {
   }
 
   const dis = () => {
-    console.log(q(z), h(z));
+    //console.log(q(z), h(z));
     if (document.getElementById("submit").disabled === true) {
       document.getElementById("submit").disabled = false
-      console.log("n[1]", `${z[0]}`[(z[0].length) - 1])
+      //console.log("n[1]", `${z[0]}`[(z[0].length) - 1])
     }
     else document.getElementById("submit").disabled = true
   }
@@ -219,7 +271,7 @@ const Form = () => {
               {forms.fill.map(fill => (
 
                 <div key={fill.fm_id}>
-                  <br /><label>ชื่อตัวชี้วัด: {fill.fm_name}</label>
+                  <br /><label>ชื่อตัวชี้วัด: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{fill.fm_name}</b></label>
                   <br /><br />
 
                   <p className='inline p'><label>ส่งข้อมูลประจำ:&nbsp;&nbsp;</label></p>
@@ -238,27 +290,27 @@ const Form = () => {
                     <br />
                     <label>ชื่อโครงการ / กิจกรรม</label>
                     <br />
-                    <input type="text" className='input60' />
+                    <input type="text" className='input60' name='evname' required />
                     <br />
                     <label>ลำดับโครงการ / กิจกรรมตามแผนสนพ.</label>
                     <br />
-                    <input type="text" className='input60' />
+                    <input type="number" className='input60' name='fmsid' required />
                     <br />
                     <label>ผู้รับผิดชอบ</label>
                     <br />
-                    <input type="text" className='input60' />
+                    <input type="text" className='input60' name='evres' required />
                     <br />
                     <label>สถานะโครงการ</label>
                     <br />
                     <div>
-                      <input type="radio" value="แล้วเสร็จ" name="gender" /> แล้วเสร็จ &nbsp;&nbsp;&nbsp;
-                      <input type="radio" value="ยังไม่ดำเนินการ" name="gender" /> ยังไม่ดำเนินการ &nbsp;&nbsp;&nbsp;
-                      <input type="radio" value="ยกเลิก" name="gender" /> ยกเลิก &nbsp;&nbsp;&nbsp;
-                      <input type="radio" value="กำลังดำเนินการ" name="gender" /> กำลังดำเนินการ &nbsp;&nbsp;&nbsp;
-                      <input type="radio" value="ชะลอ" name="gender" /> ชะลอ
+                      <input type="radio" value="แล้วเสร็จ" name="evstatus" /> แล้วเสร็จ &nbsp;&nbsp;&nbsp;
+                      <input type="radio" value="ยังไม่ดำเนินการ" name="evstatus" /> ยังไม่ดำเนินการ &nbsp;&nbsp;&nbsp;
+                      <input type="radio" value="ยกเลิก" name="evstatus" /> ยกเลิก &nbsp;&nbsp;&nbsp;
+                      <input type="radio" value="กำลังดำเนินการ" name="evstatus" /> กำลังดำเนินการ &nbsp;&nbsp;&nbsp;
+                      <input type="radio" value="ชะลอ" name="evstatus" /> ชะลอ
                     </div>
                     <br />
-                    <label>งบประมานที่ได้รับ</label>
+                    <label>งบประมาณที่ได้รับ</label>
                     <br />
                     <div className="input-group mb-3">
                       <div className="input-group-text">กทม:&nbsp;&nbsp;
@@ -274,40 +326,40 @@ const Form = () => {
                       </div>
                       <input type="text" className="input10" id='dc3' disabled />
                     </div>
-                    <label>งบประมานที่ใช้</label>
+                    <label>งบประมาณที่ใช้</label>
                     <br />
                     <div className="input-group mb-3">
                       <div className="input-group-text">กทม:&nbsp;&nbsp;
-                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc1")} />
+                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd1")} />
                       </div>
-                      <input type="text" className="input10" id='dc1' disabled />
+                      <input type="text" className="input10" id='dd1' disabled />
                       <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
-                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc2")} />
+                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd2")} />
                       </div>
-                      <input type="text" className="input10" id='dc2' disabled />
+                      <input type="text" className="input10" id='dd2' disabled />
                       <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
-                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc3")} />
+                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd3")} />
                       </div>
-                      <input type="text" className="input10" id='dc3' disabled />
+                      <input type="text" className="input10" id='dd3' disabled />
                     </div>
                     <label>วัตถุประสงค์</label>
                     <br />
-                    <textarea className='textarea60100' />
+                    <textarea className='textarea60100' name='evpoint' required />
                     <br />
                     <label>เป้าหมาย</label>
                     <br />
-                    <textarea className='textarea60100' />
+                    <textarea className='textarea60100' name='evtarget' required />
                     <br />
                     <label>ผลการดำเนินงาน</label>
                     <br />
-                    <textarea className='textarea60100' />
+                    <textarea className='textarea60100' name='result' required />
                     <br />
                     <label>ปัญหาและอุปสรรค</label>
                     <br />
-                    <textarea className='textarea60100' name='des' />
+                    <textarea className='textarea60100' name='problem' required />
                     <br />
                     <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label>
-                    <input type='file' />
+                    <input type='file' name='evimg' />
                     <div className='textr2'>
                       <br />
                       <label>ยืนยัน: <input type="checkbox" value={secec.check} onClick={e => dis()} /> </label>
