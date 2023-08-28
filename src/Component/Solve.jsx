@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react'
 import "chartjs-gauge";
 
-const Solve = () => {
+const Solve = (val) => {
   const canvasRef = useRef();
 
   var randomData = function () {
@@ -15,7 +15,7 @@ const Solve = () => {
 
 
   var data = randomData();
-  var value = 90;
+  var value = val;
 
   var config = {
     type: "gauge",
@@ -26,7 +26,7 @@ const Solve = () => {
           data: data,
           value: value,
           backgroundColor: ["red", "orange", "yellow", "green"],
-          borderWidth: 2
+          borderWidth: 4
         }
       ]
     },
@@ -52,7 +52,7 @@ const Solve = () => {
         color: "rgba(0, 0, 0, 1)"
       },
       valueLabel: {
-        formatter: Math.round
+        formatter: Math.round()
       }
     }
   };

@@ -7,6 +7,7 @@ import Solve from "../Component/Solve";
 import Authen from "../Component/Authen";
 import Users from "../Component/Users";
 import ChartCom from "../Component/ChartCom";
+import "chartjs-gauge";
 
 
 const CalForm = () => {
@@ -34,7 +35,7 @@ const CalForm = () => {
   const handleonChange = (val) => {
 
     if (localStorage.getItem("token").split("$")[1] === "9") {
-      fetch(`http://localhost:3000/all/${val}`)
+      fetch(`https://kpi-api.onrender.com/all/${val}`)
         .then(response => {
           return response.json();
         })
@@ -42,7 +43,7 @@ const CalForm = () => {
           setSelect(data)
         })
     } else {
-      fetch(`http://localhost:3000/all/hp/${sessionStorage.getItem("id")}/${val}`)
+      fetch(`https://kpi-api.onrender.com/all/hp/${sessionStorage.getItem("id")}/${val}`)
         .then(response => {
           return response.json();
         })
@@ -52,7 +53,7 @@ const CalForm = () => {
     }
 
     if (n != []) {
-      fetch(`http://localhost:3000/checked/id/${n}/1`)
+      fetch(`https://kpi-api.onrender.com/checked/id/${n}/1`)
         .then(response => {
           return response.json();
         })
@@ -60,7 +61,7 @@ const CalForm = () => {
           setQt1(data);
         });
 
-      fetch(`http://localhost:3000/checked/id/${n}/2`)
+      fetch(`https://kpi-api.onrender.com/checked/id/${n}/2`)
         .then(response => {
           return response.json();
         })
@@ -68,7 +69,7 @@ const CalForm = () => {
           setQt2(data);
         });
 
-      fetch(`http://localhost:3000/checked/id/${n}/3`)
+      fetch(`https://kpi-api.onrender.com/checked/id/${n}/3`)
         .then(response => {
           return response.json();
         })
@@ -76,7 +77,7 @@ const CalForm = () => {
           setQt3(data);
         });
 
-      fetch(`http://localhost:3000/checked/id/${n}/4`)
+      fetch(`https://kpi-api.onrender.com/checked/id/${n}/4`)
         .then(response => {
           return response.json();
         })
@@ -385,6 +386,51 @@ const CalForm = () => {
         },
       ],
     }
+
+    var config = {
+      type: "gauge",
+      data: {
+        // labels: ['Success', 'Warning', 'Warning', 'Error'],
+        datasets: [
+          {
+            data: [
+              100,
+              88,
+              70,
+              50
+            ],
+            value: value,
+            backgroundColor: ["red", "orange", "yellow", "green"],
+            borderWidth: 4
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: "Gauge chart"
+        },
+        layout: {
+          padding: {
+            bottom: 30
+          }
+        },
+        needle: {
+          // Needle circle radius as the percentage of the chart area width
+          radiusPercentage: 2,
+          // Needle width as the percentage of the chart area width
+          widthPercentage: 3.2,
+          // Needle length as the percentage of the interval between inner radius (0%) and outer radius (100%) of the arc
+          lengthPercentage: 80,
+          // The color of the needle
+          color: "rgba(0, 0, 0, 1)"
+        },
+        valueLabel: {
+          formatter: Math.round()
+        }
+      }
+    };
     //console.log("qqn1p12", qqn1p12, qqn2p12)
     //console.log("qq12", qq12)
 
@@ -409,7 +455,7 @@ const CalForm = () => {
       deid: deid
     };
 
-    fetch("http://localhost:3000/update/detail", {
+    fetch("https://kpi-api.onrender.com/update/detail", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
