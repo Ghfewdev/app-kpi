@@ -3,11 +3,11 @@ import Fetch from "../Component/Fetch";
 import Navbar from "../Component/Navbar";
 import parse from "html-react-parser";
 import Footer from "../Component/Footer";
-import Solve from "../Component/Solve";
 import Authen from "../Component/Authen";
 import Users from "../Component/Users";
-import ChartCom from "../Component/ChartCom";
 import "chartjs-gauge";
+import Solve from "../Component/Solve";
+
 
 
 const CalForm = () => {
@@ -19,7 +19,6 @@ const CalForm = () => {
   const [qt2, setQt2] = useState([]);
   const [qt3, setQt3] = useState([]);
   const [qt4, setQt4] = useState([]);
-
   var fetc = Fetch();
   var fusers = Users();
 
@@ -90,7 +89,7 @@ const CalForm = () => {
 
 
   }
-
+ 
   const agen = fusers.map(u => u.us_agency)
   var an = [];
   for (var i = 0; i <= agen.length - 4; i++) {
@@ -368,71 +367,6 @@ const CalForm = () => {
 
     var qqall = qq1.map(q => [qq1[11], qq2[11], qq12[11], qq3[11], qq4[11], qq34[11], qq14[11]])[0]
 
-    var cha = {
-      labels: ["ไตรมาสที่ 1", "ไตรมาสที่ 2", "ครึ่งปีแรก", "ไตรมาสที่ 3", "ไตรมาสที่ 4", "ครึ่งปีหลัง", "ผลรวมทั้งปี"],
-      datasets: [
-        {
-          label: "ภาพรวมสำนักการแพทย์",
-          data: qqall,
-          backgroundColor: [
-            "rgba(75,192,192,1)",
-            // "#ecf0f1",
-            // "#50AF95",
-            // "#f3ba2f",
-            // "#2a71d0",
-          ],
-          borderColor: "black",
-          borderWidth: 2,
-        },
-      ],
-    }
-
-    var config = {
-      type: "gauge",
-      data: {
-        // labels: ['Success', 'Warning', 'Warning', 'Error'],
-        datasets: [
-          {
-            data: [
-              100,
-              88,
-              70,
-              50
-            ],
-            value: value,
-            backgroundColor: ["red", "orange", "yellow", "green"],
-            borderWidth: 4
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        title: {
-          display: true,
-          text: "Gauge chart"
-        },
-        layout: {
-          padding: {
-            bottom: 30
-          }
-        },
-        needle: {
-          // Needle circle radius as the percentage of the chart area width
-          radiusPercentage: 2,
-          // Needle width as the percentage of the chart area width
-          widthPercentage: 3.2,
-          // Needle length as the percentage of the interval between inner radius (0%) and outer radius (100%) of the arc
-          lengthPercentage: 80,
-          // The color of the needle
-          color: "rgba(0, 0, 0, 1)"
-        },
-        valueLabel: {
-          formatter: Math.round()
-        }
-      }
-    };
-    //console.log("qqn1p12", qqn1p12, qqn2p12)
-    //console.log("qq12", qq12)
 
   } catch {
     //console.log("qq1", qq1)
@@ -547,7 +481,7 @@ const CalForm = () => {
             <br /><br />
 
           </div>
-          <div className="textc"><h3>สรุปผล</h3> <button className="btn btn-primary" onClick={window.print}><i className="bi bi-printer"> ออกรายงาน</i></button></div>
+          <div className="textc"><h3>สรุปผล</h3></div>
           <div className='container mt-3'>
             <br />
             <table className='table table-bordered border-primary'>
@@ -679,9 +613,9 @@ const CalForm = () => {
             <div className="col-3 textc">
             </div>
             <div className="col-1 col-md-5">
-              <div style={{ width: 700 }}>
-                <ChartCom chartData={cha} />
-              </div>
+            <div style={{ width: 600 }}>
+            <Solve name = {qq14[11]} />
+    </div>
             </div>
 
           </div>

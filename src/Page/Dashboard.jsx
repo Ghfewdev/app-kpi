@@ -5,13 +5,21 @@ import Footer from '../Component/Footer';
 import Authlevel from '../Component/Authlevel';
 
 const columns = [
-  { field: 'fm_id', headerName: 'ตัวชี้วัด' },
-  { field: 'fm_name', headerName: 'ชื่อตัวชี้วัด', width: 400 },
-  { field: 'us_agency', headerName: 'ส่วนราชการ' },
-  { field: 'de_qur', headerName: 'ไตรมาส' },
-  { field: 'fm_solve', headerName: 'ค่าเป้าหมาย', width: 200 },
-  { field: 'de_ans', headerName: 'ผลการดำเนินงาน', width: 120 },
-  { field: 'de_result', headerName: 'สรุป' }
+  { field: 'fm_id', headerName: 'KPI' },
+  //{ field: 'fm_name', headerName: 'ชื่อตัวชี้วัด', width: 400 },
+  { field: 'fm_solve', headerName: 'ค่าเป้าหมาย' },
+  { field: 'h1', headerName: 'รพก' },
+  { field: 'h2', headerName: 'รพต' },
+  { field: 'h3', headerName: 'รพจ' },
+  { field: 'h4', headerName: 'รพท' },
+  { field: 'h5', headerName: 'รพว' },
+  { field: 'h6', headerName: 'รพล' },
+  { field: 'h7', headerName: 'รพร' },
+  { field: 'h8', headerName: 'รพส' },
+  { field: 'h9', headerName: 'รพข' },
+  { field: 'h10', headerName: 'รพค' },
+  { field: 'h11', headerName: 'รพบ' },
+  { field: 're_sum', headerName: 'รวม' }
 ]
 
 const Dashboard = () => {
@@ -21,12 +29,12 @@ const Dashboard = () => {
   const [tableData, setTableData] = useState([])
 
   useEffect(() => {
-    fetch("https://kpi-api.onrender.com/all")
+    fetch("https://kpi-api.onrender.com/result")
       .then((data) => data.json())
       .then((data) => setTableData(data))
 
   }, [])
-
+ 
   console.log(tableData)
 
   return (

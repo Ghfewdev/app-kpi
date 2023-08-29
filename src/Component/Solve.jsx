@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react'
 import "chartjs-gauge";
 
-const Solve = (val) => {
+const sSolve = (val) => {
   const canvasRef = useRef();
 
   var randomData = function () {
@@ -33,7 +33,7 @@ const Solve = (val) => {
     options: {
       responsive: true,
       title: {
-        display: true,
+        display: false,
         text: "Gauge chart"
       },
       layout: {
@@ -69,10 +69,19 @@ const Solve = (val) => {
 
   return (
     <div>
-      <h1>gauge</h1>
+      <h3 className='textc'>ผลดำเนินการโดยรวมสำนักการแพทย์</h3>
+      <br /><br />
       <canvas ref={canvasRef}></canvas>
     </div>
   );
+}
+ 
+const Solve = (val) => {
+  return (
+    <div style={{ width: 650   }}>
+      {sSolve(val.name)}
+    </div>
+  )
 }
 
 export default Solve
