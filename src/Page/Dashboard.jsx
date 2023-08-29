@@ -1,64 +1,88 @@
-import React, { useState, useEffect } from 'react';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import React, { useEffect, useState } from 'react'
 import Navbar from '../Component/Navbar';
 import Footer from '../Component/Footer';
 import Authlevel from '../Component/Authlevel';
 
-const columns = [
-  { field: 'fm_id', headerName: 'KPI' },
-  //{ field: 'fm_name', headerName: 'ชื่อตัวชี้วัด', width: 400 },
-  { field: 'fm_solve', headerName: 'ค่าเป้าหมาย' },
-  { field: 'h1', headerName: 'รพก' },
-  { field: 'h2', headerName: 'รพต' },
-  { field: 'h3', headerName: 'รพจ' },
-  { field: 'h4', headerName: 'รพท' },
-  { field: 'h5', headerName: 'รพว' },
-  { field: 'h6', headerName: 'รพล' },
-  { field: 'h7', headerName: 'รพร' },
-  { field: 'h8', headerName: 'รพส' },
-  { field: 'h9', headerName: 'รพข' },
-  { field: 'h10', headerName: 'รพค' },
-  { field: 'h11', headerName: 'รพบ' },
-  { field: 're_sum', headerName: 'รวม' }
-]
+
 
 const Dashboard = () => {
 
   Authlevel();
 
-  const [tableData, setTableData] = useState([])
+  const [ans, setAns] = useState([]);
 
   useEffect(() => {
-    fetch("https://kpi-api.onrender.com/result")
-      .then((data) => data.json())
-      .then((data) => setTableData(data))
+
+    fetch("https://kpi-api.onrender.com/ans")
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        setAns(data);
+      });
 
   }, [])
- 
-  console.log(tableData)
 
-  return (
-    <>
-    <Navbar />
-    <div className='container'>
+  var an;
+
+  if (ans != []) {
+    an = <div className='container'>
       <br />
       <h1>รายงานตัวชี้วัด</h1>
       <br />
       <div className='col-md-3'></div>
-          <div style={{ height: '100%', width: '100%' }}>
-            <DataGrid
-              columns={columns}
-              rows={tableData}
-              slots={{ toolbar: GridToolbar }}
-              getRowId={(row) => Number(row.de_id)}
-            />
-          </div>
+      <table className='table table-bordered border-primary'>
+        <thead className="table-dark">
+          <tr>
+            <th>KPI</th>
+            <th>เป้าหมาย</th>
+            <th>รพก</th>
+            <th>รพต</th>
+            <th>รพจ</th>
+            <th>รพท</th>
+            <th>รพว</th>
+            <th>รพล</th>
+            <th>รพร</th>
+            <th>รพส</th>
+            <th>รพข</th>
+            <th>รพค</th>
+            <th>รพบ</th>
+            <th>รวม</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ans.map((a, i) => {
+            return (
+            <tr key={i}>
+              <th>{a.fm_id}</th>
+              <th>{(a.fm_solve).split(" ")[1]}</th>
+              <th>{a.h1}</th>
+              <th>{a.h2}</th>
+              <th>{a.h3}</th>
+              <th>{a.h4}</th>
+              <th>{a.h5}</th>
+              <th>{a.h6}</th>
+              <th>{a.h7}</th>
+              <th>{a.h8}</th>
+              <th>{a.h9}</th>
+              <th>{a.h10}</th>
+              <th>{a.h11}</th>
+              <th>{a.re_sum}</th>
+            </tr>)
+          })}
+        </tbody>
+      </table>
     </div>
-    <br /><br />
-    <Footer />
-    </>
-  );
+  } else an = <h1>กำลังดำเนินเรียกข้อมูล</h1>
 
+  return (
+    <>
+      <Navbar />
+      {an}
+      <br /><br />
+      <Footer />
+    </>
+  )
 }
 
-export default Dashboard;
+export default Dashboard

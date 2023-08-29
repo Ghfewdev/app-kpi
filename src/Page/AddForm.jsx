@@ -15,7 +15,7 @@ Authlevel();
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const JsonData = {
+        const JsonData1 = {
             id: data.get("id"),
             name: data.get("name"),
             solve: data.get("solve"),
@@ -24,13 +24,38 @@ Authlevel();
             def: data.get("define"),
             paras: g(numpara)
         };
+        const JsonData2 = {
+            fmid: data.get("id"),
+        };
 
         fetch("https://kpi-api.onrender.com/form/add", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(JsonData)
+            body: JSON.stringify(JsonData1)
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === "ok") {
+                    //alert("ทำรายการสำเร็จ");
+                    //window.location = "/";
+                } else {
+                    alert("บันทึกไม่สำเร็จ");
+                }
+            })
+            .catch((error) => {
+                console.log("error", error);
+            });
+
+            fetch("https://kpi-api.onrender.com/result/add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(JsonData2)
         })
             .then(response => {
                 return response.json();

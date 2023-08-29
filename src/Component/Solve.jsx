@@ -69,7 +69,7 @@ const sSolve = (val) => {
 
   return (
     <div>
-      <h3 className='textc'>ผลดำเนินการโดยรวมสำนักการแพทย์</h3>
+      <h4 className='textc'>ผลดำเนินการโดยรวมสำนักการแพทย์ ของตัวชี้วัดนี้</h4>
       <br /><br />
       <canvas ref={canvasRef}></canvas>
     </div>

@@ -95,7 +95,7 @@ const CalForm = () => {
   for (var i = 0; i <= agen.length - 4; i++) {
     an.push(agen[i])
     if (i === agen.length - 4) {
-      an.push("ภาพรวมทั้งสำนักการแพทพ์")
+      an.push("ภาพรวมทั้งสำนักการแพทย์")
     }
   }
 
