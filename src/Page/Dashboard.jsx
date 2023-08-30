@@ -26,9 +26,9 @@ const Dashboard = () => {
   var an;
 
   if (ans != []) {
-    an = <div className='container'>
+    an = <div className='container textc'>
       <br />
-      <h1>รายงานตัวชี้วัด</h1>
+      <div><h1>รายงานตัวชี้วัด</h1></div>
       <br />
       <div className='col-md-3'></div>
       <table className='table table-bordered border-primary'>

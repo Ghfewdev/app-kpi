@@ -8,8 +8,7 @@ const sSolve = (val) => {
     return [
       100,
       88,
-      70,
-      50
+      60
     ];
   };
 
@@ -25,7 +24,7 @@ const sSolve = (val) => {
         {
           data: data,
           value: value,
-          backgroundColor: ["red", "orange", "yellow", "green"],
+          backgroundColor: ["red", "yellow", "green"],
           borderWidth: 4
         }
       ]
@@ -63,7 +62,7 @@ const sSolve = (val) => {
     }
 
     let context = canvasRef.current.getContext("2d");
-    console.log(context);
+    //console.log(context);
     window.myGauge = new Chart(context, config);
   });
 
@@ -78,7 +77,7 @@ const sSolve = (val) => {
  
 const Solve = (val) => {
   return (
-    <div style={{ width: 650   }}>
+    <div style={{ width: val.do   }}>
       {sSolve(val.name)}
     </div>
   )

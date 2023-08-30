@@ -7,7 +7,7 @@ import Details from '../Component/Details';
 const Form = () => {
 
   Authen();
-
+  const [fetchs,setFetchs] = useState([]);
   const [forms, setForms] = useState({
     form: [],
     fill: []
@@ -18,6 +18,33 @@ const Form = () => {
   });
 
   const detail = Details();
+  const dep = sessionStorage.getItem("department");
+  var hos;
+  if (dep === "รพ.กลาง")
+  hos = "h1"
+  else if (dep === "รพ.ตากสิน")
+  hos = "h2"
+  else if (dep === "รพ.เจริญกรุงประชารัก")
+  hos = "h3"
+  else if (dep === "รพ.หลวงพ่อทวีศักดิ์")
+  hos = "h4"
+  else if (dep === "รพ.เวชการุณย์รัศมิ์")
+  hos = "h5"
+  else if (dep === "รพ.ลาดกระบัง")
+  hos = "h6"
+  else if (dep === "รพ.ราชพิพัฒน์")
+  hos = "h7"
+  else if (dep === "รพ.สิรินธร")
+  hos = "h8"
+  else if (dep === "รพ.ผู้สูงอายุบางขุนเทียน")
+  hos = "h9"
+  else if (dep === "รพ.คลองสามวา")
+  hos = "h10"
+  else if (dep === "รพ.บางนา")
+  hos = "h11"
+
+
+  //console.log(hos)
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -44,6 +71,12 @@ const Form = () => {
       problem: data.get("problem"),
       evimg: data.get("evimg")
     };
+    const JsonData3 = {
+      "h": q(z),
+      "pa1": pa2(z)[0],
+      "pa2": pa2(z)[1],
+      "sum": pa2(z)[2]
+  };
 
     fetch("https://kpi-api.onrender.com/form/fill", {
       method: "POST",
@@ -79,6 +112,27 @@ const Form = () => {
       })
       .then(data => {
         if (data.status === "ok") {
+          //window.location = "post";
+        } else {
+          alert("บันทึกไม่สำเร็จ");
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      })
+
+      fetch(`https://kpi-api.onrender.com/result/update/${hos}/${d[1]}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(JsonData3)
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        if (data.status === "ok") {
           window.location = "post";
         } else {
           alert("บันทึกไม่สำเร็จ");
@@ -106,6 +160,7 @@ const Form = () => {
       .then(data => {
         setForms({ ...forms, form: data })
       })
+      
 
   }
 
@@ -129,6 +184,14 @@ const Form = () => {
       .then(data2 => {
         setForms({ ...forms, fill: data2 })
       })
+
+      fetch(`http://localhost:3000/result/${val}`)
+              .then(response3 => {
+                return response3.json();
+              })
+              .then(data3 => {
+                setFetchs(data3);
+              });
 
   }
 
@@ -226,8 +289,39 @@ const Form = () => {
     return h
   }
 
+  const pa = () => {
+    var fp1 = fetchs.map(a => [a.pa1, a.pa2])
+    return fp1[0]
+  }
+
+  const pa2 = (val) => {
+    var pa2;
+    var p1 = 0;
+    var p2 = 0;
+    var are;
+    for (var i = 1; i <= val.length; i++) {
+      if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
+        if (p1 === 0)
+          p1 += pa()[0] + Number(document.getElementById(`${val[i - 1]}`).value);
+        else {
+          p2 += pa()[1] + Number(document.getElementById(`${val[i - 1]}`).value);
+        }
+      }
+    }
+    if ((p1/p2) * 100 >= 100)
+      are = (((p1/p2) ** (-1))*100).toFixed(2)
+    else 
+    are = ((p1/p2)*100).toFixed(2)
+
+    pa2 = [p1, p2, are]
+
+    return pa2
+    
+  }
+
   const dis = () => {
     //console.log(q(z), h(z));
+    //console.log(pa2(z))
     if (document.getElementById("submit").disabled === true) {
       document.getElementById("submit").disabled = false
       //console.log("n[1]", `${z[0]}`[(z[0].length) - 1])
@@ -237,7 +331,6 @@ const Form = () => {
 
   useEffect(() => {
     fetchUserDataForm()
-
   }, [])
 
   return (

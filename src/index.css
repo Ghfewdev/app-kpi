@@ -24,9 +24,24 @@ li a:hover:not(.active) {
 } */
 
 body {
-	font-family: 'Sarabun', sans-serif;
+  font-family: 'Sarabun', sans-serif;
 }
 
 input[type=text1] {
   width: 70%;
 }
+
+/* *::selection {
+  background: #3300c0;
+  color: white;
+} */
+
+/* *::-moz-selection {
+  background: #3300c0;
+  color: white;
+}
+
+*::-webkit-selection {
+  background: #3300c0;
+  color: white;
+} */

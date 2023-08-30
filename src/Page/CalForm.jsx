@@ -13,6 +13,7 @@ import Solve from "../Component/Solve";
 const CalForm = () => {
 
   Authen();
+  const [fetchs,setFetchs] = useState([]);
   const [param, setParam] = useState("");
   const [select, setSelect] = useState(null);
   const [qt1, setQt1] = useState([]);
@@ -21,9 +22,8 @@ const CalForm = () => {
   const [qt4, setQt4] = useState([]);
   var fetc = Fetch();
   var fusers = Users();
-
   var ta = [];
-
+  
   // const dis = () => {
   //    console.log(gg(s))
   //    console.log(qg(s))
@@ -83,6 +83,14 @@ const CalForm = () => {
         .then(data => {
           setQt4(data);
         });
+
+        fetch(`http://localhost:3000/result/${n}`)
+              .then(response3 => {
+                return response3.json();
+              })
+              .then(data3 => {
+                setFetchs(data3);
+              });
 
 
     }
@@ -151,7 +159,7 @@ const CalForm = () => {
   } catch {
   }
 
-  try {
+  if( qt1 != [] && qt2 != [] && qt3 != [] && qt4 != [] ) {
 
     var q1 = qt1.map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
     var q2 = qt2.map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
@@ -173,8 +181,8 @@ const CalForm = () => {
           re1.push((q1[j])[3])
           q1par1 += Number((q1[j])[2].split(", ")[ta[0]])
           q1par2 += Number((q1[j])[2].split(", ")[ta[1]])
-          nqq1p1.push(Number((q2[j])[2].split(", ")[ta[0]]))
-          nqq1p2.push(Number((q2[j])[2].split(", ")[ta[1]]))
+          nqq1p1.push(Number((q1[j])[2].split(", ")[ta[0]]))
+          nqq1p2.push(Number((q1[j])[2].split(", ")[ta[1]]))
 
         }
       }
@@ -365,17 +373,37 @@ const CalForm = () => {
     if (qq14[11] >= 100)
       qq14[11] = ((qq14[11] ** -1) * 10000).toFixed(2)
 
-    var qqall = qq1.map(q => [qq1[11], qq2[11], qq12[11], qq3[11], qq4[11], qq34[11], qq14[11]])[0]
-
-
-  } catch {
-    //console.log("qq1", qq1)
+    //var qqall = qq1.map(q => [qq1[11], qq2[11], qq12[11], qq3[11], qq4[11], qq34[11], qq14[11]])[0]
   }
 
+  var hos;
   var deid;
-  const setid = (id) => {
+  const setid = (id, dep) => {
     deid = id
-    console.log("deid = ", deid)
+  if (dep === "รพ.กลาง")
+  hos = "h1"
+  else if (dep === "รพ.ตากสิน")
+  hos = "h2"
+  else if (dep === "รพ.เจริญกรุงประชารัก")
+  hos = "h3"
+  else if (dep === "รพ.หลวงพ่อทวีศักดิ์")
+  hos = "h4"
+  else if (dep === "รพ.เวชการุณย์รัศมิ์")
+  hos = "h5"
+  else if (dep === "รพ.ลาดกระบัง")
+  hos = "h6"
+  else if (dep === "รพ.ราชพิพัฒน์")
+  hos = "h7"
+  else if (dep === "รพ.สิรินธร")
+  hos = "h8"
+  else if (dep === "รพ.ผู้สูงอายุบางขุนเทียน")
+  hos = "h9"
+  else if (dep === "รพ.คลองสามวา")
+  hos = "h10"
+  else if (dep === "รพ.บางนา")
+  hos = "h11"
+
+    //console.log("deid = ", deid, hos)
   }
 
   const handlesum = (event) => {
@@ -388,6 +416,12 @@ const CalForm = () => {
       result: hg(s),
       deid: deid
     };
+    const JsonData2 = {
+      "h": qg(s),
+      "pa1": pa2(s)[0],
+      "pa2": pa2(s)[1],
+      "sum": pa2(s)[2]
+  };
 
     fetch("https://kpi-api.onrender.com/update/detail", {
       method: "PUT",
@@ -401,6 +435,28 @@ const CalForm = () => {
       })
       .then(data => {
         if (data.status === "ok") {
+          //window.location = "calform";
+        } else {
+          alert("บันทึกไม่สำเร็จ");
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      })
+
+      fetch(`https://kpi-api.onrender.com/result/update/${hos}/${deid}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(JsonData2)
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        if (data.status === "ok") {
+          alert("แก้ไขสำเร็จ");
           window.location = "calform";
         } else {
           alert("บันทึกไม่สำเร็จ");
@@ -419,7 +475,7 @@ const CalForm = () => {
       try {
         a = <div>
 
-          <div className='container mt-3'>
+<div className='container mt-3'>
             <h3>รายละเอียดการส่งตัวชี้วัด </h3>
             <br />
             <label>ชื่อตัวชี้วัด: </label><br /> <input className="input100" disabled value={z} />
@@ -470,8 +526,8 @@ const CalForm = () => {
                       <td>{item.fd_date}</td>
                       {/*  <td>{item.fd_time}</td> */}
                       <td className="textc">{u}</td>
-                      <td className="textc"><button onClick={e => setid(item.de_id)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
-                      <td className="textc"><button onClick={e => setid(item.de_id)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">รายละเอียด</button></td>
+                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">รายละเอียด</button></td>
                       <td className="textc"><button className="btn btn-primary" onClick={window.print}><i className="bi bi-printer"> พิมพ์</i></button></td>
                     </tr>
                   );
@@ -548,7 +604,7 @@ const CalForm = () => {
 
                   //q12
                   if (qq12[index] > 100)
-                    qq12[index] = [((qq12[index] ** -1) * 10000).toFixed(2)]
+                    qq12[index] = ((qq12[index] ** -1) * 10000).toFixed(2)
                   if (isNaN(qq12[index]))
                     qq12[index] = "-"
                   if (qq12[index] > q.split(" ")[1])
@@ -560,7 +616,7 @@ const CalForm = () => {
 
                   //q34
                   if (qq34[index] > 100)
-                    qq34[index] = [((qq34[index] ** -1) * 10000).toFixed(2)]
+                    qq34[index] = ((qq34[index] ** -1) * 10000).toFixed(2)
                   if (isNaN(qq34[index]))
                     qq34[index] = "-"
                   if (qq34[index] > q.split(" ")[1])
@@ -572,7 +628,7 @@ const CalForm = () => {
 
                   //q14
                   if (qq14[index] > 100)
-                    qq14[index] = [((qq14[index] ** -1) * 10000).toFixed(2)]
+                    qq14[index] = ((qq14[index] ** -1) * 10000).toFixed(2)
                   if (isNaN(qq14[index]))
                     qq14[index] = "-"
                   if (qq14[index] > q.split(" ")[1])
@@ -613,15 +669,14 @@ const CalForm = () => {
             <div className="col-3 textc">
             </div>
             <div className="col-1 col-md-5">
-            <div style={{ width: 600 }}>
-            <Solve name = {qq14[11]} />
+            <div style={{ width: 650 }}>
+            <Solve name = {qq14[11]} do ={650} />
     </div>
             </div>
 
           </div>
 
         </div>
-
       } catch {
         a = <div className="textc"><h1>ไม่พบการส่งข้อมูลเข้ามา</h1></div>
       }
@@ -697,6 +752,36 @@ const CalForm = () => {
       h = "ไม่ผ่าน"
     }
     return h
+  }
+
+  const pa = () => {
+    var fp1 = fetchs.map(a => [a.pa1, a.pa2])
+    return fp1[0]
+  }
+
+  const pa2 = (val) => {
+    var pa2;
+    var p1 = 0;
+    var p2 = 0;
+    var are;
+    for (var i = 1; i <= val.length; i++) {
+      if (`${s[i - 1]}`[(s[i - 1].length) - 1] === "*") {
+        if (p1 === 0)
+          p1 += pa()[0] + Number(document.getElementById(`${val[i - 1]}`).value);
+        else {
+          p2 += pa()[1] + Number(document.getElementById(`${val[i - 1]}`).value);
+        }
+      }
+    }
+    if ((p1/p2) * 100 >= 100)
+      are = (((p1/p2) ** (-1))*100).toFixed(2)
+    else 
+    are = ((p1/p2)*100).toFixed(2)
+
+    pa2 = [p1, p2, are]
+
+    return pa2
+    
   }
 
   return (
