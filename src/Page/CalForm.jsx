@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Fetch from "../Component/Fetch";
 import Navbar from "../Component/Navbar";
 import parse from "html-react-parser";
@@ -8,11 +8,10 @@ import Users from "../Component/Users";
 import "chartjs-gauge";
 import Solve from "../Component/Solve";
 
-
-
 const CalForm = () => {
 
   Authen();
+  const [printf, setPrintf] = useState([]);
   const [fetchs,setFetchs] = useState([]);
   const [param, setParam] = useState("");
   const [select, setSelect] = useState(null);
@@ -23,6 +22,9 @@ const CalForm = () => {
   var fetc = Fetch();
   var fusers = Users();
   var ta = [];
+  var hos;
+  var deid = 0;
+  var ag = 12;
   
   // const dis = () => {
   //    console.log(gg(s))
@@ -84,7 +86,7 @@ const CalForm = () => {
           setQt4(data);
         });
 
-        fetch(`http://localhost:3000/result/${n}`)
+        fetch(`https://kpi-api.onrender.com/result/${n}`)
               .then(response3 => {
                 return response3.json();
               })
@@ -141,6 +143,7 @@ const CalForm = () => {
       z = select.map(zz => zz.fm_name)[0]
       p = e.toFixed(2)
       r = d
+      
     } else
       console.log("err")
   } catch {
@@ -376,35 +379,96 @@ const CalForm = () => {
     //var qqall = qq1.map(q => [qq1[11], qq2[11], qq12[11], qq3[11], qq4[11], qq34[11], qq14[11]])[0]
   }
 
-  var hos;
-  var deid;
-  const setid = (id, dep) => {
-    deid = id
-  if (dep === "รพ.กลาง")
-  hos = "h1"
-  else if (dep === "รพ.ตากสิน")
-  hos = "h2"
-  else if (dep === "รพ.เจริญกรุงประชารัก")
-  hos = "h3"
-  else if (dep === "รพ.หลวงพ่อทวีศักดิ์")
-  hos = "h4"
-  else if (dep === "รพ.เวชการุณย์รัศมิ์")
-  hos = "h5"
-  else if (dep === "รพ.ลาดกระบัง")
-  hos = "h6"
-  else if (dep === "รพ.ราชพิพัฒน์")
-  hos = "h7"
-  else if (dep === "รพ.สิรินธร")
-  hos = "h8"
-  else if (dep === "รพ.ผู้สูงอายุบางขุนเทียน")
-  hos = "h9"
-  else if (dep === "รพ.คลองสามวา")
-  hos = "h10"
-  else if (dep === "รพ.บางนา")
-  hos = "h11"
-
-    //console.log("deid = ", deid, hos)
+  const dissi = (d) => {
+    if (document.getElementById(d).disabled === true) {
+      (document.getElementById(d).disabled = false)
+    }
+    else document.getElementById(d).disabled = true
   }
+
+  
+  const setid = (id, dep) => {
+    deid = id;
+
+    fetch(`https://kpi-api.onrender.com/event/${deid}`)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                setPrintf(data);
+            });
+    
+  if (dep === "รพ.กลาง") {
+  hos = "h1";
+  ag = "โรงพยาบาลกลาง";
+  }
+  else if (dep === "รพ.ตากสิน"){
+    hos = "h2";
+    ag = "โรงพยาบาลตากสิน"
+}
+  else if (dep === "รพ.เจริญกรุงประชารัก") {
+    hos = "h3"
+    ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
+  }
+  else if (dep === "รพ.หลวงพ่อทวีศักดิ์") {
+    hos = "h4"
+    ag = "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ"
+  }
+  
+  else if (dep === "รพ.เวชการุณย์รัศมิ์") {
+    hos = "h5"
+    ag = "โรงพยาบาลเวชการุณย์รัศมิ์"
+  }
+  
+  else if (dep === "รพ.ลาดกระบัง") {
+    hos = "h6"
+    ag = "โรงพยาบาลลาดกระบังกรุงเทพมหานคร"
+  }
+  
+  else if (dep === "รพ.ราชพิพัฒน์") {
+    hos = "h7"
+    ag = "โรงพยาบาลราชพิพัฒน์"
+  }
+  
+  else if (dep === "รพ.สิรินธร") {
+    hos = "h8"
+    ag = "โรงพยาบาลสิรินธร"
+  }
+  
+  else if (dep === "รพ.ผู้สูงอายุบางขุนเทียน") {
+    hos = "h9"
+    ag = "โรงพยาบาลผู้สูงอายุบางขุนเทียน"
+  }
+  
+  else if (dep === "รพ.คลองสามวา") {
+    hos = "h10"
+    ag = "โรงพยาบาลคลองสามวา"
+  }
+  
+  else if (dep === "รพ.บางนา") {
+    hos = "h11"
+    ag = "โรงพยาบาลบางนากรุงเทพมหานคร"
+  }
+    sessionStorage.setItem("ag", ag)
+    sessionStorage.setItem("deid", id)
+    sessionStorage.setItem("hos", hos)
+    console.log("deid = ", deid, hos, ag)
+  }
+
+  const setfp = (id) => {
+    deid = id
+    
+    fetch(`https://kpi-api.onrender.com/event/${id}`)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                setPrintf(data);
+            });
+  }
+
+  //console.log(printf)
+
 
   const handlesum = (event) => {
     event.preventDefault();
@@ -414,7 +478,7 @@ const CalForm = () => {
       paras: gg(s),
       ans: qg(s),
       result: hg(s),
-      deid: deid
+      deid: sessionStorage.getItem("deid")
     };
     const JsonData2 = {
       "h": qg(s),
@@ -444,7 +508,7 @@ const CalForm = () => {
         console.log("error", error);
       })
 
-      fetch(`https://kpi-api.onrender.com/result/update/${hos}/${deid}`, {
+      fetch(`https://kpi-api.onrender.com/result/update/${sessionStorage.getItem("hos")}/${sessionStorage.getItem("deid")}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -465,6 +529,57 @@ const CalForm = () => {
       .catch((error) => {
         console.log("error", error);
       })
+
+  }
+
+  const handleeved = (event) => {
+    event.preventDefault();
+
+    const data = new FormData(event.currentTarget);
+    const JsonData5 = {
+      fmsid: data.get("fmsid"),
+      evname: data.get("evname"),
+      evres: data.get("evres"),
+      evstatus: data.get("evstatus"),
+      evbudget: dcdd("dc"),
+      evbuded: dcdd("dd"),
+      evpoint: data.get("evpoint"),
+      evtarget: data.get("evtarget"),
+      result: data.get("result"),
+      problem: data.get("problem"),
+      evimg: data.get("evimg"),
+      deid: sessionStorage.getItem("deid")
+    };
+
+    fetch("https://kpi-api.onrender.com/ev/edit", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(JsonData5)
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        if (data.status === "ok") {
+          alert("บันทึกสำเร็จ")
+          //window.location = "post";
+        } else {
+          alert("บันทึกไม่สำเร็จ");
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      })
+
+  }
+
+  const handelPrint = () => {
+
+    setTimeout(() => {
+      window.print();
+    }, 300);
 
   }
 
@@ -503,9 +618,9 @@ const CalForm = () => {
                   <th className="textc" scope="col">วันที่ส่ง</th>
                   {/* <th scope="col">เวลา</th> */}
                   <th className="textc" scope="col">สรุปผล</th>
-                  <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
                   <th className="textc" scope="col">ข้อมูลโครงการ</th>
-                  <th className="textc" scope="col">พิมพ์รายงาน</th>
+                  <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
+                  <th className="textc" scope="col">แก้ไขโครงการ</th>
                 </tr>
               </thead>
               <tbody>
@@ -526,9 +641,9 @@ const CalForm = () => {
                       <td>{item.fd_date}</td>
                       {/*  <td>{item.fd_time}</td> */}
                       <td className="textc">{u}</td>
+                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">รายละเอียด</button></td>
-                      <td className="textc"><button className="btn btn-primary" onClick={window.print}><i className="bi bi-printer"> พิมพ์</i></button></td>
+                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
                     </tr>
                   );
                 })}
@@ -685,7 +800,139 @@ const CalForm = () => {
 
     return a
 
+  }
+  
 
+  function pagePrint (val) {
+    try {
+var dp = val[0]
+    var pag;
+      var ap = <>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</>
+  if (dp != undefined) {
+    ap = <>{sessionStorage.getItem("ag")}</>
+    var cp = dp.ev_name
+    //var c1 = c.substring(71, 0)
+    //var c2 = c.substring(71)
+    var ep = dp.fms_id
+    var fp = dp.ev_res
+    var gp = dp.ev_status
+    var hp = dp.ev_point
+    var ip = dp.ev_target
+    var jp = dp.ev_result
+    var kp = dp.ev_budget
+    var kkp = kp.split(", ")
+    var lp = dp.ev_buded
+    var llp = lp.split(", ")
+    var mp = dp.ev_problem
+
+      pag = <div className='fonts col-print-12'>
+      <div className='textr0'>
+        ไตรมาสที่ 1 <input type="checkbox" />&nbsp; ต.ค.-ธ.ค. ๖๖
+        <br />ไตรมาสที่ 2 <input type="checkbox" />&nbsp; ม.ค.-มี.ค. ๖๗
+        <br />แบบรายงานความก้าวหน้ารายโครงการ/กิจกรรม&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ไตรมาสที่ 3 <input type="checkbox" /> เม.ย.-มิ.ย. ๖๗
+        <br /><b>ส่วนราชการ </b> &nbsp;&nbsp;&nbsp; {ap} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ไตรมาสที่ 4 <input type="checkbox" />&nbsp; ก.ค.-ก.ย. ๖๗
+      </div>
+      <div className='row textl5'>
+        <div className='col'>
+          ชื่อโครงการ/กิจกรรม
+        </div>
+        <div className='col-10'>{cp}</div>
+      </div>
+  
+      <div className='textl5'>ลำดับโครงการ / กิจกรรมตามแผนสนพ. &nbsp;&nbsp;&nbsp; {ep}
+        <br /><b>หน่วยงานที่รับผิดชอบ</b> &nbsp;&nbsp;&nbsp; {fp}
+        <br />สถานะของโครงการ: <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div className="form-check form-check-inline">
+          <input className="form-check-input" type="radio" name="status" id="inlineRadio1" value="แล้วเสร็จ" defaultChecked />
+          <label className="form-check-label" htmlFor="inlineRadio1">แล้วเสร็จ</label>
+        </div> &nbsp;&nbsp;&nbsp;&nbsp;
+        <div className="form-check form-check-inline">
+          <input className="form-check-input" type="radio" name="status" id="inlineRadio2" value="ยังไม่เริ่มดำเนินการ" />
+          <label className="form-check-label" htmlFor="inlineRadio2">ยังไม่เริ่มดำเนินการ</label>
+        </div> &nbsp;&nbsp;&nbsp;&nbsp;
+        <div className="form-check form-check-inline">
+          <input className="form-check-input" type="radio" name="status" id="inlineRadio3" value="ยกเลิก" />
+          <label className="form-check-label" htmlFor="inlineRadio3">ยกเลิก</label>
+        </div> &nbsp;&nbsp;&nbsp;&nbsp;
+        <div className="form-check form-check-inline">
+          <input className="form-check-input" type="radio" name="status" id="inlineRadio4" value="กำลังดำเนินการ" />
+          <label className="form-check-label" htmlFor="inlineRadio4">กำลังดำเนินการ</label>
+        </div> &nbsp;&nbsp;&nbsp;&nbsp;
+        <div className="form-check form-check-inline">
+          <input className="form-check-input" type="radio" name="status" id="inlineRadio5" value="ชะลอ" />
+          <label className="form-check-label" htmlFor="inlineRadio5">ชะลอ</label>
+        </div>
+        <br />รายละเอียดการดำเนินงานในไตรมาสนี้ บอกถึงเป้าหมาย วัตถุประสงค์ วิธีดำเนินการและผล (ถ้ามี) รวมถึงความก้าวหน้า ของโครงการ (%)
+        <div className='border border-dark mb-2 mt-1 m-0 p-2'>
+          <b><u>วัตถุประสงค์</u></b>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {hp}</div>
+          <b><u>เป้าหมาย</u></b>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {ip}</div>
+          <b><u>ผลการดำเนินโครงการ</u></b>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {jp}</div>
+          <b><u>การใช้จ่ายงบประมาณ</u></b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <div className="form-check form-check-inline">
+            <input className="form-check-input" type="radio" name="budget" id="inlineRadio21" value="ไม่ได้ใช้งบประมาณ" />
+            <label className="form-check-label" htmlFor="inlineRadio21">ไม่ได้ใช้งบประมาณ</label>
+          </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <div className="form-check form-check-inline">
+            <input className="form-check-input" type="radio" name="budget" id="inlineRadio22" value="ใช้งบประมาณ" defaultChecked />
+            <label className="form-check-label" htmlFor="inlineRadio22">ใช้งบประมาณ</label>
+          </div>
+          <div className='m-0 mt-1 mb-0'><table className='table table-bordered border-primary textc'>
+            <thead>
+              <tr>
+                {/* <th colSpan="2">งบประมาณและแหล่งที่มา<br />ของงบประมาณ</th> */}
+                <th colSpan="3">งบประมาณที่ได้รับทั้งหมด</th>
+                <th colSpan="3">งบประมาณที่ใช้ไปทั้งหมด</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {/* <th>งบฯกทม.</th><th>งบฯอุดหนุน<br />/อื่นๆ</th> */}
+                <th>งบฯ<br />ดำเนินการ</th>
+                <th>งบฯ<br />ลงทุน</th>
+                <th>รวม</th>
+                <th>งบฯ<br />ดำเนินการ</th>
+                <th>งบฯ<br />ลงทุน</th>
+                <th>รวม</th>
+              </tr>
+              <tr>
+                {/* <th>123</th><th>123</th> */}
+                <th>{kkp[0]}</th>
+                <th>{kkp[1]}</th>
+                <th>{kkp[2]}</th>
+                <th>{llp[0]}</th>
+                <th>{llp[1]}</th>
+                <th>{llp[2]}</th>
+              </tr>
+            </tbody>
+          </table></div><b><u>สรุปผลการดำเนินงาน: </u></b><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <div className="form-check form-check-inline">
+            <input className="form-check-input" type="radio" name="resul" id="inlineRadio31" value="เป็นไปตามแผน" defaultChecked />
+            <label className="form-check-label" htmlFor="inlineRadio31">เป็นไปตามแผน</label>
+          </div>&nbsp;&nbsp;&nbsp;&nbsp;
+          <div className="form-check form-check-inline">
+            <input className="form-check-input" type="radio" name="resul" id="inlineRadio32" value="เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ" />
+            <label className="form-check-label" htmlFor="inlineRadio32">เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ</label>
+          </div> &nbsp;&nbsp;&nbsp;&nbsp;
+          <div className="form-check form-check-inline">
+            <input className="form-check-input" type="radio" name="resul" id="inlineRadio33" value="ไม่เป็นไปตามแผน" />
+            <label className="form-check-label" htmlFor="inlineRadio33">ไม่เป็นไปตามแผน</label>
+          </div>
+          <br /><b><u>ข้อคิดเห็นเพิ่มเติม / ปัญหาและอุปสรรค</u></b>
+          <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{mp}
+          
+        </div>
+      </div>
+    </div>
+      
+  } else pag = <>ไม่พบการส่งข้อมูลเข้ามา</>
+}catch {
+  console.log("err")
+}
+
+return pag
   }
 
 
@@ -759,6 +1006,20 @@ const CalForm = () => {
     return fp1[0]
   }
 
+  function dcdd(id) {
+    var g = "";
+    for (var i = 1; i <= 3; i++) {
+      if (document.getElementById(`${id + i}`).value === "")
+        g += 0
+      else
+        g += document.getElementById(`${id + i}`).value;
+      if (i != 3) {
+        g += ", "
+      }
+    }
+    return g
+  }
+
   const pa2 = (val) => {
     var pa2;
     var p1 = 0;
@@ -828,89 +1089,127 @@ const CalForm = () => {
           </div>
         </div>
 
+        <div className="modal fade" id="eventm" tabIndex={-1} aria-labelledby="eventm" aria-hidden="true">
+          <div className="modal-dialog modal-lg">
+            <form onSubmit={handleeved}>
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="eventm"><b>แก้ไขแบบรายงานความก้าวหน้ารายโครงการ / กิจกรรม</b></h5>
+                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div className="modal-body textl7">
+                    
+                    <br />
+                    <label>ชื่อโครงการ / กิจกรรม</label>
+                    <br />
+                    <input type="text" className='input60' name='evname' required />
+                    <br />
+                    <label>ลำดับโครงการ / กิจกรรมตามแผนสนพ.</label>
+                    <br />
+                    <input type="number" className='input60' name='fmsid' required />
+                    <br />
+                    <label>ผู้รับผิดชอบ</label>
+                    <br />
+                    <input type="text" className='input60' name='evres' required />
+                    <br />
+                    <label>สถานะโครงการ</label>
+                    <br />
+                    <div>
+                      <input type="radio" value="แล้วเสร็จ" name="evstatus" /> แล้วเสร็จ &nbsp;&nbsp;&nbsp;
+                      <input type="radio" value="ยังไม่ดำเนินการ" name="evstatus" /> ยังไม่ดำเนินการ &nbsp;&nbsp;&nbsp;
+                      <input type="radio" value="ยกเลิก" name="evstatus" /> ยกเลิก &nbsp;&nbsp;&nbsp;
+                      <input type="radio" value="กำลังดำเนินการ" name="evstatus" /> กำลังดำเนินการ &nbsp;&nbsp;&nbsp;
+                      <input type="radio" value="ชะลอ" name="evstatus" /> ชะลอ
+                    </div>
+                    <br />
+                    <label>งบประมาณที่ได้รับ</label>
+                    <br />
+                    <div className="input-group mb-3">
+                      <div className="input-group-text">กทม:&nbsp;&nbsp;
+                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc1")} />
+                      </div>
+                      <input type="text" className="input10" id='dc1' disabled />
+                      <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
+                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc2")} />
+                      </div>
+                      <input type="text" className="input10" id='dc2' disabled />
+                      <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
+                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc3")} />
+                      </div>
+                      <input type="text" className="input10" id='dc3' disabled />
+                    </div>
+                    <label>งบประมาณที่ใช้</label>
+                    <br />
+                    <div className="input-group mb-3">
+                      <div className="input-group-text">กทม:&nbsp;&nbsp;
+                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd1")} />
+                      </div>
+                      <input type="text" className="input10" id='dd1' disabled />
+                      <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
+                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd2")} />
+                      </div>
+                      <input type="text" className="input10" id='dd2' disabled />
+                      <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
+                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd3")} />
+                      </div>
+                      <input type="text" className="input10" id='dd3' disabled />
+                    </div>
+                    <label>วัตถุประสงค์</label>
+                    <br />
+                    <textarea className='textarea60100' name='evpoint' required />
+                    <br />
+                    <label>เป้าหมาย</label>
+                    <br />
+                    <textarea className='textarea60100' name='evtarget' required />
+                    <br />
+                    <label>ผลการดำเนินงาน</label>
+                    <br />
+                    <textarea className='textarea60100' name='result' required />
+                    <br />
+                    <label>ปัญหาและอุปสรรค</label>
+                    <br />
+                    <textarea className='textarea60100' name='problem' required />
+                    <br />
+                    <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label>
+                    <input type='file' name='evimg' />
+                  {/* <br /><label>ยืนยัน: <input type="checkbox" onClick={e => dis()} /> </label><br /> */}
+                </div>
+
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                  <button id="submit" type="submit" className="btn btn-primary">แก้ไขข้อมูล</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
 
         <Footer />
       </div>
-      <div>
-
-        {/* page1 */}
-
-
-        <pre className='d-none d-print-block fonts'>
-          <br />                                                                                                                                                                             ไตรมาสที่ 1 <input type="checkbox" /> ต.ค.-ธ.ค. ๖๖
-          <br />                                                                                                                                                                             ไตรมาสที่ 2 <input type="checkbox" /> ม.ค.-มี.ค. ๖๗
-          <br />                                                                      แบบรายงานความก้าวหน้ารายโครงการ/กิจกรรม                        ไตรมาสที่ 3 <input type="checkbox" /> เม.ย.-มิ.ย. ๖๗
-          <br />                                                                                 <b>ส่วนราชการ....................................</b>                                   ไตรมาสที่ 4 <input type="checkbox" /> ก.ค.-ก.ย. ๖๗
-          <br />                  ชื่อโครงการ/กิจกรรม.........................................................................................................................................................
-          <br />                                                    ..........................................................................................................................................................
-          <br />                  ลำดับที่โครงการ/กิจกรรม..............................................(ตามแผน สนพ.)..................................................(ตามแผน รพ.)
-          <br />                  <b>หน่วยงานที่รับผิดชอบ</b>
-          <br />                  กลุ่มงาน/ผ่าย.....................................................................................................................................................................
-          <br />                  เจ้าหน้าที่ผู้รับผิดชอบ.....................................................................................โทรศัพท์......................................................
-          <br />                  <b>ผลการดำเนินงาน</b>
-          <br />                  สถานะของโครงการ               <input type="checkbox" />         แล้วเสร็จ                     <input type="checkbox" />         ยังไม่เริ่มดำเนินการ               <input type="checkbox" />         ยกเลิก
-          <br />                                                                 <input type="checkbox" />         กำลังดำเนินการ          <input type="checkbox" />         ชะลอ
-          <br />                  รายละเอียดการดำเนินงานในไตรมาสนี้ บอกถึงเป้าหมาย วัตถุประสงค์ วิธีดำเนินการและผล (ถ้ามี) รวมถึงความก้าวหน้า
-          <br />                  ของโครงการ (%)
-          <div className='border border-dark mb-2 mt-1 m-5 p-2'>  <b><u>วัตถุประสงค์</u></b>
-            <br />          โรงเรียนโสตศึกษาจังหวัดนนทบุรี มีนักเรียนที่บกพร่องทางการได้ยิน และบกพร่องทางสติปัญญานักเรียนส่วนใหญ่
-            <br />  เป็นนักเรียนประจำพักอยู่ที่เรือนนอนภายในโรงเรียน ปัญหาที่พบได้บ่อย คือนักเรียนที่เข้าห้องน้ำมักจะลืมปิดน้ำเมื่อใช้
-            <br />  แล้วโดยเฉพาะนักเรียนที่มีความบกพร่องทางการได้ยิน จะมีปัญหาในการไม่ได้ยินเสียงน้ำไหล และหากเกิดพฤติกรรมที่
-            <br />  ลืมปิดน้ำบ่อยครั้ง จะทำให้ค่าน้ำปะปาของโรงเรียนเพิ่มสูงขึ้นตามมา
-            <br />  <b><u>เป้าหมาย</u></b>
-            <br />          โรงเรียนโสตศึกษาจังหวัดนนทบุรี มีนักเรียนที่บกพร่องทางการได้ยิน และบกพร่องทางสติปัญญานักเรียนส่วนใหญ่
-            <br />  เป็นนักเรียนประจำพักอยู่ที่เรือนนอนภายในโรงเรียน ปัญหาที่พบได้บ่อย คือนักเรียนที่เข้าห้องน้ำมักจะลืมปิดน้ำเมื่อใช้
-            <br />  แล้วโดยเฉพาะนักเรียนที่มีความบกพร่องทางการได้ยิน จะมีปัญหาในการไม่ได้ยินเสียงน้ำไหล และหากเกิดพฤติกรรมที่
-            <br />  ลืมปิดน้ำบ่อยครั้ง จะทำให้ค่าน้ำปะปาของโรงเรียนเพิ่มสูงขึ้นตามมาด้วย
-            <br />  <b><u>ผลการดำเนินโครงการ</u></b>
-            <br />          โรงเรียนโสตศึกษาจังหวัดนนทบุรี มีนักเรียนที่บกพร่องทางการได้ยิน และบกพร่องทางสติปัญญานักเรียนส่วนใหญ่
-            <br />  เป็นนักเรียนประจำพักอยู่ที่เรือนนอนภายในโรงเรียน ปัญหาที่พบได้บ่อย คือนักเรียนที่เข้าห้องน้ำมักจะลืมปิดน้ำเมื่อใช้
-            <br />  แล้วโดยเฉพาะนักเรียนที่มีความบกพร่องทางการได้ยิน จะมีปัญหาในการไม่ได้ยินเสียงน้ำไหล และหากเกิดพฤติกรรมที่
-            <br />  ลืมปิดน้ำบ่อยครั้ง จะทำให้ค่าน้ำปะปาของโรงเรียนเพิ่มสูงขึ้นตามมา
-            <br /><table className='table table-bordered border-primary'>
-              <thead><tr><th>เดือน</th><th>ค่าที่1</th><th>ค่าที่2</th><th>รวม</th></tr></thead>
-              <tbody>
-                <tr><th>12</th><th>123</th><th>321</th><th>321</th></tr>
-                <tr><th>12</th><th>123</th><th>321</th><th>321</th></tr>
-                <tr><th>12</th><th>123</th><th>321</th><th>321</th></tr>
-                <tr><th>12</th><th>123</th><th>321</th><th>321</th></tr>
-                <tr><th>12</th><th>123</th><th>321</th><th>321</th></tr>
-              </tbody>
-            </table>  <b>หมายเหตุ</b>
-            <br />  ..
-            <br />  ..
+      <div className='d-print-none'>
+        <div className="modal fade" id="print" tabIndex="-1" aria-labelledby="#print" aria-hidden="true">
+          <div className="modal-dialog modal-lg">
+            <div className="modal-content">
+              <div className="modal-header d-print-none">
+                <h5 className="modal-title" id="print">พิมพ์รายงานการดำเนินงานของโครงการ</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="modal-body">
+              {pagePrint(printf)}
+              </div>
+              <div className="modal-footer d-print-none">
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={e => handelPrint()}><i className="bi bi-printer" ></i> พิมพ์รายงาน</button>
+              </div>
+            </div>
           </div>
-          <br />
-          <br />                  <b>การใช้จ่ายงบประมาณ</b>             <input type="checkbox" />         ไม่ได้ใช้งบประมาณ                     <input type="checkbox" />         ใช้งบประมาณ
-          <br /><div className='m-5 mt-1 mb-0'><table className='table table-bordered border-primary textc'>
-            <thead><tr><th colSpan="2">งบประมาณและแหล่งที่มาของ<br />งบประมาณ</th><th colSpan="3">งบประมาณที่ใช้ไป<br />ในรอบการรายงานครั้งนี้</th><th colSpan="3">งบประมาณที่ใช้ไป<br />ทั้งหมด</th></tr></thead>
-            <tbody>
-              <tr><th>งบฯกทม.</th><th>งบฯอุดหนุน<br />/อื่นๆ</th><th>งบฯ<br />ดำเนินการ</th><th>งบฯลงทุน</th><th>รวม</th><th>งบฯ<br />ดำเนินการ</th><th>งบฯลงทุน</th><th>รวม</th></tr>
-              <tr><th>..</th><th>..</th><th>..</th><th>..</th><th>..</th><th>..</th><th>..</th><th>..</th></tr>
+        </div>
 
-            </tbody>
-          </table></div>                  <b>สรุปผลการดำเนินงาน</b> ( <input type="checkbox" /> ) เป็นไปตามแผน ( <input type="checkbox" /> ) เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ ( <input type="checkbox" /> ) ไม่เป็นไปตามแผน
-          <br />
-          <br />                  <b>ข้อคิดเห็นเพิ่มเติม / ปัญหาและอุปสรรค</b>
-          <br />                            โรงเรียนโสตศึกษาจังหวัดนนทบุรี มีนักเรียนที่บกพร่องทางการได้ยิน และบกพร่องทางสติปัญญานักเรียนส่วนใหญ่
-          <br />                  เป็นนักเรียนประจำพักอยู่ที่เรือนนอนภายในโรงเรียน ปัญหาที่พบได้บ่อย คือนักเรียนที่เข้าห้องน้ำมักจะลืมปิดน้ำเมื่อใช้
-          <br />                  แล้วโดยเฉพาะนักเรียนที่มีความบกพร่องทางการได้ยิน จะมีปัญหาในการไม่ได้ยินเสียงน้ำไหล และหากเกิดพฤติกรรมที่
-          <br />                  ลืมปิดน้ำบ่อยครั้ง จะทำให้ค่าน้ำปะปาของโรงเรียนเพิ่มสูงขึ้นตามมา
-          <br />                            โรงเรียนโสตศึกษาจังหวัดนนทบุรี มีนักเรียนที่บกพร่องทางการได้ยิน และบกพร่องทางสติปัญญานักเรียนส่วนใหญ่
-          <br />                  เป็นนักเรียนประจำพักอยู่ที่เรือนนอนภายในโรงเรียน ปัญหาที่พบได้บ่อย คือนักเรียนที่เข้าห้องน้ำมักจะลืมปิดน้ำเมื่อใช้
-          <br />                  แล้วโดยเฉพาะนักเรียนที่มีความบกพร่องทางการได้ยิน จะมีปัญหาในการไม่ได้ยินเสียงน้ำไหล และหากเกิดพฤติกรรมที่
-          <br />                  ลืมปิดน้ำบ่อยครั้ง จะทำให้ค่าน้ำปะปาของโรงเรียนเพิ่มสูงขึ้นตามมา
-          <br />                            โรงเรียนโสตศึกษาจังหวัดนนทบุรี มีนักเรียนที่บกพร่องทางการได้ยิน และบกพร่องทางสติปัญญานักเรียนส่วนใหญ่
-          <br />                  เป็นนักเรียนประจำพักอยู่ที่เรือนนอนภายในโรงเรียน ปัญหาที่พบได้บ่อย คือนักเรียนที่เข้าห้องน้ำมักจะลืมปิดน้ำเมื่อใช้
-          <br />                  แล้วโดยเฉพาะนักเรียนที่มีความบกพร่องทางการได้ยิน จะมีปัญหาในการไม่ได้ยินเสียงน้ำไหล และหากเกิดพฤติกรรมที่
-          <br />                  ลืมปิดน้ำบ่อยครั้ง จะทำให้ค่าน้ำปะปาของโรงเรียนเพิ่มสูงขึ้นตามมา
-          <br />                            โรงเรียนโสตศึกษาจังหวัดนนทบุรี มีนักเรียนที่บกพร่องทางการได้ยิน และบกพร่องทางสติปัญญานักเรียนส่วนใหญ่
-          <br />                  เป็นนักเรียนประจำพักอยู่ที่เรือนนอนภายในโรงเรียน ปัญหาที่พบได้บ่อย คือนักเรียนที่เข้าห้องน้ำมักจะลืมปิดน้ำเมื่อใช้
-          <br />                  แล้วโดยเฉพาะนักเรียนที่มีความบกพร่องทางการได้ยิน จะมีปัญหาในการไม่ได้ยินเสียงน้ำไหล และหากเกิดพฤติกรรมที่
-          <br />                  ลืมปิดน้ำบ่อยครั้ง จะทำให้ค่าน้ำปะปาของโรงเรียนเพิ่มสูงขึ้นตามมา
-        </pre>
+      </div><div className='d-none d-print-block'>{pagePrint(printf)}</div>
+      
 
-      </div>
+
     </div>
 
   )

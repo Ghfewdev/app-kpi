@@ -6,7 +6,7 @@ const sResulted = (val) => {
   
   useEffect(() => {
 
-    fetch(`http://localhost:3000/result/id/${val}`)
+    fetch(`https://kpi-api.onrender.com/result/id/${val}`)
               .then(response => {
                 return response.json();
               })

@@ -34,7 +34,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='calform' element={<CalForm />} />
       <Route path='tests' element={<Tests />} />
       <Route path='home' element={<Home />} />
-      <Route path='EditForm' element={<EditForm />} />
+      <Route path='editform' element={<EditForm />} />
     </Routes>
   </BrowserRouter>
 )

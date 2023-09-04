@@ -115,6 +115,7 @@ const Form = () => {
           //window.location = "post";
         } else {
           alert("บันทึกไม่สำเร็จ");
+          return;
         }
       })
       .catch((error) => {
@@ -185,7 +186,7 @@ const Form = () => {
         setForms({ ...forms, fill: data2 })
       })
 
-      fetch(`http://localhost:3000/result/${val}`)
+      fetch(`https://kpi-api.onrender.com/result/${val}`)
               .then(response3 => {
                 return response3.json();
               })
