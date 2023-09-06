@@ -17,8 +17,8 @@ function Details() {
   
   var a = num.map(aa=>aa.de_id);
   var b = Math.max(...a);
-  if(b == -Infinity)
-  b = 0
+  // if(b == -Infinity)
+  // b = 0
   // console.log(b)
 
   useEffect(() => {

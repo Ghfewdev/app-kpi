@@ -12,7 +12,7 @@ const CalForm = () => {
 
   Authen();
   const [printf, setPrintf] = useState([]);
-  const [fetchs,setFetchs] = useState([]);
+  const [fetchs, setFetchs] = useState([]);
   const [param, setParam] = useState("");
   const [select, setSelect] = useState(null);
   const [qt1, setQt1] = useState([]);
@@ -25,7 +25,7 @@ const CalForm = () => {
   var hos;
   var deid = 0;
   var ag = 12;
-  
+
   // const dis = () => {
   //    console.log(gg(s))
   //    console.log(qg(s))
@@ -54,6 +54,7 @@ const CalForm = () => {
     }
 
     if (n != []) {
+
       fetch(`https://kpi-api.onrender.com/checked/id/${n}/1`)
         .then(response => {
           return response.json();
@@ -70,14 +71,15 @@ const CalForm = () => {
           setQt2(data);
         });
 
-      fetch(`https://kpi-api.onrender.com/checked/id/${n}/3`)
-        .then(response => {
-          return response.json();
-        })
-        .then(data => {
-          setQt3(data);
-        });
-
+      if (n != undefined) {
+        fetch(`https://kpi-api.onrender.com/checked/id/${n}/3`)
+          .then(response => {
+            return response.json();
+          })
+          .then(data => {
+            setQt3(data);
+          });
+      }
       fetch(`https://kpi-api.onrender.com/checked/id/${n}/4`)
         .then(response => {
           return response.json();
@@ -86,20 +88,20 @@ const CalForm = () => {
           setQt4(data);
         });
 
-        fetch(`https://kpi-api.onrender.com/result/${n}`)
-              .then(response3 => {
-                return response3.json();
-              })
-              .then(data3 => {
-                setFetchs(data3);
-              });
+      fetch(`https://kpi-api.onrender.com/result/${n}`)
+        .then(response3 => {
+          return response3.json();
+        })
+        .then(data3 => {
+          setFetchs(data3);
+        });
 
 
     }
 
 
   }
- 
+
   const agen = fusers.map(u => u.us_agency)
   var an = [];
   for (var i = 0; i <= agen.length - 4; i++) {
@@ -123,10 +125,10 @@ const CalForm = () => {
       var s = select.map(ss => ss.fm_paras.split(", "))[0]
       var ss = s.map((m, i) => (
         <div key={i}>
-        <div><p className='inline p2'><label>{m}: &nbsp;&nbsp;</label></p>
-          <p className='inline textr p2'><input className='input30' type="number" id={m} required /></p>
+          <div><p className='inline p2'><label>{m}: &nbsp;&nbsp;</label></p>
+            <p className='inline textr p2'><input className='input30' type="number" id={m} required /></p>
+          </div>
         </div>
-      </div>
       )
       );
       var b = a[0]
@@ -143,7 +145,7 @@ const CalForm = () => {
       z = select.map(zz => zz.fm_name)[0]
       p = e.toFixed(2)
       r = d
-      
+
     } else
       console.log("err")
   } catch {
@@ -162,7 +164,7 @@ const CalForm = () => {
   } catch {
   }
 
-  if( qt1 != [] && qt2 != [] && qt3 != [] && qt4 != [] ) {
+  if (qt1 != [] && qt2 != [] && qt3 != [] && qt4 != []) {
 
     var q1 = qt1.map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
     var q2 = qt2.map(q => [q.us_id, q.de_ans, q.de_paras, q.de_result])
@@ -376,6 +378,7 @@ const CalForm = () => {
     if (qq14[11] >= 100)
       qq14[11] = ((qq14[11] ** -1) * 10000).toFixed(2)
 
+
     //var qqall = qq1.map(q => [qq1[11], qq2[11], qq12[11], qq3[11], qq4[11], qq34[11], qq14[11]])[0]
   }
 
@@ -386,86 +389,104 @@ const CalForm = () => {
     else document.getElementById(d).disabled = true
   }
 
-  
-  const setid = (id, dep) => {
-    deid = id;
 
+  const setid = (id, dep, para) => {
+    deid = id;
+    var pp = para.split(", ")
     fetch(`https://kpi-api.onrender.com/event/${deid}`)
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                setPrintf(data);
-            });
-    
-  if (dep === "รพ.กลาง") {
-  hos = "h1";
-  ag = "โรงพยาบาลกลาง";
-  }
-  else if (dep === "รพ.ตากสิน"){
-    hos = "h2";
-    ag = "โรงพยาบาลตากสิน"
-}
-  else if (dep === "รพ.เจริญกรุงประชารัก") {
-    hos = "h3"
-    ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
-  }
-  else if (dep === "รพ.หลวงพ่อทวีศักดิ์") {
-    hos = "h4"
-    ag = "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ"
-  }
-  
-  else if (dep === "รพ.เวชการุณย์รัศมิ์") {
-    hos = "h5"
-    ag = "โรงพยาบาลเวชการุณย์รัศมิ์"
-  }
-  
-  else if (dep === "รพ.ลาดกระบัง") {
-    hos = "h6"
-    ag = "โรงพยาบาลลาดกระบังกรุงเทพมหานคร"
-  }
-  
-  else if (dep === "รพ.ราชพิพัฒน์") {
-    hos = "h7"
-    ag = "โรงพยาบาลราชพิพัฒน์"
-  }
-  
-  else if (dep === "รพ.สิรินธร") {
-    hos = "h8"
-    ag = "โรงพยาบาลสิรินธร"
-  }
-  
-  else if (dep === "รพ.ผู้สูงอายุบางขุนเทียน") {
-    hos = "h9"
-    ag = "โรงพยาบาลผู้สูงอายุบางขุนเทียน"
-  }
-  
-  else if (dep === "รพ.คลองสามวา") {
-    hos = "h10"
-    ag = "โรงพยาบาลคลองสามวา"
-  }
-  
-  else if (dep === "รพ.บางนา") {
-    hos = "h11"
-    ag = "โรงพยาบาลบางนากรุงเทพมหานคร"
-  }
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        setPrintf(data);
+      });
+
+    var ha;
+    var hb;
+
+    if (dep === "รพ.กลาง") {
+      hos = "h1";
+      ag = "โรงพยาบาลกลาง";
+      ha = 0
+      hb = 1
+    }
+    else if (dep === "รพ.ตากสิน") {
+      hos = "h2";
+      ag = "โรงพยาบาลตากสิน"
+      ha = 2
+      hb = 3
+    }
+    else if (dep === "รพ.เจริญกรุงประชารัก") {
+      hos = "h3"
+      ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
+      ha = 4
+      hb = 5
+    }
+    else if (dep === "รพ.หลวงพ่อทวีศักดิ์") {
+      hos = "h4"
+      ag = "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ"
+      ha = 6
+      hb = 7
+    }
+
+    else if (dep === "รพ.เวชการุณย์รัศมิ์") {
+      hos = "h5"
+      ag = "โรงพยาบาลเวชการุณย์รัศมิ์"
+      ha = 8
+      hb = 9
+    }
+
+    else if (dep === "รพ.ลาดกระบัง") {
+      hos = "h6"
+      ag = "โรงพยาบาลลาดกระบังกรุงเทพมหานคร"
+      ha = 10
+      hb = 11
+    }
+
+    else if (dep === "รพ.ราชพิพัฒน์") {
+      hos = "h7"
+      ag = "โรงพยาบาลราชพิพัฒน์"
+      ha = 12
+      hb = 13
+    }
+
+    else if (dep === "รพ.สิรินธร") {
+      hos = "h8"
+      ag = "โรงพยาบาลสิรินธร"
+      ha = 14
+      hb = 15
+    }
+
+    else if (dep === "รพ.ผู้สูงอายุบางขุนเทียน") {
+      hos = "h9"
+      ag = "โรงพยาบาลผู้สูงอายุบางขุนเทียน"
+      ha = 16
+      hb = 17
+    }
+
+    else if (dep === "รพ.คลองสามวา") {
+      hos = "h10"
+      ag = "โรงพยาบาลคลองสามวา"
+      ha = 18
+      hb = 19
+    }
+
+    else if (dep === "รพ.บางนา") {
+      hos = "h11"
+      ag = "โรงพยาบาลบางนากรุงเทพมหานคร"
+      ha = 20
+      hb = 21
+    }
     sessionStorage.setItem("ag", ag)
     sessionStorage.setItem("deid", id)
     sessionStorage.setItem("hos", hos)
-    console.log("deid = ", deid, hos, ag)
+    sessionStorage.setItem("ha", ha)
+    sessionStorage.setItem("hb", hb)
+    sessionStorage.setItem("pp", pp)
+    //console.log("deid = ", deid, hos, ag, pp)
+    //console.log(pa2(s)[2], pa2(s)[3], qq14[11])
   }
 
-  const setfp = (id) => {
-    deid = id
-    
-    fetch(`https://kpi-api.onrender.com/event/${id}`)
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                setPrintf(data);
-            });
-  }
 
   //console.log(printf)
 
@@ -481,11 +502,13 @@ const CalForm = () => {
       deid: sessionStorage.getItem("deid")
     };
     const JsonData2 = {
-      "h": qg(s),
+      "h": pa2(s)[3],
+      "hpa1": pa2(s)[4],
+      "hpa2": pa2(s)[5],
       "pa1": pa2(s)[0],
       "pa2": pa2(s)[1],
       "sum": pa2(s)[2]
-  };
+    };
 
     fetch("https://kpi-api.onrender.com/update/detail", {
       method: "PUT",
@@ -508,7 +531,7 @@ const CalForm = () => {
         console.log("error", error);
       })
 
-      fetch(`https://kpi-api.onrender.com/result/update/${sessionStorage.getItem("hos")}/${sessionStorage.getItem("deid")}`, {
+    fetch(`https://kpi-api.onrender.com/result/update/${sessionStorage.getItem("hos")}/${select[0].fm_id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -590,7 +613,7 @@ const CalForm = () => {
       try {
         a = <div>
 
-<div className='container mt-3'>
+          <div className='container mt-3'>
             <h3>รายละเอียดการส่งตัวชี้วัด </h3>
             <br />
             <label>ชื่อตัวชี้วัด: </label><br /> <input className="input100" disabled value={z} />
@@ -641,9 +664,9 @@ const CalForm = () => {
                       <td>{item.fd_date}</td>
                       {/*  <td>{item.fd_time}</td> */}
                       <td className="textc">{u}</td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
+                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
                     </tr>
                   );
                 })}
@@ -784,9 +807,9 @@ const CalForm = () => {
             <div className="col-3 textc">
             </div>
             <div className="col-1 col-md-5">
-            <div style={{ width: 650 }}>
-            <Solve name = {qq14[11]} do ={650} />
-    </div>
+              <div style={{ width: 650 }}>
+                <Solve name={qq14[11]} do={650} />
+              </div>
             </div>
 
           </div>
@@ -801,138 +824,138 @@ const CalForm = () => {
     return a
 
   }
-  
 
-  function pagePrint (val) {
+
+  function pagePrint(val) {
     try {
-var dp = val[0]
-    var pag;
+      var dp = val[0]
+      var pag;
       var ap = <>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</>
-  if (dp != undefined) {
-    ap = <>{sessionStorage.getItem("ag")}</>
-    var cp = dp.ev_name
-    //var c1 = c.substring(71, 0)
-    //var c2 = c.substring(71)
-    var ep = dp.fms_id
-    var fp = dp.ev_res
-    var gp = dp.ev_status
-    var hp = dp.ev_point
-    var ip = dp.ev_target
-    var jp = dp.ev_result
-    var kp = dp.ev_budget
-    var kkp = kp.split(", ")
-    var lp = dp.ev_buded
-    var llp = lp.split(", ")
-    var mp = dp.ev_problem
+      if (dp != undefined) {
+        ap = <>{sessionStorage.getItem("ag")}</>
+        var cp = dp.ev_name
+        //var c1 = c.substring(71, 0)
+        //var c2 = c.substring(71)
+        var ep = dp.fms_id
+        var fp = dp.ev_res
+        var gp = dp.ev_status
+        var hp = dp.ev_point
+        var ip = dp.ev_target
+        var jp = dp.ev_result
+        var kp = dp.ev_budget
+        var kkp = kp.split(", ")
+        var lp = dp.ev_buded
+        var llp = lp.split(", ")
+        var mp = dp.ev_problem
 
-      pag = <div className='fonts col-print-12'>
-      <div className='textr0'>
-        ไตรมาสที่ 1 <input type="checkbox" />&nbsp; ต.ค.-ธ.ค. ๖๖
-        <br />ไตรมาสที่ 2 <input type="checkbox" />&nbsp; ม.ค.-มี.ค. ๖๗
-        <br />แบบรายงานความก้าวหน้ารายโครงการ/กิจกรรม&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ไตรมาสที่ 3 <input type="checkbox" /> เม.ย.-มิ.ย. ๖๗
-        <br /><b>ส่วนราชการ </b> &nbsp;&nbsp;&nbsp; {ap} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ไตรมาสที่ 4 <input type="checkbox" />&nbsp; ก.ค.-ก.ย. ๖๗
-      </div>
-      <div className='row textl5'>
-        <div className='col'>
-          ชื่อโครงการ/กิจกรรม
-        </div>
-        <div className='col-10'>{cp}</div>
-      </div>
-  
-      <div className='textl5'>ลำดับโครงการ / กิจกรรมตามแผนสนพ. &nbsp;&nbsp;&nbsp; {ep}
-        <br /><b>หน่วยงานที่รับผิดชอบ</b> &nbsp;&nbsp;&nbsp; {fp}
-        <br />สถานะของโครงการ: <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <div className="form-check form-check-inline">
-          <input className="form-check-input" type="radio" name="status" id="inlineRadio1" value="แล้วเสร็จ" defaultChecked />
-          <label className="form-check-label" htmlFor="inlineRadio1">แล้วเสร็จ</label>
-        </div> &nbsp;&nbsp;&nbsp;&nbsp;
-        <div className="form-check form-check-inline">
-          <input className="form-check-input" type="radio" name="status" id="inlineRadio2" value="ยังไม่เริ่มดำเนินการ" />
-          <label className="form-check-label" htmlFor="inlineRadio2">ยังไม่เริ่มดำเนินการ</label>
-        </div> &nbsp;&nbsp;&nbsp;&nbsp;
-        <div className="form-check form-check-inline">
-          <input className="form-check-input" type="radio" name="status" id="inlineRadio3" value="ยกเลิก" />
-          <label className="form-check-label" htmlFor="inlineRadio3">ยกเลิก</label>
-        </div> &nbsp;&nbsp;&nbsp;&nbsp;
-        <div className="form-check form-check-inline">
-          <input className="form-check-input" type="radio" name="status" id="inlineRadio4" value="กำลังดำเนินการ" />
-          <label className="form-check-label" htmlFor="inlineRadio4">กำลังดำเนินการ</label>
-        </div> &nbsp;&nbsp;&nbsp;&nbsp;
-        <div className="form-check form-check-inline">
-          <input className="form-check-input" type="radio" name="status" id="inlineRadio5" value="ชะลอ" />
-          <label className="form-check-label" htmlFor="inlineRadio5">ชะลอ</label>
-        </div>
-        <br />รายละเอียดการดำเนินงานในไตรมาสนี้ บอกถึงเป้าหมาย วัตถุประสงค์ วิธีดำเนินการและผล (ถ้ามี) รวมถึงความก้าวหน้า ของโครงการ (%)
-        <div className='border border-dark mb-2 mt-1 m-0 p-2'>
-          <b><u>วัตถุประสงค์</u></b>
-          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {hp}</div>
-          <b><u>เป้าหมาย</u></b>
-          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {ip}</div>
-          <b><u>ผลการดำเนินโครงการ</u></b>
-          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {jp}</div>
-          <b><u>การใช้จ่ายงบประมาณ</u></b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <div className="form-check form-check-inline">
-            <input className="form-check-input" type="radio" name="budget" id="inlineRadio21" value="ไม่ได้ใช้งบประมาณ" />
-            <label className="form-check-label" htmlFor="inlineRadio21">ไม่ได้ใช้งบประมาณ</label>
-          </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <div className="form-check form-check-inline">
-            <input className="form-check-input" type="radio" name="budget" id="inlineRadio22" value="ใช้งบประมาณ" defaultChecked />
-            <label className="form-check-label" htmlFor="inlineRadio22">ใช้งบประมาณ</label>
+        pag = <div className='fonts col-print-12'>
+          <div className='textr0'>
+            ไตรมาสที่ 1 <input type="checkbox" />&nbsp; ต.ค.-ธ.ค. ๖๖
+            <br />ไตรมาสที่ 2 <input type="checkbox" />&nbsp; ม.ค.-มี.ค. ๖๗
+            <br />แบบรายงานความก้าวหน้ารายโครงการ/กิจกรรม&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ไตรมาสที่ 3 <input type="checkbox" /> เม.ย.-มิ.ย. ๖๗
+            <br /><b>ส่วนราชการ </b> &nbsp;&nbsp;&nbsp; {ap} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ไตรมาสที่ 4 <input type="checkbox" />&nbsp; ก.ค.-ก.ย. ๖๗
           </div>
-          <div className='m-0 mt-1 mb-0'><table className='table table-bordered border-primary textc'>
-            <thead>
-              <tr>
-                {/* <th colSpan="2">งบประมาณและแหล่งที่มา<br />ของงบประมาณ</th> */}
-                <th colSpan="3">งบประมาณที่ได้รับทั้งหมด</th>
-                <th colSpan="3">งบประมาณที่ใช้ไปทั้งหมด</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                {/* <th>งบฯกทม.</th><th>งบฯอุดหนุน<br />/อื่นๆ</th> */}
-                <th>งบฯ<br />ดำเนินการ</th>
-                <th>งบฯ<br />ลงทุน</th>
-                <th>รวม</th>
-                <th>งบฯ<br />ดำเนินการ</th>
-                <th>งบฯ<br />ลงทุน</th>
-                <th>รวม</th>
-              </tr>
-              <tr>
-                {/* <th>123</th><th>123</th> */}
-                <th>{kkp[0]}</th>
-                <th>{kkp[1]}</th>
-                <th>{kkp[2]}</th>
-                <th>{llp[0]}</th>
-                <th>{llp[1]}</th>
-                <th>{llp[2]}</th>
-              </tr>
-            </tbody>
-          </table></div><b><u>สรุปผลการดำเนินงาน: </u></b><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <div className="form-check form-check-inline">
-            <input className="form-check-input" type="radio" name="resul" id="inlineRadio31" value="เป็นไปตามแผน" defaultChecked />
-            <label className="form-check-label" htmlFor="inlineRadio31">เป็นไปตามแผน</label>
-          </div>&nbsp;&nbsp;&nbsp;&nbsp;
-          <div className="form-check form-check-inline">
-            <input className="form-check-input" type="radio" name="resul" id="inlineRadio32" value="เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ" />
-            <label className="form-check-label" htmlFor="inlineRadio32">เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ</label>
-          </div> &nbsp;&nbsp;&nbsp;&nbsp;
-          <div className="form-check form-check-inline">
-            <input className="form-check-input" type="radio" name="resul" id="inlineRadio33" value="ไม่เป็นไปตามแผน" />
-            <label className="form-check-label" htmlFor="inlineRadio33">ไม่เป็นไปตามแผน</label>
+          <div className='row textl5'>
+            <div className='col'>
+              ชื่อโครงการ/กิจกรรม
+            </div>
+            <div className='col-10'>{cp}</div>
           </div>
-          <br /><b><u>ข้อคิดเห็นเพิ่มเติม / ปัญหาและอุปสรรค</u></b>
-          <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{mp}
-          
-        </div>
-      </div>
-    </div>
-      
-  } else pag = <>ไม่พบการส่งข้อมูลเข้ามา</>
-}catch {
-  console.log("err")
-}
 
-return pag
+          <div className='textl5'>ลำดับโครงการ / กิจกรรมตามแผนสนพ. &nbsp;&nbsp;&nbsp; {ep}
+            <br /><b>หน่วยงานที่รับผิดชอบ</b> &nbsp;&nbsp;&nbsp; {fp}
+            <br />สถานะของโครงการ: <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="radio" name="status" id="inlineRadio1" value="แล้วเสร็จ" defaultChecked />
+              <label className="form-check-label" htmlFor="inlineRadio1">แล้วเสร็จ</label>
+            </div> &nbsp;&nbsp;&nbsp;&nbsp;
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="radio" name="status" id="inlineRadio2" value="ยังไม่เริ่มดำเนินการ" />
+              <label className="form-check-label" htmlFor="inlineRadio2">ยังไม่เริ่มดำเนินการ</label>
+            </div> &nbsp;&nbsp;&nbsp;&nbsp;
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="radio" name="status" id="inlineRadio3" value="ยกเลิก" />
+              <label className="form-check-label" htmlFor="inlineRadio3">ยกเลิก</label>
+            </div> &nbsp;&nbsp;&nbsp;&nbsp;
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="radio" name="status" id="inlineRadio4" value="กำลังดำเนินการ" />
+              <label className="form-check-label" htmlFor="inlineRadio4">กำลังดำเนินการ</label>
+            </div> &nbsp;&nbsp;&nbsp;&nbsp;
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="radio" name="status" id="inlineRadio5" value="ชะลอ" />
+              <label className="form-check-label" htmlFor="inlineRadio5">ชะลอ</label>
+            </div>
+            <br />รายละเอียดการดำเนินงานในไตรมาสนี้ บอกถึงเป้าหมาย วัตถุประสงค์ วิธีดำเนินการและผล (ถ้ามี) รวมถึงความก้าวหน้า ของโครงการ (%)
+            <div className='border border-dark mb-2 mt-1 m-0 p-2'>
+              <b><u>วัตถุประสงค์</u></b>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {hp}</div>
+              <b><u>เป้าหมาย</u></b>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {ip}</div>
+              <b><u>ผลการดำเนินโครงการ</u></b>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {jp}</div>
+              <b><u>การใช้จ่ายงบประมาณ</u></b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div className="form-check form-check-inline">
+                <input className="form-check-input" type="radio" name="budget" id="inlineRadio21" value="ไม่ได้ใช้งบประมาณ" />
+                <label className="form-check-label" htmlFor="inlineRadio21">ไม่ได้ใช้งบประมาณ</label>
+              </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div className="form-check form-check-inline">
+                <input className="form-check-input" type="radio" name="budget" id="inlineRadio22" value="ใช้งบประมาณ" defaultChecked />
+                <label className="form-check-label" htmlFor="inlineRadio22">ใช้งบประมาณ</label>
+              </div>
+              <div className='m-0 mt-1 mb-0'><table className='table table-bordered border-primary textc'>
+                <thead>
+                  <tr>
+                    {/* <th colSpan="2">งบประมาณและแหล่งที่มา<br />ของงบประมาณ</th> */}
+                    <th colSpan="3">งบประมาณที่ได้รับทั้งหมด</th>
+                    <th colSpan="3">งบประมาณที่ใช้ไปทั้งหมด</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    {/* <th>งบฯกทม.</th><th>งบฯอุดหนุน<br />/อื่นๆ</th> */}
+                    <th>งบฯ<br />ดำเนินการ</th>
+                    <th>งบฯ<br />ลงทุน</th>
+                    <th>รวม</th>
+                    <th>งบฯ<br />ดำเนินการ</th>
+                    <th>งบฯ<br />ลงทุน</th>
+                    <th>รวม</th>
+                  </tr>
+                  <tr>
+                    {/* <th>123</th><th>123</th> */}
+                    <th>{kkp[0]}</th>
+                    <th>{kkp[1]}</th>
+                    <th>{kkp[2]}</th>
+                    <th>{llp[0]}</th>
+                    <th>{llp[1]}</th>
+                    <th>{llp[2]}</th>
+                  </tr>
+                </tbody>
+              </table></div><b><u>สรุปผลการดำเนินงาน: </u></b><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div className="form-check form-check-inline">
+                <input className="form-check-input" type="radio" name="resul" id="inlineRadio31" value="เป็นไปตามแผน" defaultChecked />
+                <label className="form-check-label" htmlFor="inlineRadio31">เป็นไปตามแผน</label>
+              </div>&nbsp;&nbsp;&nbsp;&nbsp;
+              <div className="form-check form-check-inline">
+                <input className="form-check-input" type="radio" name="resul" id="inlineRadio32" value="เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ" />
+                <label className="form-check-label" htmlFor="inlineRadio32">เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ</label>
+              </div> &nbsp;&nbsp;&nbsp;&nbsp;
+              <div className="form-check form-check-inline">
+                <input className="form-check-input" type="radio" name="resul" id="inlineRadio33" value="ไม่เป็นไปตามแผน" />
+                <label className="form-check-label" htmlFor="inlineRadio33">ไม่เป็นไปตามแผน</label>
+              </div>
+              <br /><b><u>ข้อคิดเห็นเพิ่มเติม / ปัญหาและอุปสรรค</u></b>
+              <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{mp}
+
+            </div>
+          </div>
+        </div>
+
+      } else pag = <>ไม่พบการส่งข้อมูลเข้ามา</>
+    } catch {
+      console.log("err")
+    }
+
+    return pag
   }
 
 
@@ -1002,8 +1025,10 @@ return pag
   }
 
   const pa = () => {
-    var fp1 = fetchs.map(a => [a.pa1, a.pa2])
-    return fp1[0]
+    var fp1 = fetchs.map(a => [a.pa1, a.pa2, a.h1pa, a.h1pb, a.h2pa, a.h2pb, a.h3pa, a.h3pb, a.h4pa, a.h4pb, a.h5pa, a.h5pb, a.h6pa, a.h6pb, a.h7pa, a.h7pb, a.h8pa, a.h8pb, a.h9pa, a.h9pb, a.h10pa, a.h10pb, a.h11pa, a.h11pb])
+    var ffp1 = fp1[0]
+    var ffp = [ffp1[0], ffp1[1], ffp1[Number(sessionStorage.getItem("ha")) + 2], ffp1[Number(sessionStorage.getItem("hb")) + 2]]
+    return ffp
   }
 
   function dcdd(id) {
@@ -1024,26 +1049,45 @@ return pag
     var pa2;
     var p1 = 0;
     var p2 = 0;
+    var pp1 = 0;
+    var pp2 = 0;
+    var parar = sessionStorage.getItem("pp").split(",")
+    var sare;
     var are;
+    var iff = 0;
     for (var i = 1; i <= val.length; i++) {
       if (`${s[i - 1]}`[(s[i - 1].length) - 1] === "*") {
-        if (p1 === 0)
-          p1 += pa()[0] + Number(document.getElementById(`${val[i - 1]}`).value);
+        if (iff === 0) {
+          p1 = 0
+          pp1 = 0
+          p1 += pa()[0] - parar[i - 1] + Number(document.getElementById(`${val[i - 1]}`).value);
+          pp1 += pa()[2] - parar[i - 1] + Number(document.getElementById(`${val[i - 1]}`).value);
+          iff = 1
+        }
         else {
-          p2 += pa()[1] + Number(document.getElementById(`${val[i - 1]}`).value);
+          p2 = 0
+          pp2 = 0
+          p2 += pa()[1] - parar[i - 1] + Number(document.getElementById(`${val[i - 1]}`).value);
+          pp2 += pa()[3] - parar[i - 1] + Number(document.getElementById(`${val[i - 1]}`).value);
+          console.log("p1", p1, pp1)
+          console.log("p2", p2, pp2)
         }
       }
     }
-    if ((p1/p2) * 100 >= 100)
-      are = (((p1/p2) ** (-1))*100).toFixed(2)
-    else 
-    are = ((p1/p2)*100).toFixed(2)
-
-    pa2 = [p1, p2, are]
+    if ((p1 / p2) * 100 >= 100) {
+      are = (((p1 / p2) ** (-1)) * 100).toFixed(2)
+      sare = (((pp1 / pp2) ** (-1)) * 100).toFixed(2)
+    }
+    else {
+      are = ((p1 / p2) * 100).toFixed(2)
+      sare = ((pp1 / pp2) * 100).toFixed(2)
+    }
+    pa2 = [p1, p2, are, sare, pp1, pp2]
 
     return pa2
-    
+
   }
+
 
   return (
     <div>
@@ -1098,80 +1142,80 @@ return pag
                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body textl7">
-                    
-                    <br />
-                    <label>ชื่อโครงการ / กิจกรรม</label>
-                    <br />
-                    <input type="text" className='input60' name='evname' required />
-                    <br />
-                    <label>ลำดับโครงการ / กิจกรรมตามแผนสนพ.</label>
-                    <br />
-                    <input type="number" className='input60' name='fmsid' required />
-                    <br />
-                    <label>ผู้รับผิดชอบ</label>
-                    <br />
-                    <input type="text" className='input60' name='evres' required />
-                    <br />
-                    <label>สถานะโครงการ</label>
-                    <br />
-                    <div>
-                      <input type="radio" value="แล้วเสร็จ" name="evstatus" /> แล้วเสร็จ &nbsp;&nbsp;&nbsp;
-                      <input type="radio" value="ยังไม่ดำเนินการ" name="evstatus" /> ยังไม่ดำเนินการ &nbsp;&nbsp;&nbsp;
-                      <input type="radio" value="ยกเลิก" name="evstatus" /> ยกเลิก &nbsp;&nbsp;&nbsp;
-                      <input type="radio" value="กำลังดำเนินการ" name="evstatus" /> กำลังดำเนินการ &nbsp;&nbsp;&nbsp;
-                      <input type="radio" value="ชะลอ" name="evstatus" /> ชะลอ
+
+                  <br />
+                  <label>ชื่อโครงการ / กิจกรรม</label>
+                  <br />
+                  <input type="text" className='input60' name='evname' required />
+                  <br />
+                  <label>ลำดับโครงการ / กิจกรรมตามแผนสนพ.</label>
+                  <br />
+                  <input type="number" className='input60' name='fmsid' required />
+                  <br />
+                  <label>ผู้รับผิดชอบ</label>
+                  <br />
+                  <input type="text" className='input60' name='evres' required />
+                  <br />
+                  <label>สถานะโครงการ</label>
+                  <br />
+                  <div>
+                    <input type="radio" value="แล้วเสร็จ" name="evstatus" /> แล้วเสร็จ &nbsp;&nbsp;&nbsp;
+                    <input type="radio" value="ยังไม่ดำเนินการ" name="evstatus" /> ยังไม่ดำเนินการ &nbsp;&nbsp;&nbsp;
+                    <input type="radio" value="ยกเลิก" name="evstatus" /> ยกเลิก &nbsp;&nbsp;&nbsp;
+                    <input type="radio" value="กำลังดำเนินการ" name="evstatus" /> กำลังดำเนินการ &nbsp;&nbsp;&nbsp;
+                    <input type="radio" value="ชะลอ" name="evstatus" /> ชะลอ
+                  </div>
+                  <br />
+                  <label>งบประมาณที่ได้รับ</label>
+                  <br />
+                  <div className="input-group mb-3">
+                    <div className="input-group-text">กทม:&nbsp;&nbsp;
+                      <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc1")} />
                     </div>
-                    <br />
-                    <label>งบประมาณที่ได้รับ</label>
-                    <br />
-                    <div className="input-group mb-3">
-                      <div className="input-group-text">กทม:&nbsp;&nbsp;
-                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc1")} />
-                      </div>
-                      <input type="text" className="input10" id='dc1' disabled />
-                      <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
-                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc2")} />
-                      </div>
-                      <input type="text" className="input10" id='dc2' disabled />
-                      <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
-                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc3")} />
-                      </div>
-                      <input type="text" className="input10" id='dc3' disabled />
+                    <input type="text" className="input10" id='dc1' disabled />
+                    <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
+                      <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc2")} />
                     </div>
-                    <label>งบประมาณที่ใช้</label>
-                    <br />
-                    <div className="input-group mb-3">
-                      <div className="input-group-text">กทม:&nbsp;&nbsp;
-                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd1")} />
-                      </div>
-                      <input type="text" className="input10" id='dd1' disabled />
-                      <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
-                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd2")} />
-                      </div>
-                      <input type="text" className="input10" id='dd2' disabled />
-                      <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
-                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd3")} />
-                      </div>
-                      <input type="text" className="input10" id='dd3' disabled />
+                    <input type="text" className="input10" id='dc2' disabled />
+                    <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
+                      <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc3")} />
                     </div>
-                    <label>วัตถุประสงค์</label>
-                    <br />
-                    <textarea className='textarea60100' name='evpoint' required />
-                    <br />
-                    <label>เป้าหมาย</label>
-                    <br />
-                    <textarea className='textarea60100' name='evtarget' required />
-                    <br />
-                    <label>ผลการดำเนินงาน</label>
-                    <br />
-                    <textarea className='textarea60100' name='result' required />
-                    <br />
-                    <label>ปัญหาและอุปสรรค</label>
-                    <br />
-                    <textarea className='textarea60100' name='problem' required />
-                    <br />
-                    <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label>
-                    <input type='file' name='evimg' />
+                    <input type="text" className="input10" id='dc3' disabled />
+                  </div>
+                  <label>งบประมาณที่ใช้</label>
+                  <br />
+                  <div className="input-group mb-3">
+                    <div className="input-group-text">กทม:&nbsp;&nbsp;
+                      <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd1")} />
+                    </div>
+                    <input type="text" className="input10" id='dd1' disabled />
+                    <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
+                      <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd2")} />
+                    </div>
+                    <input type="text" className="input10" id='dd2' disabled />
+                    <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
+                      <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd3")} />
+                    </div>
+                    <input type="text" className="input10" id='dd3' disabled />
+                  </div>
+                  <label>วัตถุประสงค์</label>
+                  <br />
+                  <textarea className='textarea60100' name='evpoint' required />
+                  <br />
+                  <label>เป้าหมาย</label>
+                  <br />
+                  <textarea className='textarea60100' name='evtarget' required />
+                  <br />
+                  <label>ผลการดำเนินงาน</label>
+                  <br />
+                  <textarea className='textarea60100' name='result' required />
+                  <br />
+                  <label>ปัญหาและอุปสรรค</label>
+                  <br />
+                  <textarea className='textarea60100' name='problem' required />
+                  <br />
+                  <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label>
+                  <input type='file' name='evimg' />
                   {/* <br /><label>ยืนยัน: <input type="checkbox" onClick={e => dis()} /> </label><br /> */}
                 </div>
 
@@ -1196,7 +1240,7 @@ return pag
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="modal-body">
-              {pagePrint(printf)}
+                {pagePrint(printf)}
               </div>
               <div className="modal-footer d-print-none">
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
@@ -1207,7 +1251,7 @@ return pag
         </div>
 
       </div><div className='d-none d-print-block'>{pagePrint(printf)}</div>
-      
+
 
 
     </div>

@@ -20,28 +20,74 @@ const Form = () => {
   const detail = Details();
   const dep = sessionStorage.getItem("department");
   var hos;
-  if (dep === "รพ.กลาง")
-  hos = "h1"
-  else if (dep === "รพ.ตากสิน")
-  hos = "h2"
-  else if (dep === "รพ.เจริญกรุงประชารัก")
-  hos = "h3"
-  else if (dep === "รพ.หลวงพ่อทวีศักดิ์")
-  hos = "h4"
-  else if (dep === "รพ.เวชการุณย์รัศมิ์")
-  hos = "h5"
-  else if (dep === "รพ.ลาดกระบัง")
-  hos = "h6"
-  else if (dep === "รพ.ราชพิพัฒน์")
-  hos = "h7"
-  else if (dep === "รพ.สิรินธร")
-  hos = "h8"
-  else if (dep === "รพ.ผู้สูงอายุบางขุนเทียน")
-  hos = "h9"
-  else if (dep === "รพ.คลองสามวา")
-  hos = "h10"
-  else if (dep === "รพ.บางนา")
-  hos = "h11"
+  var ha;
+  var hb;
+  if (dep === "รพ.กลาง") {
+    hos = "h1"
+    ha = 0
+    hb = 1
+  }
+  
+  else if (dep === "รพ.ตากสิน") {
+    hos = "h2"
+    ha = 2
+    hb = 3
+  }
+  
+  else if (dep === "รพ.เจริญกรุงประชารัก") {
+    hos = "h3"
+    ha = 4
+    hb = 5
+  }
+  
+  else if (dep === "รพ.หลวงพ่อทวีศักดิ์") {
+    hos = "h4"
+    ha = 6
+    hb = 7
+  }
+  
+  else if (dep === "รพ.เวชการุณย์รัศมิ์") {
+    hos = "h5"
+    ha = 8
+    hb = 9
+  }
+  
+  else if (dep === "รพ.ลาดกระบัง") {
+    hos = "h6"
+    ha = 10
+    hb = 11
+  }
+  
+  else if (dep === "รพ.ราชพิพัฒน์") {
+    hos = "h7"
+    ha = 12
+    hb = 13
+  }
+  
+  else if (dep === "รพ.สิรินธร") {
+    hos = "h8"
+    ha = 14
+    hb = 15
+  }
+  
+  else if (dep === "รพ.ผู้สูงอายุบางขุนเทียน") {
+    hos = "h9"
+    ha = 16
+    hb = 17
+  }
+  
+  else if (dep === "รพ.คลองสามวา") {
+    hos = "h10"
+    ha = 18
+    hb = 19
+  }
+  
+  else if (dep === "รพ.บางนา") {
+    hos = "h11"
+    ha = 20
+    hb = 21
+  }
+  
 
 
   //console.log(hos)
@@ -72,7 +118,9 @@ const Form = () => {
       evimg: data.get("evimg")
     };
     const JsonData3 = {
-      "h": q(z),
+      "h": pa2(z)[3],
+      "hpa1": pa2(z)[4],
+      "hpa2": pa2(z)[5],
       "pa1": pa2(z)[0],
       "pa2": pa2(z)[1],
       "sum": pa2(z)[2]
@@ -291,33 +339,53 @@ const Form = () => {
   }
 
   const pa = () => {
-    var fp1 = fetchs.map(a => [a.pa1, a.pa2])
-    return fp1[0]
+    var fp1 = fetchs.map(a => [a.pa1, a.pa2, a.h1pa, a.h1pb, a.h2pa, a.h2pb, a.h3pa, a.h3pb, a.h4pa, a.h4pb, a.h5pa, a.h5pb, a.h6pa, a.h6pb, a.h7pa, a.h7pb, a.h8pa, a.h8pb, a.h9pa, a.h9pb, a.h10pa, a.h10pb, a.h11pa, a.h11pb])
+    var ffp1 = fp1[0]
+    var ffp = [ffp1[0], ffp1[1], ffp1[Number(sessionStorage.getItem("ha")) + 2], ffp1[Number(sessionStorage.getItem("hb")) + 2]]
+    return ffp
   }
 
   const pa2 = (val) => {
     var pa2;
     var p1 = 0;
     var p2 = 0;
+    var pp1 = 0;
+    var pp2 = 0;
+    var parar = sessionStorage.getItem("pp").split(",")
+    var sare;
     var are;
+    var iff = 0;
     for (var i = 1; i <= val.length; i++) {
-      if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
-        if (p1 === 0)
-          p1 += pa()[0] + Number(document.getElementById(`${val[i - 1]}`).value);
+      if (`${s[i - 1]}`[(s[i - 1].length) - 1] === "*") {
+        if (iff === 0) {
+          p1 = 0
+          pp1 = 0
+          p1 += pa()[0] - parar[i - 1] + Number(document.getElementById(`${val[i - 1]}`).value);
+          pp1 += pa()[2] - parar[i - 1] + Number(document.getElementById(`${val[i - 1]}`).value);
+          iff = 1
+        }
         else {
-          p2 += pa()[1] + Number(document.getElementById(`${val[i - 1]}`).value);
+          p2 = 0
+          pp2 = 0
+          p2 += pa()[1] - parar[i - 1] + Number(document.getElementById(`${val[i - 1]}`).value);
+          pp2 += pa()[3] - parar[i - 1] + Number(document.getElementById(`${val[i - 1]}`).value);
+          console.log("p1", p1, pp1)
+          console.log("p2", p2, pp2)
         }
       }
     }
-    if ((p1/p2) * 100 >= 100)
-      are = (((p1/p2) ** (-1))*100).toFixed(2)
-    else 
-    are = ((p1/p2)*100).toFixed(2)
-
-    pa2 = [p1, p2, are]
+    if ((p1 / p2) * 100 >= 100) {
+      are = (((p1 / p2) ** (-1)) * 100).toFixed(2)
+      sare = (((pp1 / pp2) ** (-1)) * 100).toFixed(2)
+    }
+    else {
+      are = ((p1 / p2) * 100).toFixed(2)
+      sare = ((pp1 / pp2) * 100).toFixed(2)
+    }
+    pa2 = [p1, p2, are, sare, pp1, pp2]
 
     return pa2
-    
+
   }
 
   const dis = () => {
