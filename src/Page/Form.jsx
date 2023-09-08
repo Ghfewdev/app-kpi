@@ -7,7 +7,8 @@ import Details from '../Component/Details';
 const Form = () => {
 
   Authen();
-  const [fetchs,setFetchs] = useState([]);
+  const [quar, setQuar] = useState([]);
+  const [fetchs, setFetchs] = useState([]);
   const [forms, setForms] = useState({
     form: [],
     fill: []
@@ -22,72 +23,122 @@ const Form = () => {
   var hos;
   var ha;
   var hb;
+  var qqi = <></>;
   if (dep === "รพ.กลาง") {
     hos = "h1"
     ha = 0
     hb = 1
   }
-  
+
   else if (dep === "รพ.ตากสิน") {
     hos = "h2"
     ha = 2
     hb = 3
   }
-  
+
   else if (dep === "รพ.เจริญกรุงประชารัก") {
     hos = "h3"
     ha = 4
     hb = 5
   }
-  
+
   else if (dep === "รพ.หลวงพ่อทวีศักดิ์") {
     hos = "h4"
     ha = 6
     hb = 7
   }
-  
+
   else if (dep === "รพ.เวชการุณย์รัศมิ์") {
     hos = "h5"
     ha = 8
     hb = 9
   }
-  
+
   else if (dep === "รพ.ลาดกระบัง") {
     hos = "h6"
     ha = 10
     hb = 11
   }
-  
+
   else if (dep === "รพ.ราชพิพัฒน์") {
     hos = "h7"
     ha = 12
     hb = 13
   }
-  
+
   else if (dep === "รพ.สิรินธร") {
     hos = "h8"
     ha = 14
     hb = 15
   }
-  
+
   else if (dep === "รพ.ผู้สูงอายุบางขุนเทียน") {
     hos = "h9"
     ha = 16
     hb = 17
   }
-  
+
   else if (dep === "รพ.คลองสามวา") {
     hos = "h10"
     ha = 18
     hb = 19
   }
-  
+
   else if (dep === "รพ.บางนา") {
     hos = "h11"
     ha = 20
     hb = 21
   }
-  
+
+  const quc = (qq) => {
+
+    if (qq != []) {
+      var che = quar.map(a => a.de_qur)
+      var st = String(che)
+      if (st == "") {
+        document.getElementById("c1").hidden = false;
+        document.getElementById("c2").hidden = true;
+        qqi = <>
+          <option value={"1"}>ไตรมาสที่ 1</option>
+          {/* <option value={"2"}>ไตรมาสที่ 2</option>
+          <option value={"3"}>ไตรมาสที่ 3</option>
+          <option value={"4"}>ไตรมาสที่ 4</option> */}
+        </>
+      }
+      else if (st == "1") {
+        document.getElementById("c1").hidden = false;
+        document.getElementById("c2").hidden = true;
+        qqi = <>
+          <option value={"2"}>ไตรมาสที่ 2</option>
+          {/* <option value={"3"}>ไตรมาสที่ 3</option>
+          <option value={"4"}>ไตรมาสที่ 4</option> */}
+        </>
+      }
+      else if (st == "1,2") {
+        document.getElementById("c1").hidden = false;
+        document.getElementById("c2").hidden = true;
+        qqi = <>
+          <option value={"3"}>ไตรมาสที่ 3</option>
+          {/* <option value={"4"}>ไตรมาสที่ 4</option> */}
+        </>
+      }
+      else if (st == "1,2,3") {
+        document.getElementById("c1").hidden = false;
+        document.getElementById("c2").hidden = true;
+        qqi = <>
+          <option value={"4"}>ไตรมาสที่ 4</option>
+        </>
+      }
+
+      else {
+        document.getElementById("c1").hidden = true;
+        document.getElementById("c2").hidden = false;
+      }
+    }
+
+    return qqi
+
+  }
 
 
   //console.log(hos)
@@ -124,7 +175,7 @@ const Form = () => {
       "pa1": pa2(z)[0],
       "pa2": pa2(z)[1],
       "sum": pa2(z)[2]
-  };
+    };
 
     fetch("https://kpi-api.onrender.com/form/fill", {
       method: "POST",
@@ -170,7 +221,7 @@ const Form = () => {
         console.log("error", error);
       })
 
-      fetch(`https://kpi-api.onrender.com/result/update/${hos}/${d[1]}`, {
+    fetch(`https://kpi-api.onrender.com/result/update/${hos}/${d[1]}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -209,7 +260,7 @@ const Form = () => {
       .then(data => {
         setForms({ ...forms, form: data })
       })
-      
+
 
   }
 
@@ -234,13 +285,21 @@ const Form = () => {
         setForms({ ...forms, fill: data2 })
       })
 
-      fetch(`https://kpi-api.onrender.com/result/${val}`)
-              .then(response3 => {
-                return response3.json();
-              })
-              .then(data3 => {
-                setFetchs(data3);
-              });
+    fetch(`https://kpi-api.onrender.com/result/${val}`)
+      .then(response3 => {
+        return response3.json();
+      })
+      .then(data3 => {
+        setFetchs(data3);
+      });
+
+    fetch(`http://localhost:3000/checked/user/${sessionStorage.getItem("id")}/${val}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        setQuar(data);
+      });
 
   }
 
@@ -409,13 +468,13 @@ const Form = () => {
       <div className='bgi'>
         <br /><br />
         <div className="card">
+
           <div className="container">
             <br />
             <h1 className='textc'>
               แบบประเมินตัวชี้วัด
             </h1>
             <br /><br />
-
             <div className="textl2">
 
               <select value={secec.sece} onClick={e => handleonChange(d[1])} onChange={e => setSececs({ ...secec, sece: e.target.value })} >
@@ -425,122 +484,131 @@ const Form = () => {
                 ))}
               </select>
             </div>
-            <br />
-            <div className="textc">{c}</div>
+            <div id='c2' hidden className='textc'>
+              <br /><br /><br />
+              <h1 style={{ color: "red" }}>ดำเนินการส่งข้อมูลครบแล้ว</h1>
+              <br /><br /><br />
+            </div>
+            <div id='c1'>
+              <br />
+              <div className="textc">{c}</div>
 
-            <form onSubmit={handleSubmit} className='textl2'>
+              <form onSubmit={handleSubmit} className='textl2'>
 
-              {forms.fill.map(fill => (
+                {forms.fill.map(fill => (
 
-                <div key={fill.fm_id}>
-                  <br /><label>ชื่อตัวชี้วัด: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{fill.fm_name}</b></label>
-                  <br /><br />
+                  <div key={fill.fm_id}>
+                    <br /><label>ชื่อตัวชี้วัด: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{fill.fm_name}</b></label>
+                    <br /><br />
 
-                  <p className='inline p'><label>ส่งข้อมูลประจำ:&nbsp;&nbsp;</label></p>
-                  <p className='inline textr p'><select name="qur">
-                    <option value={"1"}>ไตรมาสที่ 1</option>
+                    <p className='inline p'><label>ส่งข้อมูลประจำ:&nbsp;&nbsp;</label></p>
+                    <p className='inline textr p'><select name="qur">
+                      {quc(quar)}
+                      {/* <option value={"1"}>ไตรมาสที่ 1</option>
                     <option value={"2"}>ไตรมาสที่ 2</option>
                     <option value={"3"}>ไตรมาสที่ 3</option>
-                    <option value={"4"}>ไตรมาสที่ 4</option>
-                  </select></p>
-                  <br /><br />
-                  {n}
-                  <div>
-                    <br />
-                    <label><b>แบบรายงานความก้าวหน้ารายโครงการ / กิจกรรม</b></label>
-                    <br />
-                    <br />
-                    <label>ชื่อโครงการ / กิจกรรม</label>
-                    <br />
-                    <input type="text" className='input60' name='evname' required />
-                    <br />
-                    <label>ลำดับโครงการ / กิจกรรมตามแผนสนพ.</label>
-                    <br />
-                    <input type="number" className='input60' name='fmsid' required />
-                    <br />
-                    <label>ผู้รับผิดชอบ</label>
-                    <br />
-                    <input type="text" className='input60' name='evres' required />
-                    <br />
-                    <label>สถานะโครงการ</label>
-                    <br />
+                    <option value={"4"}>ไตรมาสที่ 4</option> */}
+                    </select></p>
+                    <br /><br />
+                    {n}
                     <div>
-                      <input type="radio" value="แล้วเสร็จ" name="evstatus" /> แล้วเสร็จ &nbsp;&nbsp;&nbsp;
-                      <input type="radio" value="ยังไม่ดำเนินการ" name="evstatus" /> ยังไม่ดำเนินการ &nbsp;&nbsp;&nbsp;
-                      <input type="radio" value="ยกเลิก" name="evstatus" /> ยกเลิก &nbsp;&nbsp;&nbsp;
-                      <input type="radio" value="กำลังดำเนินการ" name="evstatus" /> กำลังดำเนินการ &nbsp;&nbsp;&nbsp;
-                      <input type="radio" value="ชะลอ" name="evstatus" /> ชะลอ
+                      <br />
+                      <label><b>แบบรายงานความก้าวหน้ารายโครงการ / กิจกรรม</b></label>
+                      <br />
+                      <br />
+                      <label>ชื่อโครงการ / กิจกรรม</label>
+                      <br />
+                      <input type="text" className='input60' name='evname' required />
+                      <br />
+                      <label>ลำดับโครงการ / กิจกรรมตามแผนสนพ.</label>
+                      <br />
+                      <input type="number" className='input60' name='fmsid' required />
+                      <br />
+                      <label>ผู้รับผิดชอบ</label>
+                      <br />
+                      <input type="text" className='input60' name='evres' required />
+                      <br />
+                      <label>สถานะโครงการ</label>
+                      <br />
+                      <div>
+                        <input type="radio" value="แล้วเสร็จ" name="evstatus" /> แล้วเสร็จ &nbsp;&nbsp;&nbsp;
+                        <input type="radio" value="ยังไม่ดำเนินการ" name="evstatus" /> ยังไม่ดำเนินการ &nbsp;&nbsp;&nbsp;
+                        <input type="radio" value="ยกเลิก" name="evstatus" /> ยกเลิก &nbsp;&nbsp;&nbsp;
+                        <input type="radio" value="กำลังดำเนินการ" name="evstatus" /> กำลังดำเนินการ &nbsp;&nbsp;&nbsp;
+                        <input type="radio" value="ชะลอ" name="evstatus" /> ชะลอ
+                      </div>
+                      <br />
+                      <label>งบประมาณที่ได้รับ</label>
+                      <br />
+                      <div className="input-group mb-3">
+                        <div className="input-group-text">กทม:&nbsp;&nbsp;
+                          <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc1")} />
+                        </div>
+                        <input type="text" className="input10" id='dc1' disabled />
+                        <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
+                          <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc2")} />
+                        </div>
+                        <input type="text" className="input10" id='dc2' disabled />
+                        <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
+                          <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc3")} />
+                        </div>
+                        <input type="text" className="input10" id='dc3' disabled />
+                      </div>
+                      <label>งบประมาณที่ใช้</label>
+                      <br />
+                      <div className="input-group mb-3">
+                        <div className="input-group-text">กทม:&nbsp;&nbsp;
+                          <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd1")} />
+                        </div>
+                        <input type="text" className="input10" id='dd1' disabled />
+                        <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
+                          <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd2")} />
+                        </div>
+                        <input type="text" className="input10" id='dd2' disabled />
+                        <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
+                          <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd3")} />
+                        </div>
+                        <input type="text" className="input10" id='dd3' disabled />
+                      </div>
+                      <label>วัตถุประสงค์</label>
+                      <br />
+                      <textarea className='textarea60100' name='evpoint' required />
+                      <br />
+                      <label>เป้าหมาย</label>
+                      <br />
+                      <textarea className='textarea60100' name='evtarget' required />
+                      <br />
+                      <label>ผลการดำเนินงาน</label>
+                      <br />
+                      <textarea className='textarea60100' name='result' required />
+                      <br />
+                      <label>ปัญหาและอุปสรรค</label>
+                      <br />
+                      <textarea className='textarea60100' name='problem' required />
+                      <br />
+                      <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label>
+                      <input type='file' name='evimg' />
+                      <div className='textr2'>
+                        <br />
+                        <label>ยืนยัน: <input type="checkbox" value={secec.check} onClick={e => dis()} /> </label>
+                        <br />
+                      </div>
                     </div>
-                    <br />
-                    <label>งบประมาณที่ได้รับ</label>
-                    <br />
-                    <div className="input-group mb-3">
-                      <div className="input-group-text">กทม:&nbsp;&nbsp;
-                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc1")} />
-                      </div>
-                      <input type="text" className="input10" id='dc1' disabled />
-                      <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
-                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc2")} />
-                      </div>
-                      <input type="text" className="input10" id='dc2' disabled />
-                      <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
-                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc3")} />
-                      </div>
-                      <input type="text" className="input10" id='dc3' disabled />
-                    </div>
-                    <label>งบประมาณที่ใช้</label>
-                    <br />
-                    <div className="input-group mb-3">
-                      <div className="input-group-text">กทม:&nbsp;&nbsp;
-                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd1")} />
-                      </div>
-                      <input type="text" className="input10" id='dd1' disabled />
-                      <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
-                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd2")} />
-                      </div>
-                      <input type="text" className="input10" id='dd2' disabled />
-                      <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
-                        <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd3")} />
-                      </div>
-                      <input type="text" className="input10" id='dd3' disabled />
-                    </div>
-                    <label>วัตถุประสงค์</label>
-                    <br />
-                    <textarea className='textarea60100' name='evpoint' required />
-                    <br />
-                    <label>เป้าหมาย</label>
-                    <br />
-                    <textarea className='textarea60100' name='evtarget' required />
-                    <br />
-                    <label>ผลการดำเนินงาน</label>
-                    <br />
-                    <textarea className='textarea60100' name='result' required />
-                    <br />
-                    <label>ปัญหาและอุปสรรค</label>
-                    <br />
-                    <textarea className='textarea60100' name='problem' required />
-                    <br />
-                    <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label>
-                    <input type='file' name='evimg' />
                     <div className='textr2'>
                       <br />
-                      <label>ยืนยัน: <input type="checkbox" value={secec.check} onClick={e => dis()} /> </label>
-                      <br />
+                      <button id="submit" type="submit" className='btn btn-success' disabled> ส่งข้อมูล </button>
                     </div>
                   </div>
 
-                </div>
+                ))}
 
-              ))}
-              <div className='textr2'>
-                <br />
-                <button id="submit" type="submit" className='btn btn-success' disabled> ส่งข้อมูล </button>
+              </form>
               </div>
-            </form>
-            <br />
-            <div className='textc'><p className='inline textl'><a href="/">กลับหน้าหลัก</a></p>
-              <p className='inline textr'><a href="/"></a></p>
-            </div>
+              <br />
+              <div className='textc'><p className='inline textl'><a href="/">กลับหน้าหลัก</a></p>
+                <p className='inline textr'><a href="/"></a></p>
+              </div>
+            
           </div>
         </div>
         <div><br /><br /><br /><br /><br /><br /><br /></div>
