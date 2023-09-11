@@ -1,11 +1,9 @@
 import React from 'react'
-import Quarter from './Quarter'
 
 const Tests = () => {
-  var q = Quarter();
   return (
     <div>
-      {q}
+      <h1>TestPage</h1>
     </div>
   )
 }

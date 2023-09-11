@@ -79,7 +79,7 @@
   background-color: #4CAF50;
   color: white;
   padding: 16px;
-  font-size: 16px;
+  font-size: 16pt;
   border: none;
   cursor: pointer;
 }
@@ -179,8 +179,9 @@
 }
 
 .fonts {
-  font-size: 11pt;
-  font-family: 'Sarabun', sans-serif;
+  font-size: 16pt;
+  font-family: 'TH SarabunPSK', sans-serif;
+  line-height: 16pt;
 }
 
 

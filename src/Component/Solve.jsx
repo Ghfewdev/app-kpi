@@ -1,13 +1,13 @@
 import { useRef, useEffect } from 'react'
 import "chartjs-gauge";
 
-const sSolve = (val) => {
+const sSolve = (val, val2) => {
   const canvasRef = useRef();
 
   var randomData = function () {
     return [
       100,
-      88,
+      val2,
       60
     ];
   };
@@ -78,7 +78,7 @@ const sSolve = (val) => {
 const Solve = (val) => {
   return (
     <div style={{ width: val.do   }}>
-      {sSolve(val.name)}
+      {sSolve(val.name, val.name2)}
     </div>
   )
 }

@@ -18,7 +18,10 @@ const Form = () => {
     check: ""
   });
 
-  const detail = Details();
+  var detail = Details();
+  if (detail == [] || detail == undefined || detail == -Infinity) {
+   detail = 0
+  }
   const dep = sessionStorage.getItem("department");
   var hos;
   var ha;
@@ -139,7 +142,6 @@ const Form = () => {
     return qqi
 
   }
-
 
   //console.log(hos)
 
@@ -293,7 +295,7 @@ const Form = () => {
         setFetchs(data3);
       });
 
-    fetch(`http://localhost:3000/checked/user/${sessionStorage.getItem("id")}/${val}`)
+    fetch(`https://kpi-api.onrender.com/checked/user/${sessionStorage.getItem("id")}/${val}`)
       .then(response => {
         return response.json();
       })
@@ -400,7 +402,7 @@ const Form = () => {
   const pa = () => {
     var fp1 = fetchs.map(a => [a.pa1, a.pa2, a.h1pa, a.h1pb, a.h2pa, a.h2pb, a.h3pa, a.h3pb, a.h4pa, a.h4pb, a.h5pa, a.h5pb, a.h6pa, a.h6pb, a.h7pa, a.h7pb, a.h8pa, a.h8pb, a.h9pa, a.h9pb, a.h10pa, a.h10pb, a.h11pa, a.h11pb])
     var ffp1 = fp1[0]
-    var ffp = [ffp1[0], ffp1[1], ffp1[Number(sessionStorage.getItem("ha")) + 2], ffp1[Number(sessionStorage.getItem("hb")) + 2]]
+    var ffp = [ffp1[0], ffp1[1], ffp1[ha + 2], ffp1[hb + 2]]
     return ffp
   }
 
@@ -410,26 +412,26 @@ const Form = () => {
     var p2 = 0;
     var pp1 = 0;
     var pp2 = 0;
-    var parar = sessionStorage.getItem("pp").split(",")
+    //var parar = sessionStorage.getItem("pp").split(",")
     var sare;
     var are;
     var iff = 0;
     for (var i = 1; i <= val.length; i++) {
-      if (`${s[i - 1]}`[(s[i - 1].length) - 1] === "*") {
+      if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
         if (iff === 0) {
           p1 = 0
           pp1 = 0
-          p1 += pa()[0] - parar[i - 1] + Number(document.getElementById(`${val[i - 1]}`).value);
-          pp1 += pa()[2] - parar[i - 1] + Number(document.getElementById(`${val[i - 1]}`).value);
+          p1 += pa()[0] + Number(document.getElementById(`${val[i - 1]}`).value);
+          pp1 += pa()[2] + Number(document.getElementById(`${val[i - 1]}`).value);
           iff = 1
         }
         else {
           p2 = 0
           pp2 = 0
-          p2 += pa()[1] - parar[i - 1] + Number(document.getElementById(`${val[i - 1]}`).value);
-          pp2 += pa()[3] - parar[i - 1] + Number(document.getElementById(`${val[i - 1]}`).value);
-          console.log("p1", p1, pp1)
-          console.log("p2", p2, pp2)
+          p2 += pa()[1] + Number(document.getElementById(`${val[i - 1]}`).value);
+          pp2 += pa()[3] + Number(document.getElementById(`${val[i - 1]}`).value);
+          //console.log("p1", p1, pp1)
+          //console.log("p2", p2, pp2)
         }
       }
     }
@@ -448,7 +450,7 @@ const Form = () => {
   }
 
   const dis = () => {
-    //console.log(q(z), h(z));
+    console.log(pa2(z), detail, pa());
     //console.log(pa2(z))
     if (document.getElementById("submit").disabled === true) {
       document.getElementById("submit").disabled = false

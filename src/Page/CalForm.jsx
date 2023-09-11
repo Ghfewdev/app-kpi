@@ -485,7 +485,7 @@ const CalForm = () => {
     sessionStorage.setItem("pp", pp)
     sessionStorage.setItem("qur", qur)
     //console.log("deid = ", deid, hos, ag, pp)
-    //console.log(pa2(s)[2], pa2(s)[3], qq14[11])
+    console.log(pa2(s)[0], pa2(s)[1], pa2(s)[2], pa2(s)[3], pa2(s)[4], pa2(s)[5])
   }
 
 
@@ -809,7 +809,7 @@ const CalForm = () => {
             </div>
             <div className="col-1 col-md-5">
               <div style={{ width: 650 }}>
-                <Solve name={qq14[11]} do={650} />
+                <Solve name={qq14[11]} do={650} name2 ={q.split(" ")[1]} />
               </div>
             </div>
 
@@ -840,110 +840,144 @@ const CalForm = () => {
         var ep = dp.fms_id
         var fp = dp.ev_res
         var gp = dp.ev_status
+        var guu2 = <><input type="checkbox"  />&nbsp; ม.ค.-มี.ค. ๖๗</>;
+        var guu3 = <><input type="checkbox"  /> เม.ย.-มิ.ย. ๖๗</>
+        var guu4 = <><input type="checkbox"  />&nbsp; ก.ค.-ก.ย. ๖๗</>
+
+        if (sessionStorage.getItem("qur") == "2") {
+          guu2 = <><input type="checkbox" checked readOnly={true} />&nbsp; ม.ค.-มี.ค. ๖๗</>;
+          guu3 = <><input type="checkbox" checked = {false} /> เม.ย.-มิ.ย. ๖๗</>
+          guu4 = <><input type="checkbox" checked = {false} />&nbsp; ก.ค.-ก.ย. ๖๗</>
+        }
+        else if (sessionStorage.getItem("qur") == "3") {
+          guu2 = <><input type="checkbox" checked readOnly={true} />&nbsp; ม.ค.-มี.ค. ๖๗</>
+          guu3 = <><input type="checkbox" checked readOnly={true} /> เม.ย.-มิ.ย. ๖๗</>
+          guu4 = <><input type="checkbox" checked = {false} readOnly={true} />&nbsp; ก.ค.-ก.ย. ๖๗</>
+        }
+        else if (sessionStorage.getItem("qur") == "4") {
+          guu2 = <><input type="checkbox" checked readOnly={true}/>&nbsp; ม.ค.-มี.ค. ๖๗</>
+          guu3 = <><input type="checkbox" checked readOnly={true}/> เม.ย.-มิ.ย. ๖๗</>
+          guu4 = <><input type="checkbox" checked readOnly={true}/>&nbsp; ก.ค.-ก.ย. ๖๗</>
+        }
+        else {
+          guu2 = <><input type="checkbox" checked = {false} readOnly={true}/>&nbsp; ม.ค.-มี.ค. ๖๗</>
+          guu3 = <><input type="checkbox" checked = {false} readOnly={true}/> เม.ย.-มิ.ย. ๖๗</>
+          guu4 = <><input type="checkbox" checked = {false} readOnly={true}/>&nbsp; ก.ค.-ก.ย. ๖๗</>
+        }
         var gpp = <></>;
         if (gp == "แล้วเสร็จ")
         gpp = <><div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio1" value="แล้วเสร็จ" defaultChecked/>
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio1" value="แล้วเสร็จ" defaultChecked/>
         <label className="form-check-label" htmlFor="inlineRadio1">แล้วเสร็จ</label>
       </div> &nbsp;&nbsp;&nbsp;&nbsp;
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio2" value="ยังไม่เริ่มดำเนินการ" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio2" value="ยังไม่เริ่มดำเนินการ" />
         <label className="form-check-label" htmlFor="inlineRadio2">ยังไม่เริ่มดำเนินการ</label>
       </div> &nbsp;&nbsp;&nbsp;&nbsp;
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio3" value="ยกเลิก" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio3" value="ยกเลิก" />
         <label className="form-check-label" htmlFor="inlineRadio3">ยกเลิก</label>
-      </div> &nbsp;&nbsp;&nbsp;&nbsp;
+      </div> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio4" value="กำลังดำเนินการ" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio4" value="กำลังดำเนินการ" />
         <label className="form-check-label" htmlFor="inlineRadio4">กำลังดำเนินการ</label>
       </div> &nbsp;&nbsp;&nbsp;&nbsp;
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio5" value="ชะลอ" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio5" value="ชะลอ" />
         <label className="form-check-label" htmlFor="inlineRadio5">ชะลอ</label>
       </div></>
         else if (gp == "ยังไม่เริ่มดำเนินการ")
         gpp = <><div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio1" value="แล้วเสร็จ" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio1" value="แล้วเสร็จ" />
         <label className="form-check-label" htmlFor="inlineRadio1">แล้วเสร็จ</label>
       </div> &nbsp;&nbsp;&nbsp;&nbsp;
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio2" value="ยังไม่เริ่มดำเนินการ" defaultChecked />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio2" value="ยังไม่เริ่มดำเนินการ" defaultChecked />
         <label className="form-check-label" htmlFor="inlineRadio2">ยังไม่เริ่มดำเนินการ</label>
-      </div> &nbsp;&nbsp;&nbsp;&nbsp;
+      </div> &nbsp;&nbsp;&nbsp;&nbsp; 
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio3" value="ยกเลิก" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio3" value="ยกเลิก" />
         <label className="form-check-label" htmlFor="inlineRadio3">ยกเลิก</label>
-      </div> &nbsp;&nbsp;&nbsp;&nbsp;
+      </div> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio4" value="กำลังดำเนินการ" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio4" value="กำลังดำเนินการ" />
         <label className="form-check-label" htmlFor="inlineRadio4">กำลังดำเนินการ</label>
       </div> &nbsp;&nbsp;&nbsp;&nbsp;
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio5" value="ชะลอ" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio5" value="ชะลอ" />
         <label className="form-check-label" htmlFor="inlineRadio5">ชะลอ</label>
       </div></>
         else if (gp == "ยกเลิก")
         gpp = <><div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio1" value="แล้วเสร็จ" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio1" value="แล้วเสร็จ" />
         <label className="form-check-label" htmlFor="inlineRadio1">แล้วเสร็จ</label>
       </div> &nbsp;&nbsp;&nbsp;&nbsp;
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio2" value="ยังไม่เริ่มดำเนินการ" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio2" value="ยังไม่เริ่มดำเนินการ" />
         <label className="form-check-label" htmlFor="inlineRadio2">ยังไม่เริ่มดำเนินการ</label>
-      </div> &nbsp;&nbsp;&nbsp;&nbsp;
+      </div> &nbsp;&nbsp;&nbsp;&nbsp; 
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio3" value="ยกเลิก" defaultChecked />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio3" value="ยกเลิก" defaultChecked />
         <label className="form-check-label" htmlFor="inlineRadio3">ยกเลิก</label>
-      </div> &nbsp;&nbsp;&nbsp;&nbsp;
+      </div> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio4" value="กำลังดำเนินการ" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio4" value="กำลังดำเนินการ" />
         <label className="form-check-label" htmlFor="inlineRadio4">กำลังดำเนินการ</label>
       </div> &nbsp;&nbsp;&nbsp;&nbsp;
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio5" value="ชะลอ" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio5" value="ชะลอ" />
         <label className="form-check-label" htmlFor="inlineRadio5">ชะลอ</label>
       </div></>
         else if (gp == "กำลังดำเนินการ")
         gpp = <><div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio1" value="แล้วเสร็จ" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio1" value="แล้วเสร็จ" />
         <label className="form-check-label" htmlFor="inlineRadio1">แล้วเสร็จ</label>
       </div> &nbsp;&nbsp;&nbsp;&nbsp;
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio2" value="ยังไม่เริ่มดำเนินการ" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio2" value="ยังไม่เริ่มดำเนินการ" />
         <label className="form-check-label" htmlFor="inlineRadio2">ยังไม่เริ่มดำเนินการ</label>
-      </div> &nbsp;&nbsp;&nbsp;&nbsp;
+      </div> &nbsp;&nbsp;&nbsp;&nbsp; 
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio3" value="ยกเลิก" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio3" value="ยกเลิก" />
         <label className="form-check-label" htmlFor="inlineRadio3">ยกเลิก</label>
-      </div> &nbsp;&nbsp;&nbsp;&nbsp;
+      </div> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio4" value="กำลังดำเนินการ" defaultChecked />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio4" value="กำลังดำเนินการ" defaultChecked />
         <label className="form-check-label" htmlFor="inlineRadio4">กำลังดำเนินการ</label>
       </div> &nbsp;&nbsp;&nbsp;&nbsp;
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio5" value="ชะลอ" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio5" value="ชะลอ" />
         <label className="form-check-label" htmlFor="inlineRadio5">ชะลอ</label>
       </div></>
         else if (gp == "ชะลอ")
         gpp = <><div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio1" value="แล้วเสร็จ" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio1" value="แล้วเสร็จ" />
         <label className="form-check-label" htmlFor="inlineRadio1">แล้วเสร็จ</label>
       </div> &nbsp;&nbsp;&nbsp;&nbsp;
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio2" value="ยังไม่เริ่มดำเนินการ" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio2" value="ยังไม่เริ่มดำเนินการ" />
         <label className="form-check-label" htmlFor="inlineRadio2">ยังไม่เริ่มดำเนินการ</label>
-      </div> &nbsp;&nbsp;&nbsp;&nbsp;
+      </div> &nbsp;&nbsp;&nbsp;&nbsp; 
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio3" value="ยกเลิก" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio3" value="ยกเลิก" />
         <label className="form-check-label" htmlFor="inlineRadio3">ยกเลิก</label>
-      </div> &nbsp;&nbsp;&nbsp;&nbsp;
+      </div> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      &nbsp;&nbsp;&nbsp;&nbsp;
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio4" value="กำลังดำเนินการ" />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio4" value="กำลังดำเนินการ" />
         <label className="form-check-label" htmlFor="inlineRadio4">กำลังดำเนินการ</label>
       </div> &nbsp;&nbsp;&nbsp;&nbsp;
       <div className="form-check form-check-inline">
-        <input className="form-check-input" type="radio" name="status" id="inlineRadio5" value="ชะลอ" defaultChecked />
+        <input className="form-check-input" type="checkbox" name="status" id="inlineRadio5" value="ชะลอ" defaultChecked />
         <label className="form-check-label" htmlFor="inlineRadio5">ชะลอ</label>
       </div></>
         var hp = dp.ev_point
@@ -957,10 +991,10 @@ const CalForm = () => {
 
         pag = <div className='fonts col-print-12'>
           <div className='textr0'>
-            ไตรมาสที่ 1 <input type="checkbox" />&nbsp; ต.ค.-ธ.ค. ๖๖
-            <br />ไตรมาสที่ 2 <input type="checkbox" />&nbsp; ม.ค.-มี.ค. ๖๗
-            <br />แบบรายงานความก้าวหน้ารายโครงการ/กิจกรรม&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ไตรมาสที่ 3 <input type="checkbox" /> เม.ย.-มิ.ย. ๖๗
-            <br /><b>ส่วนราชการ </b> &nbsp;&nbsp;&nbsp; {ap} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ไตรมาสที่ 4 <input type="checkbox" />&nbsp; ก.ค.-ก.ย. ๖๗
+            ไตรมาสที่ 1 <input id="q1" type="checkbox" defaultChecked />&nbsp; ต.ค.-ธ.ค. ๖๖
+            <br />ไตรมาสที่ 2 {guu2}
+            <br />แบบรายงานความก้าวหน้ารายโครงการ/กิจกรรม&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ไตรมาสที่ 3 {guu3}
+            <br /><b>ส่วนราชการ </b> &nbsp;&nbsp;&nbsp; {ap} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ไตรมาสที่ 4 {guu4}
           </div>
           <div className='row textl5'>
             <div className='col'>
@@ -971,10 +1005,11 @@ const CalForm = () => {
 
           <div className='textl5'>ลำดับโครงการ / กิจกรรมตามแผนสนพ. &nbsp;&nbsp;&nbsp; {ep}
             <br /><b>หน่วยงานที่รับผิดชอบ</b> &nbsp;&nbsp;&nbsp; {fp}
-            <br />สถานะของโครงการ: <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br />สถานะของโครงการ: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {gpp}
             <br />รายละเอียดการดำเนินงานในไตรมาสนี้ บอกถึงเป้าหมาย วัตถุประสงค์ วิธีดำเนินการและผล (ถ้ามี) รวมถึงความก้าวหน้า ของโครงการ (%)
-            <div className='border border-dark mb-2 mt-1 m-0 p-2'>
+            {/* <div className='border border-dark mb-2 mt-1 m-0 p-2'> */}
+              <br />
               <b><u>วัตถุประสงค์</u></b>
               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {hp}</div>
               <b><u>เป้าหมาย</u></b>
@@ -983,11 +1018,11 @@ const CalForm = () => {
               <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {jp}</div>
               <b><u>การใช้จ่ายงบประมาณ</u></b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <div className="form-check form-check-inline">
-                <input className="form-check-input" type="radio" name="budget" id="inlineRadio21" value="ไม่ได้ใช้งบประมาณ" />
+                <input className="form-check-input" type="checkbox" name="budget" id="inlineRadio21" value="ไม่ได้ใช้งบประมาณ" />
                 <label className="form-check-label" htmlFor="inlineRadio21">ไม่ได้ใช้งบประมาณ</label>
               </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <div className="form-check form-check-inline">
-                <input className="form-check-input" type="radio" name="budget" id="inlineRadio22" value="ใช้งบประมาณ" defaultChecked />
+                <input className="form-check-input" type="checkbox" name="budget" id="inlineRadio22" value="ใช้งบประมาณ" defaultChecked />
                 <label className="form-check-label" htmlFor="inlineRadio22">ใช้งบประมาณ</label>
               </div>
               <div className='m-0 mt-1 mb-0'><table className='table table-bordered border-primary textc'>
@@ -1020,21 +1055,21 @@ const CalForm = () => {
                 </tbody>
               </table></div><b><u>สรุปผลการดำเนินงาน: </u></b><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <div className="form-check form-check-inline">
-                <input className="form-check-input" type="radio" name="resul" id="inlineRadio31" value="เป็นไปตามแผน" defaultChecked />
+                <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio31" value="เป็นไปตามแผน" defaultChecked />
                 <label className="form-check-label" htmlFor="inlineRadio31">เป็นไปตามแผน</label>
               </div>&nbsp;&nbsp;&nbsp;&nbsp;
               <div className="form-check form-check-inline">
-                <input className="form-check-input" type="radio" name="resul" id="inlineRadio32" value="เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ" />
+                <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio32" value="เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ" />
                 <label className="form-check-label" htmlFor="inlineRadio32">เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ</label>
               </div> &nbsp;&nbsp;&nbsp;&nbsp;
               <div className="form-check form-check-inline">
-                <input className="form-check-input" type="radio" name="resul" id="inlineRadio33" value="ไม่เป็นไปตามแผน" />
+                <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio33" value="ไม่เป็นไปตามแผน" />
                 <label className="form-check-label" htmlFor="inlineRadio33">ไม่เป็นไปตามแผน</label>
               </div>
               <br /><b><u>ข้อคิดเห็นเพิ่มเติม / ปัญหาและอุปสรรค</u></b>
               <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{mp}
 
-            </div>
+            {/* </div> */}
           </div>
         </div>
 

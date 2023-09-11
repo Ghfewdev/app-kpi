@@ -125,8 +125,8 @@ const Home = () => {
           <th>ลำดับที่</th>
           <th>ชื่อตัวชี้วัด</th>
           <th>ค่าเป้าหมาย</th>
-          <th>ข้อมูลที่ใช้สรุปตัวชี้วัด</th>
-          <th>การคำนวณ</th>
+          <th>ค่าการประเมินตัวชี้วัด</th>
+          {/* <th>การคำนวณ</th> */}
         </tr>
       </thead>
       <tbody>
@@ -142,7 +142,7 @@ const Home = () => {
               <th>{fom.fm_name}</th>
               <th>{fom.fm_solve}</th>
               <th className='textl3'>{parse(pa)}</th>
-              <th>{fom.fm_method}</th>
+              {/* <th>{fom.fm_method}</th> */}
             </tr>
           )
         })}

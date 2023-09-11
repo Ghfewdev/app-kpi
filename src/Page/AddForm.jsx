@@ -144,8 +144,8 @@ Authlevel();
                             <br /><br />
                             <label>วิธีการคำนวณ: &nbsp;&nbsp;</label>
                             <select name='method' value={solv} onChange={e => setSolv(e.target.value)} >
-                                <option>ค่าเฉลี่ย</option>
-                                <option>ผลรวม</option>
+                                {/* <option>ค่าเฉลี่ย</option>
+                                <option>ผลรวม</option> */}
                                 <option>ร้อยละ</option>
                             </select>
                             <br /><br />

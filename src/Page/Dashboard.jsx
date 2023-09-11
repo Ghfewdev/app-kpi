@@ -29,7 +29,7 @@ const Dashboard = () => {
   if (ans != []) {
     an = <div className='container textc'>
       <br />
-      <div><h1>รายงานตัวชี้วัด</h1></div>
+      <div><h1>รายงานตัวชี้วัดประจำปี 2567</h1></div>
       <br />
       <div className='col-md-3'></div>
       <table className='table table-bordered border-primary'>
@@ -71,7 +71,7 @@ const Dashboard = () => {
               <th>{(a.h11).toFixed(2)}</th>
               <th>{(a.re_sum).toFixed(2)}</th>
               <th><div style={{ width: 0 }}>
-            <Solve name = {a.re_sum} do ={160} />
+            <Solve name = {a.re_sum} name2 = {(a.fm_solve).split(" ")[1]} do ={160} />
     </div></th>
             </tr>)
           })}
