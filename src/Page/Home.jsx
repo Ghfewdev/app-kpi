@@ -115,7 +115,7 @@ const Home = () => {
 
   }
 
-  var d = secec.sece.split("รหัส: ")
+  var d = secec.sece.split("ที่: ")
 
   var c;
   if (d[1] === undefined) {
@@ -207,7 +207,7 @@ const Home = () => {
               <select value={secec.sece} onClick={e => handleonChange(d[1])} onChange={e => setSececs({ ...secec, sece: e.target.value })} >
                 <option> ตัวชี้วัดทั้งหมด </option>
                 {forms.form.map(form => (
-                  <option key={form.fm_id}>{form.fm_name} รหัส: {form.fm_id}</option>
+                  <option key={form.fm_id}> ลำดับตัวชี้วัดที่: {form.fm_id}</option>
                 ))}
               </select>
             </div>

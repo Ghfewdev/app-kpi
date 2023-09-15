@@ -8,7 +8,7 @@ const sSolve = (val, val2) => {
     return [
       100,
       val2,
-      60
+      val2-20
     ];
   };
 

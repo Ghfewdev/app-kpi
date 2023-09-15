@@ -27,6 +27,8 @@ const Form = () => {
   var ha;
   var hb;
   var qqi = <></>;
+  var ress = <></>;
+  var qc = 0;
   if (dep === "รพ.กลาง") {
     hos = "h1"
     ha = 0
@@ -101,6 +103,10 @@ const Form = () => {
       if (st == "") {
         document.getElementById("c1").hidden = false;
         document.getElementById("c2").hidden = true;
+        ress = <div>
+        <div id='tm1'><label>ไตรมาสที่ 1: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
+        {/* <div hidden><textarea className='textarea60100' name='result' required /></div> */}
+        </div>
         qqi = <>
           <option value={"1"}>ไตรมาสที่ 1</option>
           {/* <option value={"2"}>ไตรมาสที่ 2</option>
@@ -111,6 +117,12 @@ const Form = () => {
       else if (st == "1") {
         document.getElementById("c1").hidden = false;
         document.getElementById("c2").hidden = true;
+        qc = 1;
+        ress = <div>
+        <div id='tm1'><label>ไตรมาสที่ 1: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
+        <div id='tm2'><label>ไตรมาสที่ 2: </label><br /><textarea id='rre2' className='textarea60100' name='result2' required /><br /></div>
+        {/* <div hidden><textarea className='textarea60100' name='result' required /></div> */}
+        </div>
         qqi = <>
           <option value={"2"}>ไตรมาสที่ 2</option>
           {/* <option value={"3"}>ไตรมาสที่ 3</option>
@@ -120,6 +132,13 @@ const Form = () => {
       else if (st == "1,2") {
         document.getElementById("c1").hidden = false;
         document.getElementById("c2").hidden = true;
+        ress = <div>
+        <div id='tm1'><label>ไตรมาสที่ 1: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
+        <div id='tm2'><label>ไตรมาสที่ 2: </label><br /><textarea id='rre2' className='textarea60100' name='result2' required /><br /></div>
+        <div id='tm3'><label>ไตรมาสที่ 3: </label><br /><textarea id='rre3' className='textarea60100' name='result3' required /><br /></div>
+        {/* <div hidden><textarea className='textarea60100' name='result' required /></div> */}
+        </div>
+        qc = 2;
         qqi = <>
           <option value={"3"}>ไตรมาสที่ 3</option>
           {/* <option value={"4"}>ไตรมาสที่ 4</option> */}
@@ -128,6 +147,14 @@ const Form = () => {
       else if (st == "1,2,3") {
         document.getElementById("c1").hidden = false;
         document.getElementById("c2").hidden = true;
+        ress = <div>
+        <div id='tm1'><label>ไตรมาสที่ 1: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
+        <div id='tm2'><label>ไตรมาสที่ 2: </label><br /><textarea id='rre2' className='textarea60100' name='result2' required /><br /></div>
+        <div id='tm3'><label>ไตรมาสที่ 3: </label><br /><textarea id='rre3' className='textarea60100' name='result3' required /><br /></div>
+        <div id='tm4'><label>ไตรมาสที่ 4: </label><br /><textarea id='rre4' className='textarea60100' name='result4' required /><br /></div>
+        {/* <div hidden><textarea className='textarea60100' name='result' required /></div> */}
+        </div>
+        qc = 3;
         qqi = <>
           <option value={"4"}>ไตรมาสที่ 4</option>
         </>
@@ -166,7 +193,7 @@ const Form = () => {
       evbuded: dcdd("dd"),
       evpoint: data.get("evpoint"),
       evtarget: data.get("evtarget"),
-      result: data.get("result"),
+      result: reu(),
       problem: data.get("problem"),
       evimg: data.get("evimg")
     };
@@ -266,7 +293,7 @@ const Form = () => {
 
   }
 
-  var d = secec.sece.split("รหัส: ")
+  var d = secec.sece.split("ที่่: ")
 
   var c
   if (d[1] === undefined) {
@@ -323,6 +350,19 @@ const Form = () => {
   } catch {
   }
 
+  function reu() {
+    var rr
+    if (qc == 0)
+    rr = document.getElementById("rre1").value
+  if (qc == 1)
+    rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value
+  if (qc == 2)
+    rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value + ", " + document.getElementById("rre3").value
+  if (qc == 3)
+    rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value + ", " + document.getElementById("rre3").value + ", " + document.getElementById("rre4").value
+    return rr
+  }
+
   function g(val) {
     var g = "";
     for (var i = 1; i <= val.length; i++) {
@@ -367,6 +407,8 @@ const Form = () => {
     else if (t[1] === "ร้อยละ") {
       if (p * 100 <= 100)
         q = p * 100
+      else if (isNaN(q))
+      q = 0
       else
         q = (p ** (-1)) * 100
     }
@@ -387,6 +429,8 @@ const Form = () => {
         }
       }
     }
+    if (isNaN(g))
+    h = "ไม่ผ่าน"
 
     if (g * 100 >= 100)
       g = g ** (-1)
@@ -443,6 +487,12 @@ const Form = () => {
       are = ((p1 / p2) * 100).toFixed(2)
       sare = ((pp1 / pp2) * 100).toFixed(2)
     }
+    if (isNaN((sare))) {
+       sare = 0
+     }
+     else if (isNaN(are)) {
+      are = 0
+     }
     pa2 = [p1, p2, are, sare, pp1, pp2]
 
     return pa2
@@ -450,7 +500,7 @@ const Form = () => {
   }
 
   const dis = () => {
-    console.log(pa2(z), detail, pa());
+    console.log(pa2(z), detail, pa(), reu());
     //console.log(pa2(z))
     if (document.getElementById("submit").disabled === true) {
       document.getElementById("submit").disabled = false
@@ -482,7 +532,7 @@ const Form = () => {
               <select value={secec.sece} onClick={e => handleonChange(d[1])} onChange={e => setSececs({ ...secec, sece: e.target.value })} >
                 <option> ชื่อและรหัสตัวชี้วัด </option>
                 {forms.form.map(form => (
-                  <option key={form.fm_id}>{form.fm_name} รหัส: {form.fm_id}</option>
+                  <option key={form.fm_id}>ตัวชี่้วัดลำดับที่่: {form.fm_id}</option>
                 ))}
               </select>
             </div>
@@ -582,8 +632,7 @@ const Form = () => {
                       <br />
                       <label>ผลการดำเนินงาน</label>
                       <br />
-                      <textarea className='textarea60100' name='result' required />
-                      <br />
+                      {ress}
                       <label>ปัญหาและอุปสรรค</label>
                       <br />
                       <textarea className='textarea60100' name='problem' required />
