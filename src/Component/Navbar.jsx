@@ -43,7 +43,7 @@ const Navbar = () => {
         <li style={{ float: "right" }}><a className="active">ส่วนราชการ: {a}</a></li>
         <li className='navli'><a className='navli a' href="Home">ตัวชี้วัดทั้งหมด</a></li>
         <li className='navli'><a className='navli a' href="addform">เพิ่มตัวชี้วัด</a></li>
-        <li className='navli'><a className='navli a' href="register">เพิ่มผู้ใช้งาน</a></li>
+        <li className='navli'><a className='navli a' href="editform">แก้ไขผู้ใช้งาน</a></li>
         <li className='navli'><a className='navli a' href="dashboard">รายงานตัวชี้วัด</a></li>
         <li className='navli'><a className='navli a' href="calform">สรุปผลตัวชี้วัด</a></li>
       </>
