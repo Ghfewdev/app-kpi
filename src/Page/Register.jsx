@@ -16,7 +16,7 @@ const Register = () => {
       name: data.get("name"),
       agency: data.get("agency")
     };
-    fetch("https://kpi-api.onrender.com/register", {
+    fetch(import.meta.env.VITE_APP_API+"/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

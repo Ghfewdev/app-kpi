@@ -7,7 +7,7 @@ import Authen from "../Component/Authen";
 import Users from "../Component/Users";
 import "chartjs-gauge";
 import Solve from "../Component/Solve";
-import axios from "axios";
+// import axios from "axios";
 
 const CalForm = () => {
 
@@ -555,7 +555,7 @@ const CalForm = () => {
       "sum": pa2(s)[2]
     };
 
-    fetch("https://kpi-api.onrender.com/update/detail", {
+    fetch(import.meta.env.VITE_APP_API+"/update/detail", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -622,7 +622,7 @@ const CalForm = () => {
   //   const formdata = new FormData();
   //   if(file != undefined) {
   //   formdata.append("file", file)
-  //   axios.post("https://kpi-api.onrender.com/upload", formdata)
+  //   axios.post(import.meta.env.VITE_APP_API+"/upload", formdata)
   //   .then(res => {})
   //   .catch(er => console.log(er));
   //   //alert("บันทึกสำเร็จ")
@@ -630,7 +630,7 @@ const CalForm = () => {
   //   alert("เลือกไฟล์ก่อน")
   // }
 
-    fetch("https://kpi-api.onrender.com/ev/edit", {
+    fetch(import.meta.env.VITE_APP_API+"/ev/edit", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -1086,6 +1086,24 @@ const CalForm = () => {
         }
         var kp = dp.ev_budget
         var kkp = kp.split(", ")
+        var budd = <><div className="form-check form-check-inline">
+        <input className="form-check-input" type="checkbox" name="budget" id="inlineRadio21" value="ไม่ได้ใช้งบประมาณ" readOnly={true} checked={false} />
+        <label className="form-check-label" htmlFor="inlineRadio21">ไม่ได้ใช้งบประมาณ</label>
+      </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <div className="form-check form-check-inline">
+        <input className="form-check-input" type="checkbox" name="budget" id="inlineRadio22" value="ใช้งบประมาณ" readOnly={true} checked />
+        <label className="form-check-label" htmlFor="inlineRadio22">ใช้งบประมาณ</label>
+      </div></>
+        if (kp === "0, 0, 0"){
+          var budd = <><div className="form-check form-check-inline">
+        <input className="form-check-input" type="checkbox" name="budget" id="inlineRadio21" value="ไม่ได้ใช้งบประมาณ" readOnly={true} checked />
+        <label className="form-check-label" htmlFor="inlineRadio21">ไม่ได้ใช้งบประมาณ</label>
+      </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <div className="form-check form-check-inline">
+        <input className="form-check-input" type="checkbox" name="budget" id="inlineRadio22" value="ใช้งบประมาณ" readOnly={true} checked={false} />
+        <label className="form-check-label" htmlFor="inlineRadio22">ใช้งบประมาณ</label>
+      </div></>
+        }
         var lp = dp.ev_buded
         var llp = lp.split(", ")
         var mp = dp.ev_problem
@@ -1123,14 +1141,7 @@ const CalForm = () => {
               {jpp}
             </div>
             <b><u>การใช้จ่ายงบประมาณ</u></b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <div className="form-check form-check-inline">
-              <input className="form-check-input" type="checkbox" name="budget" id="inlineRadio21" value="ไม่ได้ใช้งบประมาณ" />
-              <label className="form-check-label" htmlFor="inlineRadio21">ไม่ได้ใช้งบประมาณ</label>
-            </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <div className="form-check form-check-inline">
-              <input className="form-check-input" type="checkbox" name="budget" id="inlineRadio22" value="ใช้งบประมาณ" />
-              <label className="form-check-label" htmlFor="inlineRadio22">ใช้งบประมาณ</label>
-            </div>
+            {budd}
             <div className='m-0 mt-1 mb-0'><table className='table table-bordered border-primary textc pbi'>
               <thead>
                 <tr>
@@ -1161,15 +1172,15 @@ const CalForm = () => {
               </tbody>
             </table></div><b><u>สรุปผลการดำเนินงาน: </u></b><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div className="form-check form-check-inline">
-              <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio31" value="เป็นไปตามแผน" />
+              <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio31" value="เป็นไปตามแผน" checked readOnly={true} />
               <label className="form-check-label" htmlFor="inlineRadio31">เป็นไปตามแผน</label>
             </div>&nbsp;&nbsp;&nbsp;&nbsp;
             <div className="form-check form-check-inline">
-              <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio32" value="เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ" />
+              <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio32" value="เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ" checked={false} readOnly={true} />
               <label className="form-check-label" htmlFor="inlineRadio32">เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ</label>
             </div> &nbsp;&nbsp;&nbsp;&nbsp;
             <div className="form-check form-check-inline">
-              <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio33" value="ไม่เป็นไปตามแผน" />
+              <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio33" value="ไม่เป็นไปตามแผน" checked={false} readOnly={true} />
               <label className="form-check-label" htmlFor="inlineRadio33">ไม่เป็นไปตามแผน</label>
             </div>
               <br /><b><u>ข้อคิดเห็นเพิ่มเติม / ปัญหาและอุปสรรค</u></b>

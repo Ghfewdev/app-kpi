@@ -79,7 +79,7 @@ const Home = () => {
             id: Number(d[1])
         };
 
-        fetch("https://kpi-api.onrender.com/update/form", {
+        fetch(import.meta.env.VITE_APP_API+"/update/form", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -105,7 +105,7 @@ const Home = () => {
 
   const fetchUserDataForm = () => {
 
-    fetch("https://kpi-api.onrender.com/form")
+    fetch(import.meta.env.VITE_APP_API+"/form")
       .then(response => {
         return response.json();
       })

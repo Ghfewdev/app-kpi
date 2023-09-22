@@ -10,7 +10,7 @@ const Login = () => {
       name: data.get("name"),
       password: data.get("password")
     };
-    fetch("https://kpi-api.onrender.com/login", {
+    fetch(import.meta.env.VITE_APP_API+"/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

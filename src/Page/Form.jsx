@@ -212,7 +212,7 @@ const Form = () => {
   //   const formdata = new FormData();
   //   if(file != undefined) {
   //   formdata.append("file", file)
-  //   axios.post("https://kpi-api.onrender.com/upload", formdata)
+  //   axios.post(import.meta.env.VITE_APP_API+"/upload", formdata)
   //   .then(res => {})
   //   .catch(er => console.log(er));
   //   //alert("บันทึกสำเร็จ")
@@ -220,7 +220,7 @@ const Form = () => {
   //   alert("เลือกไฟล์ก่อน")
   // }
 
-    fetch("https://kpi-api.onrender.com/form/fill", {
+    fetch(import.meta.env.VITE_APP_API+"/form/fill", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -242,7 +242,7 @@ const Form = () => {
         console.log("error", error);
       })
 
-    fetch("https://kpi-api.onrender.com/ev/add", {
+    fetch(import.meta.env.VITE_APP_API+"/ev/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -296,7 +296,7 @@ const Form = () => {
 
   const fetchUserDataForm = () => {
 
-    fetch("https://kpi-api.onrender.com/form")
+    fetch(import.meta.env.VITE_APP_API+"/form")
       .then(response => {
         return response.json();
       })

@@ -28,7 +28,7 @@ Authlevel();
             fmid: data.get("id"),
         };
 
-        fetch("https://kpi-api.onrender.com/form/add", {
+        fetch(import.meta.env.VITE_APP_API+"/form/add", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -50,7 +50,7 @@ Authlevel();
                 console.log("error", error);
             });
 
-            fetch("https://kpi-api.onrender.com/result/add", {
+            fetch(import.meta.env.VITE_APP_API+"/result/add", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

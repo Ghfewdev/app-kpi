@@ -5,7 +5,7 @@ function Details() {
   const [num, setNum] = useState([]);
 
   const f = () => {
-    fetch("https://kpi-api.onrender.com/detail")
+    fetch(import.meta.env.VITE_APP_API+"/detail")
       .then(response => {
         return response.json();
       })

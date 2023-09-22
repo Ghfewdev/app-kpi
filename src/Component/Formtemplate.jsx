@@ -20,7 +20,7 @@ const Formtemplate = () => {
 
 
   useEffect(() => {
-    fetch("https://kpi-api.onrender.com/checked")
+    fetch(import.meta.env.VITE_APP_API+"/checked")
       .then((data) => data.json())
       .then((data) => setTableData(data));
 

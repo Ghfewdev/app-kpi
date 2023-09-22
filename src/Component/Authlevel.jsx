@@ -4,7 +4,7 @@ const Authlevel = () => {
     useEffect(() => {
         try {
             const token = localStorage.getItem("token").split("$")[0]
-            fetch("https://kpi-api.onrender.com/authen", {
+            fetch(import.meta.env.VITE_APP_API+"/authen", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

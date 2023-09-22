@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   useEffect(() => {
 
-    fetch("https://kpi-api.onrender.com/ans")
+    fetch(import.meta.env.VITE_APP_API+"/ans")
       .then(response => {
         return response.json();
       })

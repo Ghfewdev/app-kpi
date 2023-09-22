@@ -13,7 +13,7 @@ const Detail = () => {
     
           useEffect(()=> {
             
-            fetch("https://kpi-api.onrender.com/form")
+            fetch(import.meta.env.VITE_APP_API+"/form")
               .then(response => {
                 return response.json();
               })

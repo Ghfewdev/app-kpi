@@ -13,7 +13,7 @@ const Users = () => {
     
           useEffect(()=> {
             
-            fetch("https://kpi-api.onrender.com/users")
+            fetch(import.meta.env.VITE_APP_API+"/users")
               .then(response => {
                 return response.json();
               })
