@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Authen from '../Component/Authen';
 import Footer from '../Component/Footer';
 import Details from '../Component/Details';
+import axios from "axios";
 
 
 const Form = () => {
 
   Authen();
+
+  const [file, setFile] = useState();
   const [quar, setQuar] = useState([]);
   const [fetchs, setFetchs] = useState([]);
   const [forms, setForms] = useState({
@@ -195,7 +198,7 @@ const Form = () => {
       evtarget: data.get("evtarget"),
       result: reu(),
       problem: data.get("problem"),
-      evimg: data.get("evimg")
+      evimg: file.name
     };
     const JsonData3 = {
       "h": pa2(z)[3],
@@ -205,6 +208,17 @@ const Form = () => {
       "pa2": pa2(z)[1],
       "sum": pa2(z)[2]
     };
+
+  //   const formdata = new FormData();
+  //   if(file != undefined) {
+  //   formdata.append("file", file)
+  //   axios.post("https://kpi-api.onrender.com/upload", formdata)
+  //   .then(res => {})
+  //   .catch(er => console.log(er));
+  //   //alert("บันทึกสำเร็จ")
+  // } else {
+  //   alert("เลือกไฟล์ก่อน")
+  // }
 
     fetch("https://kpi-api.onrender.com/form/fill", {
       method: "POST",
@@ -443,6 +457,19 @@ const Form = () => {
     return h
   }
 
+  // const upload = () => {
+  //   const formdata = new FormData();
+  //   if(file != undefined) {
+  //   formdata.append("file", file)
+  //   axios.post("http://localhost:3000/upload", formdata)
+  //   .then(res => {})
+  //   .catch(er => console.log(er));
+  //   alert("บันทึกสำเร็จ")
+  // } else {
+  //   alert("เลือกไฟล์ก่อน")
+  // }
+  // }
+
   const pa = () => {
     var fp1 = fetchs.map(a => [a.pa1, a.pa2, a.h1pa, a.h1pb, a.h2pa, a.h2pb, a.h3pa, a.h3pb, a.h4pa, a.h4pb, a.h5pa, a.h5pb, a.h6pa, a.h6pb, a.h7pa, a.h7pb, a.h8pa, a.h8pb, a.h9pa, a.h9pb, a.h10pa, a.h10pb, a.h11pa, a.h11pb])
     var ffp1 = fp1[0]
@@ -500,8 +527,8 @@ const Form = () => {
   }
 
   const dis = () => {
-    console.log(pa2(z), detail, pa(), reu());
-    //console.log(pa2(z))
+    //console.log(pa2(z), detail, pa(), reu());
+    //console.log(file.name)
     if (document.getElementById("submit").disabled === true) {
       document.getElementById("submit").disabled = false
       //console.log("n[1]", `${z[0]}`[(z[0].length) - 1])
@@ -638,7 +665,8 @@ const Form = () => {
                       <textarea className='textarea60100' name='problem' required />
                       <br />
                       <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label>
-                      <input type='file' name='evimg' />
+                      <input type='file' name='evimg' onChange={(e) => setFile(e.target.files[0])} required />
+                      <br /><label>**หมายเหตุชื่อไฟล์ต้องเป็นภาษาอังกฤษหรือตัวเลขเท่านั้น**</label>
                       <div className='textr2'>
                         <br />
                         <label>ยืนยัน: <input type="checkbox" value={secec.check} onClick={e => dis()} /> </label>

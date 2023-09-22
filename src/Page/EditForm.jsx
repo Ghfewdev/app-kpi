@@ -18,7 +18,7 @@ const EditForm = () => {
       name: data.get("name"),
       agency: data.get("agency")
     };
-    fetch("http://localhost:3000/register/edit", {
+    fetch("https://kpi-api.onrender.com/register/edit", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

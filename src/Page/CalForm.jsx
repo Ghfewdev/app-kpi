@@ -7,10 +7,13 @@ import Authen from "../Component/Authen";
 import Users from "../Component/Users";
 import "chartjs-gauge";
 import Solve from "../Component/Solve";
+import axios from "axios";
 
 const CalForm = () => {
 
   Authen();
+
+  const [file, setFile] = useState();
   const [printf, setPrintf] = useState([]);
   const [fetchs, setFetchs] = useState([]);
   const [param, setParam] = useState("");
@@ -612,9 +615,20 @@ const CalForm = () => {
       evtarget: data.get("evtarget"),
       result: reu(),
       problem: data.get("problem"),
-      evimg: data.get("evimg"),
+      evimg: file.name,
       deid: sessionStorage.getItem("deid")
     };
+
+  //   const formdata = new FormData();
+  //   if(file != undefined) {
+  //   formdata.append("file", file)
+  //   axios.post("https://kpi-api.onrender.com/upload", formdata)
+  //   .then(res => {})
+  //   .catch(er => console.log(er));
+  //   //alert("บันทึกสำเร็จ")
+  // } else {
+  //   alert("เลือกไฟล์ก่อน")
+  // }
 
     fetch("https://kpi-api.onrender.com/ev/edit", {
       method: "PUT",
@@ -1430,7 +1444,7 @@ const CalForm = () => {
                   <textarea className='textarea60100' name='problem' required />
                   <br />
                   <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label>
-                  <input type='file' name='evimg' />
+                  <input type='file' name='evimg' onChange={(e) => setFile(e.target.files[0])} required />
                   {/* <br /><label>ยืนยัน: <input type="checkbox" onClick={e => dis()} /> </label><br /> */}
                 </div>
 
