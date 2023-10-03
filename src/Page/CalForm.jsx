@@ -13,7 +13,7 @@ const CalForm = () => {
 
   Authen();
 
-  const [file, setFile] = useState();
+  //const [file, setFile] = useState();
   const [printf, setPrintf] = useState([]);
   const [fetchs, setFetchs] = useState([]);
   const [param, setParam] = useState("");
@@ -67,7 +67,7 @@ const CalForm = () => {
   const handleonChange = (val) => {
 
     if (localStorage.getItem("token").split("$")[1] === "9") {
-      fetch(`https://kpi-api.onrender.com/all/${val}`)
+      fetch(import.meta.env.VITE_APP_API + `/all/${val}`)
         .then(response => {
           return response.json();
         })
@@ -75,7 +75,7 @@ const CalForm = () => {
           setSelect(data)
         })
     } else {
-      fetch(`https://kpi-api.onrender.com/all/hp/${sessionStorage.getItem("id")}/${val}`)
+      fetch(import.meta.env.VITE_APP_API + `/all/hp/${sessionStorage.getItem("id")}/${val}`)
         .then(response => {
           return response.json();
         })
@@ -86,7 +86,7 @@ const CalForm = () => {
 
     if (n != []) {
 
-      fetch(`https://kpi-api.onrender.com/checked/id/${n}/1`)
+      fetch(import.meta.env.VITE_APP_API + `/checked/id/${n}/1`)
         .then(response => {
           return response.json();
         })
@@ -94,7 +94,7 @@ const CalForm = () => {
           setQt1(data);
         });
 
-      fetch(`https://kpi-api.onrender.com/checked/id/${n}/2`)
+      fetch(import.meta.env.VITE_APP_API + `/checked/id/${n}/2`)
         .then(response => {
           return response.json();
         })
@@ -103,7 +103,7 @@ const CalForm = () => {
         });
 
       if (n != undefined) {
-        fetch(`https://kpi-api.onrender.com/checked/id/${n}/3`)
+        fetch(import.meta.env.VITE_APP_API + `/checked/id/${n}/3`)
           .then(response => {
             return response.json();
           })
@@ -111,7 +111,7 @@ const CalForm = () => {
             setQt3(data);
           });
       }
-      fetch(`https://kpi-api.onrender.com/checked/id/${n}/4`)
+      fetch(import.meta.env.VITE_APP_API + `/checked/id/${n}/4`)
         .then(response => {
           return response.json();
         })
@@ -119,7 +119,7 @@ const CalForm = () => {
           setQt4(data);
         });
 
-      fetch(`https://kpi-api.onrender.com/result/${n}`)
+      fetch(import.meta.env.VITE_APP_API + `/result/${n}`)
         .then(response3 => {
           return response3.json();
         })
@@ -234,13 +234,13 @@ const CalForm = () => {
         nqq1p2.push(q1par2)
         if (q1par1 > q1par2) {
           qq1.push(((q1par2 / q1par1) * 100).toFixed(2))
-          if ((q1par2 / q1par1) * 100 > q.split(" ")[1])
+          if ((q1par2 / q1par1) * 100 > q)
             re1.push("ผ่าน")
           else re1.push("ไม่ผ่าน")
         }
         else {
           qq1.push(((q1par1 / q1par2) * 100).toFixed(2))
-          if ((q1par1 / q1par2) * 100 > q.split(" ")[1])
+          if ((q1par1 / q1par2) * 100 > q)
             re1.push("ผ่าน")
           else re1.push("ไม่ผ่าน")
         }
@@ -268,7 +268,6 @@ const CalForm = () => {
           nqq2p1.push(Number((q2[j])[2].split(", ")[ta[0]]))
           nqq2p2.push(Number((q2[j])[2].split(", ")[ta[1]]))
 
-
         }
       }
 
@@ -283,13 +282,13 @@ const CalForm = () => {
         nqq2p2.push(q2par2)
         if (q2par1 > q2par2) {
           qq2.push(((q2par2 / q2par1) * 100).toFixed(2))
-          if ((q2par2 / q2par1) * 100 > q.split(" ")[1])
+          if ((q2par2 / q2par1) * 100 > q)
             re2.push("ผ่าน")
           else re2.push("ไม่ผ่าน")
         }
         else {
           qq2.push(((q2par1 / q2par2) * 100).toFixed(2))
-          if ((q2par1 / q2par2) * 100 > q.split(" ")[1])
+          if ((q2par1 / q2par2) * 100 > q)
             re2.push("ผ่าน")
           else re2.push("ไม่ผ่าน")
         }
@@ -328,13 +327,13 @@ const CalForm = () => {
         nqq3p2.push(q3par2)
         if (q3par1 > q3par2) {
           qq3.push(((q3par2 / q3par1) * 100).toFixed(2))
-          if ((q3par2 / q3par1) * 100 > q.split(" ")[1])
+          if ((q3par2 / q3par1) * 100 > q)
             re2.push("ผ่าน")
           else re2.push("ไม่ผ่าน")
         }
         else {
           qq3.push(((q3par1 / q3par2) * 100).toFixed(2))
-          if ((q3par1 / q3par2) * 100 > q.split(" ")[1])
+          if ((q3par1 / q3par2) * 100 > q)
             re2.push("ผ่าน")
           else re2.push("ไม่ผ่าน")
         }
@@ -372,13 +371,13 @@ const CalForm = () => {
         nqq4p2.push(q4par2)
         if (q4par1 > q4par2) {
           qq4.push(((q4par2 / q4par1) * 100).toFixed(2))
-          if ((q4par2 / q4par1) * 100 > q.split(" ")[1])
+          if ((q4par2 / q4par1) * 100 > q)
             re4.push("ผ่าน")
           else re4.push("ไม่ผ่าน")
         }
         else {
           qq4.push(((q4par1 / q4par2) * 100).toFixed(2))
-          if ((q4par1 / q4par2) * 100 > q.split(" ")[1])
+          if ((q4par1 / q4par2) * 100 > q)
             re4.push("ผ่าน")
           else re4.push("ไม่ผ่าน")
         }
@@ -424,7 +423,7 @@ const CalForm = () => {
   const setid = (id, dep, para, qur) => {
     deid = id;
     var pp = para.split(", ")
-    fetch(`https://kpi-api.onrender.com/event/${deid}`)
+    fetch(import.meta.env.VITE_APP_API + `/event/${deid}`)
       .then(response => {
         return response.json();
       })
@@ -555,7 +554,7 @@ const CalForm = () => {
       "sum": pa2(s)[2]
     };
 
-    fetch(import.meta.env.VITE_APP_API+"/update/detail", {
+    fetch(import.meta.env.VITE_APP_API + "/update/detail", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -576,7 +575,7 @@ const CalForm = () => {
         console.log("error", error);
       })
 
-    fetch(`https://kpi-api.onrender.com/result/update/${sessionStorage.getItem("hos")}/${select[0].fm_id}`, {
+    fetch(import.meta.env.VITE_APP_API + `/result/update/${sessionStorage.getItem("hos")}/${select[0].fm_id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -615,22 +614,23 @@ const CalForm = () => {
       evtarget: data.get("evtarget"),
       result: reu(),
       problem: data.get("problem"),
-      evimg: file.name,
+      str: data.get("et"),
+      //evimg: file.name,
       deid: sessionStorage.getItem("deid")
     };
 
-  //   const formdata = new FormData();
-  //   if(file != undefined) {
-  //   formdata.append("file", file)
-  //   axios.post(import.meta.env.VITE_APP_API+"/upload", formdata)
-  //   .then(res => {})
-  //   .catch(er => console.log(er));
-  //   //alert("บันทึกสำเร็จ")
-  // } else {
-  //   alert("เลือกไฟล์ก่อน")
-  // }
+    //   const formdata = new FormData();
+    //   if(file != undefined) {
+    //   formdata.append("file", file)
+    //   axios.post(import.meta.env.VITE_APP_API+"/upload", formdata)
+    //   .then(res => {})
+    //   .catch(er => console.log(er));
+    //   //alert("บันทึกสำเร็จ")
+    // } else {
+    //   alert("เลือกไฟล์ก่อน")
+    // }
 
-    fetch(import.meta.env.VITE_APP_API+"/ev/edit", {
+    fetch(import.meta.env.VITE_APP_API + "/ev/edit", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -742,20 +742,20 @@ const CalForm = () => {
                   <th scope="col" rowSpan="2">ส่วนราชการ</th>
                   <th scope='col' colSpan="2">ไตรมาสที่ 1</th>
                   <th scope='col' colSpan="2">ไตรมาสที่ 2</th>
-                  <th scope='col' colSpan="2">ครี่งปีแรก</th>
+                  {/* <th scope='col' colSpan="2">ครี่งปีแรก</th> */}
                   <th scope='col' colSpan="2">ไตรมาสที่ 3</th>
                   <th scope='col' colSpan="2">ไตรมาสที่ 4</th>
-                  <th scope='col' colSpan="2">ครี่งปีหลัง</th>
-                  <th scope="col" colSpan="2">ทั้งปี</th>
+                  {/* <th scope='col' colSpan="2">ครี่งปีหลัง</th> */}
+                  <th scope="col" colSpan="2">ผลดำเนินการ</th>
                   {/* <th scope="col" rowSpan="2">รายละเอียด</th> */}
 
                 </tr>
 
                 <tr>
-                  <th scope='col'>ผล</th>
+                  {/* <th scope='col'>ผล</th>
                   <th scope='col'>สรุป</th>
                   <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th>
+                  <th scope='col'>สรุป</th> */}
                   <th scope='col'>ผล</th>
                   <th scope="col">สรุป</th>
                   <th scope='col'>ผล</th>
@@ -802,7 +802,7 @@ const CalForm = () => {
                     qq12[index] = ((qq12[index] ** -1) * 10000).toFixed(2)
                   if (isNaN(qq12[index]))
                     qq12[index] = "-"
-                  if (Number(qq12[index]) > Number(q.split(" ")[1]))
+                  if (Number(qq12[index]) > Number(q))
                     re12.push("ผ่าน")
                   else re12.push("ไม่ผ่าน")
                   if (re12[index] === "ผ่าน")
@@ -814,7 +814,7 @@ const CalForm = () => {
                     qq34[index] = ((qq34[index] ** -1) * 10000).toFixed(2)
                   if (isNaN(qq34[index]))
                     qq34[index] = "-"
-                  if (Number(qq34[index]) > Number(q.split(" ")[1]))
+                  if (Number(qq34[index]) > Number(q))
                     re34.push("ผ่าน")
                   else re34.push("ไม่ผ่าน")
                   if (re34[index] === "ผ่าน")
@@ -826,7 +826,7 @@ const CalForm = () => {
                     qq14[index] = ((qq14[index] ** -1) * 10000).toFixed(2)
                   if (isNaN(qq14[index]))
                     qq14[index] = "-"
-                  if (Number(qq14[index]) > Number(q.split(" ")[1]))
+                  if (Number(qq14[index]) > Number(q))
                     re14.push("ผ่าน")
                   else re14.push("ไม่ผ่าน")
                   if (re14[index] === "ผ่าน")
@@ -841,14 +841,14 @@ const CalForm = () => {
                       <td className="textc">{uu1}</td>
                       <td className="textc">{qq2[index]}</td>
                       <td className="textc">{uu2}</td>
-                      <td className="textc">{qq12[index]}</td>
-                      <td className="textc">{re12[index]}</td>
+                      {/* <td className="textc">{qq12[index]}</td>
+                      <td className="textc">{re12[index]}</td> */}
                       <td className="textc">{qq3[index]}</td>
                       <td className="textc">{uu3}</td>
                       <td className="textc">{qq4[index]}</td>
                       <td className="textc">{uu4}</td>
-                      <td className="textc">{qq34[index]}</td>
-                      <td className="textc">{re34[index]}</td>
+                      {/* <td className="textc">{qq34[index]}</td>
+                      <td className="textc">{re34[index]}</td> */}
                       <td className="textc">{qq14[index]}</td>
                       <td className="textc">{re14[index]}</td>
                       {/* <td className="textc"><button className="btn btn-success" onClick={e => handlesum(index)}>เรียกดู</button></td> */}
@@ -865,7 +865,7 @@ const CalForm = () => {
             </div>
             <div className="col-1 col-md-5">
               <div style={{ width: 650 }}>
-                <Solve name={qq14[11]} do={650} name2={q.split(" ")[1]} />
+                <Solve name={qq14[11]} do={650} name2={q} />
               </div>
             </div>
 
@@ -1062,7 +1062,7 @@ const CalForm = () => {
             <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {rjp2}</div>
             {/* <br /> */}
           </div>
-          <div className="pbb"><div className="textc d-none d-print-block">- ๓ -</div></div><br />
+            <div className="pbb"><div className="textc d-none d-print-block">- ๓ -</div></div><br />
           </>
         } else if (sessionStorage.getItem("qur") == 4) {
           var rjp1 = jp.split(", ")[1]
@@ -1087,26 +1087,71 @@ const CalForm = () => {
         var kp = dp.ev_budget
         var kkp = kp.split(", ")
         var budd = <><div className="form-check form-check-inline">
-        <input className="form-check-input" type="checkbox" name="budget" id="inlineRadio21" value="ไม่ได้ใช้งบประมาณ" readOnly={true} checked={false} />
-        <label className="form-check-label" htmlFor="inlineRadio21">ไม่ได้ใช้งบประมาณ</label>
-      </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <div className="form-check form-check-inline">
-        <input className="form-check-input" type="checkbox" name="budget" id="inlineRadio22" value="ใช้งบประมาณ" readOnly={true} checked />
-        <label className="form-check-label" htmlFor="inlineRadio22">ใช้งบประมาณ</label>
-      </div></>
-        if (kp === "0, 0, 0"){
+          <input className="form-check-input" type="checkbox" name="budget" id="inlineRadio21" value="ไม่ได้ใช้งบประมาณ" readOnly={true} checked={false} />
+          <label className="form-check-label" htmlFor="inlineRadio21">ไม่ได้ใช้งบประมาณ</label>
+        </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <div className="form-check form-check-inline">
+            <input className="form-check-input" type="checkbox" name="budget" id="inlineRadio22" value="ใช้งบประมาณ" readOnly={true} checked />
+            <label className="form-check-label" htmlFor="inlineRadio22">ใช้งบประมาณ</label>
+          </div></>
+        if (kp === "0, 0, 0") {
           var budd = <><div className="form-check form-check-inline">
-        <input className="form-check-input" type="checkbox" name="budget" id="inlineRadio21" value="ไม่ได้ใช้งบประมาณ" readOnly={true} checked />
-        <label className="form-check-label" htmlFor="inlineRadio21">ไม่ได้ใช้งบประมาณ</label>
-      </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <div className="form-check form-check-inline">
-        <input className="form-check-input" type="checkbox" name="budget" id="inlineRadio22" value="ใช้งบประมาณ" readOnly={true} checked={false} />
-        <label className="form-check-label" htmlFor="inlineRadio22">ใช้งบประมาณ</label>
-      </div></>
+            <input className="form-check-input" type="checkbox" name="budget" id="inlineRadio21" value="ไม่ได้ใช้งบประมาณ" readOnly={true} checked />
+            <label className="form-check-label" htmlFor="inlineRadio21">ไม่ได้ใช้งบประมาณ</label>
+          </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="checkbox" name="budget" id="inlineRadio22" value="ใช้งบประมาณ" readOnly={true} checked={false} />
+              <label className="form-check-label" htmlFor="inlineRadio22">ใช้งบประมาณ</label>
+            </div></>
         }
         var lp = dp.ev_buded
         var llp = lp.split(", ")
         var mp = dp.ev_problem
+        var resf = <>
+          <div className="form-check form-check-inline">
+            <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio31" value="เป็นไปตามแผน" checked readOnly={true} />
+            <label className="form-check-label" htmlFor="inlineRadio31">เป็นไปตามแผน</label>
+          </div>&nbsp;&nbsp;&nbsp;&nbsp;
+          <div className="form-check form-check-inline">
+            <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio32" value="เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ" checked={false} readOnly={true} />
+            <label className="form-check-label" htmlFor="inlineRadio32">เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ</label>
+          </div> &nbsp;&nbsp;&nbsp;&nbsp;
+          <div className="form-check form-check-inline">
+            <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio33" value="ไม่เป็นไปตามแผน" checked={false} readOnly={true} />
+            <label className="form-check-label" htmlFor="inlineRadio33">ไม่เป็นไปตามแผน</label>
+          </div>
+        </>
+        if (dp.ev_str == 2) {
+          var resf = <>
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio31" value="เป็นไปตามแผน" checked={false} readOnly={true} />
+              <label className="form-check-label" htmlFor="inlineRadio31">เป็นไปตามแผน</label>
+            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio32" value="เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ" checked readOnly={true} />
+              <label className="form-check-label" htmlFor="inlineRadio32">เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ</label>
+            </div> &nbsp;&nbsp;&nbsp;&nbsp;
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio33" value="ไม่เป็นไปตามแผน" checked={false} readOnly={true} />
+              <label className="form-check-label" htmlFor="inlineRadio33">ไม่เป็นไปตามแผน</label>
+            </div>
+          </>
+        } else if (dp.ev_str == 3) {
+          var resf = <>
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio31" value="เป็นไปตามแผน" checked={false} readOnly={true} />
+              <label className="form-check-label" htmlFor="inlineRadio31">เป็นไปตามแผน</label>
+            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio32" value="เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ" checked={false} readOnly={true} />
+              <label className="form-check-label" htmlFor="inlineRadio32">เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ</label>
+            </div> &nbsp;&nbsp;&nbsp;&nbsp;
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio33" value="ไม่เป็นไปตามแผน" checked readOnly={true} />
+              <label className="form-check-label" htmlFor="inlineRadio33">ไม่เป็นไปตามแผน</label>
+            </div>
+          </>
+        }
 
         pag = <div className='fonts col-print-12'>
           <div className='textr0'>
@@ -1171,21 +1216,10 @@ const CalForm = () => {
                 </tr>
               </tbody>
             </table></div><b><u>สรุปผลการดำเนินงาน: </u></b><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <div className="form-check form-check-inline">
-              <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio31" value="เป็นไปตามแผน" checked readOnly={true} />
-              <label className="form-check-label" htmlFor="inlineRadio31">เป็นไปตามแผน</label>
-            </div>&nbsp;&nbsp;&nbsp;&nbsp;
-            <div className="form-check form-check-inline">
-              <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio32" value="เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ" checked={false} readOnly={true} />
-              <label className="form-check-label" htmlFor="inlineRadio32">เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ</label>
-            </div> &nbsp;&nbsp;&nbsp;&nbsp;
-            <div className="form-check form-check-inline">
-              <input className="form-check-input" type="checkbox" name="resul" id="inlineRadio33" value="ไม่เป็นไปตามแผน" checked={false} readOnly={true} />
-              <label className="form-check-label" htmlFor="inlineRadio33">ไม่เป็นไปตามแผน</label>
-            </div>
-              <br /><b><u>ข้อคิดเห็นเพิ่มเติม / ปัญหาและอุปสรรค</u></b>
-              <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{mp}
-            
+            {resf}
+            <br /><b><u>ข้อคิดเห็นเพิ่มเติม / ปัญหาและอุปสรรค</u></b>
+            <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{mp}
+
             {/* </div> */}
           </div>
         </div>
@@ -1225,11 +1259,11 @@ const CalForm = () => {
           p /= parseFloat(document.getElementById(`${val[i - 1]}`).value);
       }
     }
-    if (t[1] === "ผลรวม")
+    if (t[1] === 3)
       q = q
-    else if (t[1] === "ค่าเฉลี่ย")
+    else if (t[1] === 2)
       q = q / val.length
-    else if (t[1] === "ร้อยละ") {
+    else if (t[1] === 1) {
       if (p * 100 <= 100)
         q = p * 100
       else
@@ -1256,7 +1290,7 @@ const CalForm = () => {
     if (g * 100 >= 100)
       g = g ** (-1)
 
-    if (g * 100 >= t[0].split(" ")[1]) {
+    if (g * 100 >= t[0]) {
       h = "ผ่าน"
     } else {
       h = "ไม่ผ่าน"
@@ -1454,8 +1488,15 @@ const CalForm = () => {
                   <br />
                   <textarea className='textarea60100' name='problem' required />
                   <br />
-                  <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label>
-                  <input type='file' name='evimg' onChange={(e) => setFile(e.target.files[0])} required />
+                  <label>สรุปผลการดำเนินงาน</label>
+                  <br />
+                  <div>
+                    <input id="et1" type="radio" value="1" name="et" /> เป็นไปตามแผน &nbsp;&nbsp;&nbsp;<br />
+                    <input id="et2" type="radio" value="2" name="et" /> เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ &nbsp;&nbsp;&nbsp;<br />
+                    <input id="et3" type="radio" value="3" name="et" /> ไม่เป็นไปตามแผน &nbsp;&nbsp;&nbsp;
+                  </div>
+                  {/* <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label>
+                  <input type='file' name='evimg' onChange={(e) => setFile(e.target.files[0])} required /> */}
                   {/* <br /><label>ยืนยัน: <input type="checkbox" onClick={e => dis()} /> </label><br /> */}
                 </div>
 

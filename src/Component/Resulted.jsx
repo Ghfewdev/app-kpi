@@ -6,7 +6,7 @@ const sResulted = (val) => {
   
   useEffect(() => {
 
-    fetch(`https://kpi-api.onrender.com/result/id/${val}`)
+    fetch(import.meta.env.VITE_APP_API+`/result/id/${val}`)
               .then(response => {
                 return response.json();
               })

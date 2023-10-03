@@ -3,7 +3,7 @@ import Footer from '../Component/Footer';
 import Authlevel from '../Component/Authlevel';
 
 
-const Register = () => {
+const UserAdd = () => {
 
   Authlevel();
 
@@ -16,7 +16,7 @@ const Register = () => {
       name: data.get("name"),
       agency: data.get("agency")
     };
-    fetch(import.meta.env.VITE_APP_API+"/register", {
+    fetch(import.meta.env.VITE_APP_API+"/useradd", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -29,6 +29,7 @@ const Register = () => {
       .then(data => {
         if (data.status === "ok") {
           alert("sucess");
+          window.location = "/"
         } else {
           alert("failed")
         }
@@ -76,4 +77,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default UserAdd

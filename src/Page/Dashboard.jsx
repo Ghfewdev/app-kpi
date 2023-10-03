@@ -57,7 +57,7 @@ const Dashboard = () => {
             return (
             <tr key={i}>
               <th>{a.fm_id}</th>
-              <th>{(a.fm_solve).split(" ")[1]}</th>
+              <th>{(a.fm_solve)}</th>
               <th>{(a.h1).toFixed(2)}</th>
               <th>{(a.h2).toFixed(2)}</th>
               <th>{(a.h3).toFixed(2)}</th>
@@ -71,7 +71,7 @@ const Dashboard = () => {
               <th>{(a.h11).toFixed(2)}</th>
               <th>{(a.re_sum).toFixed(2)}</th>
               <th><div style={{ width: 0 }}>
-            <Solve name = {a.re_sum} name2 = {(a.fm_solve).split(" ")[1]} do ={160} />
+            <Solve name = {a.re_sum} name2 = {(a.fm_solve)} do ={160} />
     </div></th>
             </tr>)
           })}

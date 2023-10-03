@@ -2,7 +2,7 @@ import React from 'react'
 import Authlevel from '../Component/Authlevel';
 import Footer from '../Component/Footer';
 
-const EditForm = () => {
+const UserEdit = () => {
 
   Authlevel();
 
@@ -18,7 +18,7 @@ const EditForm = () => {
       name: data.get("name"),
       agency: data.get("agency")
     };
-    fetch(import.meta.env.VITE_APP_API+"/register/edit", {
+    fetch(import.meta.env.VITE_APP_API+"/useredit", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -31,6 +31,7 @@ const EditForm = () => {
       .then(data => {
         if (data.status === "ok") {
           alert("แก้ไขข้อมูลแล้ว");
+          window.location = "/"
         } else {
           alert("แก้ไขไม่สำเร็จ")
         }
@@ -93,4 +94,4 @@ const EditForm = () => {
   )
 }
 
-export default EditForm
+export default UserEdit
