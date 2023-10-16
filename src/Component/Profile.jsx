@@ -1,5 +1,5 @@
 const Profile = () => {
-  var a = sessionStorage.getItem("id");
+  var a = localStorage.getItem("id");
   // console.log("userid = ", a)
   return a
 }

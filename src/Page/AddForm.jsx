@@ -6,9 +6,9 @@ const AddForm = () => {
 
 Authlevel();
 
-    const [numpara, setNumpara] = useState(0);
+    const [numpara, setNumpara] = useState(1);
     const [parass, setParass] = useState("");
-    const [solv, setSolv] = useState("");
+    const [solv, setSolv] = useState(1);
 
     
 
@@ -19,10 +19,12 @@ Authlevel();
             id: data.get("id"),
             name: data.get("name"),
             solve: data.get("solve"),
-            method: data.get("method"),
-            numpara: data.get("numpara"),
+            // method: data.get("method"),
+            method: 1,
+            numpara: Number(data.get("numpara"))+2,
             def: data.get("define"),
-            paras: g(numpara)
+            paras: g(numpara),
+            com: com()
         };
         const JsonData2 = {
             fmid: data.get("id"),
@@ -44,13 +46,14 @@ Authlevel();
                     //window.location = "/";
                 } else {
                     alert("บันทึกไม่สำเร็จ");
+                    return
                 }
             })
             .catch((error) => {
                 console.log("error", error);
             });
 
-            fetch(import.meta.env.VITE_APP_API+"/result/add", {
+        fetch(import.meta.env.VITE_APP_API+"/result/add", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -74,13 +77,44 @@ Authlevel();
             
     }
 
+    var fixx = () => {
+        if(document.getElementById(999).checked === true) {
+            document.getElementById("combo").hidden = false;
+            document.getElementById("com").checked = true;
+            document.getElementById(100).required = true
+            com();
+            document.getElementById("com").disabled = true;
+        }else {
+            document.getElementById("combo").hidden = true;
+            document.getElementById("com").checked = false;
+            document.getElementById(100).required = false;
+            com();
+            document.getElementById("com").disabled = false;
+        }
+
+    }
+
+    var com = () => {
+        var fillcom
+        if (document.getElementById("com").checked === true) {
+            fillcom = 1
+            console.log(fillcom)
+        }
+        else {
+            fillcom = 0
+            console.log(fillcom)
+        }
+        return fillcom
+    }
+
     var par = (val) => {
         let ht = '';
         let pas = '';
         for (let i = 1; i <= val; i++) {
             pas = `para${i}`
-            ht += `<label>ค่าการประเมินที่ ${i}:&nbsp;&nbsp;</label> ( กรณีใช้ค่านี้ในการประเมินผลตัวชี้วัดติ๊กถูกตรงนี้ <input type="checkbox" id=${i*10}> )<br /> <input required type="text1" name=${pas} id=${i} /><br /><br />`;
+            ht += `<label>ข้อมูลที่ ${i}:&nbsp;&nbsp;</label> <label hidden>( กรณีใช้ค่านี้ในการประเมินผลตัวชี้วัดติ๊กถูกตรงนี้ <input type="checkbox" id=${i*10}> )</label><br /> <input required type="text1" name=${pas} id=${i} /><br /><br />`;
         }
+        
         return ht
     }
 
@@ -93,11 +127,22 @@ Authlevel();
                 if (document.getElementById(`${i*10}`).checked === true) {
                     o += "*"
                 }
-                if (i != ve) {
+
+                //if (i != ve) {
                     o += ", "
-                }
+                // }
                 
             }
+            o += document.getElementById(`${98}`).value;
+            o += "*, ";
+            if (document.getElementById(`${999}`).checked === true) {
+                o += document.getElementById(100).value;
+                o += "^"
+            }
+            o += document.getElementById(`${99}`).value;
+            
+            o += "*"
+            
             // console.log(o)
             // document.getElementById("sum").value = o
             return o
@@ -110,13 +155,12 @@ Authlevel();
 
     const dis = () => {
         if (document.getElementById("submit").disabled === true) {
-            g(numpara)
+            //g(numpara)
             console.log(g(numpara))
             document.getElementById("submit").disabled = false
         }
         else {
-            document.getElementById("submit").disabled = true
-
+            document.getElementById("submit").disabled = true;
         }
     }
 
@@ -138,24 +182,31 @@ Authlevel();
                             <br /><br />
                             <label>นิยามของตัวชี้วัด:&nbsp;&nbsp; </label><br /><textarea className='textarea60100' type="text" name="define" autoFocus required/>
                             <br /><br />
-                            <label>ลำดับตัวชี้วัด:&nbsp;&nbsp; </label><input className='input10' type="number" name="id" required/>
+                            <label>ลำดับตัวชี้วัด:&nbsp;&nbsp; </label><input className='input10' type="number" min={1} max={1000} name="id" required defaultValue={1}/>
                             <br /><br />
-                            <label>ค่าเป้าหมาย:&nbsp;&nbsp; </label><input type="text" name="solve" required/>
-                            <br /><br />
+                            <label>ค่าเป้าหมายคิดเป็นร้อยละ:&nbsp;&nbsp; </label><input type="number" min={1} max={100} name="solve" required defaultValue={35}/>
+                            <br />
+                            {/* <div hidden>
                             <label>วิธีการคำนวณ: &nbsp;&nbsp;</label>
-                            <select name='method' value={solv} onChange={e => setSolv(e.target.value)} >
+                            <select name='method' value={solv} onChange={e => {setSolv(e.target.value)}} >
+                                <option value={1}>ร้อยละ</option> */}
                                 {/* <option>ค่าเฉลี่ย</option> */}
-                                <option value={1}>ร้อยละ</option>
-                                <option value={2}>ผลรวม</option>
-                            </select>
-                            <br /><br />
-                            <label>จำนวนค่าที่ใช้ประเมิน:&nbsp;&nbsp; </label><input className='input10' type="number" name="numpara" value={numpara}
+                                {/* <option value={2}>ผลรวม</option> */}
+                            {/* </select>
+                            </div> */}
+                            <br />
+                            <label>จำนวนข้อมูลที่ใช้ในตัวชี้วัดนี้:&nbsp;&nbsp; </label><input className='input10' type="number" min="1" max="99" name="numpara" value={numpara}
                                 onChange={e => setNumpara(e.target.value)} />
                             <br /><br />
 
                             <div dangerouslySetInnerHTML={{ __html: par(numpara) }}>
                             </div>
+                            <label>ข้อมูลเปรี่ยบเทียบที่ 1:&nbsp;&nbsp;</label> <label hidden>( กรณีใช้ค่านี้ในการประเมินผลตัวชี้วัดติ๊กถูกตรงนี้ <input type="checkbox" id={980} defaultChecked/> )</label><br /> <input required type="text1" name="para98" id={98} /><br /><br />
+                            <label>ข้อมูลเปรี่ยบเทียบที่ 2:&nbsp;&nbsp;</label> <label>( กรณีเป็นค่าเปรียบเทียบคงที่: <input type="checkbox" id={999} onClick={e => fixx()} /> <input hidden defaultChecked type="checkbox" id={990} /> )</label><br /> <input required type="text1" name="para99" id={99} /><br /><br />
+                            <div id='combo' hidden><label>ใส่ค่าเปรียบทียบคงที่:&nbsp;&nbsp;</label> <input id={100} name='fix' className='input20' type="number" /> <br /><br /></div>
+                            <label>การเก็บข้อมูลในตัวชี้วัดนี้เป็นเก็บแบบสะสมหรือไม่:&nbsp;&nbsp;</label><input id='com' type='checkbox' onClick={e => com()}></input>
                             <div className='textr2'>
+                            <br />
                             <label>ยืนยัน: <input type="checkbox" value={parass}
                                 onClick={e => { setParass(e.target.value), dis() }} /> </label>
                             <br /><br />

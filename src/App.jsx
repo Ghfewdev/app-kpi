@@ -3,7 +3,7 @@ import img from "./img/sbpbar.png"
 import './App.css';
 import Navbar from './Component/Navbar';
 import Footer from './Component/Footer';
-import Formtemplate from './Component/Formtemplate';
+import Checking from './Component/Checking';
 
 function App() {
 
@@ -20,9 +20,9 @@ function App() {
             ระบบเก็บข้อมูล และ รายงานผลตัวชี้วัด ประจำปี 2567
           </h1>
           <br />
-          <Formtemplate />
+          <Checking />
         </div>
-      <br /><br />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
       </div>
       <Footer />
     </>

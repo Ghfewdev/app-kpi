@@ -23,9 +23,9 @@ const Login = () => {
       .then(data => {
         if (data.status === "ok") {
           // alert("sucess");
-          sessionStorage.setItem("name", data.name);
-          sessionStorage.setItem("id", data.id);
-          sessionStorage.setItem("department", data.agency)
+          localStorage.setItem("name", data.name);
+          localStorage.setItem("id", data.id);
+          localStorage.setItem("department", data.agency)
           localStorage.setItem("token", data.token);
           window.location = "/";
         } else {
@@ -63,7 +63,7 @@ const Login = () => {
               </div>
           </div>
         </div>
-        <div><br /><br /><br /><br /><br /><br /><br /></div>
+        <div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></div>
         
       </div>
       <Footer />

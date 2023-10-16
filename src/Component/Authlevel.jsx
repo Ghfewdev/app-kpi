@@ -17,9 +17,9 @@ const Authlevel = () => {
                 .then(data => {
                     if (data.status != "ok") {
                         alert("คุณต้องเข้าสู่ระบบก่อน")
-                        sessionStorage.removeItem("id");
-                        sessionStorage.removeItem("name");
-                        sessionStorage.removeItem("department");
+                        localStorage.removeItem("id");
+                        localStorage.removeItem("name");
+                        localStorage.removeItem("department");
                         localStorage.removeItem("token");
                         window.location = "/login";
                     } else {

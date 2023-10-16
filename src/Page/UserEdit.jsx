@@ -68,6 +68,7 @@ const UserEdit = () => {
               <option value="รพ.คลองสามวา">&nbsp;รพ.คลองสามวา</option>
               <option value="รพ.บางนา">&nbsp;รพ.บางนา</option>
               <option value="สก.">&nbsp;สก.</option>
+              <option value="ศบฉ.">&nbsp;ศบฉ.</option>
               <option value="สพบ.">&nbsp;สพบ.</option>
               </select>
               <br /><br />
@@ -86,7 +87,7 @@ const UserEdit = () => {
               </div>
           </div>
         </div>
-        <div><br /><br /><br /><br /><br /><br /><br /></div>
+        <div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></div>
 
       </div>
     <Footer />

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Authen from '../Component/Authen';
 import Footer from '../Component/Footer';
 import Details from '../Component/Details';
-import axios from "axios";
+//import axios from "axios";
 
 
 const FillUp = () => {
@@ -25,7 +25,7 @@ const FillUp = () => {
   if (detail == [] || detail == undefined || detail == -Infinity) {
    detail = 0
   }
-  const dep = sessionStorage.getItem("department");
+  const dep = localStorage.getItem("department");
   var hos;
   var ha;
   var hb;
@@ -310,6 +310,8 @@ const FillUp = () => {
 
   var d = secec.sece.split("ที่่: ")
 
+  //console.log(d)
+
   var c
   if (d[1] === undefined) {
     c = <div>
@@ -337,7 +339,7 @@ const FillUp = () => {
         setFetchs(data3);
       });
 
-    fetch(import.meta.env.VITE_APP_API+`/checked/user/${sessionStorage.getItem("id")}/${val}`)
+    fetch(import.meta.env.VITE_APP_API+`/checked/user/${localStorage.getItem("id")}/${val}`)
       .then(response => {
         return response.json();
       })
@@ -350,7 +352,8 @@ const FillUp = () => {
   var w = forms.fill.map(fil => fil.fm_paras)
   var y = w[0]
   var t = forms.fill.map(f => [f.fm_solve, f.fm_method])[0]
-  //console.log(t)
+  var fc = forms.fill.map(c => c.fm_com)[0]
+  //console.log(fc)
   try {
     var z = y.split(", ")
     var n = z.map((m, i) => (
@@ -484,9 +487,12 @@ const FillUp = () => {
     var p2 = 0;
     var pp1 = 0;
     var pp2 = 0;
-    //var parar = sessionStorage.getItem("pp").split(",")
+    var po1 = 0;
+    var po2 = 0;
+    //var parar = localStorage.getItem("pp").split(",")
     var sare;
     var are;
+    var oo;
     var iff = 0;
     for (var i = 1; i <= val.length; i++) {
       if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
@@ -495,6 +501,7 @@ const FillUp = () => {
           pp1 = 0
           p1 += pa()[0] + Number(document.getElementById(`${val[i - 1]}`).value);
           pp1 += pa()[2] + Number(document.getElementById(`${val[i - 1]}`).value);
+          po1 += Number(document.getElementById(`${val[i - 1]}`).value);
           iff = 1
         }
         else {
@@ -502,6 +509,7 @@ const FillUp = () => {
           pp2 = 0
           p2 += pa()[1] + Number(document.getElementById(`${val[i - 1]}`).value);
           pp2 += pa()[3] + Number(document.getElementById(`${val[i - 1]}`).value);
+          po2 += Number(document.getElementById(`${val[i - 1]}`).value);
           //console.log("p1", p1, pp1)
           //console.log("p2", p2, pp2)
         }
@@ -510,10 +518,12 @@ const FillUp = () => {
     if ((p1 / p2) * 100 >= 100) {
       are = (((p1 / p2) ** (-1)) * 100).toFixed(2)
       sare = (((pp1 / pp2) ** (-1)) * 100).toFixed(2)
+      oo = (((po1 / po2) ** (-1)) * 100).toFixed(2)
     }
     else {
       are = ((p1 / p2) * 100).toFixed(2)
       sare = ((pp1 / pp2) * 100).toFixed(2)
+      oo = (((po1 / po2) ** (-1)) * 100).toFixed(2)
     }
     if (isNaN((sare))) {
        sare = 0
@@ -521,6 +531,18 @@ const FillUp = () => {
      else if (isNaN(are)) {
       are = 0
      }
+     else if (isNaN(oo)) {
+      oo = 0
+     }
+     if(fc === 1) {
+      p1 = po1
+      p2 = po2
+      pp1 = po1
+      pp2 = po2
+      are = oo
+      sare = oo
+     }
+     
     pa2 = [p1, p2, are, sare, pp1, pp2]
 
     return pa2
@@ -555,7 +577,7 @@ const FillUp = () => {
               แบบประเมินตัวชี้วัด
             </h1>
             <br /><br />
-            <div className="textl2">
+            <div className="textc">
 
               <select value={secec.sece} onClick={e => handleonChange(d[1])} onChange={e => setSececs({ ...secec, sece: e.target.value })} >
                 <option> ชื่อและรหัสตัวชี้วัด </option>
@@ -578,9 +600,10 @@ const FillUp = () => {
                 {forms.fill.map(fill => (
 
                   <div key={fill.fm_id}>
-                    <br /><label>ชื่อตัวชี้วัด: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{fill.fm_name}</b></label>
+                    <div className='textl6'>
+                    <br /><label>ชื่อตัวชี้วัด:&nbsp;&nbsp;<b>{fill.fm_name}</b></label>
                     <br /><br />
-
+                    </div>
                     <p className='inline p'><label>ส่งข้อมูลประจำ:&nbsp;&nbsp;</label></p>
                     <p className='inline textr p'><select name="qur">
                       {quc(quar)}
@@ -611,11 +634,11 @@ const FillUp = () => {
                       <label>สถานะโครงการ</label>
                       <br />
                       <div>
-                        <input type="radio" value="แล้วเสร็จ" name="evstatus" /> แล้วเสร็จ &nbsp;&nbsp;&nbsp;
-                        <input type="radio" value="ยังไม่ดำเนินการ" name="evstatus" /> ยังไม่ดำเนินการ &nbsp;&nbsp;&nbsp;
-                        <input type="radio" value="ยกเลิก" name="evstatus" /> ยกเลิก &nbsp;&nbsp;&nbsp;
-                        <input type="radio" value="กำลังดำเนินการ" name="evstatus" /> กำลังดำเนินการ &nbsp;&nbsp;&nbsp;
-                        <input type="radio" value="ชะลอ" name="evstatus" /> ชะลอ
+                        <input type="radio" value={1} name="evstatus" /> แล้วเสร็จ &nbsp;&nbsp;&nbsp;
+                        <input type="radio" value={2} name="evstatus" /> ยังไม่เริ่มดำเนินการ &nbsp;&nbsp;&nbsp;
+                        <input type="radio" value={3} name="evstatus" /> ยกเลิก &nbsp;&nbsp;&nbsp;
+                        <input type="radio" value={4} name="evstatus" /> กำลังดำเนินการ &nbsp;&nbsp;&nbsp;
+                        <input type="radio" value={5} name="evstatus" /> ชะลอ
                       </div>
                       <br />
                       <label>งบประมาณที่ได้รับ</label>
@@ -699,7 +722,7 @@ const FillUp = () => {
             
           </div>
         </div>
-        <div><br /><br /><br /><br /><br /><br /><br /></div>
+        <div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></div>
 
       </div>
       <Footer />

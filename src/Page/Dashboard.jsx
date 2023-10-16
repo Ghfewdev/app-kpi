@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../Component/Navbar';
 import Footer from '../Component/Footer';
-import Authlevel from '../Component/Authlevel';
+//import Authlevel from '../Component/Authlevel';
 import "chartjs-gauge";
 import Solve from "../Component/Solve";
+import Authen from '../Component/Authen';
 
 
 const Dashboard = () => {
 
-  Authlevel();
+  Authen
 
   const [ans, setAns] = useState([]);
 
