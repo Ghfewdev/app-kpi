@@ -145,9 +145,15 @@ const CalForm = () => {
   var v = "นิยามตัวชี้วัด"
   var z = "ชื่อตัวชี้วัด";
   var q = "ค่าเป้าหมาย";
-
+  var vcon;
+  
   try {
     if (select !== null) {
+      var io;
+      vcon = select.map(qof => qof.fm_con)[0]
+      try{io = vcon.split(", ")}
+      catch{}
+      //console.log(vcon.split(", ")[Number(sessionStorage.getItem("qur"))-1])
       var t = select.map(f => [f.fm_solve, f.fm_method])[0]
       v = select.map(vv => vv.fm_define)[0]
       q = select[0].fm_solve
@@ -155,14 +161,23 @@ const CalForm = () => {
       var a = select.map(aa => aa.de_paras.split(", "))
       var s = select.map(ss => ss.fm_paras.split(", "))[0]
       var fc = select.map(ffc => ffc.fm_com)[0]
-      var ss = s.map((m, i) => (
-        <div key={i}>
-          <div><p className='inline p2'><label>{m}: &nbsp;&nbsp;</label></p>
-            <p className='inline textr p2'><input className='input30' type="number" id={m} required /></p>
-          </div>
+      var ss = s.map((m, i) => {
+        var nn = <p className='inline textr p'><input className='input30' type="number" id={m} required /></p>
+      if(io.length === 4 && i === s.length-1){
+      nn = <p className='inline textr p'><input className='input30' type="number" id={m} defaultValue={vcon.split(", ")[Number(sessionStorage.getItem("qur"))-1]} readOnly/></p>
+      }
+      else if(vcon != 0 && i === s.length-1)
+      nn = <p className='inline textr p'><input className='input30' type="number" id={m} defaultValue={vcon} readOnly/></p>
+      return (
+      <div key={i}>
+        <div><p className='inline p'><label>{m}: &nbsp;&nbsp;</label></p>
+          {nn}
         </div>
+      </div>
       )
-      );
+    }
+    )
+      ;
       var b = a[0]
       var c = []
       for (var i = 0; i < b.length; i++) {
@@ -390,7 +405,7 @@ const CalForm = () => {
     var qqn2p12 = nqq1p2.map((q, i) => q + nqq2p2[i]);
     var qq12 = qqn1p12.map((q, i) => ((q / qqn2p12[i]) * 100).toFixed(2));
     var re12 = [];
-    if (qq12[11] >= 100)
+    if (qq12[11] > 100)
       qq12[11] = ((qq12[11] ** -1) * 10000).toFixed(2)
 
     //qq3-4
@@ -398,7 +413,7 @@ const CalForm = () => {
     var qqn2p34 = nqq3p2.map((q, i) => q + nqq4p2[i]);
     var qq34 = qqn1p34.map((q, i) => ((q / qqn2p34[i]) * 100).toFixed(2));
     var re34 = [];
-    if (qq34[11] >= 100)
+    if (qq34[11] > 100)
       qq34[11] = ((qq34[11] ** -1) * 10000).toFixed(2)
 
     //qq1-3
@@ -406,7 +421,7 @@ const CalForm = () => {
     var qqn2p13 = qqn2p12.map((q, i) => q + nqq3p2[i]);
     var qq13 = qqn1p13.map((q, i) => ((q / qqn2p13[i]) * 100).toFixed(2));
     var re13 = [];
-    if (qq13[11] >= 100)
+    if (qq13[11] > 100)
       qq13[11] = ((qq13[11] ** -1) * 10000).toFixed(2)
 
     //qq1-4
@@ -414,21 +429,21 @@ const CalForm = () => {
     var qqn2p14 = qqn2p12.map((q, i) => q + qqn2p34[i]);
     var qq14 = qqn1p14.map((q, i) => ((q / qqn2p14[i]) * 100).toFixed(2));
     var re14 = [];
-    if (qq14[11] >= 100)
+    if (qq14[11] > 100)
       qq14[11] = ((qq14[11] ** -1) * 10000).toFixed(2)
 
     if (fc === 1 && !isNaN(qq4[11])) {
       qq14[11] = qq4[11]
-      console.log("o1")
+      //console.log("o1")
     } else if (fc === 1 && !isNaN(qq3[11])) {
       qq14[11] = qq3[11]
-      console.log("o2")
+      //console.log("o2")
     } else if (fc === 1 && !isNaN(qq2[11])) {
       qq14[11] = qq2[11]
-      console.log("o3")
+      //console.log("o3")
     } else if (fc === 1 && !isNaN(qq1[11])) {
       qq14[11] = qq1[11]
-      console.log("o4")
+      //console.log("o4")
     } 
       
     //var qqall = qq1.map(q => [qq1[11], qq2[11], qq12[11], qq3[11], qq4[11], qq34[11], qq14[11]])[0]
@@ -2429,7 +2444,7 @@ const CalForm = () => {
       }
     }
 
-    if (g * 100 >= 100)
+    if (g * 100 > 100)
       g = g ** (-1)
 
     if (g * 100 >= t[0]) {
@@ -2495,7 +2510,7 @@ const CalForm = () => {
         }
       }
     }
-    if ((p1 / p2) * 100 >= 100) {
+    if ((p1 / p2) * 100 > 100) {
       are = (((p1 / p2) ** (-1)) * 100).toFixed(2)
       sare = (((pp1 / pp2) ** (-1)) * 100).toFixed(2)
       oo = (((po1 / po2) ** (-1)) * 100).toFixed(2)
@@ -2503,7 +2518,7 @@ const CalForm = () => {
     else {
       are = ((p1 / p2) * 100).toFixed(2)
       sare = ((pp1 / pp2) * 100).toFixed(2)
-      oo = (((po1 / po2) ** (-1)) * 100).toFixed(2)
+      oo = ((po1 / po2) * 100).toFixed(2)
     }
     if (isNaN((sare))) {
        sare = 0

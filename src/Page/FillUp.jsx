@@ -32,6 +32,7 @@ const FillUp = () => {
   var qqi = <></>;
   var ress = <></>;
   var qc = 0;
+  var qqc;
   if (dep === "รพ.กลาง") {
     hos = "h1"
     ha = 0
@@ -96,6 +97,16 @@ const FillUp = () => {
     hos = "h11"
     ha = 20
     hb = 21
+  }
+
+  if(quar != []){
+    qqc = 1
+  } else if (quar == "1") {
+    qqc = 2
+  } else if (quar == "1,2") {
+    qqc = 3
+  } else if (quar == "1,2,3") {
+    qqc = 4
   }
 
   const quc = (qq) => {
@@ -353,16 +364,30 @@ const FillUp = () => {
   var y = w[0]
   var t = forms.fill.map(f => [f.fm_solve, f.fm_method])[0]
   var fc = forms.fill.map(c => c.fm_com)[0]
+  var vcon;
+  try {
+    vcon = forms.fill.map(io => io.fm_con)[0].split(", ")
+    console.log(vcon[qqc-1], vcon.length)
+  }catch {
+    vcon = forms.fill.map(io => io.fm_con)[0]
+  }
   //console.log(fc)
   try {
     var z = y.split(", ")
-    var n = z.map((m, i) => (
+    var n = z.map((m, i) => {
+      var nn = <p className='inline textr p'><input className='input30' type="number" id={m} required /></p>
+      if(vcon.length === 4 && i === z.length-1)
+      nn = <p className='inline textr p'><input className='input30' type="number" id={m} defaultValue={vcon[qqc-1]} readOnly/></p>
+      else if(vcon != 0 && i === z.length-1)
+      nn = <p className='inline textr p'><input className='input30' type="number" id={m} defaultValue={vcon} readOnly/></p>
+      return (
       <div key={i}>
         <div><p className='inline p'><label>{m}: &nbsp;&nbsp;</label></p>
-          <p className='inline textr p'><input className='input30' type="number" id={m} required /></p>
+          {nn}
         </div>
       </div>
-    )
+      )
+    }
     )
 
   } catch {
@@ -450,7 +475,7 @@ const FillUp = () => {
     if (isNaN(g))
     h = "ไม่ผ่าน"
 
-    if (g * 100 >= 100)
+    if (g * 100 > 100)
       g = g ** (-1)
 
     if (g * 100 >= t[0]) {
@@ -515,7 +540,7 @@ const FillUp = () => {
         }
       }
     }
-    if ((p1 / p2) * 100 >= 100) {
+    if ((p1 / p2) * 100 > 100) {
       are = (((p1 / p2) ** (-1)) * 100).toFixed(2)
       sare = (((pp1 / pp2) ** (-1)) * 100).toFixed(2)
       oo = (((po1 / po2) ** (-1)) * 100).toFixed(2)

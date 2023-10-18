@@ -24,7 +24,8 @@ Authlevel();
             numpara: Number(data.get("numpara"))+2,
             def: data.get("define"),
             paras: g(numpara),
-            com: com()
+            com: com(),
+            con: fixc()
         };
         const JsonData2 = {
             fmid: data.get("id"),
@@ -81,13 +82,12 @@ Authlevel();
         if(document.getElementById(999).checked === true) {
             document.getElementById("combo").hidden = false;
             document.getElementById("com").checked = true;
-            document.getElementById(100).required = true
             com();
             document.getElementById("com").disabled = true;
+
         }else {
             document.getElementById("combo").hidden = true;
             document.getElementById("com").checked = false;
-            document.getElementById(100).required = false;
             com();
             document.getElementById("com").disabled = false;
         }
@@ -95,16 +95,78 @@ Authlevel();
     }
 
     var com = () => {
-        var fillcom
+        var fillcom;
         if (document.getElementById("com").checked === true) {
             fillcom = 1
-            console.log(fillcom)
+            //console.log(fillcom)
         }
         else {
             fillcom = 0
-            console.log(fillcom)
+            //console.log(fillcom)
         }
         return fillcom
+    }
+
+    // var con = () => {
+    //     var conn;
+    //     if(document.getElementById(100).hidden === false)
+    //     conn = 0;
+    //     else
+    //     conn = document.getElementById(100).value;
+        
+    //     return conn
+    // }
+
+    var mty = () => {
+        var mtyy;
+        if(document.getElementById(222).checked === true) {
+            document.getElementById("mt").hidden = false;
+            document.getElementById("mty").hidden = true;
+            document.getElementById(100).required = true;
+        }else {
+            document.getElementById("mt").hidden = true;
+            document.getElementById("mty").hidden = false;
+            document.getElementById(100).required = false;
+        }
+    }
+
+    var mtq = () => {
+        var mtqq;
+        if(document.getElementById(111).checked === true) {
+            document.getElementById("mty").hidden = false;
+            document.getElementById("mt").hidden = true;
+            document.getElementById(101).required = true;
+            document.getElementById(102).required = true;
+            document.getElementById(103).required = true;
+            document.getElementById(104).required = true;
+
+        }else {
+            document.getElementById("mty").hidden = true;
+            document.getElementById("mt").hidden = false;
+            document.getElementById(101).required = false;
+            document.getElementById(102).required = false;
+            document.getElementById(103).required = false;
+            document.getElementById(104).required = false;
+        }
+    }
+
+    function fixc() {
+        var o = "";
+        if(document.getElementById(111).checked === true) {
+            for (var i = 101; i <= 104; i++) {
+                o += document.getElementById(`${i}`).value;
+                if(i < 104 )
+                    o += ", "
+            }
+        } else {
+            if(document.getElementById(999).checked === false)
+                o = 0;
+            else
+                o = document.getElementById(100).value;
+        }
+
+        return o
+
     }
 
     var par = (val) => {
@@ -135,11 +197,11 @@ Authlevel();
             }
             o += document.getElementById(`${98}`).value;
             o += "*, ";
-            if (document.getElementById(`${999}`).checked === true) {
-                o += document.getElementById(100).value;
-                o += "^"
-            }
-            o += document.getElementById(`${99}`).value;
+            // if (document.getElementById(`${999}`).checked === true) {
+            //     o += document.getElementById(100).value;
+            //     o += "^"
+            // }
+             o += document.getElementById(`${99}`).value;
             
             o += "*"
             
@@ -157,6 +219,7 @@ Authlevel();
         if (document.getElementById("submit").disabled === true) {
             //g(numpara)
             console.log(g(numpara))
+            console.log(fixc())
             document.getElementById("submit").disabled = false
         }
         else {
@@ -203,7 +266,15 @@ Authlevel();
                             </div>
                             <label>ข้อมูลเปรี่ยบเทียบที่ 1:&nbsp;&nbsp;</label> <label hidden>( กรณีใช้ค่านี้ในการประเมินผลตัวชี้วัดติ๊กถูกตรงนี้ <input type="checkbox" id={980} defaultChecked/> )</label><br /> <input required type="text1" name="para98" id={98} /><br /><br />
                             <label>ข้อมูลเปรี่ยบเทียบที่ 2:&nbsp;&nbsp;</label> <label>( กรณีเป็นค่าเปรียบเทียบคงที่: <input type="checkbox" id={999} onClick={e => fixx()} /> <input hidden defaultChecked type="checkbox" id={990} /> )</label><br /> <input required type="text1" name="para99" id={99} /><br /><br />
-                            <div id='combo' hidden><label>ใส่ค่าเปรียบทียบคงที่:&nbsp;&nbsp;</label> <input id={100} name='fix' className='input20' type="number" /> <br /><br /></div>
+                            <div id='combo' hidden> แบ่งรายไตรมาส:&nbsp;&nbsp; <input type="radio" id={111} name='met' onClick={e => mtq()}/>&nbsp;&nbsp;&nbsp;&nbsp; รายปี:&nbsp;&nbsp;    <input type="radio" name='met' id={222} onClick={e => mty()}/> <br /><br />
+                            <div id="mt" hidden><label>ใส่ค่าเปรียบเทียบคงที่:&nbsp;&nbsp;</label> <input id={100} name='fix' className='input20' type="number" /><br /><br /></div>
+                            <div id="mty" hidden>
+                                <label>ค่าเปรียบเทียบไตรมาสที่ 1:&nbsp;&nbsp;</label> <input id={101} name='fixq1' className='input20' type="number" /><br /><br />
+                                <label>ค่าเปรียบเทียบไตรมาสที่ 2:&nbsp;&nbsp;</label> <input id={102} name='fixq2' className='input20' type="number" /><br /><br />
+                                <label>ค่าเปรียบเทียบไตรมาสที่ 3:&nbsp;&nbsp;</label> <input id={103} name='fixq3' className='input20' type="number" /><br /><br />
+                                <label>ค่าเปรียบเทียบไตรมาสที่ 4:&nbsp;&nbsp;</label> <input id={104} name='fixq4' className='input20' type="number" /><br /><br />
+                                </div>
+                            </div>
                             <label>การเก็บข้อมูลในตัวชี้วัดนี้เป็นเก็บแบบสะสมหรือไม่:&nbsp;&nbsp;</label><input id='com' type='checkbox' onClick={e => com()}></input>
                             <div className='textr2'>
                             <br />
