@@ -702,10 +702,8 @@ const CalForm = () => {
 
   function show(props) {
     var a;
-    var squr;
     //console.log(props)
     if (props !== null) {
-      try {
         if(localStorage.getItem("token").split("$")[1] === "9" && fc === 0) 
         a = <div>
 
@@ -2029,9 +2027,10 @@ const CalForm = () => {
 
       </div>
 
-      } catch {
-        a = <div className="textc"><h1>กำลังดำเนินการ</h1></div>
+      else{
+        a = <div className="textc"><h1>ไม่พบการส่งข้อมูลเข้ามา</h1></div>
       }
+
     } else
       a = <div className="textc"><h1>เลือกตัวชี้วัด</h1></div>
 
