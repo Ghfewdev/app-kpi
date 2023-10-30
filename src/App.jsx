@@ -22,7 +22,7 @@ function App() {
           <br />
           <Checking />
         </div>
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <br /><br /><br /><br /><br />
       </div>
       <Footer />
     </>

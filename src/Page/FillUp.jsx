@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Authen from '../Component/Authen';
 import Footer from '../Component/Footer';
 import Details from '../Component/Details';
-//import axios from "axios";
+import axios from "axios";
 
 
 const FillUp = () => {
 
   Authen();
 
-  //const [file, setFile] = useState();
+  const [file, setFile] = useState();
   const [quar, setQuar] = useState([]);
   const [fetchs, setFetchs] = useState([]);
   const [forms, setForms] = useState({
@@ -23,7 +23,7 @@ const FillUp = () => {
 
   var detail = Details();
   if (detail == [] || detail == undefined || detail == -Infinity) {
-   detail = 0
+    detail = 0
   }
   const dep = localStorage.getItem("department");
   var hos;
@@ -99,7 +99,7 @@ const FillUp = () => {
     hb = 21
   }
 
-  if(quar != []){
+  if (quar != []) {
     qqc = 1
   } else if (quar == "1") {
     qqc = 2
@@ -118,8 +118,8 @@ const FillUp = () => {
         document.getElementById("c1").hidden = false;
         document.getElementById("c2").hidden = true;
         ress = <div>
-        <div id='tm1'><label>ไตรมาสที่ 1: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
-        {/* <div hidden><textarea className='textarea60100' name='result' required /></div> */}
+          <div id='tm1'><label>ไตรมาสที่ 1: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
+          {/* <div hidden><textarea className='textarea60100' name='result' required /></div> */}
         </div>
         qqi = <>
           <option value={"1"}>ไตรมาสที่ 1</option>
@@ -133,9 +133,9 @@ const FillUp = () => {
         document.getElementById("c2").hidden = true;
         qc = 1;
         ress = <div>
-        <div id='tm1'><label>ไตรมาสที่ 1: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
-        <div id='tm2'><label>ไตรมาสที่ 2: </label><br /><textarea id='rre2' className='textarea60100' name='result2' required /><br /></div>
-        {/* <div hidden><textarea className='textarea60100' name='result' required /></div> */}
+          <div id='tm1'><label>ไตรมาสที่ 1: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
+          <div id='tm2'><label>ไตรมาสที่ 2: </label><br /><textarea id='rre2' className='textarea60100' name='result2' required /><br /></div>
+          {/* <div hidden><textarea className='textarea60100' name='result' required /></div> */}
         </div>
         qqi = <>
           <option value={"2"}>ไตรมาสที่ 2</option>
@@ -147,10 +147,10 @@ const FillUp = () => {
         document.getElementById("c1").hidden = false;
         document.getElementById("c2").hidden = true;
         ress = <div>
-        <div id='tm1'><label>ไตรมาสที่ 1: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
-        <div id='tm2'><label>ไตรมาสที่ 2: </label><br /><textarea id='rre2' className='textarea60100' name='result2' required /><br /></div>
-        <div id='tm3'><label>ไตรมาสที่ 3: </label><br /><textarea id='rre3' className='textarea60100' name='result3' required /><br /></div>
-        {/* <div hidden><textarea className='textarea60100' name='result' required /></div> */}
+          <div id='tm1'><label>ไตรมาสที่ 1: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
+          <div id='tm2'><label>ไตรมาสที่ 2: </label><br /><textarea id='rre2' className='textarea60100' name='result2' required /><br /></div>
+          <div id='tm3'><label>ไตรมาสที่ 3: </label><br /><textarea id='rre3' className='textarea60100' name='result3' required /><br /></div>
+          {/* <div hidden><textarea className='textarea60100' name='result' required /></div> */}
         </div>
         qc = 2;
         qqi = <>
@@ -162,11 +162,11 @@ const FillUp = () => {
         document.getElementById("c1").hidden = false;
         document.getElementById("c2").hidden = true;
         ress = <div>
-        <div id='tm1'><label>ไตรมาสที่ 1: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
-        <div id='tm2'><label>ไตรมาสที่ 2: </label><br /><textarea id='rre2' className='textarea60100' name='result2' required /><br /></div>
-        <div id='tm3'><label>ไตรมาสที่ 3: </label><br /><textarea id='rre3' className='textarea60100' name='result3' required /><br /></div>
-        <div id='tm4'><label>ไตรมาสที่ 4: </label><br /><textarea id='rre4' className='textarea60100' name='result4' required /><br /></div>
-        {/* <div hidden><textarea className='textarea60100' name='result' required /></div> */}
+          <div id='tm1'><label>ไตรมาสที่ 1: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
+          <div id='tm2'><label>ไตรมาสที่ 2: </label><br /><textarea id='rre2' className='textarea60100' name='result2' required /><br /></div>
+          <div id='tm3'><label>ไตรมาสที่ 3: </label><br /><textarea id='rre3' className='textarea60100' name='result3' required /><br /></div>
+          <div id='tm4'><label>ไตรมาสที่ 4: </label><br /><textarea id='rre4' className='textarea60100' name='result4' required /><br /></div>
+          {/* <div hidden><textarea className='textarea60100' name='result' required /></div> */}
         </div>
         qc = 3;
         qqi = <>
@@ -209,8 +209,8 @@ const FillUp = () => {
       evtarget: data.get("evtarget"),
       result: reu(),
       problem: data.get("problem"),
-      str: data.get("et")
-      // evimg: file.name
+      str: data.get("et"),
+      evimg: name
     };
     const JsonData3 = {
       "h": pa2(z)[3],
@@ -221,18 +221,7 @@ const FillUp = () => {
       "sum": pa2(z)[2]
     };
 
-  //   const formdata = new FormData();
-  //   if(file != undefined) {
-  //   formdata.append("file", file)
-  //   axios.post(import.meta.env.VITE_APP_API+"/upload", formdata)
-  //   .then(res => {})
-  //   .catch(er => console.log(er));
-  //   //alert("บันทึกสำเร็จ")
-  // } else {
-  //   alert("เลือกไฟล์ก่อน")
-  // }
-
-    fetch(import.meta.env.VITE_APP_API+"/form/fill", {
+    fetch(import.meta.env.VITE_APP_API + "/form/fill", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -254,7 +243,7 @@ const FillUp = () => {
         console.log("error", error);
       })
 
-    fetch(import.meta.env.VITE_APP_API+"/ev/add", {
+    fetch(import.meta.env.VITE_APP_API + "/ev/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -276,7 +265,7 @@ const FillUp = () => {
         console.log("error", error);
       })
 
-    fetch(import.meta.env.VITE_APP_API+`/result/update/${hos}/${d[1]}`, {
+    fetch(import.meta.env.VITE_APP_API + `/result/update/${hos}/${d[1]}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -308,7 +297,7 @@ const FillUp = () => {
 
   const fetchUserDataForm = () => {
 
-    fetch(import.meta.env.VITE_APP_API+"/form")
+    fetch(import.meta.env.VITE_APP_API + "/form")
       .then(response => {
         return response.json();
       })
@@ -334,7 +323,7 @@ const FillUp = () => {
 
   const handleonChange = (val) => {
 
-    fetch(import.meta.env.VITE_APP_API+`/form/${val}`)
+    fetch(import.meta.env.VITE_APP_API + `/form/${val}`)
       .then(response2 => {
         return response2.json();
       })
@@ -342,7 +331,7 @@ const FillUp = () => {
         setForms({ ...forms, fill: data2 })
       })
 
-    fetch(import.meta.env.VITE_APP_API+`/result/${val}`)
+    fetch(import.meta.env.VITE_APP_API + `/result/${val}`)
       .then(response3 => {
         return response3.json();
       })
@@ -350,7 +339,7 @@ const FillUp = () => {
         setFetchs(data3);
       });
 
-    fetch(import.meta.env.VITE_APP_API+`/checked/user/${localStorage.getItem("id")}/${val}`)
+    fetch(import.meta.env.VITE_APP_API + `/checked/user/${localStorage.getItem("id")}/${val}`)
       .then(response => {
         return response.json();
       })
@@ -367,8 +356,8 @@ const FillUp = () => {
   var vcon;
   try {
     vcon = forms.fill.map(io => io.fm_con)[0].split(", ")
-    console.log(vcon[qqc-1], vcon.length)
-  }catch {
+    console.log(vcon[qqc - 1], vcon.length)
+  } catch {
     vcon = forms.fill.map(io => io.fm_con)[0]
   }
   //console.log(fc)
@@ -376,16 +365,16 @@ const FillUp = () => {
     var z = y.split(", ")
     var n = z.map((m, i) => {
       var nn = <p className='inline textr p'><input className='input30' type="number" id={m} required /></p>
-      if(vcon.length === 4 && i === z.length-1)
-      nn = <p className='inline textr p'><input className='input30' type="number" id={m} defaultValue={vcon[qqc-1]} readOnly/></p>
-      else if(vcon != 0 && i === z.length-1)
-      nn = <p className='inline textr p'><input className='input30' type="number" id={m} defaultValue={vcon} readOnly/></p>
+      if (vcon.length === 4 && i === z.length - 1)
+        nn = <p className='inline textr p'><input className='input30' type="number" id={m} defaultValue={vcon[qqc - 1]} readOnly /></p>
+      else if (vcon != 0 && i === z.length - 1)
+        nn = <p className='inline textr p'><input className='input30' type="number" id={m} defaultValue={vcon} readOnly /></p>
       return (
-      <div key={i}>
-        <div><p className='inline p'><label>{m}: &nbsp;&nbsp;</label></p>
-          {nn}
+        <div key={i}>
+          <div><p className='inline p'><label>{m}: &nbsp;&nbsp;</label></p>
+            {nn}
+          </div>
         </div>
-      </div>
       )
     }
     )
@@ -396,13 +385,13 @@ const FillUp = () => {
   function reu() {
     var rr
     if (qc == 0)
-    rr = document.getElementById("rre1").value
-  if (qc == 1)
-    rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value
-  if (qc == 2)
-    rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value + ", " + document.getElementById("rre3").value
-  if (qc == 3)
-    rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value + ", " + document.getElementById("rre3").value + ", " + document.getElementById("rre4").value
+      rr = document.getElementById("rre1").value
+    if (qc == 1)
+      rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value
+    if (qc == 2)
+      rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value + ", " + document.getElementById("rre3").value
+    if (qc == 3)
+      rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value + ", " + document.getElementById("rre3").value + ", " + document.getElementById("rre4").value
     return rr
   }
 
@@ -451,7 +440,7 @@ const FillUp = () => {
       if (p * 100 <= 100)
         q = p * 100
       else if (isNaN(q))
-      q = 0
+        q = 0
       else
         q = (p ** (-1)) * 100
     }
@@ -473,7 +462,7 @@ const FillUp = () => {
       }
     }
     if (isNaN(g))
-    h = "ไม่ผ่าน"
+      h = "ไม่ผ่าน"
 
     if (g * 100 > 100)
       g = g ** (-1)
@@ -486,18 +475,23 @@ const FillUp = () => {
     return h
   }
 
-  // const upload = () => {
-  //   const formdata = new FormData();
-  //   if(file != undefined) {
-  //   formdata.append("file", file)
-  //   axios.post("http://localhost:3000/upload", formdata)
-  //   .then(res => {})
-  //   .catch(er => console.log(er));
-  //   alert("บันทึกสำเร็จ")
-  // } else {
-  //   alert("เลือกไฟล์ก่อน")
-  // }
-  // }
+  var name = "";
+
+  const upload = () => {
+    const formdata = new FormData();
+    if (file != undefined) {
+      formdata.append("file", file)
+      axios.post(import.meta.env.VITE_APP_API + "/upload", formdata)
+        .then(res => {
+          name = res.data.filename
+          //console.log(name)
+        })
+        .catch(er => console.log(er));
+      alert("บันทึกสำเร็จ")
+    } else {
+      alert("เลือกไฟล์ก่อน")
+    }
+  }
 
   const pa = () => {
     var fp1 = fetchs.map(a => [a.pa1, a.pa2, a.h1pa, a.h1pb, a.h2pa, a.h2pb, a.h3pa, a.h3pb, a.h4pa, a.h4pb, a.h5pa, a.h5pb, a.h6pa, a.h6pb, a.h7pa, a.h7pb, a.h8pa, a.h8pb, a.h9pa, a.h9pb, a.h10pa, a.h10pb, a.h11pa, a.h11pb])
@@ -551,23 +545,23 @@ const FillUp = () => {
       oo = (((po1 / po2) ** (-1)) * 100).toFixed(2)
     }
     if (isNaN((sare))) {
-       sare = 0
-     }
-     else if (isNaN(are)) {
+      sare = 0
+    }
+    else if (isNaN(are)) {
       are = 0
-     }
-     else if (isNaN(oo)) {
+    }
+    else if (isNaN(oo)) {
       oo = 0
-     }
-     if(fc === 1) {
+    }
+    if (fc === 1) {
       p1 = po1
       p2 = po2
       pp1 = po1
       pp2 = po2
       are = oo
       sare = oo
-     }
-     
+    }
+
     pa2 = [p1, p2, are, sare, pp1, pp2]
 
     return pa2
@@ -626,8 +620,8 @@ const FillUp = () => {
 
                   <div key={fill.fm_id}>
                     <div className='textl6'>
-                    <br /><label>ชื่อตัวชี้วัด:&nbsp;&nbsp;<b>{fill.fm_name}</b></label>
-                    <br /><br />
+                      <br /><label>ชื่อตัวชี้วัด:&nbsp;&nbsp;<b>{fill.fm_name}</b></label>
+                      <br /><br />
                     </div>
                     <p className='inline p'><label>ส่งข้อมูลประจำ:&nbsp;&nbsp;</label></p>
                     <p className='inline textr p'><select name="qur">
@@ -714,16 +708,21 @@ const FillUp = () => {
                       <textarea className='textarea60100' name='problem' required />
                       <br />
                       <label>สรุปผลการดำเนินงาน</label>
-                  <br />
-                  <div>
-                    <input type="radio" value="1" name="et" /> เป็นไปตามแผน &nbsp;&nbsp;&nbsp;<br />
-                    <input type="radio" value="2" name="et" /> เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ &nbsp;&nbsp;&nbsp;<br />
-                    <input type="radio" value="3" name="et" /> ไม่เป็นไปตามแผน &nbsp;&nbsp;&nbsp;
-                  </div>
-                      {/* <br />
-                      <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label>
-                      <input type='file' name='evimg' onChange={(e) => setFile(e.target.files[0])} required />
-                      <br /><label>**หมายเหตุชื่อไฟล์ต้องเป็นภาษาอังกฤษหรือตัวเลขเท่านั้น**</label> */}
+                      <br />
+                      <div>
+                        <input type="radio" value="1" name="et" /> เป็นไปตามแผน &nbsp;&nbsp;&nbsp;<br />
+                        <input type="radio" value="2" name="et" /> เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ &nbsp;&nbsp;&nbsp;<br />
+                        <input type="radio" value="3" name="et" /> ไม่เป็นไปตามแผน &nbsp;&nbsp;&nbsp;
+                      </div>
+                      <div className='up'>
+                        <br />
+                        <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label><br />
+                        <input type='file' name='evimg' onChange={(e) => setFile(e.target.files[0])} required />
+                        <button className='btn btn-primary' onClick={upload}>Upload</button>
+                        <br />
+                        <label>**หมายเหตุชื่อไฟล์ต้องเป็นภาษาอังกฤษหรือตัวเลขเท่านั้น**</label>
+                        <br />
+                      </div>
                       <div className='textr2'>
                         <br />
                         <label>ยืนยัน: <input type="checkbox" value={secec.check} onClick={e => dis()} /> </label>
@@ -739,12 +738,12 @@ const FillUp = () => {
                 ))}
 
               </form>
-              </div>
-              <br />
-              <div className='textc'><p className='inline textl'><a href="/">กลับหน้าหลัก</a></p>
-                <p className='inline textr'><a href="/"></a></p>
-              </div>
-            
+            </div>
+            <br />
+            <div className='textc'><p className='inline textl'><a href="/">กลับหน้าหลัก</a></p>
+              <p className='inline textr'><a href="/"></a></p>
+            </div>
+
           </div>
         </div>
         <div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></div>

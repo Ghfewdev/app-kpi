@@ -289,3 +289,21 @@
 .pbi {
   page-break-inside: avoid
 }
+
+.responsive {
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+}
+
+.respondash {
+  width: 100%;
+  max-width: 160px;
+  height: auto;
+}
+
+.responcal {
+  width: 100%;
+  max-width: 650px;
+  height: auto;
+}

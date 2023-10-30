@@ -71,8 +71,8 @@ const Dashboard = () => {
               <th>{(a.h10).toFixed(2)}</th>
               <th>{(a.h11).toFixed(2)}</th>
               <th>{(a.re_sum).toFixed(2)}</th>
-              <th><div style={{ width: 0 }}>
-            <Solve name = {a.re_sum} name2 = {(a.fm_solve)} do ={160} />
+              <th><div style={{ width: 155 }}>
+            <Solve name = {a.re_sum} name2 = {(a.fm_solve)} do ={160} class={"respondash"} />
     </div></th>
             </tr>)
           })}

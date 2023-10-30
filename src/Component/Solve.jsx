@@ -77,7 +77,7 @@ const sSolve = (val, val2) => {
  
 const Solve = (val) => {
   return (
-    <div style={{ width: val.do   }}>
+    <div style={{ width: val.do }} className={val.class}>
       {sSolve(val.name, val.name2)}
     </div>
   )

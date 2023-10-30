@@ -7,13 +7,13 @@ import Authen from "../Component/Authen";
 import Users from "../Component/Users";
 import "chartjs-gauge";
 import Solve from "../Component/Solve";
-// import axios from "axios";
+import axios from "axios";
 
 const CalForm = () => {
 
   Authen();
 
-  //const [file, setFile] = useState();
+  const [file, setFile] = useState();
   const [printf, setPrintf] = useState([]);
   const [fetchs, setFetchs] = useState([]);
   const [param, setParam] = useState("");
@@ -652,20 +652,9 @@ const CalForm = () => {
       result: reu(),
       problem: data.get("problem"),
       str: data.get("et"),
-      //evimg: file.name,
+      evimg: name,
       deid: sessionStorage.getItem("deid")
     };
-
-    //   const formdata = new FormData();
-    //   if(file != undefined) {
-    //   formdata.append("file", file)
-    //   axios.post(import.meta.env.VITE_APP_API+"/upload", formdata)
-    //   .then(res => {})
-    //   .catch(er => console.log(er));
-    //   //alert("บันทึกสำเร็จ")
-    // } else {
-    //   alert("เลือกไฟล์ก่อน")
-    // }
 
     fetch(import.meta.env.VITE_APP_API + "/ev/edit", {
       method: "PUT",
@@ -691,6 +680,53 @@ const CalForm = () => {
       })
 
   }
+
+  var name = "";
+
+  const upload = () => {
+    const formdata = new FormData();
+      if(file != undefined) {
+      formdata.append("file", file)
+      axios.post(import.meta.env.VITE_APP_API+"/upload", formdata)
+      .then(res => {
+       name = res.data.filename
+       sessionStorage.setItem("img", name)
+      })
+      .catch(er => console.log(er));
+
+      setTimeout(() => {
+        const jsonImg = {
+          "evimg": sessionStorage.getItem("img"),
+          //"evimg": name,
+          "deid": sessionStorage.getItem("deid")
+        }
+        fetch(import.meta.env.VITE_APP_API + "/ev/edit/img", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(jsonImg)
+        })
+          .then(response => {
+            return response.json();
+          })
+          .then(data => {
+            if (data.status === "ok") {
+              console.log(jsonImg)
+              alert("บันทึกสำเร็จ");
+            } else {
+              alert("บันทึกไม่สำเร็จ");
+            }
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
+      }, 300)
+
+    } else {
+      alert("เลือกไฟล์ก่อน")
+    }
+    }
 
   const handelPrint = () => {
 
@@ -2019,7 +2055,7 @@ const CalForm = () => {
           </div>
           <div className="col-1 col-md-5">
             <div style={{ width: 650 }}>
-              <Solve name={qq14[11]} do={650} name2={q} />
+              <Solve name={qq14[11]} do={650} name2={q} class={"responcal"}/>
             </div>
           </div>
 
@@ -2046,6 +2082,9 @@ const CalForm = () => {
       var ap = <>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</>
       if (dp != undefined) {
         ap = <>{sessionStorage.getItem("ag")}</>
+        var img = dp.ev_img
+        if(img === "{}")
+        img = "noimg.PNG"
         var cp = dp.ev_name
         //var c1 = c.substring(71, 0)
         //var c2 = c.substring(71)
@@ -2378,6 +2417,10 @@ const CalForm = () => {
 
             {/* </div> */}
           </div>
+          <br />
+          <div className="textc pbi">
+          <img src={ import.meta.env.VITE_APP_API + "/images/" + img } alt="img" className="responsive" width="700" height="500" />
+          </div>
         </div>
 
       } else pag = <>ไม่พบการส่งข้อมูลเข้ามา</>
@@ -2676,9 +2719,15 @@ const CalForm = () => {
                     <input id="et2" type="radio" value="2" name="et" /> เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ &nbsp;&nbsp;&nbsp;<br />
                     <input id="et3" type="radio" value="3" name="et" /> ไม่เป็นไปตามแผน &nbsp;&nbsp;&nbsp;
                   </div>
-                  {/* <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label>
-                  <input type='file' name='evimg' onChange={(e) => setFile(e.target.files[0])} required /> */}
-                  {/* <br /><label>ยืนยัน: <input type="checkbox" onClick={e => dis()} /> </label><br /> */}
+                  <div className='up'>
+                        <br />
+                        <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label><br />
+                        <input type='file' name='evimg' onChange={(e) => setFile(e.target.files[0])} required />
+                        <button className='btn btn-primary' onClick={upload}>Upload</button>
+                        <br />
+                        <label>**หมายเหตุชื่อไฟล์ต้องเป็นภาษาอังกฤษหรือตัวเลขเท่านั้น**</label>
+                        <br />
+                      </div>
                 </div>
 
                 <div className="modal-footer">
