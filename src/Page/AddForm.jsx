@@ -243,7 +243,7 @@ Authlevel();
 
                             <label>ชื่อตัวชี้วัด:&nbsp;&nbsp; </label><br /><textarea className='tarea70' type="text" name="name" autoFocus required/>
                             <br /><br />
-                            <label>นิยามของตัวชี้วัด:&nbsp;&nbsp; </label><br /><textarea className='textarea60100' type="text" name="define" autoFocus required/>
+                            <label>นิยามของตัวชี้วัด:&nbsp;&nbsp; </label><br /><textarea className='textarea60100' type="text" name="define" required/>
                             <br /><br />
                             <label>ลำดับตัวชี้วัด:&nbsp;&nbsp; </label><input className='input10' type="number" min={1} max={1000} name="id" required defaultValue={1}/>
                             <br /><br />

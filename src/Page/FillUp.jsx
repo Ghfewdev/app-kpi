@@ -33,6 +33,7 @@ const FillUp = () => {
   var ress = <></>;
   var qc = 0;
   var qqc;
+  var name;
   if (dep === "รพ.กลาง") {
     hos = "h1"
     ha = 0
@@ -101,11 +102,11 @@ const FillUp = () => {
 
   if (quar != []) {
     qqc = 1
-  } else if (quar == "1") {
+  } else if (quar.length == 1) {
     qqc = 2
-  } else if (quar == "1,2") {
+  } else if (quar.length == 2) {
     qqc = 3
-  } else if (quar == "1,2,3") {
+  } else if (quar.length == 3) {
     qqc = 4
   }
 
@@ -235,7 +236,7 @@ const FillUp = () => {
         if (data.status === "ok") {
           //window.location = "post";
         } else {
-          alert("บันทึกไม่สำเร็จ");
+          alert("01 บันทึกไม่สำเร็จ");
           return;
         }
       })
@@ -257,7 +258,7 @@ const FillUp = () => {
         if (data.status === "ok") {
           //window.location = "post";
         } else {
-          alert("บันทึกไม่สำเร็จ");
+          alert("02 บันทึกไม่สำเร็จ");
           return;
         }
       })
@@ -279,7 +280,7 @@ const FillUp = () => {
         if (data.status === "ok") {
           window.location = "post";
         } else {
-          alert("บันทึกไม่สำเร็จ");
+          alert("03 บันทึกไม่สำเร็จ");
         }
       })
       .catch((error) => {
@@ -290,9 +291,11 @@ const FillUp = () => {
 
   const dissi = (d) => {
     if (document.getElementById(d).disabled === true) {
-      (document.getElementById(d).disabled = false)
+      document.getElementById(d).disabled = false
     }
-    else document.getElementById(d).disabled = true
+    else {
+      document.getElementById(d).disabled = true
+    }
   }
 
   const fetchUserDataForm = () => {
@@ -356,7 +359,7 @@ const FillUp = () => {
   var vcon;
   try {
     vcon = forms.fill.map(io => io.fm_con)[0].split(", ")
-    console.log(vcon[qqc - 1], vcon.length)
+    console.log(vcon[qqc + 1])
   } catch {
     vcon = forms.fill.map(io => io.fm_con)[0]
   }
@@ -366,9 +369,9 @@ const FillUp = () => {
     var n = z.map((m, i) => {
       var nn = <p className='inline textr p'><input className='input30' type="number" id={m} required /></p>
       if (vcon.length === 4 && i === z.length - 1)
-        nn = <p className='inline textr p'><input className='input30' type="number" id={m} defaultValue={vcon[qqc - 1]} readOnly /></p>
+        nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon[qqc + 1]} readOnly /></p>
       else if (vcon != 0 && i === z.length - 1)
-        nn = <p className='inline textr p'><input className='input30' type="number" id={m} defaultValue={vcon} readOnly /></p>
+        nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon} readOnly /></p>
       return (
         <div key={i}>
           <div><p className='inline p'><label>{m}: &nbsp;&nbsp;</label></p>
@@ -475,8 +478,6 @@ const FillUp = () => {
     return h
   }
 
-  var name = "";
-
   const upload = () => {
     const formdata = new FormData();
     if (file != undefined) {
@@ -484,12 +485,11 @@ const FillUp = () => {
       axios.post(import.meta.env.VITE_APP_API + "/upload", formdata)
         .then(res => {
           name = res.data.filename
-          //console.log(name)
+          console.log(name)
         })
         .catch(er => console.log(er));
-      alert("บันทึกสำเร็จ")
     } else {
-      alert("เลือกไฟล์ก่อน")
+      alert("เลือกไฟล์ก่อน");
     }
   }
 
@@ -573,9 +573,16 @@ const FillUp = () => {
     //console.log(file.name)
     if (document.getElementById("submit").disabled === true) {
       document.getElementById("submit").disabled = false
+      // document.getElementById("upl").disabled = false
+      upload();
+      console.log(name);
       //console.log("n[1]", `${z[0]}`[(z[0].length) - 1])
     }
-    else document.getElementById("submit").disabled = true
+    else {
+      document.getElementById("submit").disabled = true
+      // document.getElementById("upl").disabled = true
+      console.log(name)
+    }
   }
 
   useEffect(() => {
@@ -717,15 +724,15 @@ const FillUp = () => {
                       <div className='up'>
                         <br />
                         <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label><br />
-                        <input type='file' name='evimg' onChange={(e) => setFile(e.target.files[0])} required />
-                        <button className='btn btn-primary' onClick={upload}>Upload</button>
-                        <br />
+                        <input type='file' onChange={(e) => setFile(e.target.files[0])} required />
+                        {/* <button id="upl" className='btn btn-primary' onClick={upload}>Upload</button> */}
+                        <br /><br />
                         <label>**หมายเหตุชื่อไฟล์ต้องเป็นภาษาอังกฤษหรือตัวเลขเท่านั้น**</label>
                         <br />
                       </div>
                       <div className='textr2'>
                         <br />
-                        <label>ยืนยัน: <input type="checkbox" value={secec.check} onClick={e => dis()} /> </label>
+                        <label>ยืนยัน: <input id="con" type="checkbox" value={secec.check} onClick={e => dis()} /> </label>
                         <br />
                       </div>
                     </div>

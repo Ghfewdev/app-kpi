@@ -712,7 +712,7 @@ const CalForm = () => {
           })
           .then(data => {
             if (data.status === "ok") {
-              console.log(jsonImg)
+              // console.log(jsonImg)
               alert("บันทึกสำเร็จ");
             } else {
               alert("บันทึกไม่สำเร็จ");
