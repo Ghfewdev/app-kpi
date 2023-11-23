@@ -750,7 +750,7 @@ const CalForm = () => {
             <br /><br />
             <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
             <br /><br />
-            <label>ค่าเป้าหมาย: </label><br /> <input className="input10" disabled value={"ร้อยละ "+q} />
+            <label>ค่าเป้าหมาย: </label><br /> <input className="input20" disabled value={"ร้อยละ "+q} />
             <br /><br />
             {/* <label>วิธีการคำนวณ: </label><br /> <input className="input10" disabled value={w} />
             <br /><br /> */}
@@ -972,7 +972,7 @@ const CalForm = () => {
             <br /><br />
             <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
             <br /><br />
-            <label>ค่าเป้าหมาย: </label><br /> <input className="input10" disabled value={"ร้อยละ "+q} />
+            <label>ค่าเป้าหมาย: </label><br /> <input className="input20" disabled value={"ร้อยละ "+q} />
             <br /><br />
             {/* <label>วิธีการคำนวณ: </label><br /> <input className="input10" disabled value={w} />
             <br /><br /> */}
@@ -1193,7 +1193,7 @@ const CalForm = () => {
             <br /><br />
             <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
             <br /><br />
-            <label>ค่าเป้าหมาย: </label><br /> <input className="input10" disabled value={"ร้อยละ "+q} />
+            <label>ค่าเป้าหมาย: </label><br /> <input className="input20" disabled value={"ร้อยละ "+q} />
             <br /><br />
             {/* <label>วิธีการคำนวณ: </label><br /> <input className="input10" disabled value={w} />
             <br /><br /> */}
@@ -1414,7 +1414,7 @@ const CalForm = () => {
             <br /><br />
             <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
             <br /><br />
-            <label>ค่าเป้าหมาย: </label><br /> <input className="input10" disabled value={"ร้อยละ "+q} />
+            <label>ค่าเป้าหมาย: </label><br /> <input className="input20" disabled value={"ร้อยละ "+q} />
             <br /><br />
             {/* <label>วิธีการคำนวณ: </label><br /> <input className="input10" disabled value={w} />
             <br /><br /> */}
@@ -1635,7 +1635,7 @@ const CalForm = () => {
           <br /><br />
           <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
           <br /><br />
-          <label>ค่าเป้าหมาย: </label><br /> <input className="input10" disabled value={"ร้อยละ "+q} />
+          <label>ค่าเป้าหมาย: </label><br /> <input className="input20" disabled value={"ร้อยละ "+q} />
           <br /><br />
           {/* <label>วิธีการคำนวณ: </label><br /> <input className="input10" disabled value={w} />
           <br /><br /> */}
@@ -1854,7 +1854,7 @@ const CalForm = () => {
           <br /><br />
           <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
           <br /><br />
-          <label>ค่าเป้าหมาย: </label><br /> <input className="input10" disabled value={"ร้อยละ "+q} />
+          <label>ค่าเป้าหมาย: </label><br /> <input className="input20" disabled value={"ร้อยละ "+q} />
           <br /><br />
           {/* <label>วิธีการคำนวณ: </label><br /> <input className="input10" disabled value={w} />
           <br /><br /> */}
@@ -2098,8 +2098,8 @@ const CalForm = () => {
 
         if (sessionStorage.getItem("qur") == "2") {
           guu2 = <><input type="checkbox" checked readOnly={true} />&nbsp; ม.ค.-มี.ค. ๖๗</>;
-          guu3 = <><input type="checkbox" checked={false} /> เม.ย.-มิ.ย. ๖๗</>
-          guu4 = <><input type="checkbox" checked={false} />&nbsp; ก.ค.-ก.ย. ๖๗</>
+          guu3 = <><input type="checkbox" checked={false} readOnly={true} /> เม.ย.-มิ.ย. ๖๗</>
+          guu4 = <><input type="checkbox" checked={false} readOnly={true} />&nbsp; ก.ค.-ก.ย. ๖๗</>
 
         }
         else if (sessionStorage.getItem("qur") == "3") {
