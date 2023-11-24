@@ -553,6 +553,7 @@ const CalForm = () => {
     sessionStorage.setItem("qur", qur)
     //console.log("deid = ", deid, hos, ag, pp)
     //console.log(pa2(s)[0], pa2(s)[1], pa2(s)[2], pa2(s)[3], pa2(s)[4], pa2(s)[5])
+    console.log(pa2(s), pa(s))
   }
 
   function reu() {
@@ -2572,11 +2573,11 @@ const CalForm = () => {
       oo = 0
      }
      if(fc === 1) {
-      p1 = po1
-      p2 = po2
+      p1 = p1
+      p2 = p2
       pp1 = po1
       pp2 = po2
-      are = oo
+      are = are
       sare = oo
      }
 

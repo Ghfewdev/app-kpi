@@ -554,11 +554,11 @@ const FillUp = () => {
       oo = 0
     }
     if (fc === 1) {
-      p1 = po1
-      p2 = po2
+      p1 = p1
+      p2 = p2
       pp1 = po1
       pp2 = po2
-      are = oo
+      are = are
       sare = oo
     }
 
