@@ -101,14 +101,16 @@ const FillUp = () => {
   }
 
   if (quar != []) {
+    if (quar.length == 0)
     qqc = 1
-  } else if (quar.length == 1) {
+   else if (quar.length == 1) {
     qqc = 2
   } else if (quar.length == 2) {
     qqc = 3
   } else if (quar.length == 3) {
     qqc = 4
   }
+}
 
   const quc = (qq) => {
 
@@ -219,6 +221,7 @@ const FillUp = () => {
       "hpa2": pa2(z)[5],
       "pa1": pa2(z)[0],
       "pa2": pa2(z)[1],
+      "log": pa2(z)[6],
       "sum": pa2(z)[2]
     };
 
@@ -241,7 +244,7 @@ const FillUp = () => {
         }
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log("error1", error);
       })
 
     fetch(import.meta.env.VITE_APP_API + "/ev/add", {
@@ -263,7 +266,7 @@ const FillUp = () => {
         }
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log("error2", error);
       })
 
     fetch(import.meta.env.VITE_APP_API + `/result/update/${hos}/${d[1]}`, {
@@ -284,7 +287,7 @@ const FillUp = () => {
         }
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log("error3", error);
       })
 
   }
@@ -359,7 +362,7 @@ const FillUp = () => {
   var vcon;
   try {
     vcon = forms.fill.map(io => io.fm_con)[0].split(", ")
-    console.log(vcon[qqc + 1])
+    //console.log(vcon[qqc - 1], qqc)
   } catch {
     vcon = forms.fill.map(io => io.fm_con)[0]
   }
@@ -369,7 +372,7 @@ const FillUp = () => {
     var n = z.map((m, i) => {
       var nn = <p className='inline textr p'><input className='input30' type="number" id={m} required /></p>
       if (vcon.length === 4 && i === z.length - 1)
-        nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon[qqc + 1]} readOnly /></p>
+        nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon[qqc - 1]} readOnly /></p>
       else if (vcon != 0 && i === z.length - 1)
         nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon} readOnly /></p>
       return (
@@ -494,9 +497,9 @@ const FillUp = () => {
   }
 
   const pa = () => {
-    var fp1 = fetchs.map(a => [a.pa1, a.pa2, a.h1pa, a.h1pb, a.h2pa, a.h2pb, a.h3pa, a.h3pb, a.h4pa, a.h4pb, a.h5pa, a.h5pb, a.h6pa, a.h6pb, a.h7pa, a.h7pb, a.h8pa, a.h8pb, a.h9pa, a.h9pb, a.h10pa, a.h10pb, a.h11pa, a.h11pb])
+    var fp1 = fetchs.map(a => [a.pa1, a.pa2, a.h1pa, a.h1pb, a.h2pa, a.h2pb, a.h3pa, a.h3pb, a.h4pa, a.h4pb, a.h5pa, a.h5pb, a.h6pa, a.h6pb, a.h7pa, a.h7pb, a.h8pa, a.h8pb, a.h9pa, a.h9pb, a.h10pa, a.h10pb, a.h11pa, a.h11pb, a.re_log])
     var ffp1 = fp1[0]
-    var ffp = [ffp1[0], ffp1[1], ffp1[ha + 2], ffp1[hb + 2]]
+    var ffp = [ffp1[0], ffp1[1], ffp1[ha + 2], ffp1[hb + 2], ffp1[24]]
     return ffp
   }
 
@@ -512,6 +515,7 @@ const FillUp = () => {
     var sare;
     var are;
     var oo;
+    var lg = pa()[4];
     var iff = 0;
     for (var i = 1; i <= val.length; i++) {
       if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
@@ -542,7 +546,7 @@ const FillUp = () => {
     else {
       are = ((p1 / p2) * 100).toFixed(2)
       sare = ((pp1 / pp2) * 100).toFixed(2)
-      oo = (((po1 / po2) ** (-1)) * 100).toFixed(2)
+      oo = ((po1 / po2) * 100).toFixed(2)
     }
     if (isNaN((sare))) {
       sare = 0
@@ -553,16 +557,33 @@ const FillUp = () => {
     else if (isNaN(oo)) {
       oo = 0
     }
-    if (fc === 1) {
-      p1 = p1
-      p2 = p2
-      pp1 = po1
-      pp2 = po2
-      are = are
-      sare = oo
+    if(fc === 1) {
+      if (lg.includes(hos)) {
+        // var loo = sessionStorage.getItem("hos") + "_" + sessionStorage.getItem("qur").split("_")
+        p1 = p1-pp1 + po1
+        p2 = p2-pp2 + po2
+        if (p1 < 0)
+        p1 = 0
+        if (p1 < p2)
+        are = ((p1 / p2) * 100).toFixed(2)
+        else
+        are = ((p2 / p1) * 100).toFixed(2)
+        // if (isNaN(are))
+        pp1 = po1
+        pp2 = po2
+        sare = oo
+        lg += ", " + hos + "_" + qqc
+      } else {
+        if (isNaN(lg)) {
+          lg += ", " + hos + "_" + qqc
+        }
+        else {
+        lg += hos + "_" + qqc
+      }
+     }
     }
 
-    pa2 = [p1, p2, are, sare, pp1, pp2]
+    pa2 = [p1, p2, are, sare, pp1, pp2, lg]
 
     return pa2
 
@@ -571,6 +592,7 @@ const FillUp = () => {
   const dis = () => {
     //console.log(pa2(z), detail, pa(), reu());
     //console.log(file.name)
+    console.log(pa2(z))
     if (document.getElementById("submit").disabled === true) {
       document.getElementById("submit").disabled = false
       // document.getElementById("upl").disabled = false
