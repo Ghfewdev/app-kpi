@@ -2360,10 +2360,10 @@ const CalForm = () => {
             <br /><b>ส่วนราชการ </b> &nbsp;&nbsp;&nbsp; {ap} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ไตรมาสที่ ๔ {guu4}
           </div>
           <div className='row textl5'>
-            <div className='col'>
+            <div className='col-auto'>
               ชื่อโครงการ/กิจกรรม
             </div>
-            <div className='col-10'>{cp}</div>
+            <div className='col'>{cp}</div>
           </div>
 
           <div className='textl5'>ลำดับโครงการ / กิจกรรมตามแผนสนพ. &nbsp;&nbsp;&nbsp; {ep}
