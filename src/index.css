@@ -28,9 +28,8 @@ body {
 }
 
 input[type=text1] {
-  width: 70%;
+  width: 80%;
 }
-
 
 /* *::selection {
   background: #3300c0;

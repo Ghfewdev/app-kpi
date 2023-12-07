@@ -28,6 +28,7 @@ const Senddetail = () => {
         .catch((error) => {
           console.log("Error: ", error)
         })
+        
 }
 
 export default Senddetail

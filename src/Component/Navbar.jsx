@@ -35,10 +35,15 @@ const Navbar = () => {
       </>
     } else if (c === "1") {
       b = <>
-        <li style={{ float: "right" }}><a className="red" href='' onClick={handleLogout}>ออกจากระบบ</a></li>
+        {/* <li style={{ float: "right" }}><a className="red" href='' onClick={handleLogout}>ออกจากระบบ</a></li>
         <li style={{ float: "right" }}><a className="active">ส่วนราชการ: {a}</a></li>
         <li className='navli'><a className='navli a' href="form">ตัวชี้วัดทั้งหมด</a></li>
         <li className='navli'><a className='navli a' href="dashboard">รายงานตัวชี้วัด</a></li>
+        <li className='navli'><a className='navli a' href="calform">สรุปผลตัวชี้วัด</a></li> */}
+        <li style={{ float: "right" }}><a className="red" href='' onClick={handleLogout}>ออกจากระบบ</a></li>
+        <li style={{ float: "right" }}><a className="active">ส่วนราชการ: {a}</a></li>
+        <li className='navli'><a className='navli a' href="form">ตัวชี้วัดทั้งหมด</a></li>
+        <li className='navli'><a className='navli a' href="fillup">รายงานตัวชี้วัด</a></li>
         <li className='navli'><a className='navli a' href="calform">สรุปผลตัวชี้วัด</a></li>
       </>
     } else if (c === "9") {

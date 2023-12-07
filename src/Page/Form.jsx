@@ -125,7 +125,7 @@ const Form = () => {
           <th>ลำดับที่</th>
           <th>ชื่อตัวชี้วัด</th>
           <th>ค่าเป้าหมาย</th>
-          <th>ข้อมูลที่ใช้สรุปตัวชี้วัด</th>
+          <th>ข้อมูลที่ถูกเก็บในตัวชี้วัด</th>
           {/* <th>การคำนวณ</th> */}
         </tr>
       </thead>
@@ -174,7 +174,7 @@ const Form = () => {
     var n = z.map((m, i) => (
       <div key={i}>
 
-        <label>ข้อมูลที่ใช้สรุปตัวชี้วัด {i + 1}: </label> <br /> <input className='input60' value={m} disabled /> <br /> <div className='input60' id={"hd"+i} hidden><input id={i} /></div>
+        <label>ข้อมูลที่ถูกเก็บในตัวชี้วัดลำดับที่ {i + 1}: </label> <br /> <input className='input60' value={m} disabled /> <br /> <div className='input60' id={"hd"+i} hidden><input id={i} /></div>
         <br /><br />
       </div>
     )
@@ -220,9 +220,9 @@ const Form = () => {
 
                 <div key={fill.fm_id}>
                   {co1}
-                  <br /><label>ชื่อตัวชี้วัด: </label> <br /> <textarea className='textarea60100' value={fill.fm_name} disabled /> <br /> <div id='hd11' hidden><textarea className='textarea60100' name='name' required/></div>
+                  <br /><label>ตัวชี้วัด KPI (ตามแผนฯ ของหน่วยงาน): </label> <br /> <textarea className='textarea60100' value={fill.fm_name} disabled /> <br /> <div id='hd11' hidden><textarea className='textarea60100' name='name' required/></div>
                   <br /><br />
-                  <label>นิยามตัวชี้วัด :&nbsp;</label> <br /><textarea className='tarea610' value={fill.fm_define} disabled /><br /><div id='hd22' hidden><textarea className='tarea610' name='define' required/></div>
+                  <label>นิยาม/คำอธิบายตัวชี้วัด:&nbsp;</label> <br /><textarea className='tarea610' value={fill.fm_define} disabled /><br /><div id='hd22' hidden><textarea className='tarea610' name='define' required/></div>
                   <br /><br />
                   <label>ค่าเป้าหมาย: </label> <br /> <input className='input60' value={"ร้อยละ "+fill.fm_solve} disabled /> <br /> <div id='hd33' hidden> <input type='number' min={1} max={100} className='input60' name='solve' required/></div>
                   <br /><br />

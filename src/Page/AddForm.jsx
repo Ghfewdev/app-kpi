@@ -25,7 +25,8 @@ Authlevel();
             def: data.get("define"),
             paras: g(numpara),
             com: com(),
-            con: fixc()
+            con: fixc(),
+            res: resp
         };
         const JsonData2 = {
             fmid: data.get("id"),
@@ -169,6 +170,24 @@ Authlevel();
 
     }
 
+    var resp = "23";
+
+    var res = (v) => {
+        if (resp.includes(v)) {
+            if (resp.includes(", "))
+            resp = resp.replace(", "+v,"")
+            else
+            resp = resp.replace(v,"")
+        }
+        else {
+            if (resp === "")
+            resp += v
+            else
+            resp += ", "+v
+        }
+        console.log(resp)
+    }
+    console.log(resp)
     var par = (val) => {
         let ht = '';
         let pas = '';
@@ -220,6 +239,7 @@ Authlevel();
             //g(numpara)
             console.log(g(numpara))
             console.log(fixc())
+            console.log(resp)
             document.getElementById("submit").disabled = false
         }
         else {
@@ -240,7 +260,25 @@ Authlevel();
                         </h1>
                         <br /><br />
                         <form onSubmit={handleSubmit} className='textl2'>
-
+                            <label>กำหนดหน่วยงานที่รับผิดชอบ:&nbsp;&nbsp;</label>
+                            <br />
+                            {/* <input id='res-00' type="checkbox" onClick={e => res("00")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>หน่วยงานสังกัดสำนักการแพทย์&nbsp;&nbsp;&nbsp;&nbsp; </label> */}
+                            <input id='res-21' type="checkbox" onClick={e => res("21")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>สก.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-22' type="checkbox" onClick={e => res("22")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>ศบฉ.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <br /><label>โรงพยาบาลสังกัดสำนักการแพทย์:&nbsp;&nbsp;&nbsp;&nbsp; </label><br />
+                            <input id='res-10' type="checkbox" onClick={e => res("10")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพก.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-11' type="checkbox" onClick={e => res("11")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพต.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-12' type="checkbox" onClick={e => res("12")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพจ.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-13' type="checkbox" onClick={e => res("13")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพท.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-14' type="checkbox" onClick={e => res("14")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพว.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-15' type="checkbox" onClick={e => res("15")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพล.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <br />
+                            <input id='res-16' type="checkbox" onClick={e => res("16")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพร.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-17' type="checkbox" onClick={e => res("17")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพส.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-18' type="checkbox" onClick={e => res("18")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพข.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-19' type="checkbox" onClick={e => res("19")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพค.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-20' type="checkbox" onClick={e => res("20")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพบ.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <br /><br />
                             <label>ชื่อตัวชี้วัด:&nbsp;&nbsp; </label><br /><textarea className='tarea70' type="text" name="name" autoFocus required/>
                             <br /><br />
                             <label>นิยามของตัวชี้วัด:&nbsp;&nbsp; </label><br /><textarea className='textarea60100' type="text" name="define" required/>
@@ -264,8 +302,8 @@ Authlevel();
 
                             <div dangerouslySetInnerHTML={{ __html: par(numpara) }}>
                             </div>
-                            <label>ข้อมูลเปรี่ยบเทียบที่ 1:&nbsp;&nbsp;</label> <label hidden>( กรณีใช้ค่านี้ในการประเมินผลตัวชี้วัดติ๊กถูกตรงนี้ <input type="checkbox" id={980} defaultChecked/> )</label><br /> <input required type="text1" name="para98" id={98} /><br /><br />
-                            <label>ข้อมูลเปรี่ยบเทียบที่ 2:&nbsp;&nbsp;</label> <label>( กรณีเป็นค่าเปรียบเทียบคงที่: <input type="checkbox" id={999} onClick={e => fixx()} /> <input hidden defaultChecked type="checkbox" id={990} /> )</label><br /> <input required type="text1" name="para99" id={99} /><br /><br />
+                            <label>ข้อมูลเปรี่ยบเทียบที่ 1 (ตัวตั้ง):&nbsp;&nbsp;</label> <label hidden>( กรณีใช้ค่านี้ในการประเมินผลตัวชี้วัดติ๊กถูกตรงนี้ <input type="checkbox" id={980} defaultChecked/> )</label><br /> <input required type="text1" name="para98" id={98} /><br /><br />
+                            <label>ข้อมูลเปรี่ยบเทียบที่ 2 (ตัวหาร):&nbsp;&nbsp;</label> <label>( กรณีเป็นค่าเปรียบเทียบคงที่: <input type="checkbox" id={999} onClick={e => fixx()} /> <input hidden defaultChecked type="checkbox" id={990} /> )</label><br /> <input required type="text1" name="para99" id={99} /><br /><br />
                             <div id='combo' hidden> แบ่งรายไตรมาส:&nbsp;&nbsp; <input type="radio" id={111} name='met' onClick={e => mtq()}/>&nbsp;&nbsp;&nbsp;&nbsp; รายปี:&nbsp;&nbsp;    <input type="radio" name='met' id={222} onClick={e => mty()}/> <br /><br />
                             <div id="mt" hidden><label>ใส่ค่าเปรียบเทียบคงที่:&nbsp;&nbsp;</label> <input id={100} name='fix' className='input20' type="number" /><br /><br /></div>
                             <div id="mty" hidden>

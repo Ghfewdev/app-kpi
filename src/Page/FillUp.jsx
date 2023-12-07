@@ -14,7 +14,8 @@ const FillUp = () => {
   const [fetchs, setFetchs] = useState([]);
   const [forms, setForms] = useState({
     form: [],
-    fill: []
+    fill: [],
+    formres: []
   });
   const [secec, setSececs] = useState({
     sece: "",
@@ -98,6 +99,18 @@ const FillUp = () => {
     hos = "h11"
     ha = 20
     hb = 21
+  }
+
+  else if (dep === "สก.") {
+    hos = "d1"
+    ha = 22
+    hb = 23
+  }
+
+  else if (dep === "ศบฉ.") {
+    hos = "d2"
+    ha = 24
+    hb = 25
   }
 
   if (quar != []) {
@@ -311,6 +324,13 @@ const FillUp = () => {
         setForms({ ...forms, form: data })
       })
 
+      fetch(import.meta.env.VITE_APP_API + `/form/res/${localStorage.getItem("id")}` )
+      .then(response => {
+        return response.json();
+      })
+      .then(data2 => {
+        setForms({ ...forms, formres: data2 })
+      })
 
   }
 
@@ -370,6 +390,34 @@ const FillUp = () => {
   try {
     var z = y.split(", ")
     var n = z.map((m, i) => {
+    const k = m.split("_")
+    var g1 = <></>
+    var g2 = <></>
+    var pi = <></>
+    var group = m;
+    if(k.length === 2) {
+      g1 = <><br /><b>{k[0]}: </b></>
+      pi = <><br /> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;- {k[1]}</>
+      m = <></>
+      if (!(i%(3**1) === 0))
+      g1 = <></>
+      group = <>{g1}{pi}{g2}</>
+    }
+    else if (k.length === 3) {
+      g1 = <><br /><b>{k[0]}: </b></>
+      g2 = <><br /> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;- {k[1]}</>
+      pi = <><br /> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;- <u>{k[2]}</u></>
+      m = <></>
+      if (!(i%(3**2) === 0)) {
+      g1 = <></>
+      }
+      if (!(i%(3**1) === 0))
+      pi = <></>
+      group = <>{g1}{pi}{g2}</>
+    }
+
+    
+
       var nn = <p className='inline textr p'><input className='input30' type="number" id={m} required /></p>
       if (vcon.length === 4 && i === z.length - 1)
         nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon[qqc - 1]} readOnly /></p>
@@ -377,7 +425,7 @@ const FillUp = () => {
         nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon} readOnly /></p>
       return (
         <div key={i}>
-          <div><p className='inline p'><label>{m}: &nbsp;&nbsp;</label></p>
+          <div><p className='inline p'><label>{group} &nbsp;&nbsp;</label></p>
             {nn}
           </div>
         </div>
@@ -497,9 +545,9 @@ const FillUp = () => {
   }
 
   const pa = () => {
-    var fp1 = fetchs.map(a => [a.pa1, a.pa2, a.h1pa, a.h1pb, a.h2pa, a.h2pb, a.h3pa, a.h3pb, a.h4pa, a.h4pb, a.h5pa, a.h5pb, a.h6pa, a.h6pb, a.h7pa, a.h7pb, a.h8pa, a.h8pb, a.h9pa, a.h9pb, a.h10pa, a.h10pb, a.h11pa, a.h11pb, a.re_log])
+    var fp1 = fetchs.map(a => [a.pa1, a.pa2, a.h1pa, a.h1pb, a.h2pa, a.h2pb, a.h3pa, a.h3pb, a.h4pa, a.h4pb, a.h5pa, a.h5pb, a.h6pa, a.h6pb, a.h7pa, a.h7pb, a.h8pa, a.h8pb, a.h9pa, a.h9pb, a.h10pa, a.h10pb, a.h11pa, a.h11pb, a.d1pa, a.d1pb, a.d2pa, a.d2pb, a.re_log])
     var ffp1 = fp1[0]
-    var ffp = [ffp1[0], ffp1[1], ffp1[ha + 2], ffp1[hb + 2], ffp1[24]]
+    var ffp = [ffp1[0], ffp1[1], ffp1[ha + 2], ffp1[hb + 2], ffp1[28]]
     return ffp
   }
 
@@ -629,7 +677,7 @@ const FillUp = () => {
 
               <select value={secec.sece} onClick={e => handleonChange(d[1])} onChange={e => setSececs({ ...secec, sece: e.target.value })} >
                 <option> ชื่อและรหัสตัวชี้วัด </option>
-                {forms.form.map(form => (
+                {forms.formres.map(form => (
                   <option key={form.fm_id}>ตัวชี่้วัดลำดับที่่: {form.fm_id}</option>
                 ))}
               </select>

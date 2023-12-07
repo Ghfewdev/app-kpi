@@ -22,12 +22,17 @@
 
 .textr2 {
   text-align: right;
-  width: 70%;
+  width: 80%;
 }
 
 .textl2 {
   text-align: left;
-  padding-left: 25%;
+  padding-left: 15%;
+}
+
+.fillupl {
+  text-align: left;
+  padding-left: 15%;
 }
 
 .textl4 {
@@ -65,6 +70,10 @@
 
 .redt {
   color: red;
+}
+
+.bluet {
+  color: purple;
 }
 
 .greent {
@@ -185,6 +194,10 @@
 }
 
 .input60 {
+  width: 80%;
+}
+
+.input80 {
   width: 70%;
 }
 
@@ -193,7 +206,7 @@
 }
 
 .input10 {
-  width: 10%;
+  width: 17%;
 }
 
 .input20 {
@@ -201,7 +214,7 @@
 }
 
 .p {
-  width: 35%;
+  width: 40%;
 }
 
 .p2 {
@@ -209,17 +222,17 @@
 }
 
 .tarea610 {
-  width: 70%;
+  width: 80%;
   height: 600px;
 }
 
 .tarea70 {
-  width: 70%;
+  width: 80%;
   height: 50px;
 }
 
 .textarea60100 {
-  width: 70%;
+  width: 80%;
   height: 200px;
 }
 .col-print-1 {

@@ -22,6 +22,7 @@ const CalForm = () => {
   const [qt2, setQt2] = useState([]);
   const [qt3, setQt3] = useState([]);
   const [qt4, setQt4] = useState([]);
+  const [formres, setFormres] = useState([])
   var fetc = Fetch();
   var fusers = Users();
   var ta = [];
@@ -127,6 +128,13 @@ const CalForm = () => {
           setFetchs(data3);
         });
 
+      fetch(import.meta.env.VITE_APP_API + `/form/res/${localStorage.getItem("id")}`)
+        .then(response3 => {
+          return response3.json();
+        })
+        .then(data7 => {
+          setFormres(data7);
+        });
 
     }
 
@@ -545,6 +553,21 @@ const CalForm = () => {
       ha = 20
       hb = 21
     }
+
+    else if (dep === "สก.") {
+      hos = "d1"
+      ag = "สก."
+      ha = 22
+      hb = 23
+    }
+  
+    else if (dep === "ศบฉ.") {
+      hos = "d2"
+      ag = "ศบฉ."
+      ha = 24
+      hb = 25
+    }
+
     sessionStorage.setItem("ag", ag)
     sessionStorage.setItem("deid", id)
     sessionStorage.setItem("hos", hos)
@@ -594,6 +617,10 @@ const CalForm = () => {
       "log": pa2(s)[6],
       "sum": pa2(s)[2]
     };
+    const JsonData6 = {
+      user: localStorage.getItem("id"),
+      detail: sessionStorage.getItem("deid")
+    };
 
     fetch(import.meta.env.VITE_APP_API + "/update/detail", {
       method: "PUT",
@@ -628,8 +655,8 @@ const CalForm = () => {
       })
       .then(data => {
         if (data.status === "ok") {
-          alert("แก้ไขสำเร็จ");
-          window.location = "calform";
+          //alert("แก้ไขสำเร็จ");
+          //window.location = "calform";
         } else {
           alert("บันทึกไม่สำเร็จ");
         }
@@ -637,6 +664,30 @@ const CalForm = () => {
       .catch((error) => {
         console.log("error", error);
       })
+
+      fetch(import.meta.env.VITE_APP_API+"/formed/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(JsonData6)
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(data => {
+          if (data.status === "ok") {
+            console.log("logadd: success")
+            alert("แก้ไขสำเร็จ")
+            window.location = "calform"
+          } else {
+            console.log("logadd: failure")
+            alert("แก้ไขไม่สำเร็จ")
+          }
+        })
+        .catch((error) => {
+          console.log("Error: ", error)
+        })
 
   }
 
@@ -660,6 +711,11 @@ const CalForm = () => {
       deid: sessionStorage.getItem("deid")
     };
 
+    const JsonData6 = {
+      user: localStorage.getItem("id"),
+      detail: sessionStorage.getItem("deid")
+    };
+
     fetch(import.meta.env.VITE_APP_API + "/ev/edit", {
       method: "PUT",
       headers: {
@@ -672,9 +728,8 @@ const CalForm = () => {
       })
       .then(data => {
         if (data.status === "ok") {
-          alert("บันทึกสำเร็จ")
-          //window.location = "post";
-          window.location = "calform"
+          //alert("บันทึกสำเร็จ")
+          //window.location = "calform"
         } else {
           alert("บันทึกไม่สำเร็จ");
         }
@@ -682,6 +737,29 @@ const CalForm = () => {
       .catch((error) => {
         console.log("error", error);
       })
+    
+      fetch(import.meta.env.VITE_APP_API+"/formed/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(JsonData6)
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(data => {
+          if (data.status === "ok") {
+            console.log("logadd: success")
+            alert("บันทึกสำเร็จ")
+            //window.location = "calform"
+          } else {
+            console.log("logadd: failure")
+          }
+        })
+        .catch((error) => {
+          console.log("Error: ", error)
+        })
 
   }
 
@@ -774,7 +852,7 @@ const CalForm = () => {
                   {/* <th className="textc" scope="col">{w}</th> */}
                   <th className="textc" scope="col">ร้อยละ</th>
                   <th className="textc" scope="col">วันที่ส่ง</th>
-                  {/* <th scope="col">เวลา</th> */}
+                  <th className="textc" scope="col">วันที่อัปเดต</th>
                   <th className="textc" scope="col">สรุปผล</th>
                   <th className="textc" scope="col">ข้อมูลโครงการ</th>
                   <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
@@ -797,7 +875,7 @@ const CalForm = () => {
                       {parse(y)}
                       <td>{item.de_ans.toFixed(2)}</td>
                       <td>{item.fd_date}</td>
-                      {/*  <td>{item.fd_time}</td> */}
+                      <td>{item.fd_update}</td>
                       <td className="textc">{u}</td>
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
@@ -955,11 +1033,11 @@ const CalForm = () => {
           </div>
           <br /><br />
           <div className="row">
-            <div className="col-3 textc">
+            <div className="col-4 textc">
             </div>
-            <div className="col-1 col-md-5">
-              <div style={{ width: 650 }}>
-                <Solve name={qq14[11]} do={650} name2={q} class={"responcal"}/>
+            <div className="col-1 col-md-4">
+              <div style={{ width: 530 }}>
+                <Solve name={qq14[11]} do={530} name2={q} class={"responcal"}/>
               </div>
             </div>
 
@@ -996,7 +1074,7 @@ const CalForm = () => {
                   {/* <th className="textc" scope="col">{w}</th> */}
                   <th className="textc" scope="col">ร้อยละ</th>
                   <th className="textc" scope="col">วันที่ส่ง</th>
-                  {/* <th scope="col">เวลา</th> */}
+                  <th className="textc" scope="col">วันที่อัปเดต</th>
                   <th className="textc" scope="col">สรุปผล</th>
                   <th className="textc" scope="col">ข้อมูลโครงการ</th>
                   <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
@@ -1019,11 +1097,11 @@ const CalForm = () => {
                       {parse(y)}
                       <td>{item.de_ans.toFixed(2)}</td>
                       <td>{item.fd_date}</td>
-                      {/*  <td>{item.fd_time}</td> */}
+                      <td>{item.fd_update}</td>
                       <td className="textc">{u}</td>
-                      <td className="textc"><button disabled onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
-                      <td className="textc"><button disabled onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
-                      <td className="textc"><button disabled onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
+                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
                     </tr>
                   );
                 })}
@@ -1033,154 +1111,13 @@ const CalForm = () => {
 
           </div>
           <div className="textc"><h3>สรุปผล</h3></div>
-          <div className='container mt-3'>
-            <br />
-            <table className='table table-bordered border-primary'>
-
-              <thead className="table-dark">
-                <tr>
-                  <th scope="col" rowSpan="2">ส่วนราชการ</th>
-                  <th scope='col' colSpan="2">ไตรมาสที่ 1</th>
-                  <th scope='col' colSpan="2">ไตรมาสที่ 2</th>
-                  {/* <th scope='col' colSpan="2">ครี่งปีแรก</th> */}
-                  <th scope='col' colSpan="2">ไตรมาสที่ 3</th>
-                  <th scope='col' colSpan="2">ไตรมาสที่ 4</th>
-                  {/* <th scope='col' colSpan="2">ครี่งปีหลัง</th> */}
-                  <th scope="col" colSpan="2">ผลดำเนินการ</th>
-                  {/* <th scope="col" rowSpan="2">รายละเอียด</th> */}
-
-                </tr>
-
-                <tr>
-                  {/* <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th>
-                  <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th> */}
-                  <th scope='col'>ผล</th>
-                  <th scope="col">สรุป</th>
-                  <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th>
-                  <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th>
-                  <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th>
-                  <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th>
-                </tr>
-              </thead>
-              <tbody>
-
-                {an.map((item, index) => {
-                  var uu1 = <h4 className="bi bi-x-circle redt"></h4>;
-                  var uu2 = <h4 className="bi bi-x-circle redt"></h4>;
-                  var uu3 = <h4 className="bi bi-x-circle redt"></h4>;
-                  var uu4 = <h4 className="bi bi-x-circle redt"></h4>;
-
-
-                  if (re1[index] === "ผ่าน")
-                    uu1 = <h4 className="bi bi-check-circle greent"></h4>
-                  if (re2[index] === "ผ่าน")
-                    uu2 = <h4 className="bi bi-check-circle greent"></h4>
-                  if (re3[index] === "ผ่าน")
-                    uu3 = <h4 className="bi bi-check-circle greent"></h4>
-                  if (re4[index] === "ผ่าน")
-                    uu4 = <h4 className="bi bi-check-circle greent"></h4>
-
-
-                  //q1-4
-                  if (isNaN(qq1[index]))
-                    qq1[index] = "-"
-                  if (isNaN(qq2[index]))
-                    qq2[index] = "-"
-                  if (isNaN(qq3[index]))
-                    qq3[index] = "-"
-                  if (isNaN(qq4[index]))
-                    qq4[index] = "-"
-
-                  //q12
-                  if (qq12[index] > 100)
-                    qq12[index] = ((qq12[index] ** -1) * 10000).toFixed(2)
-                  if (isNaN(qq12[index]))
-                    qq12[index] = "-"
-                  if (Number(qq12[index]) > Number(q))
-                    re12.push("ผ่าน")
-                  else re12.push("ไม่ผ่าน")
-                  if (re12[index] === "ผ่าน")
-                    re12[index] = <h4 className="bi bi-check-circle greent"></h4>
-                  else re12[index] = <h4 className="bi bi-x-circle redt"></h4>;
-
-                  //q13
-
-
-                  //q34
-                  if (qq34[index] > 100)
-                    qq34[index] = ((qq34[index] ** -1) * 10000).toFixed(2)
-                  if (isNaN(qq34[index]))
-                    qq34[index] = "-"
-                  if (Number(qq34[index]) > Number(q))
-                    re34.push("ผ่าน")
-                  else re34.push("ไม่ผ่าน")
-                  if (re34[index] === "ผ่าน")
-                    re34[index] = <h4 className="bi bi-check-circle greent"></h4>
-                  else re34[index] = <h4 className="bi bi-x-circle redt"></h4>;
-
-                  //q13
-                  if (qq13[index] > 100)
-                    qq13[index] = ((qq13[index] ** -1) * 10000).toFixed(2)
-                  if (isNaN(qq13[index]))
-                    qq13[index] = "-"
-                  if (Number(qq13[index]) > Number(q))
-                    re13.push("ผ่าน")
-                  else re13.push("ไม่ผ่าน")
-                  if (re13[index] === "ผ่าน")
-                    re13[index] = <h4 className="bi bi-check-circle greent"></h4>
-                  else re13[index] = <h4 className="bi bi-x-circle redt"></h4>;
-                  
-                  //q14
-                  if (qq14[index] > 100)
-                    qq14[index] = ((qq14[index] ** -1) * 10000).toFixed(2)
-                  if (isNaN(qq14[index]))
-                    qq14[index] = "-"
-                  if (Number(qq14[index]) > Number(q))
-                    re14.push("ผ่าน")
-                  else re14.push("ไม่ผ่าน")
-                  if (re14[index] === "ผ่าน")
-                    re14[index] = <h4 className="bi bi-check-circle greent"></h4>
-                  else re14[index] = <h4 className="bi bi-x-circle redt"></h4>;
-
-                  //console.log("qqall" ,qqall)
-                  return (
-                    <tr key={index}>
-                      <td>{an[index]}</td>
-                      <td className="textc">{qq1[index]}</td>
-                      <td className="textc">{uu1}</td>
-                      <td className="textc">{qq2[index]}</td>
-                      <td className="textc">{uu2}</td>
-                      {/* <td className="textc">{qq12[index]}</td>
-                      <td className="textc">{re12[index]}</td> */}
-                      <td className="textc">{qq3[index]}</td>
-                      <td className="textc">{uu3}</td>
-                      <td className="textc">{qq4[index]}</td>
-                      <td className="textc">{uu4}</td>
-                      {/* <td className="textc">{qq34[index]}</td>
-                      <td className="textc">{re34[index]}</td> */}
-                      <td className="textc">{qq14[index]}</td>
-                      <td className="textc">{re14[index]}</td>
-                      {/* <td className="textc"><button className="btn btn-success" onClick={e => handlesum(index)}>เรียกดู</button></td> */}
-                    </tr>
-                  );
-                })}
-
-              </tbody>
-            </table>
-          </div>
           <br /><br />
           <div className="row">
-            <div className="col-3 textc">
+            <div className="col-4 textc">
             </div>
-            <div className="col-1 col-md-5">
-              <div style={{ width: 650 }}>
-                <Solve name={qq14[11]} do={650} name2={q} class={"responcal"}/>
+            <div className="col-1 col-md-4">
+              <div style={{ width: 530 }}>
+                <Solve name={qq14[11]} do={530} name2={q} class={"responcal"}/>
               </div>
             </div>
 
@@ -1217,7 +1154,7 @@ const CalForm = () => {
                   {/* <th className="textc" scope="col">{w}</th> */}
                   <th className="textc" scope="col">ร้อยละ</th>
                   <th className="textc" scope="col">วันที่ส่ง</th>
-                  {/* <th scope="col">เวลา</th> */}
+                  <th className="textc" scope="col">วันที่อัปเดต</th>
                   <th className="textc" scope="col">สรุปผล</th>
                   <th className="textc" scope="col">ข้อมูลโครงการ</th>
                   <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
@@ -1240,7 +1177,7 @@ const CalForm = () => {
                       {parse(y)}
                       <td>{item.de_ans.toFixed(2)}</td>
                       <td>{item.fd_date}</td>
-                      {/*  <td>{item.fd_time}</td> */}
+                      <td>{item.fd_update}</td>
                       <td className="textc">{u}</td>
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
@@ -1397,11 +1334,11 @@ const CalForm = () => {
           </div>
           <br /><br />
           <div className="row">
-            <div className="col-3 textc">
+            <div className="col-4 textc">
             </div>
-            <div className="col-1 col-md-5">
-              <div style={{ width: 650 }}>
-                <Solve name={qq14[11]} do={650} name2={q} class={"responcal"}/>
+            <div className="col-1 col-md-4">
+              <div style={{ width: 530 }}>
+                <Solve name={qq14[11]} do={530} name2={q} class={"responcal"}/>
               </div>
             </div>
 
@@ -1438,7 +1375,7 @@ const CalForm = () => {
                   {/* <th className="textc" scope="col">{w}</th> */}
                   <th className="textc" scope="col">ร้อยละ</th>
                   <th className="textc" scope="col">วันที่ส่ง</th>
-                  {/* <th scope="col">เวลา</th> */}
+                  <th className="textc" scope="col">วันที่อัปเดต</th>
                   <th className="textc" scope="col">สรุปผล</th>
                   <th className="textc" scope="col">ข้อมูลโครงการ</th>
                   <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
@@ -1461,7 +1398,7 @@ const CalForm = () => {
                       {parse(y)}
                       <td>{item.de_ans.toFixed(2)}</td>
                       <td>{item.fd_date}</td>
-                      {/*  <td>{item.fd_time}</td> */}
+                      <td>{item.fd_update}</td>
                       <td className="textc">{u}</td>
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
@@ -1618,11 +1555,11 @@ const CalForm = () => {
           </div>
           <br /><br />
           <div className="row">
-            <div className="col-3 textc">
+            <div className="col-4 textc">
             </div>
-            <div className="col-1 col-md-5">
-              <div style={{ width: 650 }}>
-                <Solve name={qq14[11]} do={650} name2={q} class={"responcal"}/>
+            <div className="col-1 col-md-4">
+              <div style={{ width: 530 }}>
+                <Solve name={qq14[11]} do={530} name2={q} class={"responcal"}/>
               </div>
             </div>
 
@@ -1659,7 +1596,7 @@ const CalForm = () => {
                 {/* <th className="textc" scope="col">{w}</th> */}
                 <th className="textc" scope="col">ร้อยละ</th>
                 <th className="textc" scope="col">วันที่ส่ง</th>
-                {/* <th scope="col">เวลา</th> */}
+                <th className="textc" scope="col">วันที่อัปเดต</th>
                 <th className="textc" scope="col">สรุปผล</th>
                 <th className="textc" scope="col">ข้อมูลโครงการ</th>
                 <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
@@ -1682,7 +1619,7 @@ const CalForm = () => {
                     {parse(y)}
                     <td>{item.de_ans.toFixed(2)}</td>
                     <td>{item.fd_date}</td>
-                    {/*  <td>{item.fd_time}</td> */}
+                    <td>{item.fd_update}</td>
                     <td className="textc">{u}</td>
                     <td className="textc"><button disabled onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                     <td className="textc"><button disabled onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
@@ -1878,7 +1815,7 @@ const CalForm = () => {
                 {/* <th className="textc" scope="col">{w}</th> */}
                 <th className="textc" scope="col">ร้อยละ</th>
                 <th className="textc" scope="col">วันที่ส่ง</th>
-                {/* <th scope="col">เวลา</th> */}
+                <th className="textc" scope="col">วันที่อัปเดต</th>
                 <th className="textc" scope="col">สรุปผล</th>
                 <th className="textc" scope="col">ข้อมูลโครงการ</th>
                 <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
@@ -1901,7 +1838,7 @@ const CalForm = () => {
                     {parse(y)}
                     <td>{item.de_ans.toFixed(2)}</td>
                     <td>{item.fd_date}</td>
-                    {/*  <td>{item.fd_time}</td> */}
+                    <td>{item.fd_update}</td>
                     <td className="textc">{u}</td>
                     <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                     <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
@@ -2356,19 +2293,19 @@ const CalForm = () => {
           <div className='textr0'>
             ไตรมาสที่ ๑ <input id="q1" type="checkbox" checked readOnly={true} />&nbsp; ต.ค.-ธ.ค. ๖๖
             <br />ไตรมาสที่ ๒ {guu2}
-            <br />แบบรายงานความก้าวหน้ารายโครงการ/กิจกรรม&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ไตรมาสที่ ๓ {guu3}
+            <br /><b>แบบรายงานความก้าวหน้ารายโครงการ/กิจกรรม</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ไตรมาสที่ ๓ {guu3}
             <br /><b>ส่วนราชการ </b> &nbsp;&nbsp;&nbsp; {ap} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ไตรมาสที่ ๔ {guu4}
           </div>
           <div className='row textl5'>
             <div className='col-auto'>
-              ชื่อโครงการ/กิจกรรม
+              <b>ชื่อโครงการ/กิจกรรม</b>
             </div>
             <div className='col'>{cp}</div>
           </div>
 
-          <div className='textl5'>ลำดับโครงการ / กิจกรรมตามแผนสนพ. &nbsp;&nbsp;&nbsp; {ep}
+          <div className='textl5'><b>ลำดับโครงการ / กิจกรรมตามแผนสนพ.</b> &nbsp;&nbsp;&nbsp; {ep}
             <br /><b>หน่วยงานที่รับผิดชอบ</b> &nbsp;&nbsp;&nbsp; {fp}
-            <br />สถานะของโครงการ: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br /><b>สถานะของโครงการ:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {gpp}
             <br />รายละเอียดการดำเนินงานในไตรมาสนี้ บอกถึงเป้าหมาย วัตถุประสงค์ วิธีดำเนินการและผล (ถ้ามี) รวมถึงความก้าวหน้า ของโครงการ (%)
             <div className='border border-dark mb-2 mt-1 m-0 p-2 pbi'>
@@ -2502,9 +2439,9 @@ const CalForm = () => {
   }
 
   const pa = () => {
-    var fp1 = fetchs.map(a => [a.pa1, a.pa2, a.h1pa, a.h1pb, a.h2pa, a.h2pb, a.h3pa, a.h3pb, a.h4pa, a.h4pb, a.h5pa, a.h5pb, a.h6pa, a.h6pb, a.h7pa, a.h7pb, a.h8pa, a.h8pb, a.h9pa, a.h9pb, a.h10pa, a.h10pb, a.h11pa, a.h11pb, a.re_log, a.re_sum])
+    var fp1 = fetchs.map(a => [a.pa1, a.pa2, a.h1pa, a.h1pb, a.h2pa, a.h2pb, a.h3pa, a.h3pb, a.h4pa, a.h4pb, a.h5pa, a.h5pb, a.h6pa, a.h6pb, a.h7pa, a.h7pb, a.h8pa, a.h8pb, a.h9pa, a.h9pb, a.h10pa, a.h10pb, a.h11pa, a.h11pb, a.d1pa, a.d1pb, a.d2pa, a.d2pb, a.re_log, a.re_sum])
     var ffp1 = fp1[0]
-    var ffp = [ffp1[0], ffp1[1], ffp1[Number(sessionStorage.getItem("ha")) + 2], ffp1[Number(sessionStorage.getItem("hb")) + 2], ffp1[24], ffp1[25]]
+    var ffp = [ffp1[0], ffp1[1], ffp1[Number(sessionStorage.getItem("ha")) + 2], ffp1[Number(sessionStorage.getItem("hb")) + 2], ffp1[28], ffp1[29]]
     return ffp
   }
 
@@ -2622,7 +2559,7 @@ const CalForm = () => {
           <br />
           <select value={param} onClick={e => handleonChange(n)} onChange={e => setParam(e.target.value)} >
             <option>เลือกดูตัวชี้วัด</option>
-            {fetc.map(form => (
+            {formres.map(form => (
               <option key={form.fm_id}>ตัวชี้วัด ลำดับที่: {form.fm_id}</option>
             ))}
           </select>
@@ -2669,15 +2606,15 @@ const CalForm = () => {
                   <br />
                   <label>ชื่อโครงการ / กิจกรรม</label>
                   <br />
-                  <input type="text" className='input60' name='evname' required />
+                  <input type="text" className='input80' name='evname' required />
                   <br />
                   <label>ลำดับโครงการ / กิจกรรมตามแผนสนพ.</label>
                   <br />
-                  <input type="number" className='input60' name='fmsid' required />
+                  <input type="number" className='input80' name='fmsid' required />
                   <br />
                   <label>ผู้รับผิดชอบ</label>
                   <br />
-                  <input type="text" className='input60' name='evres' required />
+                  <input type="text" className='input80' name='evres' required />
                   <br />
                   <label>สถานะโครงการ</label>
                   <br />
