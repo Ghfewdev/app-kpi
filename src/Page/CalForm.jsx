@@ -820,6 +820,11 @@ const CalForm = () => {
 
   function show(props) {
     var a;
+    var qwe = 0;
+    try {
+      qwe = pa()[5]
+    }catch {
+    }
     //console.log(props)
     if (props !== null) {
         if(localStorage.getItem("token").split("$")[1] === "9" && fc === 0) 
@@ -1117,7 +1122,7 @@ const CalForm = () => {
             </div>
             <div className="col-1 col-md-4">
               <div style={{ width: 530 }}>
-                <Solve name={qq14[11]} do={530} name2={q} class={"responcal"}/>
+                <Solve name={qwe} do={530} name2={q} class={"responcal"}/>
               </div>
             </div>
 

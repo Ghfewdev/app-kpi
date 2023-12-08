@@ -199,6 +199,10 @@ Authlevel();
         return ht
     }
 
+    const grouping = () => {
+
+    }
+
     function g(ve) {
         var o = "";
         try {
@@ -299,7 +303,6 @@ Authlevel();
                             <label>จำนวนข้อมูลที่ใช้ในตัวชี้วัดนี้:&nbsp;&nbsp; </label><input className='input10' type="number" min="1" max="99" name="numpara" value={numpara}
                                 onChange={e => setNumpara(e.target.value)} />
                             <br /><br />
-
                             <div dangerouslySetInnerHTML={{ __html: par(numpara) }}>
                             </div>
                             <label>ข้อมูลเปรี่ยบเทียบที่ 1 (ตัวตั้ง):&nbsp;&nbsp;</label> <label hidden>( กรณีใช้ค่านี้ในการประเมินผลตัวชี้วัดติ๊กถูกตรงนี้ <input type="checkbox" id={980} defaultChecked/> )</label><br /> <input required type="text1" name="para98" id={98} /><br /><br />

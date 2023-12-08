@@ -63,8 +63,9 @@ const Checking = () => {
   }, []);
 
   var pq = new Date().getUTCMonth() + 1
-  console.log(pq)
+  console.log(pq, b1)
   var sq;
+  var yg;
   if (pq >= 10)
     sq = <div className='container-fluid' id='pqq'>
     <h2>ข้อมูลการส่งตัวชี้วัดรายหน่อยงานไตรมาสที่ 1 (ไตรมาสปัจจุบัน)</h2>
@@ -89,17 +90,19 @@ const Checking = () => {
         </tr>
       </thead>
       <tbody>
-        {fet.map((f, i) => {
+        {fet.map((f, j) => {
           var check = <h4 className="bi bi-x-circle"></h4>
           var y = "";
-
+          yg = String(fres[j])
           for (var i = 10; i <= 22; i++) {
-            if (sb1.includes(String([i, f])))
-              y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
-            else if (sa1.includes(String(i)))
-              y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
+            if (!yg.includes(String(i)))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else if (sb1.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
+            else if (i === f && !sb1.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
-              y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
           }
 
           return (
@@ -136,18 +139,20 @@ const Checking = () => {
           </tr>
         </thead>
         <tbody>
-          {fet.map((f, i) => {
-            var check = <h4 className="bi bi-x-circle"></h4>
-            var y = "";
-
-            for (var i = 10; i <= 22; i++) {
-              if (sb2.includes(String([i, f])))
-                y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
-              else if (sa2.includes(String(i)))
-                y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
-              else
-                y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            }
+        {fet.map((f, j) => {
+          var check = <h4 className="bi bi-x-circle"></h4>
+          var y = "";
+          yg = String(fres[j])
+          for (var i = 10; i <= 22; i++) {
+            if (!yg.includes(String(i)))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else if (sb2.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
+            else if (i === f && !sb2.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else
+            y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
+          }
 
             return (
               <tr key={f}>
@@ -183,18 +188,20 @@ const Checking = () => {
           </tr>
         </thead>
         <tbody>
-          {fet.map((f, i) => {
-            var check = <h4 className="bi bi-x-circle"></h4>
-            var y = "";
-
-            for (var i = 10; i <= 22; i++) {
-              if (sb3.includes(String([i, f])))
-                y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
-              else if (sa3.includes(String(i)))
-                y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
-              else
-                y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            }
+        {fet.map((f, j) => {
+          var check = <h4 className="bi bi-x-circle"></h4>
+          var y = "";
+          yg = String(fres[j])
+          for (var i = 10; i <= 22; i++) {
+            if (!yg.includes(String(i)))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else if (sb3.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
+            else if (i === f && !sb3.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else
+            y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
+          }
 
             return (
               <tr key={f}>
@@ -230,18 +237,20 @@ const Checking = () => {
           </tr>
         </thead>
         <tbody>
-          {fet.map((f, i) => {
-            var check = <h4 className="bi bi-x-circle"></h4>
-            var y = "";
-
-            for (var i = 10; i <= 22; i++) {
-              if (sb4.includes(String([i, f])))
-                y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
-              else if (sa4.includes(String(i)))
-                y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
-              else
-                y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            }
+        {fet.map((f, j) => {
+          var check = <h4 className="bi bi-x-circle"></h4>
+          var y = "";
+          yg = String(fres[j])
+          for (var i = 10; i <= 22; i++) {
+            if (!yg.includes(String(i)))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else if (sb4.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
+            else if (i === f && !sb4.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else
+            y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
+          }
 
             return (
               <tr key={f}>
@@ -329,18 +338,20 @@ const Checking = () => {
             </tr>
           </thead>
           <tbody>
-            {fet.map((f, i) => {
-              var check = <h4 className="bi bi-x-circle"></h4>
-              var y = "";
-
-              for (var i = 10; i <= 22; i++) {
-                if (sb1.includes(String([i, f])))
-                  y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
-                else if (sa1.includes(String(i)))
-                  y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
-                else
-                  y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-              }
+          {fet.map((f, j) => {
+          var check = <h4 className="bi bi-x-circle"></h4>
+          var y = "";
+          yg = String(fres[j])
+          for (var i = 10; i <= 22; i++) {
+            if (!yg.includes(String(i)))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else if (sb1.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
+            else if (i === f && !sb1.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else
+            y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
+          }
 
               return (
                 <tr key={f}>
@@ -375,18 +386,20 @@ const Checking = () => {
             </tr>
           </thead>
           <tbody>
-            {fet.map((f, i) => {
-              var check = <h4 className="bi bi-x-circle"></h4>
-              var y = "";
-
-              for (var i = 10; i <= 22; i++) {
-                if (sb2.includes(String([i, f])))
-                  y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
-                else if (sa2.includes(String(i)))
-                  y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
-                else
-                  y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-              }
+          {fet.map((f, j) => {
+          var check = <h4 className="bi bi-x-circle"></h4>
+          var y = "";
+          yg = String(fres[j])
+          for (var i = 10; i <= 22; i++) {
+            if (!yg.includes(String(i)))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else if (sb2.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
+            else if (i === f && !sb2.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else
+            y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
+          }
 
               return (
                 <tr key={f}>
@@ -421,18 +434,20 @@ const Checking = () => {
             </tr>
           </thead>
           <tbody>
-            {fet.map((f, i) => {
-              var check = <h4 className="bi bi-x-circle"></h4>
-              var y = "";
-
-              for (var i = 10; i <= 22; i++) {
-                if (sb3.includes(String([i, f])))
-                  y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
-                else if (sa3.includes(String(i)))
-                  y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
-                else
-                  y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-              }
+          {fet.map((f, j) => {
+          var check = <h4 className="bi bi-x-circle"></h4>
+          var y = "";
+          yg = String(fres[j])
+          for (var i = 10; i <= 22; i++) {
+            if (!yg.includes(String(i)))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else if (sb3.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
+            else if (i === f && !sb3.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else
+            y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
+          }
 
               return (
                 <tr key={f}>
@@ -467,18 +482,20 @@ const Checking = () => {
             </tr>
           </thead>
           <tbody>
-            {fet.map((f, i) => {
-              var check = <h4 className="bi bi-x-circle"></h4>
-              var y = "";
-
-              for (var i = 10; i <= 22; i++) {
-                if (sb4.includes(String([i, f])))
-                  y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
-                else if (sa4.includes(String(i)))
-                  y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
-                else
-                  y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-              }
+          {fet.map((f, j) => {
+          var check = <h4 className="bi bi-x-circle"></h4>
+          var y = "";
+          yg = String(fres[j])
+          for (var i = 10; i <= 22; i++) {
+            if (!yg.includes(String(i)))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else if (sb4.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
+            else if (i === f && !sb4.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else
+            y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
+          }
 
               return (
                 <tr key={f}>
