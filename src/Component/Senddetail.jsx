@@ -4,6 +4,11 @@ import Profile from './Profile';
 const Senddetail = () => {
     const user = Profile();
     const detail = Details();
+
+  if (detail == [] || detail == undefined || detail == -Infinity) {
+    detail = 1
+  }
+
     const JsonData = {
         user: user,
         detail: detail

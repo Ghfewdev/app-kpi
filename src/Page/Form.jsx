@@ -148,8 +148,11 @@ const Form = () => {
         })}
       </tbody>
     </table>
+    try {
+      document.getElementById("unknow").hidden = true
+    } catch {}
 
-  } else c
+  } else document.getElementById("unknow").hidden = false
 
   const handleonChange = (val) => {
 
@@ -161,7 +164,7 @@ const Form = () => {
         setForms({ ...forms, fill: data2 })
       })
 
-      console.log(d[1])
+      //console.log(val)
 
   }
 
@@ -213,7 +216,7 @@ const Form = () => {
             </div>
             <br />
             <div>{c}</div>
-
+            <div id='unknow' hidden>
             <form onSubmit={handleSubmit} className='textl2'>
 
               {forms.fill.map(fill => (
@@ -237,6 +240,7 @@ const Form = () => {
 
             </form>
             <br />
+            </div>
             <div className='textc'><p className='inline textl'><a href="/">กลับหน้าหลัก</a></p>
               <p className='inline textr'><a href="/"></a></p>
             </div>

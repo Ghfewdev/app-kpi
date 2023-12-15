@@ -26,6 +26,7 @@ const FillUp = () => {
   if (detail == [] || detail == undefined || detail == -Infinity) {
     detail = 0
   }
+
   const dep = localStorage.getItem("department");
   var hos;
   var ha;
@@ -115,15 +116,15 @@ const FillUp = () => {
 
   if (quar != []) {
     if (quar.length == 0)
-    qqc = 1
-   else if (quar.length == 1) {
-    qqc = 2
-  } else if (quar.length == 2) {
-    qqc = 3
-  } else if (quar.length == 3) {
-    qqc = 4
+      qqc = 1
+    else if (quar.length == 1) {
+      qqc = 2
+    } else if (quar.length == 2) {
+      qqc = 3
+    } else if (quar.length == 3) {
+      qqc = 4
+    }
   }
-}
 
   const quc = (qq) => {
 
@@ -324,7 +325,7 @@ const FillUp = () => {
         setForms({ ...forms, form: data })
       })
 
-      fetch(import.meta.env.VITE_APP_API + `/form/res/${localStorage.getItem("id")}` )
+    fetch(import.meta.env.VITE_APP_API + `/form/res/${localStorage.getItem("id")}`)
       .then(response => {
         return response.json();
       })
@@ -345,9 +346,15 @@ const FillUp = () => {
       <h2>กรุณาเลือกตัวชี้วัดเพื่อดำเนินการ</h2>
       <br /><br /><br />
     </div>
-  } else c
+    try {
+      document.getElementById("c3").hidden = true;
+    } catch {
+    }
+  } else document.getElementById("c3").hidden = false;
 
   const handleonChange = (val) => {
+
+    com = ""
 
     fetch(import.meta.env.VITE_APP_API + `/form/${val}`)
       .then(response2 => {
@@ -373,6 +380,8 @@ const FillUp = () => {
         setQuar(data);
       });
 
+      //console.log(val)
+
   }
 
   var w = forms.fill.map(fil => fil.fm_paras)
@@ -387,42 +396,70 @@ const FillUp = () => {
     vcon = forms.fill.map(io => io.fm_con)[0]
   }
   //console.log(fc)
+  var com = ""
+  var cheo = 0
   try {
     var z = y.split(", ")
     var n = z.map((m, i) => {
-    const k = m.split("_")
-    var g1 = <></>
-    var g2 = <></>
-    var pi = <></>
-    var group = m;
-    if(k.length === 2) {
-      g1 = <><br /><b>{k[0]}: </b></>
-      pi = <><br /> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;- {k[1]}</>
-      m = <></>
-      if (!(i%(3**1) === 0))
-      g1 = <></>
-      group = <>{g1}{pi}{g2}</>
-    }
-    else if (k.length === 3) {
-      g1 = <><br /><b>{k[0]}: </b></>
-      g2 = <><br /> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;- {k[1]}</>
-      pi = <><br /> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;- <u>{k[2]}</u></>
-      m = <></>
-      if (!(i%(3**2) === 0)) {
-      g1 = <></>
+      const k = m.split("_")
+      var g1 = <></>
+      var g2 = <></>
+      var pi = <></>
+      var group = m;
+      if (k.length === 2) {
+        g1 = <><br /><b>{k[0]}: </b></>
+        pi = <><br /> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;- {k[1]}</>
+        m = <></>
+        if (com === "") {
+          com = k[0]
+          cheo = 0
+        }
+        if (com === k[0] && cheo === 0) {
+          g1 = <><br /><b>{k[0]}: </b></>
+          cheo = 1
+        }
+        else if (com === k[0]) {
+          g1 = <></>
+        }
+        else {
+          g1 = <><br /><b>{k[0]}: </b></>
+          com = k[0]
+        }
+        
+        
+      // if (!(i%2 === 0)) {
+      //   cuo = k[0]
+      // if (cuo === k[0])
+      //   g1 = <></>
+      // }
+        //  if (!(i % (3 ** 1) === 0))
+        //    g1 = <></>
+        group = <>{g1}{pi}</>
+        //console.log(com, cheo)
+      } 
+      else if (k.length === 3) {
+        g1 = <><br /><b>{k[0]}: </b></>
+        g2 = <><br /> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;- {k[1]}</>
+        pi = <><br /> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;- <u>{k[2]}</u></>
+        m = <></>
+        if (!(i % (3 ** 2) === 0)) {
+          g1 = <></>
+        }
+        if (!(i % (3 ** 1) === 0))
+          pi = <></>
+        group = <>{g1}{pi}{g2}</>
       }
-      if (!(i%(3**1) === 0))
-      pi = <></>
-      group = <>{g1}{pi}{g2}</>
-    }
-
-    
 
       var nn = <p className='inline textr p'><input className='input30' type="number" id={m} required /></p>
-      if (vcon.length === 4 && i === z.length - 1)
-        nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon[qqc - 1]} readOnly /></p>
+      if (vcon.length === 11 && i === z.length - 1)
+        nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon[localStorage.getItem("id") - 10]} readOnly /></p>
       else if (vcon != 0 && i === z.length - 1)
         nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon} readOnly /></p>
+
+      if (qqc === 3 || qqc === 4) {
+        if (m[2] === "1" || (k[1])[2] === "1")
+          nn = <p className='inline textr p'><input className='input30' type="number" id={m} disabled /></p>
+      }
       return (
         <div key={i}>
           <div><p className='inline p'><label>{group} &nbsp;&nbsp;</label></p>
@@ -605,17 +642,17 @@ const FillUp = () => {
     else if (isNaN(oo)) {
       oo = 0
     }
-    if(fc === 1) {
+    if (fc === 1) {
       if (lg.includes(hos)) {
         // var loo = sessionStorage.getItem("hos") + "_" + sessionStorage.getItem("qur").split("_")
-        p1 = p1-pp1 + po1
-        p2 = p2-pp2 + po2
+        p1 = p1 - pp1 + po1
+        p2 = p2 - pp2 + po2
         if (p1 < 0)
-        p1 = 0
+          p1 = 0
         if (p1 < p2)
-        are = ((p1 / p2) * 100).toFixed(2)
+          are = ((p1 / p2) * 100).toFixed(2)
         else
-        are = ((p2 / p1) * 100).toFixed(2)
+          are = ((p2 / p1) * 100).toFixed(2)
         // if (isNaN(are))
         pp1 = po1
         pp2 = po2
@@ -626,9 +663,9 @@ const FillUp = () => {
           lg += ", " + hos + "_" + qqc
         }
         else {
-        lg += hos + "_" + qqc
+          lg += hos + "_" + qqc
+        }
       }
-     }
     }
 
     pa2 = [p1, p2, are, sare, pp1, pp2, lg]
@@ -687,10 +724,12 @@ const FillUp = () => {
               <h1 style={{ color: "red" }}>ดำเนินการส่งข้อมูลครบแล้ว</h1>
               <br /><br /><br />
             </div>
-            <div id='c1'>
-              <br />
-              <div className="textc">{c}</div>
 
+            <br />
+            <div className="textc">{c}</div>
+
+            <div id='c1'>
+              <div id='c3'>
               <form onSubmit={handleSubmit} className='textl2'>
 
                 {forms.fill.map(fill => (
@@ -815,6 +854,7 @@ const FillUp = () => {
                 ))}
 
               </form>
+              </div>
             </div>
             <br />
             <div className='textc'><p className='inline textl'><a href="/">กลับหน้าหลัก</a></p>
