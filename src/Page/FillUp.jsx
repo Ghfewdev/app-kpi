@@ -380,7 +380,7 @@ const FillUp = () => {
         setQuar(data);
       });
 
-      //console.log(val)
+    //console.log(val)
 
   }
 
@@ -409,7 +409,6 @@ const FillUp = () => {
       if (k.length === 2) {
         g1 = <><br /><b>{k[0]}: </b></>
         pi = <><br /> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;- {k[1]}</>
-        m = <></>
         if (com === "") {
           com = k[0]
           cheo = 0
@@ -425,23 +424,23 @@ const FillUp = () => {
           g1 = <><br /><b>{k[0]}: </b></>
           com = k[0]
         }
-        
-        
-      // if (!(i%2 === 0)) {
-      //   cuo = k[0]
-      // if (cuo === k[0])
-      //   g1 = <></>
-      // }
+
+
+        // if (!(i%2 === 0)) {
+        //   cuo = k[0]
+        // if (cuo === k[0])
+        //   g1 = <></>
+        // }
         //  if (!(i % (3 ** 1) === 0))
         //    g1 = <></>
         group = <>{g1}{pi}</>
         //console.log(com, cheo)
-      } 
+      }
       else if (k.length === 3) {
         g1 = <><br /><b>{k[0]}: </b></>
         g2 = <><br /> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;- {k[1]}</>
         pi = <><br /> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;- <u>{k[2]}</u></>
-        m = <></>
+
         if (!(i % (3 ** 2) === 0)) {
           g1 = <></>
         }
@@ -514,19 +513,28 @@ const FillUp = () => {
   function q(val) {
     var q = 0;
     var p = 0;
+    var pr1 = 0;
+    var pr2 = 0;
     for (var i = 1; i <= val.length; i++) {
       if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
         q += parseFloat(document.getElementById(`${val[i - 1]}`).value);
-        if (p === 0)
+        if (p === 0) {
           p += parseFloat(document.getElementById(`${val[i - 1]}`).value);
-        else
+          pr1 = parseFloat(document.getElementById(`${val[i - 1]}`).value);
+        }
+        else {
           p /= parseFloat(document.getElementById(`${val[i - 1]}`).value);
+          pr2 = parseFloat(document.getElementById(`${val[i - 1]}`).value);
+        }
       }
     }
     if (t[1] === 3)
-      q = q
-    else if (t[1] === 2)
       q = q / val.length
+    else if (t[1] === 2)
+      if (fc !== 0)
+        q = pr1
+      else
+        q = pr2
     else if (t[1] === 1) {
       if (p * 100 <= 100)
         q = p * 100
@@ -535,9 +543,7 @@ const FillUp = () => {
       else
         q = (p ** (-1)) * 100
     }
-
     return q
-
   }
 
   function h(val) {
@@ -668,6 +674,25 @@ const FillUp = () => {
       }
     }
 
+    if (t[1] === 2) {
+      if (fc === 0) {
+        p1 = p1
+        p2 = p2
+        are = p2
+        pp1 = 0
+        pp2 = pp2
+        sare = pp2
+      } else {
+        p1 = p1
+        p2 = p2
+        are = p1
+        pp1 = pp1
+        pp2 = 0
+        sare = pp1
+      }
+
+    }
+
     pa2 = [p1, p2, are, sare, pp1, pp2, lg]
 
     return pa2
@@ -682,8 +707,9 @@ const FillUp = () => {
       document.getElementById("submit").disabled = false
       // document.getElementById("upl").disabled = false
       upload();
-      console.log(name);
-      //console.log("n[1]", `${z[0]}`[(z[0].length) - 1])
+      //console.log(name);
+      console.log(q(z))
+      //console.log(`${z[0]}`[(z[0].length) - 1])
     }
     else {
       document.getElementById("submit").disabled = true
@@ -730,130 +756,130 @@ const FillUp = () => {
 
             <div id='c1'>
               <div id='c3'>
-              <form onSubmit={handleSubmit} className='textl2'>
+                <form onSubmit={handleSubmit} className='textl2'>
 
-                {forms.fill.map(fill => (
+                  {forms.fill.map(fill => (
 
-                  <div key={fill.fm_id}>
-                    <div className='textl6'>
-                      <br /><label>ชื่อตัวชี้วัด:&nbsp;&nbsp;<b>{fill.fm_name}</b></label>
-                      <br /><br />
-                    </div>
-                    <p className='inline p'><label>ส่งข้อมูลประจำ:&nbsp;&nbsp;</label></p>
-                    <p className='inline textr p'><select name="qur">
-                      {quc(quar)}
-                      {/* <option value={"1"}>ไตรมาสที่ 1</option>
+                    <div key={fill.fm_id}>
+                      <div className='textl6'>
+                        <br /><label>ชื่อตัวชี้วัด:&nbsp;&nbsp;<b>{fill.fm_name}</b></label>
+                        <br /><br />
+                      </div>
+                      <p className='inline p'><label>ส่งข้อมูลประจำ:&nbsp;&nbsp;</label></p>
+                      <p className='inline textr p'><select name="qur">
+                        {quc(quar)}
+                        {/* <option value={"1"}>ไตรมาสที่ 1</option>
                     <option value={"2"}>ไตรมาสที่ 2</option>
                     <option value={"3"}>ไตรมาสที่ 3</option>
                     <option value={"4"}>ไตรมาสที่ 4</option> */}
-                    </select></p>
-                    <br /><br />
-                    {n}
-                    <div>
-                      <br />
-                      <label><b>แบบรายงานความก้าวหน้ารายโครงการ / กิจกรรม</b></label>
-                      <br />
-                      <br />
-                      <label>ชื่อโครงการ / กิจกรรม</label>
-                      <br />
-                      <input type="text" className='input60' name='evname' required />
-                      <br />
-                      <label>ลำดับโครงการ / กิจกรรมตามแผนสนพ.</label>
-                      <br />
-                      <input type="number" className='input60' name='fmsid' required />
-                      <br />
-                      <label>ผู้รับผิดชอบ</label>
-                      <br />
-                      <input type="text" className='input60' name='evres' required />
-                      <br />
-                      <label>สถานะโครงการ</label>
-                      <br />
+                      </select></p>
+                      <br /><br />
+                      {n}
                       <div>
-                        <input type="radio" value={1} name="evstatus" /> แล้วเสร็จ &nbsp;&nbsp;&nbsp;
-                        <input type="radio" value={2} name="evstatus" /> ยังไม่เริ่มดำเนินการ &nbsp;&nbsp;&nbsp;
-                        <input type="radio" value={3} name="evstatus" /> ยกเลิก &nbsp;&nbsp;&nbsp;
-                        <input type="radio" value={4} name="evstatus" /> กำลังดำเนินการ &nbsp;&nbsp;&nbsp;
-                        <input type="radio" value={5} name="evstatus" /> ชะลอ
-                      </div>
-                      <br />
-                      <label>งบประมาณที่ได้รับ</label>
-                      <br />
-                      <div className="input-group mb-3">
-                        <div className="input-group-text">กทม:&nbsp;&nbsp;
-                          <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc1")} />
-                        </div>
-                        <input type="text" className="input10" id='dc1' disabled />
-                        <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
-                          <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc2")} />
-                        </div>
-                        <input type="text" className="input10" id='dc2' disabled />
-                        <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
-                          <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc3")} />
-                        </div>
-                        <input type="text" className="input10" id='dc3' disabled />
-                      </div>
-                      <label>งบประมาณที่ใช้</label>
-                      <br />
-                      <div className="input-group mb-3">
-                        <div className="input-group-text">กทม:&nbsp;&nbsp;
-                          <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd1")} />
-                        </div>
-                        <input type="text" className="input10" id='dd1' disabled />
-                        <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
-                          <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd2")} />
-                        </div>
-                        <input type="text" className="input10" id='dd2' disabled />
-                        <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
-                          <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd3")} />
-                        </div>
-                        <input type="text" className="input10" id='dd3' disabled />
-                      </div>
-                      <label>วัตถุประสงค์</label>
-                      <br />
-                      <textarea className='textarea60100' name='evpoint' required />
-                      <br />
-                      <label>เป้าหมาย</label>
-                      <br />
-                      <textarea className='textarea60100' name='evtarget' required />
-                      <br />
-                      <label>ผลการดำเนินงาน</label>
-                      <br />
-                      {ress}
-                      <label>ปัญหาและอุปสรรค</label>
-                      <br />
-                      <textarea className='textarea60100' name='problem' required />
-                      <br />
-                      <label>สรุปผลการดำเนินงาน</label>
-                      <br />
-                      <div>
-                        <input type="radio" value="1" name="et" /> เป็นไปตามแผน &nbsp;&nbsp;&nbsp;<br />
-                        <input type="radio" value="2" name="et" /> เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ &nbsp;&nbsp;&nbsp;<br />
-                        <input type="radio" value="3" name="et" /> ไม่เป็นไปตามแผน &nbsp;&nbsp;&nbsp;
-                      </div>
-                      <div className='up'>
                         <br />
-                        <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label><br />
-                        <input type='file' onChange={(e) => setFile(e.target.files[0])} required />
-                        {/* <button id="upl" className='btn btn-primary' onClick={upload}>Upload</button> */}
-                        <br /><br />
-                        <label>**หมายเหตุชื่อไฟล์ต้องเป็นภาษาอังกฤษหรือตัวเลขเท่านั้น**</label>
+                        <label><b>แบบรายงานความก้าวหน้ารายโครงการ / กิจกรรม</b></label>
                         <br />
+                        <br />
+                        <label>ชื่อโครงการ / กิจกรรม</label>
+                        <br />
+                        <input type="text" className='input60' name='evname' required />
+                        <br />
+                        <label>ลำดับโครงการ / กิจกรรมตามแผนสนพ.</label>
+                        <br />
+                        <input type="number" className='input60' name='fmsid' required />
+                        <br />
+                        <label>ผู้รับผิดชอบ</label>
+                        <br />
+                        <input type="text" className='input60' name='evres' required />
+                        <br />
+                        <label>สถานะโครงการ</label>
+                        <br />
+                        <div>
+                          <input type="radio" value={1} name="evstatus" /> แล้วเสร็จ &nbsp;&nbsp;&nbsp;
+                          <input type="radio" value={2} name="evstatus" /> ยังไม่เริ่มดำเนินการ &nbsp;&nbsp;&nbsp;
+                          <input type="radio" value={3} name="evstatus" /> ยกเลิก &nbsp;&nbsp;&nbsp;
+                          <input type="radio" value={4} name="evstatus" /> กำลังดำเนินการ &nbsp;&nbsp;&nbsp;
+                          <input type="radio" value={5} name="evstatus" /> ชะลอ
+                        </div>
+                        <br />
+                        <label>งบประมาณที่ได้รับ</label>
+                        <br />
+                        <div className="input-group mb-3">
+                          <div className="input-group-text">กทม:&nbsp;&nbsp;
+                            <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc1")} />
+                          </div>
+                          <input type="text" className="input10" id='dc1' disabled />
+                          <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
+                            <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc2")} />
+                          </div>
+                          <input type="text" className="input10" id='dc2' disabled />
+                          <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
+                            <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc3")} />
+                          </div>
+                          <input type="text" className="input10" id='dc3' disabled />
+                        </div>
+                        <label>งบประมาณที่ใช้</label>
+                        <br />
+                        <div className="input-group mb-3">
+                          <div className="input-group-text">กทม:&nbsp;&nbsp;
+                            <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd1")} />
+                          </div>
+                          <input type="text" className="input10" id='dd1' disabled />
+                          <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
+                            <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd2")} />
+                          </div>
+                          <input type="text" className="input10" id='dd2' disabled />
+                          <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
+                            <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd3")} />
+                          </div>
+                          <input type="text" className="input10" id='dd3' disabled />
+                        </div>
+                        <label>วัตถุประสงค์</label>
+                        <br />
+                        <textarea className='textarea60100' name='evpoint' required />
+                        <br />
+                        <label>เป้าหมาย</label>
+                        <br />
+                        <textarea className='textarea60100' name='evtarget' required />
+                        <br />
+                        <label>ผลการดำเนินงาน</label>
+                        <br />
+                        {ress}
+                        <label>ปัญหาและอุปสรรค</label>
+                        <br />
+                        <textarea className='textarea60100' name='problem' required />
+                        <br />
+                        <label>สรุปผลการดำเนินงาน</label>
+                        <br />
+                        <div>
+                          <input type="radio" value="1" name="et" /> เป็นไปตามแผน &nbsp;&nbsp;&nbsp;<br />
+                          <input type="radio" value="2" name="et" /> เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ &nbsp;&nbsp;&nbsp;<br />
+                          <input type="radio" value="3" name="et" /> ไม่เป็นไปตามแผน &nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div className='up'>
+                          <br />
+                          <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label><br />
+                          <input type='file' onChange={(e) => setFile(e.target.files[0])} required />
+                          {/* <button id="upl" className='btn btn-primary' onClick={upload}>Upload</button> */}
+                          <br /><br />
+                          <label>**หมายเหตุชื่อไฟล์ต้องเป็นภาษาอังกฤษหรือตัวเลขเท่านั้น**</label>
+                          <br />
+                        </div>
+                        <div className='textr2'>
+                          <br />
+                          <label>ยืนยัน: <input id="con" type="checkbox" value={secec.check} onClick={e => dis()} /> </label>
+                          <br />
+                        </div>
                       </div>
                       <div className='textr2'>
                         <br />
-                        <label>ยืนยัน: <input id="con" type="checkbox" value={secec.check} onClick={e => dis()} /> </label>
-                        <br />
+                        <button id="submit" type="submit" className='btn btn-success' disabled> ส่งข้อมูล </button>
                       </div>
                     </div>
-                    <div className='textr2'>
-                      <br />
-                      <button id="submit" type="submit" className='btn btn-success' disabled> ส่งข้อมูล </button>
-                    </div>
-                  </div>
 
-                ))}
+                  ))}
 
-              </form>
+                </form>
               </div>
             </div>
             <br />

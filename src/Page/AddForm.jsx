@@ -19,8 +19,8 @@ const AddForm = () => {
             id: data.get("id"),
             name: data.get("name"),
             solve: data.get("solve"),
-            // method: data.get("method"),
-            method: 1,
+            method: data.get("method"),
+            // method: 1,
             numpara: Number(data.get("numpara")) + 2,
             def: data.get("define"),
             paras: g(numpara),
@@ -355,14 +355,16 @@ const AddForm = () => {
                             <br /><br />
                             <label>ค่าเป้าหมายคิดเป็นร้อยละ:&nbsp;&nbsp; </label><input type="number" min={1} max={100} name="solve" required defaultValue={35} />
                             <br />
-                            {/* <div hidden>
+                            <div>
+                                <br />
                             <label>วิธีการคำนวณ: &nbsp;&nbsp;</label>
                             <select name='method' value={solv} onChange={e => {setSolv(e.target.value)}} >
-                                <option value={1}>ร้อยละ</option> */}
-                            {/* <option>ค่าเฉลี่ย</option> */}
-                            {/* <option value={2}>ผลรวม</option> */}
-                            {/* </select>
-                            </div> */}
+                                <option value={1}>ร้อยละ</option>
+                                <option value={2}>ผลรวม</option>
+                                {/* <option value={3}>รวบรวม</option> */}
+                                {/* <option>ค่าเฉลี่ย</option> */}
+                            </select>
+                            </div>
                             <br />
                             <label>จำนวนข้อมูลที่ใช้ในตัวชี้วัดนี้:&nbsp;&nbsp; </label><input className='input10' type="number" min="1" max="99" name="numpara" value={numpara}
                                 onChange={e => setNumpara(e.target.value)} />

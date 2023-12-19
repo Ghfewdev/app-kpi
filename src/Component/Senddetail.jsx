@@ -3,10 +3,9 @@ import Profile from './Profile';
 
 const Senddetail = () => {
     const user = Profile();
-    const detail = Details();
-
+    var detail = Details();
   if (detail == [] || detail == undefined || detail == -Infinity) {
-    detail = 1
+    detail = 0
   }
 
     const JsonData = {

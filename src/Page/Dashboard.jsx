@@ -5,13 +5,18 @@ import Footer from '../Component/Footer';
 import "chartjs-gauge";
 import Solve from "../Component/Solve";
 import Authen from '../Component/Authen';
+import Fetch from '../Component/Fetch';
 
 
 const Dashboard = () => {
 
-  Authen
+  Authen();
 
   const [ans, setAns] = useState([]);
+  const fet = Fetch();
+
+  const itp = fet.map(r => r.fm_method);
+  const opp = fet.map(t => t.fm_con);
 
   useEffect(() => {
 
@@ -26,6 +31,8 @@ const Dashboard = () => {
   }, [])
 
   var an;
+
+  console.log(opp)
 
   if (ans != []) {
     an = <div className='container textc'>
@@ -57,6 +64,18 @@ const Dashboard = () => {
         </thead>
         <tbody>
           {ans.map((a, i) => {
+            var ifr
+            if (itp[i] === 1) {
+            ifr = <th><div style={{ width: 155 }}>
+            <Solve name = {a.re_sum} name2 = {(a.fm_solve)} do ={160} class={"respondash"} />
+            </div></th>
+            }
+            else if (itp[i] === 2) {
+              var t = opp[i].split(", ")
+              var tt = t.reduce((x, y) => Number(x) + Number(y), 0);
+              ifr = <th><h1>{tt}</h1></th>
+            }
+            
             return (
             <tr key={i}>
               <th>{a.fm_id}</th>
@@ -75,9 +94,7 @@ const Dashboard = () => {
               <th>{(a.d1).toFixed(2)}</th>
               <th>{(a.d2).toFixed(2)}</th>
               <th>{(a.re_sum).toFixed(2)}</th>
-              <th><div style={{ width: 155 }}>
-            <Solve name = {a.re_sum} name2 = {(a.fm_solve)} do ={160} class={"respondash"} />
-    </div></th>
+              {ifr}
             </tr>)
           })}
         </tbody>

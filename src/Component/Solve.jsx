@@ -5,11 +5,19 @@ const sSolve = (val, val2) => {
   const canvasRef = useRef();
 
   var randomData = function () {
+    if (val2 > 10)
     return [
       100,
       val2,
       val2-20
     ];
+     else {
+       return [
+         10,
+         val+1,
+         val+2
+       ]
+     }
   };
 
 
