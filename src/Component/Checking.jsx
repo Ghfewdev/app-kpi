@@ -99,7 +99,7 @@ const Checking = () => {
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else if (sb1.includes(String([i, f])))
             y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
-            else if (i === f && !sb1.includes(String([i, f])) && !yg.includes(String(i)))
+            else if (i === f && !sb1.includes(String([i, f])))
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
             y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
@@ -148,7 +148,7 @@ const Checking = () => {
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else if (sb2.includes(String([i, f])))
             y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
-            else if (i === f && !sb2.includes(String([i, f])) && !yg.includes(String(i)))
+            else if (i === f && !sb2.includes(String([i, f])))
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
             y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
@@ -197,7 +197,7 @@ const Checking = () => {
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else if (sb3.includes(String([i, f])))
             y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
-            else if (i === f && !sb3.includes(String([i, f])) && !yg.includes(String(i)))
+            else if (i === f && !sb3.includes(String([i, f])))
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
             y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
@@ -246,7 +246,7 @@ const Checking = () => {
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else if (sb4.includes(String([i, f])))
             y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
-            else if (i === f && !sb4.includes(String([i, f])) && !yg.includes(String(i)))
+            else if (i === f && !sb4.includes(String([i, f])))
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
             y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
@@ -347,7 +347,7 @@ const Checking = () => {
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else if (sb1.includes(String([i, f])))
             y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
-            else if (i === f && !sb1.includes(String([i, f])) && !yg.includes(String(i)))
+            else if (i === f && !sb1.includes(String([i, f])))
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
             y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
@@ -395,7 +395,7 @@ const Checking = () => {
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else if (sb2.includes(String([i, f])))
             y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
-            else if (i === f && !sb2.includes(String([i, f])) && !yg.includes(String(i)))
+            else if (i === f && !sb2.includes(String([i, f])))
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
             y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
@@ -443,7 +443,7 @@ const Checking = () => {
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else if (sb3.includes(String([i, f])))
             y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
-            else if (i === f && !sb3.includes(String([i, f])) && !yg.includes(String(i)))
+            else if (i === f && !sb3.includes(String([i, f])))
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
             y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`
@@ -491,7 +491,7 @@ const Checking = () => {
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else if (sb4.includes(String([i, f])))
             y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
-            else if (i === f && !sb4.includes(String([i, f])) && !yg.includes(String(i)))
+            else if (i === f && !sb4.includes(String([i, f])))
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
             y += `<td><h4 className="bi bi-clock-history redt"></h4></td>`

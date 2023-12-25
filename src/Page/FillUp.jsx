@@ -10,6 +10,7 @@ const FillUp = () => {
   Authen();
 
   const [file, setFile] = useState();
+  const [events, setEvents] = useState([]);
   const [quar, setQuar] = useState([]);
   const [fetchs, setFetchs] = useState([]);
   const [forms, setForms] = useState({
@@ -159,6 +160,7 @@ const FillUp = () => {
           {/* <option value={"3"}>ไตรมาสที่ 3</option>
           <option value={"4"}>ไตรมาสที่ 4</option> */}
         </>
+        document.getElementById("dbu").hidden = false;
       }
       else if (st == "1,2") {
         document.getElementById("c1").hidden = false;
@@ -174,6 +176,7 @@ const FillUp = () => {
           <option value={"3"}>ไตรมาสที่ 3</option>
           {/* <option value={"4"}>ไตรมาสที่ 4</option> */}
         </>
+        document.getElementById("dbu").hidden = false;
       }
       else if (st == "1,2,3") {
         document.getElementById("c1").hidden = false;
@@ -189,6 +192,7 @@ const FillUp = () => {
         qqi = <>
           <option value={"4"}>ไตรมาสที่ 4</option>
         </>
+        document.getElementById("dbu").hidden = false;
       }
 
       else {
@@ -349,12 +353,21 @@ const FillUp = () => {
     try {
       document.getElementById("c3").hidden = true;
     } catch {
+      console.log("loading ...")
     }
   } else document.getElementById("c3").hidden = false;
 
   const handleonChange = (val) => {
 
     com = ""
+
+    fetch(import.meta.env.VITE_APP_API + `/evde/${val}/${localStorage.getItem("id")}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        setEvents(data);
+      });
 
     fetch(import.meta.env.VITE_APP_API + `/form/${val}`)
       .then(response2 => {
@@ -384,6 +397,7 @@ const FillUp = () => {
 
   }
 
+  // var autoevent = events.map(e => [e.ev_name, e.ev_res, e.fms_id, e.ev_point, e.ev_target, e.ev_result])[0]
   var w = forms.fill.map(fil => fil.fm_paras)
   var y = w[0]
   var t = forms.fill.map(f => [f.fm_solve, f.fm_method])[0]
@@ -406,6 +420,7 @@ const FillUp = () => {
       var g2 = <></>
       var pi = <></>
       var group = m;
+
       if (k.length === 2) {
         g1 = <><br /><b>{k[0]}: </b></>
         pi = <><br /> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;- {k[1]}</>
@@ -449,16 +464,17 @@ const FillUp = () => {
         group = <>{g1}{pi}{g2}</>
       }
 
-      var nn = <p className='inline textr p'><input className='input30' type="number" id={m} required /></p>
+      var nn = <p className='inline textr p'><input className='input30' type="text" id={m} required /></p>
       if (vcon.length === 11 && i === z.length - 1)
         nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon[localStorage.getItem("id") - 10]} readOnly /></p>
       else if (vcon != 0 && i === z.length - 1)
         nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon} readOnly /></p>
 
-      if (qqc === 3 || qqc === 4) {
-        if (m[2] === "1" || (k[1])[2] === "1")
-          nn = <p className='inline textr p'><input className='input30' type="number" id={m} disabled /></p>
-      }
+        try {
+        if ((k[1])[2] === "1") {
+         if (qqc === 3 || qqc === 4)
+         nn = <p className='inline textr p'><input className='input30' type="text" id={m} disabled /></p>
+        }}catch{}
       return (
         <div key={i}>
           <div><p className='inline p'><label>{group} &nbsp;&nbsp;</label></p>
@@ -513,8 +529,8 @@ const FillUp = () => {
   function q(val) {
     var q = 0;
     var p = 0;
-    var pr1 = 0;
-    var pr2 = 0;
+    var pr1;
+    var pr2;
     for (var i = 1; i <= val.length; i++) {
       if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
         q += parseFloat(document.getElementById(`${val[i - 1]}`).value);
@@ -675,7 +691,7 @@ const FillUp = () => {
     }
 
     if (t[1] === 2) {
-      if (fc === 0) {
+      if (fc === 0 && t2 !== 0) {
         p1 = p1
         p2 = p2
         are = p2
@@ -715,6 +731,48 @@ const FillUp = () => {
       document.getElementById("submit").disabled = true
       // document.getElementById("upl").disabled = true
       console.log(name)
+    }
+  }
+
+  const defu = () => {
+    var autoevent = events.map(e => [e.ev_name, e.ev_res, e.fms_id, e.ev_point, e.ev_target, e.ev_result ,e.ev_problem])[0]
+    if (document.getElementById("def").checked === true) {
+    document.getElementById("evnaem").value = autoevent[0]
+    document.getElementById("fmsid").value = autoevent[1]
+    document.getElementById("evres").value = autoevent[2]
+    document.getElementById("evpoint").value = autoevent[3]
+    document.getElementById("evtarget").value = autoevent[4]
+    if (qqc === 2)
+      document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
+    else if (qqc === 3) {
+      document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
+      document.getElementById("rre2").value = (autoevent[5]).split(", ")[1]
+    }
+    else if (qqc === 4) {
+      document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
+      document.getElementById("rre2").value = (autoevent[5]).split(", ")[1]
+      document.getElementById("rre3").value = (autoevent[5]).split(", ")[2]
+    }
+    document.getElementById("problem").value = autoevent[6]
+    }
+    else {
+      document.getElementById("evnaem").value = ""
+    document.getElementById("fmsid").value = ""
+    document.getElementById("evres").value = ""
+    document.getElementById("evpoint").value = ""
+    document.getElementById("evtarget").value = ""
+    if (qqc === 2)
+      document.getElementById("rre1").value = ""
+    else if (qqc === 3) {
+      document.getElementById("rre1").value = ""
+      document.getElementById("rre2").value = ""
+    }
+    else if (qqc === 4) {
+      document.getElementById("rre1").value = ""
+      document.getElementById("rre2").value = ""
+      document.getElementById("rre3").value = ""
+    }
+    document.getElementById("problem").value = ""
     }
   }
 
@@ -758,8 +816,10 @@ const FillUp = () => {
               <div id='c3'>
                 <form onSubmit={handleSubmit} className='textl2'>
 
-                  {forms.fill.map(fill => (
-
+                  {forms.fill.map(fill => {
+                    
+                    
+                    return (
                     <div key={fill.fm_id}>
                       <div className='textl6'>
                         <br /><label>ชื่อตัวชี้วัด:&nbsp;&nbsp;<b>{fill.fm_name}</b></label>
@@ -780,17 +840,21 @@ const FillUp = () => {
                         <label><b>แบบรายงานความก้าวหน้ารายโครงการ / กิจกรรม</b></label>
                         <br />
                         <br />
+                        <div id='dbu' hidden><label>ใช้ข้อมูลจากไตรมาสก่อนหน้า</label>: <input type="checkbox" id='def' onClick={e => defu()}/>
+                        <br />
+                        <br />
+                        </div>
                         <label>ชื่อโครงการ / กิจกรรม</label>
                         <br />
-                        <input type="text" className='input60' name='evname' required />
+                        <input type="text" className='input60' id='evnaem' name='evname' required />
                         <br />
                         <label>ลำดับโครงการ / กิจกรรมตามแผนสนพ.</label>
                         <br />
-                        <input type="number" className='input60' name='fmsid' required />
+                        <input type="number" className='input60' id='fmsid' name='fmsid' required />
                         <br />
                         <label>ผู้รับผิดชอบ</label>
                         <br />
-                        <input type="text" className='input60' name='evres' required />
+                        <input type="text" className='input60' id='evres' name='evres' required />
                         <br />
                         <label>สถานะโครงการ</label>
                         <br />
@@ -836,18 +900,18 @@ const FillUp = () => {
                         </div>
                         <label>วัตถุประสงค์</label>
                         <br />
-                        <textarea className='textarea60100' name='evpoint' required />
+                        <textarea className='textarea60100' id='evpoint' name='evpoint' required />
                         <br />
                         <label>เป้าหมาย</label>
                         <br />
-                        <textarea className='textarea60100' name='evtarget' required />
+                        <textarea className='textarea60100' id='evtarget' name='evtarget' required />
                         <br />
                         <label>ผลการดำเนินงาน</label>
                         <br />
                         {ress}
                         <label>ปัญหาและอุปสรรค</label>
                         <br />
-                        <textarea className='textarea60100' name='problem' required />
+                        <textarea className='textarea60100' id='problem' name='problem' required />
                         <br />
                         <label>สรุปผลการดำเนินงาน</label>
                         <br />
@@ -877,7 +941,8 @@ const FillUp = () => {
                       </div>
                     </div>
 
-                  ))}
+                  )
+                  })}
 
                 </form>
               </div>

@@ -366,7 +366,7 @@ const AddForm = () => {
                             </select>
                             </div>
                             <br />
-                            <label>จำนวนข้อมูลที่ใช้ในตัวชี้วัดนี้:&nbsp;&nbsp; </label><input className='input10' type="number" min="1" max="99" name="numpara" value={numpara}
+                            <label>จำนวนข้อมูลที่ใช้ในตัวชี้วัดนี้:&nbsp;&nbsp; </label><input className='input10' type="number" min="0" max="99" name="numpara" value={numpara}
                                 onChange={e => setNumpara(e.target.value)} />
                             <br /><br />
                             <div dangerouslySetInnerHTML={{ __html: par(numpara) }}>
