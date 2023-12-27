@@ -213,7 +213,7 @@ const FillUp = () => {
     const data = new FormData(event.currentTarget);
     const JsonData = {
       formid: d[1],
-      qur: data.get("qur"),
+      qur: qqc,
       paras: g(z),
       ans: q(z),
       result: h(z)
@@ -724,7 +724,7 @@ const FillUp = () => {
       // document.getElementById("upl").disabled = false
       upload();
       //console.log(name);
-      console.log(q(z))
+      console.log(q(z), g(z), h(z), d[1], qqc)
       //console.log(`${z[0]}`[(z[0].length) - 1])
     }
     else {

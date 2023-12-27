@@ -10,8 +10,6 @@ const AddForm = () => {
     const [parass, setParass] = useState("");
     const [solv, setSolv] = useState(1);
 
-
-
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
