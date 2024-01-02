@@ -6,9 +6,9 @@ const AddForm = () => {
 
     Authlevel();
 
-    const [numpara, setNumpara] = useState(1);
+    const [numpara, setNumpara] = useState(0);
     const [parass, setParass] = useState("");
-    const [solv, setSolv] = useState(1);
+    const [solv, setSolv] = useState(3);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -19,7 +19,7 @@ const AddForm = () => {
             solve: data.get("solve"),
             method: data.get("method"),
             // method: 1,
-            numpara: Number(data.get("numpara")) + 2,
+            numpara: Number(data.get("numpara")) + 1,
             def: data.get("define"),
             paras: g(numpara),
             com: com(),
@@ -177,6 +177,10 @@ const AddForm = () => {
             else
                 o = document.getElementById(100).value;
         }
+        
+        // if (document.getElementById("nob").checked === true) {
+        //     o = ""
+        // }
 
         return o
 
@@ -239,7 +243,7 @@ const AddForm = () => {
                 document.getElementById("res-22").disabled = false
                 document.getElementById("res-all").disabled = false
             }
-                
+
             else {
                 resp = "10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 23"
                 document.getElementById("res-10").disabled = true
@@ -311,6 +315,11 @@ const AddForm = () => {
 
             // console.log(o)
             // document.getElementById("sum").value = o
+
+            if (document.getElementById("nob").checked === true) {
+                o = "-"
+            }
+
             return o
 
         } catch {
@@ -325,10 +334,21 @@ const AddForm = () => {
             console.log(g(numpara))
             console.log(fixc())
             console.log(resp)
+            console.log(document.getElementById("99").required === false)
             document.getElementById("submit").disabled = false
         }
         else {
             document.getElementById("submit").disabled = true;
+        }
+    }
+
+    const hided = () => {
+        if (document.getElementById("no").hidden === true) {
+            document.getElementById("no").hidden = false
+            document.getElementById("99").required = false
+        } else {
+            document.getElementById("no").hidden = true
+            document.getElementById("99").required = true
         }
     }
 
@@ -344,52 +364,58 @@ const AddForm = () => {
                             เพิ่มตัวชี้วัด
                         </h1>
                         <br /><br />
+
                         <form onSubmit={handleSubmit} className='textl2'>
+
+                            <label>เป็นตัวชี้วัดที่ไม่ได้มีการเก็บข้อมูลเชิงสถิติ:&nbsp;&nbsp; </label><input id='nob' type="checkbox" onClick={e => hided()} />
+                            <br /><br />
                             <label>ชื่อตัวชี้วัด:&nbsp;&nbsp; </label><br /><textarea className='tarea70' type="text" name="name" autoFocus required />
                             <br /><br />
                             <label>นิยามของตัวชี้วัด:&nbsp;&nbsp; </label><br /><textarea className='textarea60100' type="text" name="define" required />
                             <br /><br />
                             <label>ลำดับตัวชี้วัด:&nbsp;&nbsp; </label><input className='input10' type="text" min={1} max={1000} name="id" required defaultValue={1} />
                             <br /><br />
-                            <label>ค่าเป้าหมายคิดเป็นร้อยละ:&nbsp;&nbsp; </label><input type="number" min={1} max={100} name="solve" required defaultValue={35} />
-                            <br />
-                            <div>
+                            <div id='no'>
+                                <label>ค่าเป้าหมายคิดเป็นร้อยละ:&nbsp;&nbsp; </label><input type="number" min={1} max={100} name="solve" required defaultValue={100} />
                                 <br />
-                            <label>วิธีการคำนวณ: &nbsp;&nbsp;</label>
-                            <select name='method' value={solv} onChange={e => {setSolv(e.target.value)}} >
-                                <option value={1}>ร้อยละ</option>
-                                <option value={2}>ผลรวม</option>
-                                {/* <option value={3}>รวบรวม</option> */}
-                                {/* <option>ค่าเฉลี่ย</option> */}
-                            </select>
-                            </div>
-                            <br />
-                            <label>จำนวนข้อมูลที่ใช้ในตัวชี้วัดนี้:&nbsp;&nbsp; </label><input className='input10' type="number" min="0" max="99" name="numpara" value={numpara}
-                                onChange={e => setNumpara(e.target.value)} />
-                            <br /><br />
-                            <div dangerouslySetInnerHTML={{ __html: par(numpara) }}>
-                            </div>
-                            {/* <label>ข้อมูลเปรี่ยบเทียบที่ 1 (ตัวตั้ง):&nbsp;&nbsp;</label> <label hidden>( กรณีใช้ค่านี้ในการประเมินผลตัวชี้วัดติ๊กถูกตรงนี้ <input type="checkbox" id={980}/> )</label><br /> <input required type="text1" name="para98" id={98} /><br /><br /> */}
-                            {/* <label>ข้อมูลเปรี่ยบเทียบที่ 2 (ตัวหาร):&nbsp;&nbsp;</label> <label>( กรณีเป็นค่าเปรียบเทียบคงที่: <input type="checkbox" id={999} onClick={e => fixx()} /> <input hidden defaultChecked type="checkbox" id={990} /> )</label><br /> <input required type="text1" name="para99" id={99} /><br /><br /> */}
-                            <label>ข้อมูลเปรี่ยบเทียบ (ตัวหาร):&nbsp;&nbsp;</label> <label>( กรณีเป็นค่าเปรียบเทียบคงที่: <input type="checkbox" id={999} onClick={e => fixx()} /> <input hidden defaultChecked type="checkbox" id={990} /> )</label><br /> <input required type="text1" name="para99" id={99} /><br /><br />
-                            <div id='combo' hidden> แบ่งรายโรงพยาบาล:&nbsp;&nbsp; <input type="radio" id={111} name='met' onClick={e => mtq()} />&nbsp;&nbsp;&nbsp;&nbsp; รายปี:&nbsp;&nbsp;    <input type="radio" name='met' id={222} onClick={e => mty()} /> <br /><br />
-                                <div id="mt" hidden><label>ใส่ค่าเปรียบเทียบคงที่:&nbsp;&nbsp;</label> <input id={100} name='fix' className='input20' type="number" /><br /><br /></div>
-                                <div id="mty" hidden>
-                                    <label>รพก:&nbsp;&nbsp;</label> <input id={701} name='fixq1' className='input20' type="number" /><br /><br />
-                                    <label>รพต:&nbsp;&nbsp;</label> <input id={702} name='fixq2' className='input20' type="number" /><br /><br />
-                                    <label>รพจ:&nbsp;&nbsp;</label> <input id={703} name='fixq3' className='input20' type="number" /><br /><br />
-                                    <label>รพท:&nbsp;&nbsp;</label> <input id={704} name='fixq4' className='input20' type="number" /><br /><br />
-                                    <label>รพว:&nbsp;&nbsp;</label> <input id={705} name='fixq5' className='input20' type="number" /><br /><br />
-                                    <label>รพล:&nbsp;&nbsp;</label> <input id={706} name='fixq6' className='input20' type="number" /><br /><br />
-                                    <label>รพร:&nbsp;&nbsp;</label> <input id={707} name='fixq7' className='input20' type="number" /><br /><br />
-                                    <label>รพส:&nbsp;&nbsp;</label> <input id={708} name='fixq8' className='input20' type="number" /><br /><br />
-                                    <label>รพข:&nbsp;&nbsp;</label> <input id={709} name='fixq9' className='input20' type="number" /><br /><br />
-                                    <label>รพค:&nbsp;&nbsp;</label> <input id={710} name='fixq10' className='input20' type="number" /><br /><br />
-                                    <label>รพบ:&nbsp;&nbsp;</label> <input id={711} name='fixq11' className='input20' type="number" /><br /><br />
+                                <div>
+                                    <br />
+                                    <label>วิธีการคำนวณ: &nbsp;&nbsp;</label>
+                                    <select name='method' value={solv} onChange={e => { setSolv(e.target.value) }} >
+                                        <option value={1}>ร้อยละ</option>
+                                        <option value={2}>ผลรวม</option>
+                                        <option value={3}>ไม่มีการคำนวณ</option>
+                                        {/* <option>ค่าเฉลี่ย</option> */}
+                                    </select>
                                 </div>
+                                <br />
+                                <label>จำนวนข้อมูลที่ใช้ในตัวชี้วัดนี้:&nbsp;&nbsp; </label><input className='input10' type="number" min="0" max="99" name="numpara" value={numpara}
+                                    onChange={e => setNumpara(e.target.value)} />
+                                <br /><br />
+                                <div dangerouslySetInnerHTML={{ __html: par(numpara) }}>
+                                </div>
+                                {/* <label>ข้อมูลเปรี่ยบเทียบที่ 1 (ตัวตั้ง):&nbsp;&nbsp;</label> <label hidden>( กรณีใช้ค่านี้ในการประเมินผลตัวชี้วัดติ๊กถูกตรงนี้ <input type="checkbox" id={980}/> )</label><br /> <input required type="text1" name="para98" id={98} /><br /><br /> */}
+                                {/* <label>ข้อมูลเปรี่ยบเทียบที่ 2 (ตัวหาร):&nbsp;&nbsp;</label> <label>( กรณีเป็นค่าเปรียบเทียบคงที่: <input type="checkbox" id={999} onClick={e => fixx()} /> <input hidden defaultChecked type="checkbox" id={990} /> )</label><br /> <input required type="text1" name="para99" id={99} /><br /><br /> */}
+                                <label>ข้อมูลเปรี่ยบเทียบ (ตัวหาร):&nbsp;&nbsp;</label> <label>( กรณีเป็นค่าเปรียบเทียบคงที่: <input type="checkbox" id={999} onClick={e => fixx()} /> <input hidden defaultChecked type="checkbox" id={990} /> )</label><br /> <input required type="text1" name="para99" id={99} /><br /><br />
+                                <div id='combo' hidden> แบ่งรายโรงพยาบาล:&nbsp;&nbsp; <input type="radio" id={111} name='met' onClick={e => mtq()} />&nbsp;&nbsp;&nbsp;&nbsp; รายปี:&nbsp;&nbsp;    <input type="radio" name='met' id={222} onClick={e => mty()} /> <br /><br />
+                                    <div id="mt" hidden><label>ใส่ค่าเปรียบเทียบคงที่:&nbsp;&nbsp;</label> <input id={100} name='fix' className='input20' type="number" /><br /><br /></div>
+                                    <div id="mty" hidden>
+                                        <label>รพก:&nbsp;&nbsp;</label> <input id={701} name='fixq1' className='input20' type="number" /><br /><br />
+                                        <label>รพต:&nbsp;&nbsp;</label> <input id={702} name='fixq2' className='input20' type="number" /><br /><br />
+                                        <label>รพจ:&nbsp;&nbsp;</label> <input id={703} name='fixq3' className='input20' type="number" /><br /><br />
+                                        <label>รพท:&nbsp;&nbsp;</label> <input id={704} name='fixq4' className='input20' type="number" /><br /><br />
+                                        <label>รพว:&nbsp;&nbsp;</label> <input id={705} name='fixq5' className='input20' type="number" /><br /><br />
+                                        <label>รพล:&nbsp;&nbsp;</label> <input id={706} name='fixq6' className='input20' type="number" /><br /><br />
+                                        <label>รพร:&nbsp;&nbsp;</label> <input id={707} name='fixq7' className='input20' type="number" /><br /><br />
+                                        <label>รพส:&nbsp;&nbsp;</label> <input id={708} name='fixq8' className='input20' type="number" /><br /><br />
+                                        <label>รพข:&nbsp;&nbsp;</label> <input id={709} name='fixq9' className='input20' type="number" /><br /><br />
+                                        <label>รพค:&nbsp;&nbsp;</label> <input id={710} name='fixq10' className='input20' type="number" /><br /><br />
+                                        <label>รพบ:&nbsp;&nbsp;</label> <input id={711} name='fixq11' className='input20' type="number" /><br /><br />
+                                    </div>
+                                </div>
+                                <label>การเก็บข้อมูลในตัวชี้วัดนี้เป็นเก็บแบบสะสมหรือไม่:&nbsp;&nbsp;</label><input id='com' type='checkbox' onClick={e => com()}></input>
+                                <br /><br />
                             </div>
-                            <label>การเก็บข้อมูลในตัวชี้วัดนี้เป็นเก็บแบบสะสมหรือไม่:&nbsp;&nbsp;</label><input id='com' type='checkbox' onClick={e => com()}></input>
-                            <br /><br />
                             <label>กำหนดหน่วยงานที่รับผิดชอบ:&nbsp;&nbsp;</label>
                             <br />
                             {/* <input id='res-00' type="checkbox" onClick={e => res("00")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>หน่วยงานสังกัดสำนักการแพทย์&nbsp;&nbsp;&nbsp;&nbsp; </label> */}

@@ -2,10 +2,8 @@ import React from 'react'
 import Senddetail from './Senddetail'
 
 const Post = () => {
-  var chi = 0
-  if (chi === 0)
+  
   Senddetail();
-  chi = 1
 
   setTimeout(() => {
     location = "/"

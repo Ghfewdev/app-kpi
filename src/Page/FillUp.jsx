@@ -258,7 +258,7 @@ const FillUp = () => {
           //window.location = "post";
         } else {
           alert("01 บันทึกไม่สำเร็จ");
-          return;
+          window.location = "fillup"
         }
       })
       .catch((error) => {
@@ -280,7 +280,7 @@ const FillUp = () => {
           //window.location = "post";
         } else {
           alert("02 บันทึกไม่สำเร็จ");
-          return;
+          window.location = "fillup"
         }
       })
       .catch((error) => {
@@ -718,13 +718,17 @@ const FillUp = () => {
   const dis = () => {
     //console.log(pa2(z), detail, pa(), reu());
     //console.log(file.name)
-    console.log(pa2(z))
+    
+    console.log(d[1])
+    console.log(qqc)
+    console.log(g(z))
+    console.log(q(z))
+    console.log(h(z))
     if (document.getElementById("submit").disabled === true) {
       document.getElementById("submit").disabled = false
       // document.getElementById("upl").disabled = false
       upload();
       //console.log(name);
-      console.log(q(z), g(z), h(z), d[1], qqc)
       //console.log(`${z[0]}`[(z[0].length) - 1])
     }
     else {
@@ -735,13 +739,14 @@ const FillUp = () => {
   }
 
   const defu = () => {
-    var autoevent = events.map(e => [e.ev_name, e.ev_res, e.fms_id, e.ev_point, e.ev_target, e.ev_result ,e.ev_problem])[0]
+    var autoevent = events.map(e => [e.ev_name, e.fms_id, e.ev_res, e.ev_point, e.ev_target, e.ev_result ,e.ev_problem])[0]
     if (document.getElementById("def").checked === true) {
     document.getElementById("evnaem").value = autoevent[0]
     document.getElementById("fmsid").value = autoevent[1]
     document.getElementById("evres").value = autoevent[2]
     document.getElementById("evpoint").value = autoevent[3]
     document.getElementById("evtarget").value = autoevent[4]
+    console.log(autoevent)
     if (qqc === 2)
       document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
     else if (qqc === 3) {
