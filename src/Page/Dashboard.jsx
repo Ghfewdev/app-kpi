@@ -75,15 +75,22 @@ const Dashboard = () => {
               tc = [a.h1, a.h2, a.h3, a.h4, a.h5, a.h6, a.h7, a.h8, a.h9, a.h10, a.h11, a.d1, a.d2, a.re_sum]
               if (opp[i] === "0") {
                 if (a.pa2 === 0)
-                  ifr = <th><h1 className='greent'>{a.pa1}</h1></th>
+                  ifr = <th><h4 className='greent'>{a.pa1}</h4></th>
                 else
-                  ifr = <th><h1 className='greent'>{a.pa2}</h1></th>
+                  ifr = <th><h4 className='greent'>{a.pa2}</h4></th>
               } else {
                 var t = opp[i].split(", ")
                 var tt = t.reduce((x, y) => Number(x) + Number(y), 0);
-                ifr = <th><h1 className='greent'>{tt}</h1></th>
+                ifr = <th><h2 className='greent'>{tt}</h2></th>
                 
               }
+            }
+            else if (itp[i] === 3) {
+              tc = [a.h1, a.h2, a.h3, a.h4, a.h5, a.h6, a.h7, a.h8, a.h9, a.h10, a.h11, a.d1, a.d2, a.re_sum]
+              if (a.re_sum === 36)
+              ifr = <th><h5 className='greent'>ส่งข้อมูลครบ</h5></th>
+              else
+              ifr = <th><h5 className='greent'>โครงการ</h5></th>
             }
             return (
               <tr key={i}>

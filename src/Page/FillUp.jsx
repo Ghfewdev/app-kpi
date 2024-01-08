@@ -399,6 +399,7 @@ const FillUp = () => {
 
   // var autoevent = events.map(e => [e.ev_name, e.ev_res, e.fms_id, e.ev_point, e.ev_target, e.ev_result])[0]
   var w = forms.fill.map(fil => fil.fm_paras)
+  var numpa = forms.fill.map(po => po.fm_numpara)[0]
   var y = w[0]
   var t = forms.fill.map(f => [f.fm_solve, f.fm_method])[0]
   var fc = forms.fill.map(c => c.fm_com)[0]
@@ -440,7 +441,6 @@ const FillUp = () => {
           com = k[0]
         }
 
-
         // if (!(i%2 === 0)) {
         //   cuo = k[0]
         // if (cuo === k[0])
@@ -475,6 +475,12 @@ const FillUp = () => {
          if (qqc === 3 || qqc === 4)
          nn = <p className='inline textr p'><input className='input30' type="text" id={m} disabled /></p>
         }}catch{}
+
+        if(group === "-") {
+          group = <></>
+          nn = <></>
+        }
+
       return (
         <div key={i}>
           <div><p className='inline p'><label>{group} &nbsp;&nbsp;</label></p>
@@ -503,12 +509,17 @@ const FillUp = () => {
 
   function g(val) {
     var g = "";
+    if (numpa === 1) {
+      g = 1
+    } else {
     for (var i = 1; i <= val.length; i++) {
       g += document.getElementById(`${val[i - 1]}`).value;
       if (i != val.length) {
         g += ", "
       }
     }
+  }
+
     return g
   }
 
@@ -531,6 +542,9 @@ const FillUp = () => {
     var p = 0;
     var pr1;
     var pr2;
+    if (numpa === 1) {
+      q = 1
+    } else {
     for (var i = 1; i <= val.length; i++) {
       if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
         q += parseFloat(document.getElementById(`${val[i - 1]}`).value);
@@ -559,12 +573,16 @@ const FillUp = () => {
       else
         q = (p ** (-1)) * 100
     }
+  }
     return q
   }
 
   function h(val) {
     var h;
     var g = 0;
+    if (numpa === 1) {
+      h = "ผ่าน"
+    } else {
     for (var i = 1; i <= val.length; i++) {
       if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
         if (g === 0)
@@ -585,6 +603,7 @@ const FillUp = () => {
     } else {
       h = "ไม่ผ่าน"
     }
+  }
     return h
   }
 
@@ -711,6 +730,10 @@ const FillUp = () => {
 
     pa2 = [p1, p2, are, sare, pp1, pp2, lg]
 
+    if (numpa === 1) {
+      pa2 = [0, 0, 1, 0, 0, 0, lg]
+    }
+
     return pa2
 
   }
@@ -719,11 +742,13 @@ const FillUp = () => {
     //console.log(pa2(z), detail, pa(), reu());
     //console.log(file.name)
     
-    console.log(d[1])
-    console.log(qqc)
-    console.log(g(z))
-    console.log(q(z))
-    console.log(h(z))
+    // console.log(d[1])
+    // console.log(qqc)
+    // console.log(g(z))
+    // console.log(q(z))
+    // console.log(h(z))
+    // console.log(numpa)
+
     if (document.getElementById("submit").disabled === true) {
       document.getElementById("submit").disabled = false
       // document.getElementById("upl").disabled = false
@@ -867,7 +892,7 @@ const FillUp = () => {
                           <input type="radio" value={1} name="evstatus" /> แล้วเสร็จ &nbsp;&nbsp;&nbsp;
                           <input type="radio" value={2} name="evstatus" /> ยังไม่เริ่มดำเนินการ &nbsp;&nbsp;&nbsp;
                           <input type="radio" value={3} name="evstatus" /> ยกเลิก &nbsp;&nbsp;&nbsp;
-                          <input type="radio" value={4} name="evstatus" /> กำลังดำเนินการ &nbsp;&nbsp;&nbsp;
+                          <input type="radio" value={4} name="evstatus" defaultChecked/> กำลังดำเนินการ &nbsp;&nbsp;&nbsp;
                           <input type="radio" value={5} name="evstatus" /> ชะลอ
                         </div>
                         <br />
@@ -921,7 +946,7 @@ const FillUp = () => {
                         <label>สรุปผลการดำเนินงาน</label>
                         <br />
                         <div>
-                          <input type="radio" value="1" name="et" /> เป็นไปตามแผน &nbsp;&nbsp;&nbsp;<br />
+                          <input type="radio" value="1" name="et" defaultChecked/> เป็นไปตามแผน &nbsp;&nbsp;&nbsp;<br />
                           <input type="radio" value="2" name="et" /> เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ &nbsp;&nbsp;&nbsp;<br />
                           <input type="radio" value="3" name="et" /> ไม่เป็นไปตามแผน &nbsp;&nbsp;&nbsp;
                         </div>

@@ -30,6 +30,36 @@ const Form = () => {
 
 }
 
+const rese = () => {
+  const jsonres = {
+    res: resp,
+    id: Number(d[1])
+  }
+  
+  fetch(import.meta.env.VITE_APP_API+"/update/form/res", {
+    method: "PUT",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(jsonres)
+})
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        if (data.status === "ok") {
+            alert("ทำรายการสำเร็จ");
+            window.location = "/";
+        } else {
+            alert("บันทึกไม่สำเร็จ");
+        }
+    })
+    .catch((error) => {
+        console.log("error", error);
+    });
+
+}
+
   const dis = () => {
     if (document.getElementById("submit").disabled === true) {
       g(z.length)
@@ -56,6 +86,7 @@ const Form = () => {
   }
   var co1 = <></>;
   var co2 = <></>;
+  var co3 = <></>;
   try {
     if (localStorage.getItem("token").split("$")[1] === "9") {
       co1 = <>
@@ -64,9 +95,37 @@ const Form = () => {
       co2 = <>
         <button id="submit" type="submit" className='btn btn-success' disabled> แก้ไขข้อมูล </button>
       </>
+      co3 = <>
+      <label>กำหนดหน่วยงานที่รับผิดชอบ:&nbsp;&nbsp;</label>
+                            <br />
+                            {/* <input id='res-00' type="checkbox" onClick={e => res("00")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>หน่วยงานสังกัดสำนักการแพทย์&nbsp;&nbsp;&nbsp;&nbsp; </label> */}
+                            <input id='res-all' type="checkbox" onClick={e => res("all")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>ทุกหน่วยงานในสังกัด&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-21' type="checkbox" onClick={e => res("21")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>สก.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-22' type="checkbox" onClick={e => res("22")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>ศบฉ.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <br /><label>โรงพยาบาลสังกัดสำนักการแพทย์:&nbsp;&nbsp;&nbsp;&nbsp; </label><br />
+                            <input id='res-ah' type="checkbox" onClick={e => res("ah")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>ทุกโรงพยาบาลในสังกัด&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-10' type="checkbox" onClick={e => res("10")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพก.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-11' type="checkbox" onClick={e => res("11")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพต.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-12' type="checkbox" onClick={e => res("12")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพจ.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-13' type="checkbox" onClick={e => res("13")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพท.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <br />
+                            <input id='res-14' type="checkbox" onClick={e => res("14")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพว.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-15' type="checkbox" onClick={e => res("15")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพล.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-16' type="checkbox" onClick={e => res("16")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพร.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-17' type="checkbox" onClick={e => res("17")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพส.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-18' type="checkbox" onClick={e => res("18")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพข.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-19' type="checkbox" onClick={e => res("19")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพค.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-20' type="checkbox" onClick={e => res("20")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพบ.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <br />
+                            <br />
+                            <button className='btn btn-info' onClick={e => rese()}> แก้ไขผู้รับผิดชอบ </button>
+                            <br />
+                            <br />
+      </>;
     }
   } catch {
     co2 = <></>;
+    co3 = <></>;
   }
 
   const handleSubmit = (event) => {
@@ -168,6 +227,97 @@ const Form = () => {
 
   }
 
+  var resp = "23";
+
+    var res = (v) => {
+        if (v === "all")
+            if (resp === "10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23") {
+                resp = "23"
+                document.getElementById("res-10").disabled = false
+                document.getElementById("res-11").disabled = false
+                document.getElementById("res-12").disabled = false
+                document.getElementById("res-13").disabled = false
+                document.getElementById("res-14").disabled = false
+                document.getElementById("res-15").disabled = false
+                document.getElementById("res-16").disabled = false
+                document.getElementById("res-17").disabled = false
+                document.getElementById("res-18").disabled = false
+                document.getElementById("res-19").disabled = false
+                document.getElementById("res-20").disabled = false
+                document.getElementById("res-21").disabled = false
+                document.getElementById("res-22").disabled = false
+                document.getElementById("res-ah").disabled = false
+            }
+
+            else {
+                resp = "10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23"
+                document.getElementById("res-10").disabled = true
+                document.getElementById("res-11").disabled = true
+                document.getElementById("res-12").disabled = true
+                document.getElementById("res-13").disabled = true
+                document.getElementById("res-14").disabled = true
+                document.getElementById("res-15").disabled = true
+                document.getElementById("res-16").disabled = true
+                document.getElementById("res-17").disabled = true
+                document.getElementById("res-18").disabled = true
+                document.getElementById("res-19").disabled = true
+                document.getElementById("res-20").disabled = true
+                document.getElementById("res-21").disabled = true
+                document.getElementById("res-22").disabled = true
+                document.getElementById("res-ah").disabled = true
+            }
+        else if (v === "ah")
+            if (resp === "10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 23") {
+                resp = "23"
+                document.getElementById("res-10").disabled = false
+                document.getElementById("res-11").disabled = false
+                document.getElementById("res-12").disabled = false
+                document.getElementById("res-13").disabled = false
+                document.getElementById("res-14").disabled = false
+                document.getElementById("res-15").disabled = false
+                document.getElementById("res-16").disabled = false
+                document.getElementById("res-17").disabled = false
+                document.getElementById("res-18").disabled = false
+                document.getElementById("res-19").disabled = false
+                document.getElementById("res-20").disabled = false
+                document.getElementById("res-21").disabled = false
+                document.getElementById("res-22").disabled = false
+                document.getElementById("res-all").disabled = false
+            }
+
+            else {
+                resp = "10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 23"
+                document.getElementById("res-10").disabled = true
+                document.getElementById("res-11").disabled = true
+                document.getElementById("res-12").disabled = true
+                document.getElementById("res-13").disabled = true
+                document.getElementById("res-14").disabled = true
+                document.getElementById("res-15").disabled = true
+                document.getElementById("res-16").disabled = true
+                document.getElementById("res-17").disabled = true
+                document.getElementById("res-18").disabled = true
+                document.getElementById("res-19").disabled = true
+                document.getElementById("res-20").disabled = true
+                document.getElementById("res-21").disabled = true
+                document.getElementById("res-22").disabled = true
+                document.getElementById("res-all").disabled = true
+            }
+
+        else if (resp.includes(v)) {
+            if (resp.includes(", "))
+                resp = resp.replace(", " + v, "")
+            else
+                resp = resp.replace(v, "")
+        }
+        else {
+            if (resp === "")
+                resp += v
+            else
+                resp += ", " + v
+        }
+        console.log(resp)
+    }
+
   var w = forms.fill.map(fil => fil.fm_paras)
   var y = w[0]
   var t = forms.fill.map(f => [f.fm_solve, f.fm_method])[0]
@@ -216,12 +366,14 @@ const Form = () => {
             </div>
             <br />
             <div>{c}</div>
-            <div id='unknow' hidden>
-            <form onSubmit={handleSubmit} className='textl2'>
-
+            <br />
+            <div id='unknow' className='textl2' hidden>
+              {co3}
+            <form onSubmit={handleSubmit}>
               {forms.fill.map(fill => (
 
                 <div key={fill.fm_id}>
+                  
                   {co1}
                   <br /><label>ตัวชี้วัด KPI (ตามแผนฯ ของหน่วยงาน): </label> <br /> <textarea className='textarea60100' value={fill.fm_name} disabled /> <br /> <div id='hd11' hidden><textarea className='textarea60100' name='name' required/></div>
                   <br /><br />

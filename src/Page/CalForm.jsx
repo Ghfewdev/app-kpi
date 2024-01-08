@@ -828,6 +828,8 @@ const CalForm = () => {
     }
     //console.log(props)
     if (props !== null) {
+      var hosi = Number(localStorage.getItem("id")) - 10
+      //console.log(hosi)
       if (localStorage.getItem("token").split("$")[1] === "9" && fc === 0 && met === 1)
         a = <div>
 
@@ -1123,7 +1125,66 @@ const CalForm = () => {
           </div>
 
         </div>
-      else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 0)
+        else if (met === 3)
+        a = <div>
+
+          <div className='container mt-3'>
+            <h3>รายละเอียดการส่งตัวชี้วัด </h3>
+            <br />
+            <label>ชื่อตัวชี้วัด: </label><br /> <input className="input100" disabled value={z} />
+            <br /><br />
+            <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
+            <br /><br />
+            <div className="textc"><h3>โครงการ</h3></div>
+          <br /><br />
+            <table className='table table-bordered border-primary'>
+
+              <thead className="table-dark">
+                <tr>
+                  <th className="textc" scope="col">ส่วนราชการ</th>
+                  <th className="textc" scope='col'>ไตรมาส</th>
+                  {/* <th className="textc" scope="col">{w}</th> */}
+                  <th className="textc" scope="col">วันที่ส่ง</th>
+                  <th className="textc" scope="col">วันที่อัปเดต</th>
+                  <th className="textc" scope="col">สรุปผล</th>
+                  <th className="textc" scope="col">ข้อมูลโครงการ</th>
+                  <th className="textc" scope="col">แก้ไขโครงการ</th>
+                </tr>
+              </thead>
+              <tbody>
+                {props.map((item, index) => {
+                  var y = "";
+                  var u = <h4 className="bi bi-x-circle redt"></h4>;
+                  for (var i = 1; i <= props[0].fm_paras.split(', ').length; i++) {
+                    y += `<td>${item.de_paras.split(", ")[i - 1]}</td>`
+                  }
+                  if (item.de_result === "ผ่าน")
+                    u = <h4 className="bi bi-check-circle greent"></h4>
+                  return (
+                    <tr key={index}>
+                      <td>{item.us_agency}</td>
+                      <td>{item.de_qur}</td>
+                      <td>{item.fd_date}</td>
+                      <td>{item.fd_update}</td>
+                      <td className="textc">{u}</td>
+                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
+                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            <br /><br />
+
+          </div>
+          
+
+        </div>
+      else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 0) {
+        var ois = qq14[hosi]
+        if (qq14[hosi] > 100)
+        ois = ((qq14[hosi]**-1)*10000).toFixed(2)
+
         a = <div>
 
           <div className='container mt-3'>
@@ -1192,144 +1253,6 @@ const CalForm = () => {
           <div className="textc"><h3>สรุปผล</h3></div>
           <div className='container mt-3'>
             <br />
-            <table className='table table-bordered border-primary'>
-
-              <thead className="table-dark">
-                <tr>
-                  <th scope="col" rowSpan="2">ส่วนราชการ</th>
-                  <th scope='col' colSpan="2">ไตรมาสที่ 1</th>
-                  <th scope='col' colSpan="2">ไตรมาสที่ 2</th>
-                  {/* <th scope='col' colSpan="2">ครี่งปีแรก</th> */}
-                  <th scope='col' colSpan="2">ไตรมาสที่ 3</th>
-                  <th scope='col' colSpan="2">ไตรมาสที่ 4</th>
-                  {/* <th scope='col' colSpan="2">ครี่งปีหลัง</th> */}
-                  <th scope="col" colSpan="2">ผลดำเนินการ</th>
-                  {/* <th scope="col" rowSpan="2">รายละเอียด</th> */}
-
-                </tr>
-
-                <tr>
-                  {/* <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th>
-                  <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th> */}
-                  <th scope='col'>ผล</th>
-                  <th scope="col">สรุป</th>
-                  <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th>
-                  <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th>
-                  <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th>
-                  <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th>
-                </tr>
-              </thead>
-              <tbody>
-
-                {an.map((item, index) => {
-                  var uu1 = <h4 className="bi bi-x-circle redt"></h4>;
-                  var uu2 = <h4 className="bi bi-x-circle redt"></h4>;
-                  var uu3 = <h4 className="bi bi-x-circle redt"></h4>;
-                  var uu4 = <h4 className="bi bi-x-circle redt"></h4>;
-
-
-                  if (re1[index] === "ผ่าน")
-                    uu1 = <h4 className="bi bi-check-circle greent"></h4>
-                  if (re2[index] === "ผ่าน")
-                    uu2 = <h4 className="bi bi-check-circle greent"></h4>
-                  if (re3[index] === "ผ่าน")
-                    uu3 = <h4 className="bi bi-check-circle greent"></h4>
-                  if (re4[index] === "ผ่าน")
-                    uu4 = <h4 className="bi bi-check-circle greent"></h4>
-
-
-                  //q1-4
-                  if (isNaN(qq1[index]))
-                    qq1[index] = "-"
-                  if (isNaN(qq2[index]))
-                    qq2[index] = "-"
-                  if (isNaN(qq3[index]))
-                    qq3[index] = "-"
-                  if (isNaN(qq4[index]))
-                    qq4[index] = "-"
-
-                  //q12
-                  if (qq12[index] > 100)
-                    qq12[index] = ((qq12[index] ** -1) * 10000).toFixed(2)
-                  if (isNaN(qq12[index]))
-                    qq12[index] = "-"
-                  if (Number(qq12[index]) > Number(q))
-                    re12.push("ผ่าน")
-                  else re12.push("ไม่ผ่าน")
-                  if (re12[index] === "ผ่าน")
-                    re12[index] = <h4 className="bi bi-check-circle greent"></h4>
-                  else re12[index] = <h4 className="bi bi-x-circle redt"></h4>;
-
-                  //q13
-
-
-                  //q34
-                  if (qq34[index] > 100)
-                    qq34[index] = ((qq34[index] ** -1) * 10000).toFixed(2)
-                  if (isNaN(qq34[index]))
-                    qq34[index] = "-"
-                  if (Number(qq34[index]) > Number(q))
-                    re34.push("ผ่าน")
-                  else re34.push("ไม่ผ่าน")
-                  if (re34[index] === "ผ่าน")
-                    re34[index] = <h4 className="bi bi-check-circle greent"></h4>
-                  else re34[index] = <h4 className="bi bi-x-circle redt"></h4>;
-
-                  //q13
-                  if (qq13[index] > 100)
-                    qq13[index] = ((qq13[index] ** -1) * 10000).toFixed(2)
-                  if (isNaN(qq13[index]))
-                    qq13[index] = "-"
-                  if (Number(qq13[index]) > Number(q))
-                    re13.push("ผ่าน")
-                  else re13.push("ไม่ผ่าน")
-                  if (re13[index] === "ผ่าน")
-                    re13[index] = <h4 className="bi bi-check-circle greent"></h4>
-                  else re13[index] = <h4 className="bi bi-x-circle redt"></h4>;
-
-                  //q14
-                  if (qq14[index] > 100)
-                    qq14[index] = ((qq14[index] ** -1) * 10000).toFixed(2)
-                  if (isNaN(qq14[index]))
-                    qq14[index] = "-"
-                  if (Number(qq14[index]) > Number(q))
-                    re14.push("ผ่าน")
-                  else re14.push("ไม่ผ่าน")
-                  if (re14[index] === "ผ่าน")
-                    re14[index] = <h4 className="bi bi-check-circle greent"></h4>
-                  else re14[index] = <h4 className="bi bi-x-circle redt"></h4>;
-
-                  //console.log("qqall" ,qqall)
-                  return (
-                    <tr key={index}>
-                      <td>{an[index]}</td>
-                      <td className="textc">{qq1[index]}</td>
-                      <td className="textc">{uu1}</td>
-                      <td className="textc">{qq2[index]}</td>
-                      <td className="textc">{uu2}</td>
-                      {/* <td className="textc">{qq12[index]}</td>
-                      <td className="textc">{re12[index]}</td> */}
-                      <td className="textc">{qq3[index]}</td>
-                      <td className="textc">{uu3}</td>
-                      <td className="textc">{qq4[index]}</td>
-                      <td className="textc">{uu4}</td>
-                      {/* <td className="textc">{qq34[index]}</td>
-                      <td className="textc">{re34[index]}</td> */}
-                      <td className="textc">{qq14[index]}</td>
-                      <td className="textc">{re14[index]}</td>
-                      {/* <td className="textc"><button className="btn btn-success" onClick={e => handlesum(index)}>เรียกดู</button></td> */}
-                    </tr>
-                  );
-                })}
-
-              </tbody>
-            </table>
           </div>
           <br /><br />
           <div className="row">
@@ -1337,13 +1260,14 @@ const CalForm = () => {
             </div>
             <div className="col-1 col-md-4">
               <div style={{ width: 530 }}>
-                <Solve name={qq14[11]} do={530} name2={q} class={"responcal"} />
+                <Solve name={ois} do={530} name2={q} class={"responcal"} />
               </div>
             </div>
 
           </div>
 
         </div>
+        }
       else if (localStorage.getItem("token").split("$")[1] === "9" && fc === 1)
         a = <div>
 
@@ -1772,11 +1696,11 @@ const CalForm = () => {
           </div>
           <br /><br />
           <div className="row">
-            <div className="col-3 textc">
+            <div className="col-4 textc">
             </div>
-            <div className="col-1 col-md-5">
-              <div style={{ width: 650 }}>
-                <Solve name={qq14[11]} do={650} name2={q} class={"responcal"} />
+            <div className="col-1 col-md-4">
+              <div style={{ width: 530 }}>
+                <Solve name={qq14[11]} do={530} name2={q} class={"responcal"} />
               </div>
             </div>
 
@@ -1784,7 +1708,10 @@ const CalForm = () => {
 
         </div>
 
-      else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 1)
+      else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 1) {
+        var ois = qq14[hosi]
+        if (qq14[hosi] > 100)
+        ois = ((qq14[hosi]**-1)*10000).toFixed(2)
         a = <div>
 
           <div className='container mt-3'>
@@ -1850,152 +1777,14 @@ const CalForm = () => {
             <br /><br />
 
           </div>
-          <div className="textc"><h3>สรุปผล</h3></div>
-          <div className='container mt-3'>
-            <br />
-            <table className='table table-bordered border-primary'>
-
-              <thead className="table-dark">
-                <tr>
-                  <th scope="col" rowSpan="2">ส่วนราชการ</th>
-                  <th scope='col' colSpan="2">ไตรมาสที่ 1</th>
-                  <th scope='col' colSpan="2">ไตรมาสที่ 2</th>
-                  {/* <th scope='col' colSpan="2">ครี่งปีแรก</th> */}
-                  <th scope='col' colSpan="2">ไตรมาสที่ 3</th>
-                  <th scope='col' colSpan="2">ไตรมาสที่ 4</th>
-                  {/* <th scope='col' colSpan="2">ครี่งปีหลัง</th> */}
-                  {/* <th scope="col" colSpan="2">ผลดำเนินการ</th> */}
-                  {/* <th scope="col" rowSpan="2">รายละเอียด</th> */}
-
-                </tr>
-
-                <tr>
-                  {/* <th scope='col'>ผล</th>
-                <th scope='col'>สรุป</th>
-                <th scope='col'>ผล</th>
-                <th scope='col'>สรุป</th> */}
-                  {/* <th scope='col'>ผล</th>
-                <th scope="col">สรุป</th> */}
-                  <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th>
-                  <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th>
-                  <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th>
-                  <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th>
-                </tr>
-              </thead>
-              <tbody>
-
-                {an.map((item, index) => {
-                  var uu1 = <h4 className="bi bi-x-circle redt"></h4>;
-                  var uu2 = <h4 className="bi bi-x-circle redt"></h4>;
-                  var uu3 = <h4 className="bi bi-x-circle redt"></h4>;
-                  var uu4 = <h4 className="bi bi-x-circle redt"></h4>;
-
-                  if (re1[index] === "ผ่าน")
-                    uu1 = <h4 className="bi bi-check-circle greent"></h4>
-                  if (re2[index] === "ผ่าน")
-                    uu2 = <h4 className="bi bi-check-circle greent"></h4>
-                  if (re3[index] === "ผ่าน")
-                    uu3 = <h4 className="bi bi-check-circle greent"></h4>
-                  if (re4[index] === "ผ่าน")
-                    uu4 = <h4 className="bi bi-check-circle greent"></h4>
-
-                  //q1-4
-                  if (isNaN(qq1[index]))
-                    qq1[index] = "-"
-                  if (isNaN(qq2[index]))
-                    qq2[index] = "-"
-                  if (isNaN(qq3[index]))
-                    qq3[index] = "-"
-                  if (isNaN(qq4[index]))
-                    qq4[index] = "-"
-
-                  //q12
-                  if (qq12[index] > 100)
-                    qq12[index] = ((qq12[index] ** -1) * 10000).toFixed(2)
-                  if (isNaN(qq12[index]))
-                    qq12[index] = "-"
-                  if (Number(qq12[index]) > Number(q))
-                    re12.push("ผ่าน")
-                  else re12.push("ไม่ผ่าน")
-                  if (re12[index] === "ผ่าน")
-                    re12[index] = <h4 className="bi bi-check-circle greent"></h4>
-                  else re12[index] = <h4 className="bi bi-x-circle redt"></h4>;
-
-                  //q34
-                  if (qq34[index] > 100)
-                    qq34[index] = ((qq34[index] ** -1) * 10000).toFixed(2)
-                  if (isNaN(qq34[index]))
-                    qq34[index] = "-"
-                  if (Number(qq34[index]) > Number(q))
-                    re34.push("ผ่าน")
-                  else re34.push("ไม่ผ่าน")
-                  if (re34[index] === "ผ่าน")
-                    re34[index] = <h4 className="bi bi-check-circle greent"></h4>
-                  else re34[index] = <h4 className="bi bi-x-circle redt"></h4>;
-
-                  //q13
-                  if (qq13[index] > 100)
-                    qq13[index] = ((qq13[index] ** -1) * 10000).toFixed(2)
-                  if (isNaN(qq13[index]))
-                    qq13[index] = "-"
-                  if (Number(qq13[index]) > Number(q))
-                    re13.push("ผ่าน")
-                  else re13.push("ไม่ผ่าน")
-                  if (re13[index] === "ผ่าน")
-                    re13[index] = <h4 className="bi bi-check-circle greent"></h4>
-                  else re13[index] = <h4 className="bi bi-x-circle redt"></h4>;
-
-                  //q14
-                  if (qq14[index] > 100)
-                    qq14[index] = ((qq14[index] ** -1) * 10000).toFixed(2)
-                  if (isNaN(qq14[index]))
-                    qq14[index] = "-"
-                  if (Number(qq14[index]) > Number(q))
-                    re14.push("ผ่าน")
-                  else re14.push("ไม่ผ่าน")
-                  if (re14[index] === "ผ่าน")
-                    re14[index] = <h4 className="bi bi-check-circle greent"></h4>
-                  else re14[index] = <h4 className="bi bi-x-circle redt"></h4>;
-
-                  //console.log("qqall" ,qqall)
-                  return (
-                    <tr key={index}>
-                      <td>{an[index]}</td>
-                      <td className="textc">{qq1[index]}</td>
-                      <td className="textc">{uu1}</td>
-                      <td className="textc">{qq2[index]}</td>
-                      <td className="textc">{uu2}</td>
-                      {/* <td className="textc">{qq12[index]}</td>
-                    <td className="textc">{re12[index]}</td> */}
-                      <td className="textc">{qq3[index]}</td>
-                      <td className="textc">{uu3}</td>
-                      <td className="textc">{qq4[index]}</td>
-                      <td className="textc">{uu4}</td>
-                      {/* <td className="textc">{qq34[index]}</td>
-                    <td className="textc">{re34[index]}</td> */}
-                      {/* <td className="textc">{qq4[index]}</td>
-                    <td className="textc">{uu4}</td> */}
-                      {/* <td className="textc">{qq14[index]}</td>
-                    <td className="textc">{re14[index]}</td> */}
-                      {/* <td className="textc"><button className="btn btn-success" onClick={e => handlesum(index)}>เรียกดู</button></td> */}
-                    </tr>
-                  );
-                })}
-
-              </tbody>
-            </table>
-          </div>
+          <div className="textc"><h3>สรุปผลของหน่วยงาน</h3></div>
           <br /><br />
           <div className="row">
-            <div className="col-3 textc">
+            <div className="col-4 textc">
             </div>
-            <div className="col-1 col-md-5">
-              <div style={{ width: 650 }}>
-                <Solve name={qq14[11]} do={650} name2={q} class={"responcal"} />
+            <div className="col-1 col-md-4">
+              <div style={{ width: 470 }}>
+                <Solve name={ois} do={470} name2={q} class={"responcal"} />
               </div>
             </div>
 
@@ -2003,7 +1792,7 @@ const CalForm = () => {
 
         </div>
 
-      
+              }
       else {
         a = <div className="textc"><h1>ไม่พบการส่งข้อมูลเข้ามา</h1></div>
       }

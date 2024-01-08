@@ -345,10 +345,10 @@ const AddForm = () => {
     const hided = () => {
         if (document.getElementById("no").hidden === true) {
             document.getElementById("no").hidden = false
-            document.getElementById("99").required = false
+            document.getElementById("99").required = true
         } else {
             document.getElementById("no").hidden = true
-            document.getElementById("99").required = true
+            document.getElementById("99").required = false
         }
     }
 
