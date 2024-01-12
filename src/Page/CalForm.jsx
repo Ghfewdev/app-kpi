@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Fetch from "../Component/Fetch";
 import Navbar from "../Component/Navbar";
 import parse from "html-react-parser";
@@ -13,6 +13,8 @@ const CalForm = () => {
 
   Authen();
 
+  const [eve, setEve] = useState([]);
+  const [tableData1, setTableData1] = useState([]);
   const [file, setFile] = useState();
   const [printf, setPrintf] = useState([]);
   const [fetchs, setFetchs] = useState([]);
@@ -29,6 +31,16 @@ const CalForm = () => {
   var hos;
   var deid = 0;
   var ag = 12;
+
+  var formmm
+  if (tableData1 != undefined) {
+    formmm = tableData1.map(form => {
+      return (
+        <option key={form.fm_id}>ตัวชี้วัด ลำดับที่: {form.fm_id}</option>
+      )
+    });
+  }
+
   var ress = <div>
     <div id='tm1'><label>ไตรมาสที่ ๑: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
   </div>
@@ -67,6 +79,8 @@ const CalForm = () => {
 
   const handleonChange = (val) => {
 
+    
+
     if (localStorage.getItem("token").split("$")[1] === "9" || localStorage.getItem("token").split("$")[1] === "1") {
       fetch(import.meta.env.VITE_APP_API + `/all/${val}`)
         .then(response => {
@@ -75,6 +89,16 @@ const CalForm = () => {
         .then(data => {
           setSelect(data)
         })
+
+      fetch(import.meta.env.VITE_APP_API + `/evde/f/${val}/a`)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setEve(data);
+        });
+
+
     } else {
       fetch(import.meta.env.VITE_APP_API + `/all/hp/${localStorage.getItem("id")}/${val}`)
         .then(response => {
@@ -83,6 +107,15 @@ const CalForm = () => {
         .then(data => {
           setSelect(data)
         })
+
+      fetch(import.meta.env.VITE_APP_API + `/evde/${val}/${localStorage.getItem("id")}`)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setEve(data);
+        });
+
     }
 
     if (n != []) {
@@ -466,17 +499,169 @@ const CalForm = () => {
     else document.getElementById(d).disabled = true
   }
 
-
-  const setid = (id, dep, para, qur) => {
-    deid = id;
-    var pp = para.split(", ")
-    fetch(import.meta.env.VITE_APP_API + `/event/${deid}`)
+  const detev = (val, dep, qur) => {
+    fetch(import.meta.env.VITE_APP_API + `/evde/${val}`)
       .then(response => {
         return response.json();
       })
       .then(data => {
         setPrintf(data);
       });
+
+    if (dep === 10) {
+      ag = "โรงพยาบาลกลาง";
+    }
+    else if (dep === 11) {
+      ag = "โรงพยาบาลตากสิน"
+    }
+    else if (dep === 12) {
+      ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
+    }
+    else if (dep === 13) {
+      ag = "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ"
+    }
+    else if (dep === 14) {
+      ag = "โรงพยาบาลเวชการุณย์รัศมิ์"
+    }
+    else if (dep === 15) {
+      ag = "โรงพยาบาลลาดกระบังกรุงเทพมหานคร"
+    }
+    else if (dep === 16) {
+      ag = "โรงพยาบาลราชพิพัฒน์"
+    }
+    else if (dep === 17) {
+      ag = "โรงพยาบาลสิรินธร"
+    }
+    else if (dep === 18) {
+      ag = "โรงพยาบาลผู้สูงอายุบางขุนเทียน"
+    }
+    else if (dep === 19) {
+      ag = "โรงพยาบาลคลองสามวา"
+    }
+    else if (dep === 20) {
+      ag = "โรงพยาบาลบางนากรุงเทพมหานคร"
+    }
+    else if (dep === 21) {
+      ag = "สก."
+    }
+    else if (dep === 22) {
+      ag = "ศบฉ."
+    }
+
+    sessionStorage.setItem("ag", ag)
+    sessionStorage.setItem("qur", qur)
+    sessionStorage.setItem("evid", val)
+  }
+
+  const setp = (dep) => {
+
+    var ha;
+    var hb;
+
+    if (dep === "รพ.กลาง") {
+      hos = "h1";
+      ag = "โรงพยาบาลกลาง";
+      ha = 0
+      hb = 1
+    }
+    else if (dep === "รพ.ตากสิน") {
+      hos = "h2";
+      ag = "โรงพยาบาลตากสิน"
+      ha = 2
+      hb = 3
+    }
+    else if (dep === "รพ.เจริญกรุงประชารัก") {
+      hos = "h3"
+      ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
+      ha = 4
+      hb = 5
+    }
+    else if (dep === "รพ.หลวงพ่อทวีศักดิ์") {
+      hos = "h4"
+      ag = "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ"
+      ha = 6
+      hb = 7
+    }
+
+    else if (dep === "รพ.เวชการุณย์รัศมิ์") {
+      hos = "h5"
+      ag = "โรงพยาบาลเวชการุณย์รัศมิ์"
+      ha = 8
+      hb = 9
+    }
+
+    else if (dep === "รพ.ลาดกระบัง") {
+      hos = "h6"
+      ag = "โรงพยาบาลลาดกระบังกรุงเทพมหานคร"
+      ha = 10
+      hb = 11
+    }
+
+    else if (dep === "รพ.ราชพิพัฒน์") {
+      hos = "h7"
+      ag = "โรงพยาบาลราชพิพัฒน์"
+      ha = 12
+      hb = 13
+    }
+
+    else if (dep === "รพ.สิรินธร") {
+      hos = "h8"
+      ag = "โรงพยาบาลสิรินธร"
+      ha = 14
+      hb = 15
+    }
+
+    else if (dep === "รพ.ผู้สูงอายุบางขุนเทียน") {
+      hos = "h9"
+      ag = "โรงพยาบาลผู้สูงอายุบางขุนเทียน"
+      ha = 16
+      hb = 17
+    }
+
+    else if (dep === "รพ.คลองสามวา") {
+      hos = "h10"
+      ag = "โรงพยาบาลคลองสามวา"
+      ha = 18
+      hb = 19
+    }
+
+    else if (dep === "รพ.บางนา") {
+      hos = "h11"
+      ag = "โรงพยาบาลบางนากรุงเทพมหานคร"
+      ha = 20
+      hb = 21
+    }
+
+    else if (dep === "สก.") {
+      hos = "d1"
+      ag = "สก."
+      ha = 22
+      hb = 23
+    }
+
+    else if (dep === "ศบฉ.") {
+      hos = "d2"
+      ag = "ศบฉ."
+      ha = 24
+      hb = 25
+    }
+
+    else if (dep === "สพบ.") {
+      hos = "0"
+      ag = "0"
+      ha = 0
+      hb = 0
+    }
+
+    sessionStorage.setItem("ag", ag)
+    sessionStorage.setItem("hos", hos)
+    sessionStorage.setItem("ha", ha)
+    sessionStorage.setItem("hb", hb)
+  }
+
+  const setid = (id, dep, para, qur) => {
+    deid = id;
+    var pp = para.split(", ")
 
     var ha;
     var hb;
@@ -698,6 +883,7 @@ const CalForm = () => {
     const data = new FormData(event.currentTarget);
     const JsonData5 = {
       fmsid: data.get("fmsid"),
+      evqur: 1,
       evname: data.get("evname"),
       evres: data.get("evres"),
       evstatus: data.get("evstatus"),
@@ -709,7 +895,7 @@ const CalForm = () => {
       problem: data.get("problem"),
       str: data.get("et"),
       evimg: name,
-      deid: sessionStorage.getItem("deid")
+      fmid: n
     };
 
     const JsonData6 = {
@@ -823,7 +1009,11 @@ const CalForm = () => {
     var a;
     var qwe = 0;
     try {
+      if (localStorage.getItem("token").split("$")[1] === "9")
       qwe = pa()[5]
+    else {
+      qwe = pa()[2]
+    }
     } catch {
     }
     //console.log(props)
@@ -862,9 +1052,9 @@ const CalForm = () => {
                   <th className="textc" scope="col">วันที่ส่ง</th>
                   <th className="textc" scope="col">วันที่อัปเดต</th>
                   <th className="textc" scope="col">สรุปผล</th>
-                  <th className="textc" scope="col">ข้อมูลโครงการ</th>
+                  {/* <th className="textc" scope="col">ข้อมูลโครงการ</th> */}
                   <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
-                  <th className="textc" scope="col">แก้ไขโครงการ</th>
+                  {/* <th className="textc" scope="col">แก้ไขโครงการ</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -885,9 +1075,9 @@ const CalForm = () => {
                       <td>{item.fd_date}</td>
                       <td>{item.fd_update}</td>
                       <td className="textc">{u}</td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
+                      {/* <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td> */}
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      {/* <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td> */}
                     </tr>
                   );
                 })}
@@ -896,6 +1086,87 @@ const CalForm = () => {
             <br /><br />
 
           </div>
+
+          <div className='container mt-3'>
+            <div className="textc"><h3>ข้อมูลโครงการ</h3></div>
+            <br /><br />
+            <table className='table table-bordered border-primary'>
+              <thead className="table-dark">
+                <tr>
+                  <th className="textc" scope="col" width="20">ลำดับ</th>
+                  <th className="textc" scope="col" width="200" >ส่วนราชการ</th>
+                  <th className="textc" scope='col' width="20">ไตรมาส</th>
+                  <th className="textc" scope='col'>ชื่อโครงการ</th>
+                  <th className="textc" scope="col" width="100">วันที่ส่ง</th>
+                  <th className="textc" scope="col" width="100">วันที่อัปเดต</th>
+                  <th className="textc" scope='col' width="170">รายละเอียด</th>
+                  <th className="textc" scope='col' width="120">แก้ไข</th>
+                </tr>
+              </thead>
+              <tbody>
+                {eve.map((e, j) => {
+                  var rr = e.ev_id
+                  var qq = e.ev_qur
+                  var uu = e.us_id
+                  var ag
+
+                  if (uu === 10) {
+                    ag = "โรงพยาบาลกลาง";
+                  }
+                  else if (uu === 11) {
+                    ag = "โรงพยาบาลตากสิน"
+                  }
+                  else if (uu === 12) {
+                    ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
+                  }
+                  else if (uu === 13) {
+                    ag = "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ"
+                  }
+                  else if (uu === 14) {
+                    ag = "โรงพยาบาลเวชการุณย์รัศมิ์"
+                  }
+                  else if (uu === 15) {
+                    ag = "โรงพยาบาลลาดกระบังกรุงเทพมหานคร"
+                  }
+                  else if (uu === 16) {
+                    ag = "โรงพยาบาลราชพิพัฒน์"
+                  }
+                  else if (uu === 17) {
+                    ag = "โรงพยาบาลสิรินธร"
+                  }
+                  else if (uu === 18) {
+                    ag = "โรงพยาบาลผู้สูงอายุบางขุนเทียน"
+                  }
+                  else if (uu === 19) {
+                    ag = "โรงพยาบาลคลองสามวา"
+                  }
+                  else if (uu === 20) {
+                    ag = "โรงพยาบาลบางนากรุงเทพมหานคร"
+                  }
+                  else if (uu === 21) {
+                    ag = "สก."
+                  }
+                  else if (uu === 22) {
+                    ag = "ศบฉ."
+                  }
+
+                  return (
+                    <tr key={j}>
+                      <td>{e.fms_id}</td>
+                      <td>{ag}</td>
+                      <td>{e.ev_qur}</td>
+                      <td>{e.ev_name}</td>
+                      <td>{e.ed_date.split("T")[0]}</td>
+                      <td>{e.ed_update.split("T")[0]}</td>
+                      <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
+                      <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+          <br /><br />
           <div className="textc"><h3>สรุปผล</h3></div>
           <div className='container mt-3'>
             <br />
@@ -962,8 +1233,12 @@ const CalForm = () => {
                     qq4[index] = "-"
 
                   //q12
-                  if (qq12[index] > 100)
-                    qq12[index] = ((qq12[index] ** -1) * 10000).toFixed(2)
+                  if (qq12[index] > 100) {
+                    if (qq2[index] === "-")
+                      qq12[index] = "-"
+                    else
+                      qq12[index] = ((qq12[index] ** -1) * 10000).toFixed(2)
+                  }
                   if (isNaN(qq12[index]))
                     qq12[index] = "-"
                   if (Number(qq12[index]) > Number(q))
@@ -986,8 +1261,12 @@ const CalForm = () => {
                   else re34[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
                   //q13
-                  if (qq13[index] > 100)
-                    qq13[index] = ((qq13[index] ** -1) * 10000).toFixed(2)
+                  if (qq13[index] > 100) {
+                    if (qq3[index] === "-")
+                      qq13[index] = "-"
+                    else
+                      qq13[index] = ((qq13[index] ** -1) * 10000).toFixed(2)
+                  }
                   if (isNaN(qq13[index]))
                     qq13[index] = "-"
                   if (Number(qq13[index]) > Number(q))
@@ -998,8 +1277,13 @@ const CalForm = () => {
                   else re13[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
                   //q14
-                  if (qq14[index] > 100)
-                    qq14[index] = ((qq14[index] ** -1) * 10000).toFixed(2)
+                  if (qq14[index] > 100) {
+                    if (qq4[index] === "-")
+                      qq14[index] = "-"
+                    else
+                      qq14[index] = ((qq14[index] ** -1) * 10000).toFixed(2)
+                  }
+
                   if (isNaN(qq14[index]))
                     qq14[index] = "-"
                   if (Number(qq14[index]) > Number(q))
@@ -1008,6 +1292,12 @@ const CalForm = () => {
                   if (re14[index] === "ผ่าน")
                     re14[index] = <h4 className="bi bi-check-circle greent"></h4>
                   else re14[index] = <h4 className="bi bi-x-circle redt"></h4>;
+
+                  if (qq2[index] === "-")
+                    qq12[index] = "-"
+                  if (qq3[index] === "-")
+                    qq13[index] = "-"
+
 
                   //console.log("qqall" ,qqall)
                   return (
@@ -1084,9 +1374,7 @@ const CalForm = () => {
                   <th className="textc" scope="col">วันที่ส่ง</th>
                   <th className="textc" scope="col">วันที่อัปเดต</th>
                   <th className="textc" scope="col">สรุปผล</th>
-                  <th className="textc" scope="col">ข้อมูลโครงการ</th>
                   <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
-                  <th className="textc" scope="col">แก้ไขโครงการ</th>
                 </tr>
               </thead>
               <tbody>
@@ -1107,9 +1395,7 @@ const CalForm = () => {
                       <td>{item.fd_date}</td>
                       <td>{item.fd_update}</td>
                       <td className="textc">{u}</td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
                     </tr>
                   );
                 })}
@@ -1118,14 +1404,95 @@ const CalForm = () => {
             <br /><br />
 
           </div>
+
+          <div className='container mt-3'>
+            <div className="textc"><h3>ข้อมูลโครงการ</h3></div>
+            <br /><br />
+            <table className='table table-bordered border-primary'>
+              <thead className="table-dark">
+                <tr>
+                  <th className="textc" scope="col" width="20">ลำดับ</th>
+                  <th className="textc" scope="col" width="200" >ส่วนราชการ</th>
+                  <th className="textc" scope='col' width="20">ไตรมาส</th>
+                  <th className="textc" scope='col'>ชื่อโครงการ</th>
+                  <th className="textc" scope="col" width="100">วันที่ส่ง</th>
+                  <th className="textc" scope="col" width="100">วันที่อัปเดต</th>
+                  <th className="textc" scope='col' width="170">รายละเอียด</th>
+                  <th className="textc" scope='col' width="120">แก้ไข</th>
+                </tr>
+              </thead>
+              <tbody>
+                {eve.map((e, j) => {
+                  var rr = e.ev_id
+                  var qq = e.ev_qur
+                  var uu = e.us_id
+                  var ag
+
+                  if (uu === 10) {
+                    ag = "โรงพยาบาลกลาง";
+                  }
+                  else if (uu === 11) {
+                    ag = "โรงพยาบาลตากสิน"
+                  }
+                  else if (uu === 12) {
+                    ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
+                  }
+                  else if (uu === 13) {
+                    ag = "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ"
+                  }
+                  else if (uu === 14) {
+                    ag = "โรงพยาบาลเวชการุณย์รัศมิ์"
+                  }
+                  else if (uu === 15) {
+                    ag = "โรงพยาบาลลาดกระบังกรุงเทพมหานคร"
+                  }
+                  else if (uu === 16) {
+                    ag = "โรงพยาบาลราชพิพัฒน์"
+                  }
+                  else if (uu === 17) {
+                    ag = "โรงพยาบาลสิรินธร"
+                  }
+                  else if (uu === 18) {
+                    ag = "โรงพยาบาลผู้สูงอายุบางขุนเทียน"
+                  }
+                  else if (uu === 19) {
+                    ag = "โรงพยาบาลคลองสามวา"
+                  }
+                  else if (uu === 20) {
+                    ag = "โรงพยาบาลบางนากรุงเทพมหานคร"
+                  }
+                  else if (uu === 21) {
+                    ag = "สก."
+                  }
+                  else if (uu === 22) {
+                    ag = "ศบฉ."
+                  }
+
+                  return (
+                    <tr key={j}>
+                      <td>{e.fms_id}</td>
+                      <td>{ag}</td>
+                      <td>{e.ev_qur}</td>
+                      <td>{e.ev_name}</td>
+                      <td>{e.ed_date.split("T")[0]}</td>
+                      <td>{e.ed_update.split("T")[0]}</td>
+                      <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
+                      <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+                <br /><br />
           <div className="textc"><h3>สรุปผล</h3></div>
           <br /><br />
           <div className="textc">
-                <p className="fl">{qwe}</p>
+            <p className="fl">{qwe}</p>
           </div>
 
         </div>
-        else if (met === 3)
+      else if (met === 3)
         a = <div>
 
           <div className='container mt-3'>
@@ -1135,8 +1502,8 @@ const CalForm = () => {
             <br /><br />
             <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
             <br /><br />
-            <div className="textc"><h3>โครงการ</h3></div>
-          <br /><br />
+            <div className="textc"><h3>ข้อมูลการส่ง</h3></div>
+            <br /><br />
             <table className='table table-bordered border-primary'>
 
               <thead className="table-dark">
@@ -1146,9 +1513,9 @@ const CalForm = () => {
                   {/* <th className="textc" scope="col">{w}</th> */}
                   <th className="textc" scope="col">วันที่ส่ง</th>
                   <th className="textc" scope="col">วันที่อัปเดต</th>
-                  <th className="textc" scope="col">สรุปผล</th>
-                  <th className="textc" scope="col">ข้อมูลโครงการ</th>
-                  <th className="textc" scope="col">แก้ไขโครงการ</th>
+                  <th className="textc" scope="col">ส่ง</th>
+                  {/* <th className="textc" scope="col">ข้อมูลโครงการ</th>
+                  <th className="textc" scope="col">แก้ไขโครงการ</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -1167,8 +1534,8 @@ const CalForm = () => {
                       <td>{item.fd_date}</td>
                       <td>{item.fd_update}</td>
                       <td className="textc">{u}</td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      {/* <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
+                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td> */}
                     </tr>
                   );
                 })}
@@ -1176,14 +1543,94 @@ const CalForm = () => {
             </table>
             <br /><br />
 
-          </div>
-          
 
+          </div>
+
+          <div className='container mt-3'>
+            <div className="textc"><h3>ข้อมูลโครงการ</h3></div>
+            <br /><br />
+            <table className='table table-bordered border-primary'>
+              <thead className="table-dark">
+                <tr>
+                  <th className="textc" scope="col" width="20">ลำดับ</th>
+                  <th className="textc" scope="col" width="200" >ส่วนราชการ</th>
+                  <th className="textc" scope='col' width="20">ไตรมาส</th>
+                  <th className="textc" scope='col'>ชื่อโครงการ</th>
+                  <th className="textc" scope="col" width="100">วันที่ส่ง</th>
+                  <th className="textc" scope="col" width="100">วันที่อัปเดต</th>
+                  <th className="textc" scope='col' width="170">รายละเอียด</th>
+                  <th className="textc" scope='col' width="120">แก้ไข</th>
+                </tr>
+              </thead>
+              <tbody>
+                {eve.map((e, j) => {
+                  var rr = e.ev_id
+                  var qq = e.ev_qur
+                  var uu = e.us_id
+                  var ag
+
+                  if (uu === 10) {
+                    ag = "โรงพยาบาลกลาง";
+                  }
+                  else if (uu === 11) {
+                    ag = "โรงพยาบาลตากสิน"
+                  }
+                  else if (uu === 12) {
+                    ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
+                  }
+                  else if (uu === 13) {
+                    ag = "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ"
+                  }
+                  else if (uu === 14) {
+                    ag = "โรงพยาบาลเวชการุณย์รัศมิ์"
+                  }
+                  else if (uu === 15) {
+                    ag = "โรงพยาบาลลาดกระบังกรุงเทพมหานคร"
+                  }
+                  else if (uu === 16) {
+                    ag = "โรงพยาบาลราชพิพัฒน์"
+                  }
+                  else if (uu === 17) {
+                    ag = "โรงพยาบาลสิรินธร"
+                  }
+                  else if (uu === 18) {
+                    ag = "โรงพยาบาลผู้สูงอายุบางขุนเทียน"
+                  }
+                  else if (uu === 19) {
+                    ag = "โรงพยาบาลคลองสามวา"
+                  }
+                  else if (uu === 20) {
+                    ag = "โรงพยาบาลบางนากรุงเทพมหานคร"
+                  }
+                  else if (uu === 21) {
+                    ag = "สก."
+                  }
+                  else if (uu === 22) {
+                    ag = "ศบฉ."
+                  }
+
+                  return (
+                    <tr key={j}>
+                      <td>{e.fms_id}</td>
+                      <td>{ag}</td>
+                      <td>{e.ev_qur}</td>
+                      <td>{e.ev_name}</td>
+                      <td>{e.ed_date.split("T")[0]}</td>
+                      <td>{e.ed_update.split("T")[0]}</td>
+                      <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
+                      <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+          <br /><br /><br /><br /><br /><br />
         </div>
       else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 0) {
         var ois = qq14[hosi]
         if (qq14[hosi] > 100)
-        ois = ((qq14[hosi]**-1)*10000).toFixed(2)
+          ois = ((qq14[hosi] ** -1) * 10000).toFixed(2)
 
         a = <div>
 
@@ -1216,9 +1663,7 @@ const CalForm = () => {
                   <th className="textc" scope="col">วันที่ส่ง</th>
                   <th className="textc" scope="col">วันที่อัปเดต</th>
                   <th className="textc" scope="col">สรุปผล</th>
-                  <th className="textc" scope="col">ข้อมูลโครงการ</th>
                   <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
-                  <th className="textc" scope="col">แก้ไขโครงการ</th>
                 </tr>
               </thead>
               <tbody>
@@ -1239,17 +1684,94 @@ const CalForm = () => {
                       <td>{item.fd_date}</td>
                       <td>{item.fd_update}</td>
                       <td className="textc">{u}</td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
             <br /><br />
+            <div className='container mt-3'>
+              <div className="textc"><h3>ข้อมูลโครงการ</h3></div>
+              <br /><br />
+              <table className='table table-bordered border-primary'>
+                <thead className="table-dark">
+                  <tr>
+                    <th className="textc" scope="col" width="20">ลำดับ</th>
+                    <th className="textc" scope="col" width="200" >ส่วนราชการ</th>
+                    <th className="textc" scope='col' width="20">ไตรมาส</th>
+                    <th className="textc" scope='col'>ชื่อโครงการ</th>
+                    <th className="textc" scope="col" width="100">วันที่ส่ง</th>
+                    <th className="textc" scope="col" width="100">วันที่อัปเดต</th>
+                    <th className="textc" scope='col' width="170">รายละเอียด</th>
+                    <th className="textc" scope='col' width="120">แก้ไข</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {eve.map((e, j) => {
+                    var rr = e.ev_id
+                    var qq = e.ev_qur
+                    var uu = e.us_id
+                    var ag
 
+                    if (uu === 10) {
+                      ag = "โรงพยาบาลกลาง";
+                    }
+                    else if (uu === 11) {
+                      ag = "โรงพยาบาลตากสิน"
+                    }
+                    else if (uu === 12) {
+                      ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
+                    }
+                    else if (uu === 13) {
+                      ag = "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ"
+                    }
+                    else if (uu === 14) {
+                      ag = "โรงพยาบาลเวชการุณย์รัศมิ์"
+                    }
+                    else if (uu === 15) {
+                      ag = "โรงพยาบาลลาดกระบังกรุงเทพมหานคร"
+                    }
+                    else if (uu === 16) {
+                      ag = "โรงพยาบาลราชพิพัฒน์"
+                    }
+                    else if (uu === 17) {
+                      ag = "โรงพยาบาลสิรินธร"
+                    }
+                    else if (uu === 18) {
+                      ag = "โรงพยาบาลผู้สูงอายุบางขุนเทียน"
+                    }
+                    else if (uu === 19) {
+                      ag = "โรงพยาบาลคลองสามวา"
+                    }
+                    else if (uu === 20) {
+                      ag = "โรงพยาบาลบางนากรุงเทพมหานคร"
+                    }
+                    else if (uu === 21) {
+                      ag = "สก."
+                    }
+                    else if (uu === 22) {
+                      ag = "ศบฉ."
+                    }
+
+                    return (
+                      <tr key={j}>
+                        <td>{e.fms_id}</td>
+                        <td>{ag}</td>
+                        <td>{e.ev_qur}</td>
+                        <td>{e.ev_name}</td>
+                        <td>{e.ed_date.split("T")[0]}</td>
+                        <td>{e.ed_update.split("T")[0]}</td>
+                        <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
+                        <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
+          <br /><br />
           <div className="textc"><h3>สรุปผล</h3></div>
           <div className='container mt-3'>
             <br />
@@ -1267,7 +1789,7 @@ const CalForm = () => {
           </div>
 
         </div>
-        }
+      }
       else if (localStorage.getItem("token").split("$")[1] === "9" && fc === 1)
         a = <div>
 
@@ -1711,7 +2233,7 @@ const CalForm = () => {
       else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 1) {
         var ois = qq14[hosi]
         if (qq14[hosi] > 100)
-        ois = ((qq14[hosi]**-1)*10000).toFixed(2)
+          ois = ((qq14[hosi] ** -1) * 10000).toFixed(2)
         a = <div>
 
           <div className='container mt-3'>
@@ -1792,7 +2314,7 @@ const CalForm = () => {
 
         </div>
 
-              }
+      }
       else {
         a = <div className="textc"><h1>ไม่พบการส่งข้อมูลเข้ามา</h1></div>
       }
@@ -1813,7 +2335,7 @@ const CalForm = () => {
       if (dp != undefined) {
         ap = <>{sessionStorage.getItem("ag")}</>
         var img = dp.ev_img
-        if (img === "{}")
+        if (img === "")
           img = "noimg.PNG"
         var cp = dp.ev_name
         //var c1 = c.substring(71, 0)
@@ -2202,7 +2724,7 @@ const CalForm = () => {
         q = pr1
       else
         q = pr2
-      }
+    }
     else if (t[1] === 1) {
       if (p * 100 <= 100)
         q = p * 100
@@ -2269,7 +2791,7 @@ const CalForm = () => {
     var po2 = 0;
     var parar = sessionStorage.getItem("pp")
     if (parar.includes(","))
-    parar = sessionStorage.getItem("pp").split(",")
+      parar = sessionStorage.getItem("pp").split(",")
     var sare;
     var are;
     var oo;
@@ -2382,6 +2904,22 @@ const CalForm = () => {
 
   }
 
+  useEffect(() => {
+    if (localStorage.getItem("id") === "23") {
+      fetch(import.meta.env.VITE_APP_API + "/checked/s/1/c")
+        .then((data) => data.json())
+        .then((data) => setTableData1(data));
+    }
+    else {
+      fetch(import.meta.env.VITE_APP_API + "/checked/1/" + localStorage.getItem("id"))
+        .then((data) => data.json())
+        .then((data) => setTableData1(data));
+    }
+
+    setp(localStorage.getItem("department"));
+
+  }, []);
+
   return (
     <div>
       <div className="d-print-none">
@@ -2392,9 +2930,7 @@ const CalForm = () => {
           <br />
           <select value={param} onClick={e => handleonChange(n)} onChange={e => setParam(e.target.value)} >
             <option>เลือกดูตัวชี้วัด</option>
-            {formres.map(form => (
-              <option key={form.fm_id}>ตัวชี้วัด ลำดับที่: {form.fm_id}</option>
-            ))}
+            {formmm}
           </select>
           <br />
           <br />

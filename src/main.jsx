@@ -17,6 +17,8 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import UserEdit from './Page/UserEdit.jsx'
+import AddEvevt from './Page/AddEvevt.jsx'
+import PostEv from './Component/PostEv.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -33,6 +35,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='calform' element={<CalForm />} />
       <Route path='fillup' element={<FillUp />} />
       <Route path='useradd' element={<UserAdd />} />
+      <Route path='addevent' element={<AddEvevt/>} />
+      <Route path='postev' element={<PostEv />} />
     </Routes>
   </BrowserRouter>
 )

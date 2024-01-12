@@ -6,7 +6,7 @@ const Post = () => {
   Senddetail();
 
   setTimeout(() => {
-    location = "/"
+    location = "addevent"
   }, 3000)
 
   return (

@@ -11,7 +11,7 @@ const Checking = () => {
   const [tableData4, setTableData4] = useState([]);
   const [choose, setChoose] = useState("");
   const fet = Fetch().map(f => f.fm_id);
-  const fres = Fetch().map(f => [f.fm_id, f.fm_res]);
+  const fres = Fetch().map(f => f.fm_res);
   const fn = fet.length;
 
 
@@ -93,14 +93,14 @@ const Checking = () => {
         {fet.map((f, j) => {
           var check = <h4 className="bi bi-x-circle"></h4>
           var y = "";
-          yg = String(fres[j])
+          yg = String((fres[j]))
           for (var i = 10; i <= 22; i++) {
             if (!yg.includes(String(i)))
-            y += `<td><h4 className="bi bi-dash-circle redt"></h4></td>`
-            else if (sb1.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else if (String(i) !== f && sb1.includes(String([i, f])))
             y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
             else if (i === f && !sb1.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-dash-circle redt"></h4></td>`
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
             y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
           }
@@ -145,11 +145,11 @@ const Checking = () => {
           yg = String(fres[j])
           for (var i = 10; i <= 22; i++) {
             if (!yg.includes(String(i)))
-            y += `<td><h4 className="bi bi-dash-circle redt"></h4></td>`
-            else if (sb2.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else if (String(i) !== f && sb2.includes(String([i, f])))
             y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
             else if (i === f && !sb2.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-dash-circle redt"></h4></td>`
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
             y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
           }
@@ -194,11 +194,11 @@ const Checking = () => {
           yg = String(fres[j])
           for (var i = 10; i <= 22; i++) {
             if (!yg.includes(String(i)))
-            y += `<td><h4 className="bi bi-dash-circle redt"></h4></td>`
-            else if (sb3.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else if (String(i) !== f && sb3.includes(String([i, f])))
             y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
             else if (i === f && !sb3.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-dash-circle redt"></h4></td>`
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
             y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
           }
@@ -243,11 +243,11 @@ const Checking = () => {
           yg = String(fres[j])
           for (var i = 10; i <= 22; i++) {
             if (!yg.includes(String(i)))
-            y += `<td><h4 className="bi bi-dash-circle redt"></h4></td>`
-            else if (sb4.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else if (String(i) !== f && sb4.includes(String([i, f])))
             y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
             else if (i === f && !sb4.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-dash-circle redt"></h4></td>`
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
             y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
           }
@@ -344,11 +344,11 @@ const Checking = () => {
           yg = String(fres[j])
           for (var i = 10; i <= 22; i++) {
             if (!yg.includes(String(i)))
-            y += `<td><h4 className="bi bi-dash-circle redt"></h4></td>`
-            else if (sb1.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else if (String(i) !== f && sb1.includes(String([i, f])))
             y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
             else if (i === f && !sb1.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-dash-circle redt"></h4></td>`
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
             y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
           }
@@ -392,11 +392,11 @@ const Checking = () => {
           yg = String(fres[j])
           for (var i = 10; i <= 22; i++) {
             if (!yg.includes(String(i)))
-            y += `<td><h4 className="bi bi-dash-circle redt"></h4></td>`
-            else if (sb2.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else if (String(i) !== f && sb2.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
             else if (i === f && !sb2.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-dash-circle redt"></h4></td>`
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
             y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
           }
@@ -440,11 +440,11 @@ const Checking = () => {
           yg = String(fres[j])
           for (var i = 10; i <= 22; i++) {
             if (!yg.includes(String(i)))
-            y += `<td><h4 className="bi bi-dash-circle redt"></h4></td>`
-            else if (sb3.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else if (String(i) !== f && sb3.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
             else if (i === f && !sb3.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-dash-circle redt"></h4></td>`
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
             y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
           }
@@ -488,11 +488,11 @@ const Checking = () => {
           yg = String(fres[j])
           for (var i = 10; i <= 22; i++) {
             if (!yg.includes(String(i)))
-            y += `<td><h4 className="bi bi-dash-circle redt"></h4></td>`
-            else if (sb4.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-check-circle greent"></h4></td>`
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+            else if (String(i) !== f && sb4.includes(String([i, f])))
+            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
             else if (i === f && !sb4.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-dash-circle redt"></h4></td>`
+            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
             y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
           }

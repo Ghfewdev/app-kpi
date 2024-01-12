@@ -13,9 +13,9 @@ const sSolve = (val, val2) => {
     ];
      else {
        return [
-         10,
-         val+1,
-         val+2
+         100,
+         val2,
+         val2-0.5
        ]
      }
   };

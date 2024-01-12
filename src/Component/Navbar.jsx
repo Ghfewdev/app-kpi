@@ -31,6 +31,7 @@ const Navbar = () => {
         <li style={{ float: "right" }}><a className="active">ส่วนราชการ: {a}</a></li>
         <li className='navli'><a className='navli a' href="form">ตัวชี้วัดทั้งหมด</a></li>
         <li className='navli'><a className='navli a' href="fillup">รายงานตัวชี้วัด</a></li>
+        <li className='navli'><a className='navli a' href="addevent">รายงานโครงการ</a></li>
         <li className='navli'><a className='navli a' href="calform">สรุปผลตัวชี้วัด</a></li>
       </>
     } else if (c === "1") {

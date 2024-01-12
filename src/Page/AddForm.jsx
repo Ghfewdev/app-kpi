@@ -80,15 +80,15 @@ const AddForm = () => {
     var fixx = () => {
         if (document.getElementById(999).checked === true) {
             document.getElementById("combo").hidden = false;
-            document.getElementById("com").checked = true;
-            com();
-            document.getElementById("com").disabled = true;
+            // document.getElementById("com").checked = true;
+            // com();
+            // document.getElementById("com").disabled = true;
 
         } else {
             document.getElementById("combo").hidden = true;
-            document.getElementById("com").checked = false;
-            com();
-            document.getElementById("com").disabled = false;
+            // document.getElementById("com").checked = false;
+            // com();
+            // document.getElementById("com").disabled = false;
         }
 
     }

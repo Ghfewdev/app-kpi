@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Authen from '../Component/Authen';
 import Footer from '../Component/Footer';
-import Details from '../Component/Details';
-import axios from "axios";
-
 
 const FillUp = () => {
 
   Authen();
 
-  const [file, setFile] = useState();
-  const [events, setEvents] = useState([]);
   const [quar, setQuar] = useState([]);
   const [fetchs, setFetchs] = useState([]);
   const [forms, setForms] = useState({
@@ -23,18 +18,11 @@ const FillUp = () => {
     check: ""
   });
 
-  var detail = Details();
-  if (detail == [] || detail == undefined || detail == -Infinity) {
-    detail = 0
-  }
-
   const dep = localStorage.getItem("department");
   var hos;
   var ha;
   var hb;
   var qqi = <></>;
-  var ress = <></>;
-  var qc = 0;
   var qqc;
   var name;
   if (dep === "รพ.กลาง") {
@@ -135,10 +123,6 @@ const FillUp = () => {
       if (st == "") {
         document.getElementById("c1").hidden = false;
         document.getElementById("c2").hidden = true;
-        ress = <div>
-          <div id='tm1'><label>ไตรมาสที่ 1: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
-          {/* <div hidden><textarea className='textarea60100' name='result' required /></div> */}
-        </div>
         qqi = <>
           <option value={"1"}>ไตรมาสที่ 1</option>
           {/* <option value={"2"}>ไตรมาสที่ 2</option>
@@ -149,50 +133,26 @@ const FillUp = () => {
       else if (st == "1") {
         document.getElementById("c1").hidden = false;
         document.getElementById("c2").hidden = true;
-        qc = 1;
-        ress = <div>
-          <div id='tm1'><label>ไตรมาสที่ 1: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
-          <div id='tm2'><label>ไตรมาสที่ 2: </label><br /><textarea id='rre2' className='textarea60100' name='result2' required /><br /></div>
-          {/* <div hidden><textarea className='textarea60100' name='result' required /></div> */}
-        </div>
         qqi = <>
           <option value={"2"}>ไตรมาสที่ 2</option>
           {/* <option value={"3"}>ไตรมาสที่ 3</option>
           <option value={"4"}>ไตรมาสที่ 4</option> */}
         </>
-        document.getElementById("dbu").hidden = false;
       }
       else if (st == "1,2") {
         document.getElementById("c1").hidden = false;
         document.getElementById("c2").hidden = true;
-        ress = <div>
-          <div id='tm1'><label>ไตรมาสที่ 1: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
-          <div id='tm2'><label>ไตรมาสที่ 2: </label><br /><textarea id='rre2' className='textarea60100' name='result2' required /><br /></div>
-          <div id='tm3'><label>ไตรมาสที่ 3: </label><br /><textarea id='rre3' className='textarea60100' name='result3' required /><br /></div>
-          {/* <div hidden><textarea className='textarea60100' name='result' required /></div> */}
-        </div>
-        qc = 2;
         qqi = <>
           <option value={"3"}>ไตรมาสที่ 3</option>
           {/* <option value={"4"}>ไตรมาสที่ 4</option> */}
         </>
-        document.getElementById("dbu").hidden = false;
       }
       else if (st == "1,2,3") {
         document.getElementById("c1").hidden = false;
         document.getElementById("c2").hidden = true;
-        ress = <div>
-          <div id='tm1'><label>ไตรมาสที่ 1: </label><br /><textarea id='rre1' className='textarea60100' name='result1' required /><br /></div>
-          <div id='tm2'><label>ไตรมาสที่ 2: </label><br /><textarea id='rre2' className='textarea60100' name='result2' required /><br /></div>
-          <div id='tm3'><label>ไตรมาสที่ 3: </label><br /><textarea id='rre3' className='textarea60100' name='result3' required /><br /></div>
-          <div id='tm4'><label>ไตรมาสที่ 4: </label><br /><textarea id='rre4' className='textarea60100' name='result4' required /><br /></div>
-          {/* <div hidden><textarea className='textarea60100' name='result' required /></div> */}
-        </div>
-        qc = 3;
         qqi = <>
           <option value={"4"}>ไตรมาสที่ 4</option>
         </>
-        document.getElementById("dbu").hidden = false;
       }
 
       else {
@@ -200,9 +160,7 @@ const FillUp = () => {
         document.getElementById("c2").hidden = false;
       }
     }
-
     return qqi
-
   }
 
   //console.log(hos)
@@ -217,21 +175,6 @@ const FillUp = () => {
       paras: g(z),
       ans: q(z),
       result: h(z)
-    };
-    const JsonData2 = {
-      deid: detail + 1,
-      fmsid: data.get("fmsid"),
-      evname: data.get("evname"),
-      evres: data.get("evres"),
-      evstatus: data.get("evstatus"),
-      evbudget: dcdd("dc"),
-      evbuded: dcdd("dd"),
-      evpoint: data.get("evpoint"),
-      evtarget: data.get("evtarget"),
-      result: reu(),
-      problem: data.get("problem"),
-      str: data.get("et"),
-      evimg: name
     };
     const JsonData3 = {
       "h": pa2(z)[3],
@@ -265,58 +208,27 @@ const FillUp = () => {
         console.log("error1", error);
       })
 
-    fetch(import.meta.env.VITE_APP_API + "/ev/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(JsonData2)
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        if (data.status === "ok") {
-          //window.location = "post";
-        } else {
-          alert("02 บันทึกไม่สำเร็จ");
-          window.location = "fillup"
-        }
-      })
-      .catch((error) => {
-        console.log("error2", error);
-      })
+     fetch(import.meta.env.VITE_APP_API + `/result/update/${hos}/${d[1]}`, {
+       method: "PUT",
+       headers: {
+         "Content-Type": "application/json"
+       },
+       body: JSON.stringify(JsonData3)
+     })
+       .then(response => {
+         return response.json();
+       })
+       .then(data => {
+         if (data.status === "ok") {
+           window.location = "post";
+         } else {
+           alert("03 บันทึกไม่สำเร็จ");
+         }
+       })
+       .catch((error) => {
+         console.log("error3", error);
+       })
 
-    fetch(import.meta.env.VITE_APP_API + `/result/update/${hos}/${d[1]}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(JsonData3)
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        if (data.status === "ok") {
-          window.location = "post";
-        } else {
-          alert("03 บันทึกไม่สำเร็จ");
-        }
-      })
-      .catch((error) => {
-        console.log("error3", error);
-      })
-
-  }
-
-  const dissi = (d) => {
-    if (document.getElementById(d).disabled === true) {
-      document.getElementById(d).disabled = false
-    }
-    else {
-      document.getElementById(d).disabled = true
-    }
   }
 
   const fetchUserDataForm = () => {
@@ -339,6 +251,16 @@ const FillUp = () => {
 
   }
 
+  const refech = () => {
+    fetch(import.meta.env.VITE_APP_API + `/form/res/${localStorage.getItem("id")}`)
+    .then(response => {
+        return response.json();
+    })
+    .then(data2 => {
+        setForms({ ...forms, formres: data2 })
+    })
+}
+
   var d = secec.sece.split("ที่่: ")
 
   //console.log(d)
@@ -348,6 +270,7 @@ const FillUp = () => {
     c = <div>
       <br /><br /><br />
       <h2>กรุณาเลือกตัวชี้วัดเพื่อดำเนินการ</h2>
+      <br /><button onClick={e => refech()}>ตัวชี้วัดไม่แสดงคลิก</button>
       <br /><br /><br />
     </div>
     try {
@@ -360,14 +283,6 @@ const FillUp = () => {
   const handleonChange = (val) => {
 
     com = ""
-
-    fetch(import.meta.env.VITE_APP_API + `/evde/${val}/${localStorage.getItem("id")}`)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        setEvents(data);
-      });
 
     fetch(import.meta.env.VITE_APP_API + `/form/${val}`)
       .then(response2 => {
@@ -397,7 +312,6 @@ const FillUp = () => {
 
   }
 
-  // var autoevent = events.map(e => [e.ev_name, e.ev_res, e.fms_id, e.ev_point, e.ev_target, e.ev_result])[0]
   var w = forms.fill.map(fil => fil.fm_paras)
   var numpa = forms.fill.map(po => po.fm_numpara)[0]
   var y = w[0]
@@ -411,6 +325,7 @@ const FillUp = () => {
     vcon = forms.fill.map(io => io.fm_con)[0]
   }
   //console.log(fc)
+  var parast = 0
   var com = ""
   var cheo = 0
   try {
@@ -481,10 +396,16 @@ const FillUp = () => {
           nn = <></>
         }
 
+        var sii = <></>
+
+        if (y === "-") {
+          sii = <button className='btn btn-primary'>บันทึกและส่งข้อมูลโครงการ</button>
+        }
+
       return (
         <div key={i}>
           <div><p className='inline p'><label>{group} &nbsp;&nbsp;</label></p>
-            {nn}
+            {nn}{sii}
           </div>
         </div>
       )
@@ -494,22 +415,9 @@ const FillUp = () => {
   } catch {
   }
 
-  function reu() {
-    var rr
-    if (qc == 0)
-      rr = document.getElementById("rre1").value
-    if (qc == 1)
-      rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value
-    if (qc == 2)
-      rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value + ", " + document.getElementById("rre3").value
-    if (qc == 3)
-      rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value + ", " + document.getElementById("rre3").value + ", " + document.getElementById("rre4").value
-    return rr
-  }
-
   function g(val) {
     var g = "";
-    if (numpa === 1) {
+    if (numpa === 0) {
       g = 1
     } else {
     for (var i = 1; i <= val.length; i++) {
@@ -520,21 +428,18 @@ const FillUp = () => {
     }
   }
 
+  // if(numpa === 0)
+  // g = 1
+
     return g
   }
 
-  function dcdd(id) {
-    var g = "";
-    for (var i = 1; i <= 3; i++) {
-      if (document.getElementById(`${id + i}`).value === "")
-        g += 0
-      else
-        g += document.getElementById(`${id + i}`).value;
-      if (i != 3) {
-        g += ", "
+  const sts = (val) => {
+    for (var i = 1; i <= val.length; i++) {
+      if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
+        parast += 1
       }
     }
-    return g
   }
 
   function q(val) {
@@ -542,8 +447,12 @@ const FillUp = () => {
     var p = 0;
     var pr1;
     var pr2;
-    if (numpa === 1) {
-      q = 1
+    if (parast === 1) {
+      for (var i = 1; i <= val.length; i++) {
+        if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
+          q += parseFloat(document.getElementById(`${val[i - 1]}`).value);
+        }
+      }
     } else {
     for (var i = 1; i <= val.length; i++) {
       if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
@@ -560,11 +469,11 @@ const FillUp = () => {
     }
     if (t[1] === 3)
       q = q / val.length
-    else if (t[1] === 2)
-      if (fc !== 0)
-        q = pr1
-      else
-        q = pr2
+     else if (t[1] === 2)
+       if (fc !== 0)
+         q = pr1
+       else
+         q = pr2
     else if (t[1] === 1) {
       if (p * 100 <= 100)
         q = p * 100
@@ -574,6 +483,16 @@ const FillUp = () => {
         q = (p ** (-1)) * 100
     }
   }
+
+  // if (pr2 === undefined) {
+  //   q = pr1
+  // }
+
+  if (parast === 1)
+  q = document.getElementById([z]).value
+  else if (parast === 1)
+  q = 1
+
     return q
   }
 
@@ -605,21 +524,6 @@ const FillUp = () => {
     }
   }
     return h
-  }
-
-  const upload = () => {
-    const formdata = new FormData();
-    if (file != undefined) {
-      formdata.append("file", file)
-      axios.post(import.meta.env.VITE_APP_API + "/upload", formdata)
-        .then(res => {
-          name = res.data.filename
-          console.log(name)
-        })
-        .catch(er => console.log(er));
-    } else {
-      alert("เลือกไฟล์ก่อน");
-    }
   }
 
   const pa = () => {
@@ -710,7 +614,7 @@ const FillUp = () => {
     }
 
     if (t[1] === 2) {
-      if (fc === 0 && t2 !== 0) {
+      if (fc === 0 && p2 !== 0) {
         p1 = p1
         p2 = p2
         are = p2
@@ -730,8 +634,26 @@ const FillUp = () => {
 
     pa2 = [p1, p2, are, sare, pp1, pp2, lg]
 
-    if (numpa === 1) {
-      pa2 = [0, 0, 1, 0, 0, 0, lg]
+    if (parast === 1) {
+
+      if (lg.includes(hos)) {
+        if (lg === "") {
+        lg += hos + "_" + qqc
+      }
+      else {
+        lg += ", " + hos + "_" + qqc
+      }
+      pa2 = [Number(pa()[0])+Number(q(z)), Number(pa()[0])+Number(q(z)), Number(pa()[0])+Number(q(z)), Number(pa()[2])+Number(q(z)), Number(pa()[2])+Number(q(z)), Number(pa()[2])+Number(q(z)), lg]
+      } else {
+        if (lg === "") {
+          lg += hos + "_" + qqc
+        }
+        else {
+          lg += ", " + hos + "_" + qqc
+        }
+        pa2 = [Number(pa()[0])+Number(q(z)), Number(pa()[0])+Number(q(z)), Number(pa()[0])+Number(q(z)), q(z), q(z), q(z), lg]
+      }
+      
     }
 
     return pa2
@@ -739,70 +661,22 @@ const FillUp = () => {
   }
 
   const dis = () => {
-    //console.log(pa2(z), detail, pa(), reu());
-    //console.log(file.name)
-    
-    // console.log(d[1])
-    // console.log(qqc)
-    // console.log(g(z))
-    // console.log(q(z))
-    // console.log(h(z))
-    // console.log(numpa)
+
+       console.log(d[1])
+       console.log(qqc)
+       console.log(g(z))
+       console.log(q(z))
+       console.log(h(z))
+      //console.log(parast)
+      console.log(pa2(z))
 
     if (document.getElementById("submit").disabled === true) {
       document.getElementById("submit").disabled = false
-      // document.getElementById("upl").disabled = false
-      upload();
-      //console.log(name);
       //console.log(`${z[0]}`[(z[0].length) - 1])
     }
     else {
       document.getElementById("submit").disabled = true
       // document.getElementById("upl").disabled = true
-      console.log(name)
-    }
-  }
-
-  const defu = () => {
-    var autoevent = events.map(e => [e.ev_name, e.fms_id, e.ev_res, e.ev_point, e.ev_target, e.ev_result ,e.ev_problem])[0]
-    if (document.getElementById("def").checked === true) {
-    document.getElementById("evnaem").value = autoevent[0]
-    document.getElementById("fmsid").value = autoevent[1]
-    document.getElementById("evres").value = autoevent[2]
-    document.getElementById("evpoint").value = autoevent[3]
-    document.getElementById("evtarget").value = autoevent[4]
-    console.log(autoevent)
-    if (qqc === 2)
-      document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
-    else if (qqc === 3) {
-      document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
-      document.getElementById("rre2").value = (autoevent[5]).split(", ")[1]
-    }
-    else if (qqc === 4) {
-      document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
-      document.getElementById("rre2").value = (autoevent[5]).split(", ")[1]
-      document.getElementById("rre3").value = (autoevent[5]).split(", ")[2]
-    }
-    document.getElementById("problem").value = autoevent[6]
-    }
-    else {
-      document.getElementById("evnaem").value = ""
-    document.getElementById("fmsid").value = ""
-    document.getElementById("evres").value = ""
-    document.getElementById("evpoint").value = ""
-    document.getElementById("evtarget").value = ""
-    if (qqc === 2)
-      document.getElementById("rre1").value = ""
-    else if (qqc === 3) {
-      document.getElementById("rre1").value = ""
-      document.getElementById("rre2").value = ""
-    }
-    else if (qqc === 4) {
-      document.getElementById("rre1").value = ""
-      document.getElementById("rre2").value = ""
-      document.getElementById("rre3").value = ""
-    }
-    document.getElementById("problem").value = ""
     }
   }
 
@@ -847,7 +721,7 @@ const FillUp = () => {
                 <form onSubmit={handleSubmit} className='textl2'>
 
                   {forms.fill.map(fill => {
-                    
+                    sts(z);
                     
                     return (
                     <div key={fill.fm_id}>
@@ -866,99 +740,6 @@ const FillUp = () => {
                       <br /><br />
                       {n}
                       <div>
-                        <br />
-                        <label><b>แบบรายงานความก้าวหน้ารายโครงการ / กิจกรรม</b></label>
-                        <br />
-                        <br />
-                        <div id='dbu' hidden><label>ใช้ข้อมูลจากไตรมาสก่อนหน้า</label>: <input type="checkbox" id='def' onClick={e => defu()}/>
-                        <br />
-                        <br />
-                        </div>
-                        <label>ชื่อโครงการ / กิจกรรม</label>
-                        <br />
-                        <input type="text" className='input60' id='evnaem' name='evname' required />
-                        <br />
-                        <label>ลำดับโครงการ / กิจกรรมตามแผนสนพ.</label>
-                        <br />
-                        <input type="number" className='input60' id='fmsid' name='fmsid' required />
-                        <br />
-                        <label>ผู้รับผิดชอบ</label>
-                        <br />
-                        <input type="text" className='input60' id='evres' name='evres' required />
-                        <br />
-                        <label>สถานะโครงการ</label>
-                        <br />
-                        <div>
-                          <input type="radio" value={1} name="evstatus" /> แล้วเสร็จ &nbsp;&nbsp;&nbsp;
-                          <input type="radio" value={2} name="evstatus" /> ยังไม่เริ่มดำเนินการ &nbsp;&nbsp;&nbsp;
-                          <input type="radio" value={3} name="evstatus" /> ยกเลิก &nbsp;&nbsp;&nbsp;
-                          <input type="radio" value={4} name="evstatus" defaultChecked/> กำลังดำเนินการ &nbsp;&nbsp;&nbsp;
-                          <input type="radio" value={5} name="evstatus" /> ชะลอ
-                        </div>
-                        <br />
-                        <label>งบประมาณที่ได้รับ</label>
-                        <br />
-                        <div className="input-group mb-3">
-                          <div className="input-group-text">กทม:&nbsp;&nbsp;
-                            <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc1")} />
-                          </div>
-                          <input type="text" className="input10" id='dc1' disabled />
-                          <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
-                            <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc2")} />
-                          </div>
-                          <input type="text" className="input10" id='dc2' disabled />
-                          <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
-                            <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dc3")} />
-                          </div>
-                          <input type="text" className="input10" id='dc3' disabled />
-                        </div>
-                        <label>งบประมาณที่ใช้</label>
-                        <br />
-                        <div className="input-group mb-3">
-                          <div className="input-group-text">กทม:&nbsp;&nbsp;
-                            <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd1")} />
-                          </div>
-                          <input type="text" className="input10" id='dd1' disabled />
-                          <div className="input-group-text">เงินบำรุง:&nbsp;&nbsp;
-                            <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd2")} />
-                          </div>
-                          <input type="text" className="input10" id='dd2' disabled />
-                          <div className="input-group-text">อื่นๆ:&nbsp;&nbsp;
-                            <input className="form-check-input mt-0" type="checkbox" value="" onClick={e => dissi("dd3")} />
-                          </div>
-                          <input type="text" className="input10" id='dd3' disabled />
-                        </div>
-                        <label>วัตถุประสงค์</label>
-                        <br />
-                        <textarea className='textarea60100' id='evpoint' name='evpoint' required />
-                        <br />
-                        <label>เป้าหมาย</label>
-                        <br />
-                        <textarea className='textarea60100' id='evtarget' name='evtarget' required />
-                        <br />
-                        <label>ผลการดำเนินงาน</label>
-                        <br />
-                        {ress}
-                        <label>ปัญหาและอุปสรรค</label>
-                        <br />
-                        <textarea className='textarea60100' id='problem' name='problem' required />
-                        <br />
-                        <label>สรุปผลการดำเนินงาน</label>
-                        <br />
-                        <div>
-                          <input type="radio" value="1" name="et" defaultChecked/> เป็นไปตามแผน &nbsp;&nbsp;&nbsp;<br />
-                          <input type="radio" value="2" name="et" /> เป็นไปตามแผนแต่ควรติดตามเป็นพิเศษ &nbsp;&nbsp;&nbsp;<br />
-                          <input type="radio" value="3" name="et" /> ไม่เป็นไปตามแผน &nbsp;&nbsp;&nbsp;
-                        </div>
-                        <div className='up'>
-                          <br />
-                          <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label><br />
-                          <input type='file' onChange={(e) => setFile(e.target.files[0])} required />
-                          {/* <button id="upl" className='btn btn-primary' onClick={upload}>Upload</button> */}
-                          <br /><br />
-                          <label>**หมายเหตุชื่อไฟล์ต้องเป็นภาษาอังกฤษหรือตัวเลขเท่านั้น**</label>
-                          <br />
-                        </div>
                         <div className='textr2'>
                           <br />
                           <label>ยืนยัน: <input id="con" type="checkbox" value={secec.check} onClick={e => dis()} /> </label>
