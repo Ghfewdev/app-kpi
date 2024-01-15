@@ -58,7 +58,7 @@ const UserEdit = () => {
                <select id='ag' name='agency' /*onChange={e => check()}> */ >
               <option value="รพ.กลาง">&nbsp;รพ.กลาง</option>
               <option value="รพ.ตากสิน">&nbsp;รพ.ตากสิน</option>
-              <option value="รพ.เจริญกรุงประชารัก">&nbsp;รพ.เจริญกรุงประชารัก</option>
+              <option value="รพ.เจริญกรุงประชารักษ์">&nbsp;รพ.เจริญกรุงประชารักษ์</option>
               <option value="รพ.หลวงพ่อทวีศักดิ์">&nbsp;รพ.หลวงพ่อทวีศักดิ์</option>
               <option value="รพ.เวชการุณย์รัศมิ์">&nbsp;รพ.เวชการุณย์รัศมิ์</option>
               <option value="รพ.ลาดกระบัง">&nbsp;รพ.ลาดกระบัง</option>

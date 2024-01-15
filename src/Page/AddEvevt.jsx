@@ -51,7 +51,7 @@ const AddEvevt = () => {
         hb = 3
     }
 
-    else if (dep === "รพ.เจริญกรุงประชารัก") {
+    else if (dep === "รพ.เจริญกรุงประชารักษ์") {
         hos = "h3"
         ha = 4
         hb = 5
@@ -162,8 +162,10 @@ const AddEvevt = () => {
             })
             .then(data => {
                 if (data.status === "ok") {
-                    window.location = "postev";
-                    
+                    sessionStorage.setItem("postev", "1")
+                    setTimeout(() => {
+                        window.location = "postev";
+                      }, 500)
                 } else {
                     alert("02 บันทึกไม่สำเร็จ");
                     window.location = "addevent"

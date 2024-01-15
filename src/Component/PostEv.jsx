@@ -6,17 +6,18 @@ const PostEv = () => {
   const user = Profile();
   var event1 = EventFill();
   console.log(event1)
-  
+
   const JsonData = {
     user: user,
     event: event1
   };
 
-//    if (detail == [] || detail == undefined || detail == -Infinity) {
-//      detail = 1
-//    }
+  //    if (detail == [] || detail == undefined || detail == -Infinity) {
+  //      detail = 1
+  //    }
 
   //useEffect(() => {
+  if (sessionStorage.getItem("postev") === "1") {
     fetch(import.meta.env.VITE_APP_API + "/eved/fill", {
       method: "POST",
       headers: {
@@ -37,23 +38,28 @@ const PostEv = () => {
       .catch((error) => {
         console.log("Error: ", error)
       })
+  
   //}, []);
-
-   setTimeout(() => {
-     location = "/"
-   }, 3000)
+  
+  setTimeout(() => {
+    sessionStorage.removeItem("postev")
+    location = "/"
+  }, 3000)
+} else {
+  location = "/"
+}
 
   return (
     <>
       <div className='bgi'>
-      <br /><br /><br /><br /><br /><br /><br />
+        <br /><br /><br /><br /><br /><br /><br />
         <div className="card">
-        <br /><br /><br />
+          <br /><br /><br />
           <div className="container">
             <br />
 
             <h1 className='textc'>
-            บันทึกข้อมูลโครงการสำเร็จ
+              บันทึกข้อมูลโครงการสำเร็จ
             </h1>
             <br />
 
@@ -65,7 +71,7 @@ const PostEv = () => {
       </div>
     </>
   )
-  
+
 }
 
 export default PostEv

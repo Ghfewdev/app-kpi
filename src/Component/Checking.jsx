@@ -97,8 +97,9 @@ const Checking = () => {
           for (var i = 10; i <= 22; i++) {
             if (!yg.includes(String(i)))
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else if (String(i) !== f && sb1.includes(String([i, f])))
+            else if (String(i) !== f && sb1.includes(String([i, f]))) {
             y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
+          }
             else if (i === f && !sb1.includes(String([i, f])))
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else

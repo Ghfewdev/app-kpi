@@ -44,7 +44,7 @@ const Dashboard = () => {
         <thead className="table-dark">
           <tr>
             <th>KPI</th>
-            <th>เป้าหมาย</th>
+            {/* <th>เป้าหมาย</th> */}
             <th>รพก</th>
             <th>รพต</th>
             <th>รพจ</th>
@@ -81,7 +81,11 @@ const Dashboard = () => {
               } else {
                 var t = opp[i].split(", ")
                 var tt = t.reduce((x, y) => Number(x) + Number(y), 0);
-                ifr = <th><h2 className='greent'>{tt}</h2></th>
+                if (a.pa1 > tt )
+                ifr = <th><h2 className='greent'>{a.pa1}</h2></th>
+                else {
+                  ifr = <th><h2 className='redt'>{a.pa1}</h2></th>
+                }
                 
               }
             }
@@ -95,7 +99,7 @@ const Dashboard = () => {
             return (
               <tr key={i}>
                 <th>{a.fm_id}</th>
-                <th>{(a.fm_solve)}%</th>
+                {/* <th>{(a.fm_solve)}%</th> */}
                 <th>{tc[0]}</th>
                 <th>{tc[1]}</th>
                 <th>{tc[2]}</th>

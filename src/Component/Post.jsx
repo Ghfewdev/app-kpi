@@ -2,24 +2,28 @@ import React from 'react'
 import Senddetail from './Senddetail'
 
 const Post = () => {
-  
-  Senddetail();
 
-  setTimeout(() => {
-    location = "addevent"
-  }, 3000)
+  if (sessionStorage.getItem("postfi") === "1") {
+    Senddetail();
+    setTimeout(() => {
+      sessionStorage.removeItem("postfi")
+      location = "addevent"
+    }, 3000)
+  } else {
+    location = "/"
+  }
 
   return (
     <>
       <div className='bgi'>
-      <br /><br /><br /><br /><br /><br /><br />
+        <br /><br /><br /><br /><br /><br /><br />
         <div className="card">
-        <br /><br /><br />
+          <br /><br /><br />
           <div className="container">
             <br />
 
             <h1 className='textc'>
-            บันทึกข้อมูลสำเร็จ
+              บันทึกข้อมูลสำเร็จ
             </h1>
             <br />
 

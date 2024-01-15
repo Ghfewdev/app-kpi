@@ -176,9 +176,9 @@ const CalForm = () => {
 
   const agen = fusers.map(u => u.us_agency)
   var an = [];
-  for (var i = 0; i <= agen.length - 4; i++) {
+  for (var i = 0; i <= agen.length - 2; i++) {
     an.push(agen[i])
-    if (i === agen.length - 4) {
+    if (i === agen.length - 2) {
       an.push("ภาพรวมทั้งสำนักการแพทย์")
     }
   }
@@ -194,7 +194,7 @@ const CalForm = () => {
       vcon = select.map(qof => qof.fm_con)[0]
       try { io = vcon.split(", ") }
       catch { }
-      //console.log(vcon.split(", ")[Number(sessionStorage.getItem("qur"))-1])
+      console.log(vcon.split(", ")[Number(sessionStorage.getItem("qur"))-1])
       var t = select.map(f => [f.fm_solve, f.fm_method])[0]
       v = select.map(vv => vv.fm_define)[0]
       q = select[0].fm_solve
@@ -205,8 +205,8 @@ const CalForm = () => {
       var met = select.map(me => me.fm_method)[0]
       var nn;
       var ss = s.map((m, i) => {
-        nn = <p className='inline textr p'><input className='input30' type="number" id={m} required /></p>
-        if (io.length === 4 && i === s.length - 1) {
+        nn = <p className='inline textr p'><input className='input30' type="number" defaultValue={sessionStorage.getItem("pp").split(",")[i]} id={m} required /></p>
+        if (io.length === 11 && i === s.length - 1) {
           nn = <p className='inline textr p'><input className='input30' type="number" id={m} defaultValue={vcon.split(", ")[Number(sessionStorage.getItem("qur")) - 1]} readOnly /></p>
         }
         else if (vcon != 0 && i === s.length - 1)
@@ -269,7 +269,7 @@ const CalForm = () => {
     var nqq1p2 = [];
     var re1 = [];
 
-    for (var i = 10; i <= 20; i++) {
+    for (var i = 10; i <= 22; i++) {
       for (var j = 0; j < q1.length; j++) {
         if ((q1[j])[0] === i) {
           qq1.push(((q1[j])[1]).toFixed(2))
@@ -288,7 +288,7 @@ const CalForm = () => {
         nqq1p1.push(0)
         nqq1p2.push(0)
       }
-      if (i === 20) {
+      if (i === 22) {
         nqq1p1.push(q1par1)
         nqq1p2.push(q1par2)
         if (q1par1 > q1par2) {
@@ -317,7 +317,7 @@ const CalForm = () => {
     var nqq2p2 = [];
     var re2 = [];
 
-    for (var i = 10; i <= 20; i++) {
+    for (var i = 10; i <= 22; i++) {
       for (var j = 0; j < q2.length; j++) {
         if ((q2[j])[0] === i) {
           qq2.push(((q2[j])[1]).toFixed(2))
@@ -336,7 +336,7 @@ const CalForm = () => {
         nqq2p1.push(0)
         nqq2p2.push(0)
       }
-      if (i === 20) {
+      if (i === 22) {
         nqq2p1.push(q2par1)
         nqq2p2.push(q2par2)
         if (q2par1 > q2par2) {
@@ -362,7 +362,7 @@ const CalForm = () => {
     var nqq3p2 = [];
     var re3 = [];
 
-    for (var i = 10; i <= 20; i++) {
+    for (var i = 10; i <= 22; i++) {
       for (var j = 0; j < q3.length; j++) {
         if ((q3[j])[0] === i) {
           qq3.push(((q3[j])[1]).toFixed(2))
@@ -381,7 +381,7 @@ const CalForm = () => {
         nqq3p1.push(0)
         nqq3p2.push(0)
       }
-      if (i === 20) {
+      if (i === 22) {
         nqq3p1.push(q3par1)
         nqq3p2.push(q3par2)
         if (q3par1 > q3par2) {
@@ -407,7 +407,7 @@ const CalForm = () => {
     var nqq4p2 = [];
     var re4 = [];
 
-    for (var i = 10; i <= 20; i++) {
+    for (var i = 10; i <= 22; i++) {
       for (var j = 0; j < q4.length; j++) {
         if ((q4[j])[0] === i) {
           qq4.push(((q4[j])[1]).toFixed(2))
@@ -425,7 +425,7 @@ const CalForm = () => {
         nqq4p1.push(0)
         nqq4p2.push(0)
       }
-      if (i === 20) {
+      if (i === 22) {
         nqq4p1.push(q4par1)
         nqq4p2.push(q4par2)
         if (q4par1 > q4par2) {
@@ -448,44 +448,44 @@ const CalForm = () => {
     var qqn2p12 = nqq1p2.map((q, i) => q + nqq2p2[i]);
     var qq12 = qqn1p12.map((q, i) => ((q / qqn2p12[i]) * 100).toFixed(2));
     var re12 = [];
-    if (qq12[11] > 100)
-      qq12[11] = ((qq12[11] ** -1) * 10000).toFixed(2)
+    // if (qq12[11] > 100)
+    //   qq12[11] = ((qq12[11] ** -1) * 10000).toFixed(2)
 
     //qq3-4
     var qqn1p34 = nqq3p1.map((q, i) => q + nqq4p1[i]);
     var qqn2p34 = nqq3p2.map((q, i) => q + nqq4p2[i]);
     var qq34 = qqn1p34.map((q, i) => ((q / qqn2p34[i]) * 100).toFixed(2));
     var re34 = [];
-    if (qq34[11] > 100)
-      qq34[11] = ((qq34[11] ** -1) * 10000).toFixed(2)
+    // if (qq34[11] > 100)
+    //   qq34[11] = ((qq34[11] ** -1) * 10000).toFixed(2)
 
     //qq1-3
     var qqn1p13 = qqn1p12.map((q, i) => q + nqq3p1[i]);
     var qqn2p13 = qqn2p12.map((q, i) => q + nqq3p2[i]);
     var qq13 = qqn1p13.map((q, i) => ((q / qqn2p13[i]) * 100).toFixed(2));
     var re13 = [];
-    if (qq13[11] > 100)
-      qq13[11] = ((qq13[11] ** -1) * 10000).toFixed(2)
+    // if (qq13[11] > 100)
+    //   qq13[11] = ((qq13[11] ** -1) * 10000).toFixed(2)
 
     //qq1-4
     var qqn1p14 = qqn1p12.map((q, i) => q + qqn1p34[i]);
     var qqn2p14 = qqn2p12.map((q, i) => q + qqn2p34[i]);
-    var qq14 = qqn1p14.map((q, i) => ((q / qqn2p14[i]) * 100).toFixed(2));
+    var qq14 = qqn1p14.map((q, i) => ((qqn2p14[i] / q) * 100).toFixed(2));
     var re14 = [];
-    if (qq14[11] > 100)
-      qq14[11] = ((qq14[11] ** -1) * 10000).toFixed(2)
+    // if (qq14[11] > 100)
+    //   qq14[11] = ((qq14[11] ** -1) * 10000).toFixed(2)
 
     if (fc === 1 && !isNaN(qq4[11])) {
-      qq14[11] = qq4[11]
+      qq14[13] = qq4[13]
       //console.log("o1")
     } else if (fc === 1 && !isNaN(qq3[11])) {
-      qq14[11] = qq3[11]
+      qq14[13] = qq3[13]
       //console.log("o2")
     } else if (fc === 1 && !isNaN(qq2[11])) {
-      qq14[11] = qq2[11]
+      qq14[13] = qq2[13]
       //console.log("o3")
     } else if (fc === 1 && !isNaN(qq1[11])) {
-      qq14[11] = qq1[11]
+      qq14[13] = qq1[13]
       //console.log("o4")
     }
 
@@ -570,7 +570,7 @@ const CalForm = () => {
       ha = 2
       hb = 3
     }
-    else if (dep === "รพ.เจริญกรุงประชารัก") {
+    else if (dep === "รพ.เจริญกรุงประชารักษ์") {
       hos = "h3"
       ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
       ha = 4
@@ -678,7 +678,7 @@ const CalForm = () => {
       ha = 2
       hb = 3
     }
-    else if (dep === "รพ.เจริญกรุงประชารัก") {
+    else if (dep === "รพ.เจริญกรุงประชารักษ์") {
       hos = "h3"
       ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
       ha = 4
@@ -754,6 +754,12 @@ const CalForm = () => {
       hb = 25
     }
 
+    s.map((m, i) => {
+      setTimeout(() => {
+        document.getElementById(m).value = sessionStorage.getItem("pp").split(",")[i]
+      }, 200)
+    })
+
     sessionStorage.setItem("ag", ag)
     sessionStorage.setItem("deid", id)
     sessionStorage.setItem("hos", hos)
@@ -763,7 +769,7 @@ const CalForm = () => {
     sessionStorage.setItem("qur", qur)
     //console.log("deid = ", deid, hos, ag, pp)
     //console.log(pa2(s)[0], pa2(s)[1], pa2(s)[2], pa2(s)[3], pa2(s)[4], pa2(s)[5])
-    console.log(pa2(s), pa(), qq14[11], qg(s))
+    console.log(pa2(s), pa(), qq14[13], qg(s) ,hg(s))
     //console.log(vcon.split(", ")[Number(sessionStorage.getItem("qur"))-1])
   }
 
@@ -882,26 +888,26 @@ const CalForm = () => {
 
     const data = new FormData(event.currentTarget);
     const JsonData5 = {
-      fmsid: data.get("fmsid"),
-      evqur: 1,
-      evname: data.get("evname"),
-      evres: data.get("evres"),
-      evstatus: data.get("evstatus"),
-      evbudget: dcdd("dc"),
-      evbuded: dcdd("dd"),
-      evpoint: data.get("evpoint"),
-      evtarget: data.get("evtarget"),
-      result: reu(),
-      problem: data.get("problem"),
-      str: data.get("et"),
-      evimg: name,
-      fmid: n
+            qur: sessionStorage.getItem("qur"),
+            fmsid: data.get("fmsid"),
+            evname: data.get("evname"),
+            evres: data.get("evres"),
+            evstatus: data.get("evstatus"),
+            evbudget: dcdd("dc"),
+            evbuded: dcdd("dd"),
+            evpoint: data.get("evpoint"),
+            evtarget: data.get("evtarget"),
+            result: reu(),
+            problem: data.get("problem"),
+            str: data.get("et"),
+            evimg: name,
+            fmid: n
     };
 
-    const JsonData6 = {
-      user: localStorage.getItem("id"),
-      detail: sessionStorage.getItem("deid")
-    };
+    // const JsonData6 = {
+    //   user: localStorage.getItem("id"),
+    //   detail: sessionStorage.getItem("deid")
+    // };
 
     fetch(import.meta.env.VITE_APP_API + "/ev/edit", {
       method: "PUT",
@@ -915,8 +921,8 @@ const CalForm = () => {
       })
       .then(data => {
         if (data.status === "ok") {
-          //alert("บันทึกสำเร็จ")
-          //window.location = "calform"
+          alert("บันทึกสำเร็จ")
+          window.location = "calform"
         } else {
           alert("บันทึกไม่สำเร็จ");
         }
@@ -925,28 +931,28 @@ const CalForm = () => {
         console.log("error", error);
       })
 
-    fetch(import.meta.env.VITE_APP_API + "/formed/update", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(JsonData6)
-    })
-      .then(response => {
-        return response.json()
-      })
-      .then(data => {
-        if (data.status === "ok") {
-          console.log("logadd: success")
-          alert("บันทึกสำเร็จ")
-          //window.location = "calform"
-        } else {
-          console.log("logadd: failure")
-        }
-      })
-      .catch((error) => {
-        console.log("Error: ", error)
-      })
+    // fetch(import.meta.env.VITE_APP_API + "/formed/update", {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(JsonData6)
+    // })
+    //   .then(response => {
+    //     return response.json()
+    //   })
+    //   .then(data => {
+    //     if (data.status === "ok") {
+    //       console.log("logadd: success")
+    //       alert("บันทึกสำเร็จ")
+    //       //window.location = "calform"
+    //     } else {
+    //       console.log("logadd: failure")
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error: ", error)
+    //   })
 
   }
 
@@ -967,7 +973,7 @@ const CalForm = () => {
         const jsonImg = {
           "evimg": sessionStorage.getItem("img"),
           //"evimg": name,
-          "deid": sessionStorage.getItem("deid")
+          "evid": sessionStorage.getItem("evid")
         }
         fetch(import.meta.env.VITE_APP_API + "/ev/edit/img", {
           method: "PUT",
@@ -1233,12 +1239,12 @@ const CalForm = () => {
                     qq4[index] = "-"
 
                   //q12
-                  if (qq12[index] > 100) {
-                    if (qq2[index] === "-")
-                      qq12[index] = "-"
-                    else
-                      qq12[index] = ((qq12[index] ** -1) * 10000).toFixed(2)
-                  }
+                  // if (qq12[index] > 100) {
+                  //   if (qq2[index] === "-")
+                  //     qq12[index] = "-"
+                  //   else
+                  //     qq12[index] = ((qq12[index] ** -1) * 10000).toFixed(2)
+                  // }
                   if (isNaN(qq12[index]))
                     qq12[index] = "-"
                   if (Number(qq12[index]) > Number(q))
@@ -1249,8 +1255,8 @@ const CalForm = () => {
                   else re12[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
                   //q34
-                  if (qq34[index] > 100)
-                    qq34[index] = ((qq34[index] ** -1) * 10000).toFixed(2)
+                  // if (qq34[index] > 100)
+                  //   qq34[index] = ((qq34[index] ** -1) * 10000).toFixed(2)
                   if (isNaN(qq34[index]))
                     qq34[index] = "-"
                   if (Number(qq34[index]) > Number(q))
@@ -1261,12 +1267,12 @@ const CalForm = () => {
                   else re34[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
                   //q13
-                  if (qq13[index] > 100) {
-                    if (qq3[index] === "-")
-                      qq13[index] = "-"
-                    else
-                      qq13[index] = ((qq13[index] ** -1) * 10000).toFixed(2)
-                  }
+                  // if (qq13[index] > 100) {
+                  //   if (qq3[index] === "-")
+                  //     qq13[index] = "-"
+                  //   else
+                  //     qq13[index] = ((qq13[index] ** -1) * 10000).toFixed(2)
+                  // }
                   if (isNaN(qq13[index]))
                     qq13[index] = "-"
                   if (Number(qq13[index]) > Number(q))
@@ -1277,12 +1283,12 @@ const CalForm = () => {
                   else re13[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
                   //q14
-                  if (qq14[index] > 100) {
-                    if (qq4[index] === "-")
-                      qq14[index] = "-"
-                    else
-                      qq14[index] = ((qq14[index] ** -1) * 10000).toFixed(2)
-                  }
+                  // if (qq14[index] > 100) {
+                  //   if (qq4[index] === "-")
+                  //     qq14[index] = "-"
+                  //   else
+                  //     qq14[index] = ((qq14[index] ** -1) * 10000).toFixed(2)
+                  // }
 
                   if (isNaN(qq14[index]))
                     qq14[index] = "-"
@@ -1335,7 +1341,7 @@ const CalForm = () => {
             </div>
             <div className="col-1 col-md-4">
               <div style={{ width: 530 }}>
-                <Solve name={qq14[11]} do={530} name2={q} class={"responcal"} />
+                <Solve name={qq14[13]} do={530} name2={q} class={"responcal"} />
               </div>
             </div>
 
@@ -1352,8 +1358,8 @@ const CalForm = () => {
             <br /><br />
             <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
             <br /><br />
-            <label>ค่าเป้าหมาย: </label><br /> <input className="input20" disabled value={"ร้อยละ " + q} />
-            <br /><br />
+            {/* <label>ค่าเป้าหมาย: </label><br /> <input className="input20" disabled value={"ร้อยละ " + q} />
+            <br /><br /> */}
             {/* <label>วิธีการคำนวณ: </label><br /> <input className="input10" disabled value={w} />
             <br /><br /> */}
             <div>หมายเหตุ:&nbsp;&nbsp; {f.map(ff => <a key={ff}><br />{ff}</a>)}</div>
@@ -1629,8 +1635,8 @@ const CalForm = () => {
         </div>
       else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 0) {
         var ois = qq14[hosi]
-        if (qq14[hosi] > 100)
-          ois = ((qq14[hosi] ** -1) * 10000).toFixed(2)
+        // if (qq14[hosi] > 100)
+        //   ois = ((qq14[hosi] ** -1) * 10000).toFixed(2)
 
         a = <div>
 
@@ -1822,9 +1828,7 @@ const CalForm = () => {
                   <th className="textc" scope="col">วันที่ส่ง</th>
                   <th className="textc" scope="col">วันที่อัปเดต</th>
                   <th className="textc" scope="col">สรุปผล</th>
-                  <th className="textc" scope="col">ข้อมูลโครงการ</th>
                   <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
-                  <th className="textc" scope="col">แก้ไขโครงการ</th>
                 </tr>
               </thead>
               <tbody>
@@ -1845,15 +1849,94 @@ const CalForm = () => {
                       <td>{item.fd_date}</td>
                       <td>{item.fd_update}</td>
                       <td className="textc">{u}</td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
             <br /><br />
+
+            <div className='container mt-3'>
+            <div className="textc"><h3>ข้อมูลโครงการ</h3></div>
+            <br /><br />
+            <table className='table table-bordered border-primary'>
+              <thead className="table-dark">
+                <tr>
+                  <th className="textc" scope="col" width="20">ลำดับ</th>
+                  <th className="textc" scope="col" width="200" >ส่วนราชการ</th>
+                  <th className="textc" scope='col' width="20">ไตรมาส</th>
+                  <th className="textc" scope='col'>ชื่อโครงการ</th>
+                  <th className="textc" scope="col" width="100">วันที่ส่ง</th>
+                  <th className="textc" scope="col" width="100">วันที่อัปเดต</th>
+                  <th className="textc" scope='col' width="170">รายละเอียด</th>
+                  <th className="textc" scope='col' width="120">แก้ไข</th>
+                </tr>
+              </thead>
+              <tbody>
+                {eve.map((e, j) => {
+                  var rr = e.ev_id
+                  var qq = e.ev_qur
+                  var uu = e.us_id
+                  var ag
+
+                  if (uu === 10) {
+                    ag = "โรงพยาบาลกลาง";
+                  }
+                  else if (uu === 11) {
+                    ag = "โรงพยาบาลตากสิน"
+                  }
+                  else if (uu === 12) {
+                    ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
+                  }
+                  else if (uu === 13) {
+                    ag = "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ"
+                  }
+                  else if (uu === 14) {
+                    ag = "โรงพยาบาลเวชการุณย์รัศมิ์"
+                  }
+                  else if (uu === 15) {
+                    ag = "โรงพยาบาลลาดกระบังกรุงเทพมหานคร"
+                  }
+                  else if (uu === 16) {
+                    ag = "โรงพยาบาลราชพิพัฒน์"
+                  }
+                  else if (uu === 17) {
+                    ag = "โรงพยาบาลสิรินธร"
+                  }
+                  else if (uu === 18) {
+                    ag = "โรงพยาบาลผู้สูงอายุบางขุนเทียน"
+                  }
+                  else if (uu === 19) {
+                    ag = "โรงพยาบาลคลองสามวา"
+                  }
+                  else if (uu === 20) {
+                    ag = "โรงพยาบาลบางนากรุงเทพมหานคร"
+                  }
+                  else if (uu === 21) {
+                    ag = "สก."
+                  }
+                  else if (uu === 22) {
+                    ag = "ศบฉ."
+                  }
+
+                  return (
+                    <tr key={j}>
+                      <td>{e.fms_id}</td>
+                      <td>{ag}</td>
+                      <td>{e.ev_qur}</td>
+                      <td>{e.ev_name}</td>
+                      <td>{e.ed_date.split("T")[0]}</td>
+                      <td>{e.ed_update.split("T")[0]}</td>
+                      <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
+                      <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+          <br /><br /><br /><br /><br /><br />
 
           </div>
           <div className="textc"><h3>สรุปผล</h3></div>
@@ -1922,8 +2005,8 @@ const CalForm = () => {
                     qq4[index] = "-"
 
                   //q12
-                  if (qq12[index] > 100)
-                    qq12[index] = ((qq12[index] ** -1) * 10000).toFixed(2)
+                  // if (qq12[index] > 100)
+                    // qq12[index] = ((qq12[index] ** -1) * 10000).toFixed(2)
                   if (isNaN(qq12[index]))
                     qq12[index] = "-"
                   if (Number(qq12[index]) > Number(q))
@@ -1937,8 +2020,8 @@ const CalForm = () => {
 
 
                   //q34
-                  if (qq34[index] > 100)
-                    qq34[index] = ((qq34[index] ** -1) * 10000).toFixed(2)
+                  // if (qq34[index] > 100)
+                  //   qq34[index] = ((qq34[index] ** -1) * 10000).toFixed(2)
                   if (isNaN(qq34[index]))
                     qq34[index] = "-"
                   if (Number(qq34[index]) > Number(q))
@@ -1949,8 +2032,8 @@ const CalForm = () => {
                   else re34[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
                   //q13
-                  if (qq13[index] > 100)
-                    qq13[index] = ((qq13[index] ** -1) * 10000).toFixed(2)
+                  // if (qq13[index] > 100)
+                  //   qq13[index] = ((qq13[index] ** -1) * 10000).toFixed(2)
                   if (isNaN(qq13[index]))
                     qq13[index] = "-"
                   if (Number(qq13[index]) > Number(q))
@@ -1961,8 +2044,8 @@ const CalForm = () => {
                   else re13[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
                   //q14
-                  if (qq14[index] > 100)
-                    qq14[index] = ((qq14[index] ** -1) * 10000).toFixed(2)
+                  // if (qq14[index] > 100)
+                  //   qq14[index] = ((qq14[index] ** -1) * 10000).toFixed(2)
                   if (isNaN(qq14[index]))
                     qq14[index] = "-"
                   if (Number(qq14[index]) > Number(q))
@@ -2004,7 +2087,7 @@ const CalForm = () => {
             </div>
             <div className="col-1 col-md-4">
               <div style={{ width: 530 }}>
-                <Solve name={qq14[11]} do={530} name2={q} class={"responcal"} />
+                <Solve name={qq14[13]} do={530} name2={q} class={"responcal"} />
               </div>
             </div>
 
@@ -2141,8 +2224,8 @@ const CalForm = () => {
                     qq4[index] = "-"
 
                   //q12
-                  if (qq12[index] > 100)
-                    qq12[index] = ((qq12[index] ** -1) * 10000).toFixed(2)
+                  // if (qq12[index] > 100)
+                  //   qq12[index] = ((qq12[index] ** -1) * 10000).toFixed(2)
                   if (isNaN(qq12[index]))
                     qq12[index] = "-"
                   if (Number(qq12[index]) > Number(q))
@@ -2153,8 +2236,8 @@ const CalForm = () => {
                   else re12[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
                   //q34
-                  if (qq34[index] > 100)
-                    qq34[index] = ((qq34[index] ** -1) * 10000).toFixed(2)
+                  // if (qq34[index] > 100)
+                  //   qq34[index] = ((qq34[index] ** -1) * 10000).toFixed(2)
                   if (isNaN(qq34[index]))
                     qq34[index] = "-"
                   if (Number(qq34[index]) > Number(q))
@@ -2165,8 +2248,8 @@ const CalForm = () => {
                   else re34[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
                   //q13
-                  if (qq13[index] > 100)
-                    qq13[index] = ((qq13[index] ** -1) * 10000).toFixed(2)
+                  // if (qq13[index] > 100)
+                  //   qq13[index] = ((qq13[index] ** -1) * 10000).toFixed(2)
                   if (isNaN(qq13[index]))
                     qq13[index] = "-"
                   if (Number(qq13[index]) > Number(q))
@@ -2177,8 +2260,8 @@ const CalForm = () => {
                   else re13[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
                   //q14
-                  if (qq14[index] > 100)
-                    qq14[index] = ((qq14[index] ** -1) * 10000).toFixed(2)
+                  // if (qq14[index] > 100)
+                  //   qq14[index] = ((qq14[index] ** -1) * 10000).toFixed(2)
                   if (isNaN(qq14[index]))
                     qq14[index] = "-"
                   if (Number(qq14[index]) > Number(q))
@@ -2216,13 +2299,16 @@ const CalForm = () => {
               </tbody>
             </table>
           </div>
+
+
+          
           <br /><br />
           <div className="row">
             <div className="col-4 textc">
             </div>
             <div className="col-1 col-md-4">
               <div style={{ width: 530 }}>
-                <Solve name={qq14[11]} do={530} name2={q} class={"responcal"} />
+                <Solve name={qq14[13]} do={530} name2={q} class={"responcal"} />
               </div>
             </div>
 
@@ -2232,8 +2318,8 @@ const CalForm = () => {
 
       else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 1) {
         var ois = qq14[hosi]
-        if (qq14[hosi] > 100)
-          ois = ((qq14[hosi] ** -1) * 10000).toFixed(2)
+        // if (qq14[hosi] > 100)
+        //   ois = ((qq14[hosi] ** -1) * 10000).toFixed(2)
         a = <div>
 
           <div className='container mt-3'>
@@ -2265,9 +2351,7 @@ const CalForm = () => {
                   <th className="textc" scope="col">วันที่ส่ง</th>
                   <th className="textc" scope="col">วันที่อัปเดต</th>
                   <th className="textc" scope="col">สรุปผล</th>
-                  <th className="textc" scope="col">ข้อมูลโครงการ</th>
                   <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
-                  <th className="textc" scope="col">แก้ไขโครงการ</th>
                 </tr>
               </thead>
               <tbody>
@@ -2288,15 +2372,94 @@ const CalForm = () => {
                       <td>{item.fd_date}</td>
                       <td>{item.fd_update}</td>
                       <td className="textc">{u}</td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
             <br /><br />
+
+            <div className='container mt-3'>
+            <div className="textc"><h3>ข้อมูลโครงการ</h3></div>
+            <br /><br />
+            <table className='table table-bordered border-primary'>
+              <thead className="table-dark">
+                <tr>
+                  <th className="textc" scope="col" width="20">ลำดับ</th>
+                  <th className="textc" scope="col" width="200" >ส่วนราชการ</th>
+                  <th className="textc" scope='col' width="20">ไตรมาส</th>
+                  <th className="textc" scope='col'>ชื่อโครงการ</th>
+                  <th className="textc" scope="col" width="100">วันที่ส่ง</th>
+                  <th className="textc" scope="col" width="100">วันที่อัปเดต</th>
+                  <th className="textc" scope='col' width="170">รายละเอียด</th>
+                  <th className="textc" scope='col' width="120">แก้ไข</th>
+                </tr>
+              </thead>
+              <tbody>
+                {eve.map((e, j) => {
+                  var rr = e.ev_id
+                  var qq = e.ev_qur
+                  var uu = e.us_id
+                  var ag
+
+                  if (uu === 10) {
+                    ag = "โรงพยาบาลกลาง";
+                  }
+                  else if (uu === 11) {
+                    ag = "โรงพยาบาลตากสิน"
+                  }
+                  else if (uu === 12) {
+                    ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
+                  }
+                  else if (uu === 13) {
+                    ag = "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ"
+                  }
+                  else if (uu === 14) {
+                    ag = "โรงพยาบาลเวชการุณย์รัศมิ์"
+                  }
+                  else if (uu === 15) {
+                    ag = "โรงพยาบาลลาดกระบังกรุงเทพมหานคร"
+                  }
+                  else if (uu === 16) {
+                    ag = "โรงพยาบาลราชพิพัฒน์"
+                  }
+                  else if (uu === 17) {
+                    ag = "โรงพยาบาลสิรินธร"
+                  }
+                  else if (uu === 18) {
+                    ag = "โรงพยาบาลผู้สูงอายุบางขุนเทียน"
+                  }
+                  else if (uu === 19) {
+                    ag = "โรงพยาบาลคลองสามวา"
+                  }
+                  else if (uu === 20) {
+                    ag = "โรงพยาบาลบางนากรุงเทพมหานคร"
+                  }
+                  else if (uu === 21) {
+                    ag = "สก."
+                  }
+                  else if (uu === 22) {
+                    ag = "ศบฉ."
+                  }
+
+                  return (
+                    <tr key={j}>
+                      <td>{e.fms_id}</td>
+                      <td>{ag}</td>
+                      <td>{e.ev_qur}</td>
+                      <td>{e.ev_name}</td>
+                      <td>{e.ed_date.split("T")[0]}</td>
+                      <td>{e.ed_update.split("T")[0]}</td>
+                      <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
+                      <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+          <br /><br /><br /><br /><br /><br />
 
           </div>
           <div className="textc"><h3>สรุปผลของหน่วยงาน</h3></div>
@@ -2718,19 +2881,22 @@ const CalForm = () => {
       }
     }
     if (t[1] === 3)
-      q = q / val.length
+    q = q
+      //q = q / val.length
     else if (t[1] === 2) {
       if (fc === 0 && pr2 !== 0)
         q = pr1
       else
         q = pr2
     }
-    else if (t[1] === 1) {
-      if (p * 100 <= 100)
-        q = p * 100
-      else
-        q = (p ** (-1)) * 100
-    }
+     else if (t[1] === 1) {
+      //  if (p * 100 <= 100)
+      //   q = p * 100
+         
+      //  else
+          q = (p ** (-1)) * 100;
+          //console.log(q);
+     }
 
     return q
 
@@ -2749,14 +2915,24 @@ const CalForm = () => {
       }
     }
 
-    if (g * 100 > 100)
-      g = g ** (-1)
+    // if (g * 100 > 100)
+    //   g = g ** (-1)
 
     if (g * 100 >= t[0]) {
       h = "ผ่าน"
     } else {
       h = "ไม่ผ่าน"
     }
+
+    if(met === 2  && s.length >= 2) {
+      if (Number(document.getElementById(val[val.length-1]).value) < Number(document.getElementById(val[val.length-2]).value))
+      h = "ผ่าน"
+     else {
+      h = "ไม่ผ่าน"
+     }
+      
+    }
+
     return h
   }
 
@@ -2855,12 +3031,12 @@ const CalForm = () => {
         var lo2 = Number(loo[loo.length - 1])
         p1 = p1 - pp1 + po1
         p2 = p2 - pp2 + po2
-        if (p1 < 0)
-          p1 = 0
-        if (p1 < p2)
-          are = ((p1 / p2) * 100).toFixed(2)
-        else
-          are = ((p2 / p1) * 100).toFixed(2)
+        // if (p1 < 0)
+        //   p1 = 0
+        // if (p1 < p2)
+           are = ((p1 / p2) * 100).toFixed(2)
+        // else
+        //   are = ((p2 / p1) * 100).toFixed(2)
         // if (isNaN(are))
         // are = oo
         if (Number(sessionStorage.getItem("qur") >= lo2)) {
@@ -2880,7 +3056,15 @@ const CalForm = () => {
     }
 
     if (t[1] === 2) {
-      if (fc === 0 && t2 !== 0) {
+      if (vcon != 0) {
+        p1 = p1
+        p2 = p2
+        are = p1
+        pp1 = pp1
+        pp2 = pp2
+        sare = pp1
+      }
+      else if (fc === 0 && t2 !== 0) {
         p1 = t1
         p2 = t2
         are = t2
@@ -3054,7 +3238,7 @@ const CalForm = () => {
                   <div className='up'>
                     <br />
                     <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label><br />
-                    <input type='file' name='evimg' onChange={(e) => setFile(e.target.files[0])} required />
+                    <input type='file' name='evimg' onChange={(e) => setFile(e.target.files[0])} />
                     <button className='btn btn-primary' onClick={upload}>Upload</button>
                     <br />
                     <label>**หมายเหตุชื่อไฟล์ต้องเป็นภาษาอังกฤษหรือตัวเลขเท่านั้น**</label>

@@ -24,7 +24,6 @@ const FillUp = () => {
   var hb;
   var qqi = <></>;
   var qqc;
-  var name;
   if (dep === "รพ.กลาง") {
     hos = "h1"
     ha = 0
@@ -37,7 +36,7 @@ const FillUp = () => {
     hb = 3
   }
 
-  else if (dep === "รพ.เจริญกรุงประชารัก") {
+  else if (dep === "รพ.เจริญกรุงประชารักษ์") {
     hos = "h3"
     ha = 4
     hb = 5
@@ -198,7 +197,6 @@ const FillUp = () => {
       })
       .then(data => {
         if (data.status === "ok") {
-          //window.location = "post";
         } else {
           alert("01 บันทึกไม่สำเร็จ");
           window.location = "fillup"
@@ -208,26 +206,29 @@ const FillUp = () => {
         console.log("error1", error);
       })
 
-     fetch(import.meta.env.VITE_APP_API + `/result/update/${hos}/${d[1]}`, {
-       method: "PUT",
-       headers: {
-         "Content-Type": "application/json"
-       },
-       body: JSON.stringify(JsonData3)
-     })
-       .then(response => {
-         return response.json();
-       })
-       .then(data => {
-         if (data.status === "ok") {
-           window.location = "post";
-         } else {
-           alert("03 บันทึกไม่สำเร็จ");
-         }
-       })
-       .catch((error) => {
-         console.log("error3", error);
-       })
+    fetch(import.meta.env.VITE_APP_API + `/result/update/${hos}/${d[1]}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(JsonData3)
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        if (data.status === "ok") {
+          sessionStorage.setItem("postfi", "1")
+          setTimeout(() => {
+            window.location = "post";
+          }, 500)
+        } else {
+          alert("03 บันทึกไม่สำเร็จ");
+        }
+      })
+      .catch((error) => {
+        console.log("error3", error);
+      })
 
   }
 
@@ -253,13 +254,13 @@ const FillUp = () => {
 
   const refech = () => {
     fetch(import.meta.env.VITE_APP_API + `/form/res/${localStorage.getItem("id")}`)
-    .then(response => {
+      .then(response => {
         return response.json();
-    })
-    .then(data2 => {
+      })
+      .then(data2 => {
         setForms({ ...forms, formres: data2 })
-    })
-}
+      })
+  }
 
   var d = secec.sece.split("ที่่: ")
 
@@ -385,22 +386,23 @@ const FillUp = () => {
       else if (vcon != 0 && i === z.length - 1)
         nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon} readOnly /></p>
 
-        try {
+      try {
         if ((k[1])[2] === "1") {
-         if (qqc === 3 || qqc === 4)
-         nn = <p className='inline textr p'><input className='input30' type="text" id={m} disabled /></p>
-        }}catch{}
-
-        if(group === "-") {
-          group = <></>
-          nn = <></>
+          if (qqc === 3 || qqc === 4)
+            nn = <p className='inline textr p'><input className='input30' type="text" id={m} disabled /></p>
         }
+      } catch { }
 
-        var sii = <></>
+      if (group === "-") {
+        group = <></>
+        nn = <></>
+      }
 
-        if (y === "-") {
-          sii = <button className='btn btn-primary'>บันทึกและส่งข้อมูลโครงการ</button>
-        }
+      var sii = <></>
+
+      if (y === "-") {
+        sii = <button className='btn btn-primary'>บันทึกและส่งข้อมูลโครงการ</button>
+      }
 
       return (
         <div key={i}>
@@ -420,16 +422,19 @@ const FillUp = () => {
     if (numpa === 0) {
       g = 1
     } else {
-    for (var i = 1; i <= val.length; i++) {
-      g += document.getElementById(`${val[i - 1]}`).value;
-      if (i != val.length) {
-        g += ", "
+      for (var i = 1; i <= val.length; i++) {
+        if (document.getElementById(`${val[i - 1]}`).value === "")
+        g += "0"
+        else
+        g += document.getElementById(`${val[i - 1]}`).value;
+        if (i != val.length) {
+          g += ", "
+        }
       }
     }
-  }
 
-  // if(numpa === 0)
-  // g = 1
+    // if(numpa === 0)
+    // g = 1
 
     return g
   }
@@ -454,44 +459,50 @@ const FillUp = () => {
         }
       }
     } else {
-    for (var i = 1; i <= val.length; i++) {
-      if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
-        q += parseFloat(document.getElementById(`${val[i - 1]}`).value);
-        if (p === 0) {
-          p += parseFloat(document.getElementById(`${val[i - 1]}`).value);
-          pr1 = parseFloat(document.getElementById(`${val[i - 1]}`).value);
-        }
-        else {
-          p /= parseFloat(document.getElementById(`${val[i - 1]}`).value);
-          pr2 = parseFloat(document.getElementById(`${val[i - 1]}`).value);
+      for (var i = 1; i <= val.length; i++) {
+        if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
+          q += parseFloat(document.getElementById(`${val[i - 1]}`).value);
+          if (p === 0) {
+            p += parseFloat(document.getElementById(`${val[i - 1]}`).value);
+            pr1 = parseFloat(document.getElementById(`${val[i - 1]}`).value);
+          }
+          else {
+            p /= parseFloat(document.getElementById(`${val[i - 1]}`).value);
+            pr2 = parseFloat(document.getElementById(`${val[i - 1]}`).value);
+          }
         }
       }
-    }
-    if (t[1] === 3)
-      q = q / val.length
-     else if (t[1] === 2)
-       if (fc !== 0)
-         q = pr1
-       else
-         q = pr2
-    else if (t[1] === 1) {
-      if (p * 100 <= 100)
-        q = p * 100
-      else if (isNaN(q))
-        q = 0
-      else
-        q = (p ** (-1)) * 100
-    }
-  }
+      if (t[1] === 3)
+      q = q
+      //q = q / val.length
+      else if (t[1] === 2)
+        if (fc !== 0)
+          q = pr1
+        else
+          q = pr2
+      if (t[1] === 1) {
 
-  // if (pr2 === undefined) {
-  //   q = pr1
-  // }
+        // if (isNaN(q)) {
+        //   sessionStorage.setItem("non", "no")
+        //} 
+        //else {
+          q = (p ** (-1)) * 100;
+        //}
+      }
+    }
 
-  if (parast === 1)
-  q = document.getElementById([z]).value
-  else if (parast === 1)
-  q = 1
+    if (numpa === 0) {
+      q = 1
+    }
+
+    if (isNaN(q)) {
+         sessionStorage.setItem("non", "no")
+      } 
+
+    // if (parast === 1)
+    // q = document.getElementById([z]).value
+    // else if (parast === 1)
+    // q = 1
 
     return q
   }
@@ -499,30 +510,38 @@ const FillUp = () => {
   function h(val) {
     var h;
     var g = 0;
-    if (numpa === 1) {
+    if (numpa === 0) {
       h = "ผ่าน"
     } else {
-    for (var i = 1; i <= val.length; i++) {
-      if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
-        if (g === 0)
-          g += Number(document.getElementById(`${val[i - 1]}`).value);
-        else {
-          g /= Number(document.getElementById(`${val[i - 1]}`).value);
+      for (var i = 1; i <= val.length; i++) {
+        if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
+          if (g === 0)
+            g += Number(document.getElementById(`${val[i - 1]}`).value);
+          else {
+            g /= Number(document.getElementById(`${val[i - 1]}`).value);
+          }
         }
       }
-    }
-    if (isNaN(g))
-      h = "ไม่ผ่าน"
+      if (isNaN(g))
+        h = "ไม่ผ่าน"
 
-    if (g * 100 > 100)
-      g = g ** (-1)
+      // if (g * 100 > 100)
+      //   g = g ** (-1)
 
-    if (g * 100 >= t[0]) {
-      h = "ผ่าน"
-    } else {
-      h = "ไม่ผ่าน"
+      if (g * 100 >= t[0]) {
+        h = "ผ่าน"
+      } else {
+        h = "ไม่ผ่าน"
+      }
+
+      if(t[1] === 2 && numpa >= 2) {
+        if (Number(document.getElementById(val[val.length-1]).value) < Number(document.getElementById(val[val.length-2]).value))
+        h = "ผ่าน"
+       else {
+        h = "ไม่ผ่าน"
+       }}
+
     }
-  }
     return h
   }
 
@@ -568,36 +587,28 @@ const FillUp = () => {
         }
       }
     }
-    if ((p1 / p2) * 100 > 100) {
-      are = (((p1 / p2) ** (-1)) * 100).toFixed(2)
-      sare = (((pp1 / pp2) ** (-1)) * 100).toFixed(2)
-      oo = (((po1 / po2) ** (-1)) * 100).toFixed(2)
-    }
-    else {
-      are = ((p1 / p2) * 100).toFixed(2)
-      sare = ((pp1 / pp2) * 100).toFixed(2)
-      oo = ((po1 / po2) * 100).toFixed(2)
-    }
-    if (isNaN((sare))) {
-      sare = 0
-    }
-    else if (isNaN(are)) {
-      are = 0
-    }
-    else if (isNaN(oo)) {
-      oo = 0
-    }
+    // if ((p1 / p2) * 100 > 100) {
+       are = (((p1 / p2) ** (-1)) * 100).toFixed(2)
+       sare = (((pp1 / pp2) ** (-1)) * 100).toFixed(2)
+       oo = (((po1 / po2) ** (-1)) * 100).toFixed(2)
+    // }
+    // else {
+    //   are = ((p1 / p2) * 100).toFixed(2)
+    //   sare = ((pp1 / pp2) * 100).toFixed(2)
+    //   oo = ((po1 / po2) * 100).toFixed(2)
+    // }
+    
     if (fc === 1) {
       if (lg.includes(hos)) {
         // var loo = sessionStorage.getItem("hos") + "_" + sessionStorage.getItem("qur").split("_")
         p1 = p1 - pp1 + po1
         p2 = p2 - pp2 + po2
-        if (p1 < 0)
-          p1 = 0
-        if (p1 < p2)
-          are = ((p1 / p2) * 100).toFixed(2)
-        else
-          are = ((p2 / p1) * 100).toFixed(2)
+        // if (p1 < 0)
+        //   p1 = 0
+        // if (p1 < p2)
+           //are = ((p1 / p2) * 100).toFixed(2)
+        // else
+           are = ((p2 / p1) * 100).toFixed(2)
         // if (isNaN(are))
         pp1 = po1
         pp2 = po2
@@ -614,7 +625,16 @@ const FillUp = () => {
     }
 
     if (t[1] === 2) {
-      if (fc === 0 && p2 !== 0) {
+      
+      if (vcon != 0) {
+        p1 = p1
+        p2 = p2
+        are = p1
+        pp1 = pp1
+        pp2 = pp2
+        sare = pp1
+      }
+      else if (fc === 0 && p2 !== 0) {
         p1 = p1
         p2 = p2
         are = p2
@@ -632,18 +652,37 @@ const FillUp = () => {
 
     }
 
+    if (numpa === 0) {
+      p1 = 0
+      p2 = 0
+      are = 0
+      pp1 = 0
+      pp2 = 0
+      sare = 0
+    }
+
+    if (isNaN((sare))) {
+      sare = 0
+    }
+    else if (isNaN(are)) {
+      are = 0
+    }
+    else if (isNaN(oo)) {
+      oo = 0
+    }
+
     pa2 = [p1, p2, are, sare, pp1, pp2, lg]
 
     if (parast === 1) {
 
       if (lg.includes(hos)) {
         if (lg === "") {
-        lg += hos + "_" + qqc
-      }
-      else {
-        lg += ", " + hos + "_" + qqc
-      }
-      pa2 = [Number(pa()[0])+Number(q(z)), Number(pa()[0])+Number(q(z)), Number(pa()[0])+Number(q(z)), Number(pa()[2])+Number(q(z)), Number(pa()[2])+Number(q(z)), Number(pa()[2])+Number(q(z)), lg]
+          lg += hos + "_" + qqc
+        }
+        else {
+          lg += ", " + hos + "_" + qqc
+        }
+        pa2 = [Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), Number(pa()[2]) + Number(q(z)), Number(pa()[2]) + Number(q(z)), Number(pa()[2]) + Number(q(z)), lg]
       } else {
         if (lg === "") {
           lg += hos + "_" + qqc
@@ -651,9 +690,9 @@ const FillUp = () => {
         else {
           lg += ", " + hos + "_" + qqc
         }
-        pa2 = [Number(pa()[0])+Number(q(z)), Number(pa()[0])+Number(q(z)), Number(pa()[0])+Number(q(z)), q(z), q(z), q(z), lg]
+        pa2 = [Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), q(z), q(z), q(z), lg]
       }
-      
+
     }
 
     return pa2
@@ -662,21 +701,35 @@ const FillUp = () => {
 
   const dis = () => {
 
-       console.log(d[1])
-       console.log(qqc)
-       console.log(g(z))
-       console.log(q(z))
-       console.log(h(z))
-      //console.log(parast)
-      console.log(pa2(z))
+    // console.log(d[1])
+    // console.log(qqc)
+     console.log(g(z))
+    // console.log(q(z))
+    // console.log(h(z))
+    console.log(parast)
+    console.log(pa2(z))
+    console.log(pa())
 
-    if (document.getElementById("submit").disabled === true) {
-      document.getElementById("submit").disabled = false
+
+
+    if (document.getElementById("con").checked === true) {
+      if (sessionStorage.getItem("non") === "no") {
+        alert("ใส่ตัวเลข")
+        // document.getElementById("con").checked = false
+      }
+      else {
+        document.getElementById("submit").disabled = false;
+        sessionStorage.removeItem("non")
+      }
+        
       //console.log(`${z[0]}`[(z[0].length) - 1])
     }
     else {
-      document.getElementById("submit").disabled = true
+      // setTimeout(() => {
+      // }, 500)
       // document.getElementById("upl").disabled = true
+      document.getElementById("submit").disabled = true
+      sessionStorage.removeItem("non")
     }
   }
 
@@ -722,37 +775,37 @@ const FillUp = () => {
 
                   {forms.fill.map(fill => {
                     sts(z);
-                    
+
                     return (
-                    <div key={fill.fm_id}>
-                      <div className='textl6'>
-                        <br /><label>ชื่อตัวชี้วัด:&nbsp;&nbsp;<b>{fill.fm_name}</b></label>
-                        <br /><br />
-                      </div>
-                      <p className='inline p'><label>ส่งข้อมูลประจำ:&nbsp;&nbsp;</label></p>
-                      <p className='inline textr p'><select name="qur">
-                        {quc(quar)}
-                        {/* <option value={"1"}>ไตรมาสที่ 1</option>
+                      <div key={fill.fm_id}>
+                        <div className='textl6'>
+                          <br /><label>ชื่อตัวชี้วัด:&nbsp;&nbsp;<b>{fill.fm_name}</b></label>
+                          <br /><br />
+                        </div>
+                        <p className='inline p'><label>ส่งข้อมูลประจำ:&nbsp;&nbsp;</label></p>
+                        <p className='inline textr p'><select name="qur">
+                          {quc(quar)}
+                          {/* <option value={"1"}>ไตรมาสที่ 1</option>
                     <option value={"2"}>ไตรมาสที่ 2</option>
                     <option value={"3"}>ไตรมาสที่ 3</option>
                     <option value={"4"}>ไตรมาสที่ 4</option> */}
-                      </select></p>
-                      <br /><br />
-                      {n}
-                      <div>
+                        </select></p>
+                        <br /><br />
+                        {n}
+                        <div>
+                          <div className='textr2'>
+                            <br />
+                            <label>ยืนยัน: <input id="con" type="checkbox" value={secec.check} onClick={e => dis()} /> </label>
+                            <br />
+                          </div>
+                        </div>
                         <div className='textr2'>
                           <br />
-                          <label>ยืนยัน: <input id="con" type="checkbox" value={secec.check} onClick={e => dis()} /> </label>
-                          <br />
+                          <button id="submit" type="submit" className='btn btn-success' disabled> ส่งข้อมูล </button>
                         </div>
                       </div>
-                      <div className='textr2'>
-                        <br />
-                        <button id="submit" type="submit" className='btn btn-success' disabled> ส่งข้อมูล </button>
-                      </div>
-                    </div>
 
-                  )
+                    )
                   })}
 
                 </form>
