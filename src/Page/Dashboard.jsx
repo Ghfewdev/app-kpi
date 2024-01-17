@@ -44,7 +44,7 @@ const Dashboard = () => {
         <thead className="table-dark">
           <tr>
             <th>KPI</th>
-            {/* <th>เป้าหมาย</th> */}
+            <th>เป้าหมาย</th>
             <th>รพก</th>
             <th>รพต</th>
             <th>รพจ</th>
@@ -65,6 +65,7 @@ const Dashboard = () => {
         <tbody>
           {ans.map((a, i) => {
             var ifr
+            var sov = <th><h4 className='greent'>{(a.fm_solve)}</h4></th>
             var tc = [(a.h1).toFixed(2), (a.h2).toFixed(2), (a.h3).toFixed(2), (a.h4).toFixed(2), (a.h5).toFixed(2), (a.h6).toFixed(2), (a.h7).toFixed(2), (a.h8).toFixed(2), (a.h9).toFixed(2), (a.h10).toFixed(2), (a.h11).toFixed(2), (a.d1).toFixed(2), (a.d2).toFixed(2), (a.re_sum).toFixed(2)]
             if (itp[i] === 1) {
               ifr = <th><div style={{ width: 155 }}>
@@ -86,7 +87,7 @@ const Dashboard = () => {
                 else {
                   ifr = <th><h2 className='redt'>{a.pa1}</h2></th>
                 }
-                
+                sov = <th><h4 className='greent'>{tt}</h4></th>
               }
             }
             else if (itp[i] === 3) {
@@ -99,7 +100,7 @@ const Dashboard = () => {
             return (
               <tr key={i}>
                 <th>{a.fm_id}</th>
-                {/* <th>{(a.fm_solve)}%</th> */}
+                {sov}
                 <th>{tc[0]}</th>
                 <th>{tc[1]}</th>
                 <th>{tc[2]}</th>

@@ -11,12 +11,19 @@ const sSolve = (val, val2) => {
       val2,
       val2-20
     ];
-     else {
+     else if (val2 < 1) {
        return [
          100,
-         val2,
-         val2-0.5
+         val2 + 100,
+         val2 + 100
        ]
+     }
+     else {
+      return [
+        100,
+        val2,
+        val2-0.5
+      ]
      }
   };
 

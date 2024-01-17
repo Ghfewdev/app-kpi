@@ -24,13 +24,13 @@ const AddEvevt = () => {
     });
 
     var formmm
-  if (tableData1 != undefined) {
-    formmm = tableData1.map(form => {
-      return (
-        <option key={form.fm_id}>ตัวชี่้วัดลำดับที่่: {form.fm_id}</option>
-      )
-    });
-  }
+    if (tableData1 != undefined) {
+        formmm = tableData1.map(form => {
+            return (
+                <option key={form.fm_id}>ตัวชี่้วัดลำดับที่่: {form.fm_id}</option>
+            )
+        });
+    }
 
     const dep = localStorage.getItem("department");
     var hos;
@@ -165,7 +165,7 @@ const AddEvevt = () => {
                     sessionStorage.setItem("postev", "1")
                     setTimeout(() => {
                         window.location = "postev";
-                      }, 500)
+                    }, 500)
                 } else {
                     alert("02 บันทึกไม่สำเร็จ");
                     window.location = "addevent"
@@ -276,13 +276,13 @@ const AddEvevt = () => {
 
     function reu() {
         var rr
-        if (qc == 0)
+        if (qqc === 1)
             rr = document.getElementById("rre1").value
-        if (qc == 1)
+        else if (qqc === 2)
             rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value
-        if (qc == 2)
+        else if (qqc === 3)
             rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value + ", " + document.getElementById("rre3").value
-        if (qc == 3)
+        else if (qqc === 4)
             rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value + ", " + document.getElementById("rre3").value + ", " + document.getElementById("rre4").value
         return rr
     }
@@ -321,7 +321,7 @@ const AddEvevt = () => {
 
     const dis = () => {
         //console.log(file.name)
-
+        console.log(reu())
         if (document.getElementById("submit").disabled === true) {
             document.getElementById("submit").disabled = false
             upload();
@@ -377,6 +377,7 @@ const AddEvevt = () => {
 
     const qurc = (val) => {
         if (val === "2") {
+            qqc = 2
             document.getElementById("rre2").required = true
             document.getElementById("rre3").required = false
             document.getElementById("rre4").required = false
@@ -385,6 +386,7 @@ const AddEvevt = () => {
             document.getElementById("tm4").hidden = true
             document.getElementById("dbu").hidden = false
         } else if (val === "3") {
+            qqc = 3
             document.getElementById("rre2").required = true
             document.getElementById("rre3").required = true
             document.getElementById("rre4").required = false
@@ -393,6 +395,7 @@ const AddEvevt = () => {
             document.getElementById("tm4").hidden = true
             document.getElementById("dbu").hidden = false
         } else if (val === "4") {
+            qqc = 4
             document.getElementById("rre2").required = true
             document.getElementById("rre3").required = true
             document.getElementById("rre4").required = true
@@ -401,6 +404,7 @@ const AddEvevt = () => {
             document.getElementById("tm4").hidden = false
             document.getElementById("dbu").hidden = false
         } else if (val === "1") {
+            qqc = 1
             document.getElementById("rre2").required = false
             document.getElementById("rre3").required = false
             document.getElementById("rre4").required = false
@@ -415,8 +419,8 @@ const AddEvevt = () => {
         fetchUserDataForm();
 
         fetch(import.meta.env.VITE_APP_API + "/checked/1/" + localStorage.getItem("id"))
-        .then((data) => data.json())
-        .then((data) => setTableData1(data));
+            .then((data) => data.json())
+            .then((data) => setTableData1(data));
     }, [])
 
     return (

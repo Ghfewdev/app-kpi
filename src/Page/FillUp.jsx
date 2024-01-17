@@ -476,24 +476,23 @@ const FillUp = () => {
       q = q
       //q = q / val.length
       else if (t[1] === 2)
-        if (fc !== 0)
+        if (fc === 0 && pr2 !== 0)
           q = pr1
         else
           q = pr2
       if (t[1] === 1) {
-
-        // if (isNaN(q)) {
-        //   sessionStorage.setItem("non", "no")
-        //} 
-        //else {
+        if (d[1] === "8" || d[1] === "24" || d[1] === "26") {
+        q = p*100;
+        } else {
           q = (p ** (-1)) * 100;
-        //}
+        }
       }
     }
 
     if (numpa === 0) {
       q = 1
     }
+
 
     if (isNaN(q)) {
          sessionStorage.setItem("non", "no")
@@ -527,21 +526,44 @@ const FillUp = () => {
 
       // if (g * 100 > 100)
       //   g = g ** (-1)
-
-      if (g * 100 >= t[0]) {
+      if ((g**(-1))*100 >= t[0]) {
         h = "ผ่าน"
       } else {
         h = "ไม่ผ่าน"
       }
 
+      if (d[1] === "5") {
+        if ((g**(-1))*100 <= t[0]) {
+          h = "ผ่าน"
+        } else {
+          h = "ไม่ผ่าน"
+        }
+      } else if (d[1] === "8" || d[1] === "24" || d[1] === "26") {
+        if ((g)*100 >= t[0]) {
+          h = "ผ่าน"
+        } else {
+          h = "ไม่ผ่าน"
+        }
+      }
+
       if(t[1] === 2 && numpa >= 2) {
-        if (Number(document.getElementById(val[val.length-1]).value) < Number(document.getElementById(val[val.length-2]).value))
+        if (Number(document.getElementById(val[val.length-1]).value) <= Number(pa()[3]))
+        h = "ผ่าน"
+        else if (Number(document.getElementById(val[val.length-1]).value) <= Number(document.getElementById(val[val.length-2]).value))
         h = "ผ่าน"
        else {
         h = "ไม่ผ่าน"
        }}
 
     }
+
+    if (numpa === 1) {
+      if (g >= t[0])
+      h = "ผ่าน"
+       else 
+        h = "ไม่ผ่าน"
+    }
+
     return h
   }
 
@@ -588,15 +610,26 @@ const FillUp = () => {
       }
     }
     // if ((p1 / p2) * 100 > 100) {
-       are = (((p1 / p2) ** (-1)) * 100).toFixed(2)
-       sare = (((pp1 / pp2) ** (-1)) * 100).toFixed(2)
-       oo = (((po1 / po2) ** (-1)) * 100).toFixed(2)
+    //   are = (((p1 / p2) ** (-1)) * 100).toFixed(2)
+    //   sare = (((pp1 / pp2) ** (-1)) * 100).toFixed(2)
+    //   oo = (((po1 / po2) ** (-1)) * 100).toFixed(2)
     // }
     // else {
     //   are = ((p1 / p2) * 100).toFixed(2)
     //   sare = ((pp1 / pp2) * 100).toFixed(2)
     //   oo = ((po1 / po2) * 100).toFixed(2)
     // }
+
+    if (d[1] === "8" || d[1] === "24" || d[1] === "26") {
+      are = (((p2 / p1) ** (-1)) * 100).toFixed(2)
+      sare = (((pp2 / pp1) ** (-1)) * 100).toFixed(2)
+      oo = (((po2 / po1) ** (-1)) * 100).toFixed(2)
+    }
+    else {
+      are = ((p2 / p1) * 100).toFixed(2)
+      sare = ((pp2 / pp1) * 100).toFixed(2)
+      oo = ((po2 / po1) * 100).toFixed(2)
+    }
     
     if (fc === 1) {
       if (lg.includes(hos)) {
@@ -703,10 +736,10 @@ const FillUp = () => {
 
     // console.log(d[1])
     // console.log(qqc)
-     console.log(g(z))
-    // console.log(q(z))
-    // console.log(h(z))
-    console.log(parast)
+    // console.log(g(z))
+     console.log(q(z))
+     console.log(h(z))
+    //console.log(parast)
     console.log(pa2(z))
     console.log(pa())
 
