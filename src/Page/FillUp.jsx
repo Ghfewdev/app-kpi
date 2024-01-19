@@ -385,6 +385,9 @@ const FillUp = () => {
         nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon[localStorage.getItem("id") - 10]} readOnly /></p>
       else if (vcon != 0 && i === z.length - 1)
         nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon} readOnly /></p>
+      else if (m === " *" && i === z.length - 1) {
+      nn = <p className='inline textr p hidden'><input className='input30' type="text" id={m} defaultValue={1} readOnly /></p>
+    }
 
       try {
         if ((k[1])[2] === "1") {
@@ -433,6 +436,8 @@ const FillUp = () => {
       }
     }
 
+    if (numpa === 1 && t[1] === 1)
+    g = "1, " + g
     // if(numpa === 0)
     // g = 1
 
@@ -476,12 +481,15 @@ const FillUp = () => {
       q = q
       //q = q / val.length
       else if (t[1] === 2)
-        if (fc === 0 && pr2 !== 0)
+        if (fc === 0 && pr2 != 0)
           q = pr1
         else
           q = pr2
-      if (t[1] === 1) {
-        if (d[1] === "8" || d[1] === "24" || d[1] === "26") {
+
+      if (t[1] === 1 && pr2 === 1) {
+        q = pr1
+      } else if (t[1] === 1) {
+        if (d[1] === "24" || d[1] === "26") {
         q = p*100;
         } else {
           q = (p ** (-1)) * 100;
@@ -509,15 +517,20 @@ const FillUp = () => {
   function h(val) {
     var h;
     var g = 0;
+    var uioo1
+    var uioo2
     if (numpa === 0) {
       h = "ผ่าน"
     } else {
       for (var i = 1; i <= val.length; i++) {
         if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
-          if (g === 0)
+          if (g === 0) {
             g += Number(document.getElementById(`${val[i - 1]}`).value);
+            uioo1 = g
+          }
           else {
             g /= Number(document.getElementById(`${val[i - 1]}`).value);
+            uioo2 = g
           }
         }
       }
@@ -532,13 +545,13 @@ const FillUp = () => {
         h = "ไม่ผ่าน"
       }
 
-      if (d[1] === "5") {
+      if (d[1] === "5" || d[1] === "20" || d[1] === "20.2") {
         if ((g**(-1))*100 <= t[0]) {
           h = "ผ่าน"
         } else {
           h = "ไม่ผ่าน"
         }
-      } else if (d[1] === "8" || d[1] === "24" || d[1] === "26") {
+      } else if (d[1] === "24" || d[1] === "26") {
         if ((g)*100 >= t[0]) {
           h = "ผ่าน"
         } else {
@@ -547,9 +560,9 @@ const FillUp = () => {
       }
 
       if(t[1] === 2 && numpa >= 2) {
-        if (Number(document.getElementById(val[val.length-1]).value) <= Number(pa()[3]))
+        if (Number(document.getElementById(val[val.length-1]).value) <= Number(uioo1))
         h = "ผ่าน"
-        else if (Number(document.getElementById(val[val.length-1]).value) <= Number(document.getElementById(val[val.length-2]).value))
+        else if (Number(document.getElementById(val[val.length-1]).value) <= Number(pa()[3]))
         h = "ผ่าน"
        else {
         h = "ไม่ผ่าน"
@@ -558,6 +571,18 @@ const FillUp = () => {
     }
 
     if (numpa === 1) {
+      if (g >= t[0])
+      h = "ผ่าน"
+       else 
+        h = "ไม่ผ่าน"
+    } else if (numpa === 2 && d[1] === "39", d[1] === "15", d[1] === "48") {
+      if (g >= t[0])
+      h = "ผ่าน"
+       else 
+        h = "ไม่ผ่าน"
+    }
+
+    if (parast === 1) {
       if (g >= t[0])
       h = "ผ่าน"
        else 
@@ -620,10 +645,14 @@ const FillUp = () => {
     //   oo = ((po1 / po2) * 100).toFixed(2)
     // }
 
-    if (d[1] === "8" || d[1] === "24" || d[1] === "26") {
+    if (d[1] === "24" || d[1] === "26") {
       are = (((p2 / p1) ** (-1)) * 100).toFixed(2)
       sare = (((pp2 / pp1) ** (-1)) * 100).toFixed(2)
       oo = (((po2 / po1) ** (-1)) * 100).toFixed(2)
+    } else if (d[1] === "39", d[1] === "15", d[1] === "48") {
+      are = (((p2 / p1) ** (-1))).toFixed(2)
+      sare = (((pp2 / pp1) ** (-1))).toFixed(2)
+      oo = (((po2 / po1) ** (-1))).toFixed(2)
     }
     else {
       are = ((p2 / p1) * 100).toFixed(2)
@@ -667,7 +696,7 @@ const FillUp = () => {
         pp2 = pp2
         sare = pp1
       }
-      else if (fc === 0 && p2 !== 0) {
+      else if (fc === 0 && p2 != 0) {
         p1 = p1
         p2 = p2
         are = p2
@@ -715,6 +744,16 @@ const FillUp = () => {
         else {
           lg += ", " + hos + "_" + qqc
         }
+
+        if (t[1] === 1) {
+        var ps1 = Number(pa()[0]) + 1
+      var ps2 = Number(pa()[1]) + Number(q(z))
+      var ps3 = ps2/ps1
+      var ps4 = Number(pa()[2]) + 1
+      var ps5 = Number(pa()[3]) + Number(q(z))
+      var ps6 = ps5/ps4
+      pa2 = [ps1, ps2, ps3, ps6, ps4, ps5, lg]
+      } else
         pa2 = [Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), Number(pa()[2]) + Number(q(z)), Number(pa()[2]) + Number(q(z)), Number(pa()[2]) + Number(q(z)), lg]
       } else {
         if (lg === "") {
@@ -723,6 +762,15 @@ const FillUp = () => {
         else {
           lg += ", " + hos + "_" + qqc
         }
+        if (t[1] === 1) {
+          var ps1 = Number(pa()[0]) + 1
+        var ps2 = Number(pa()[1]) + Number(q(z))
+        var ps3 = ps2/ps1
+        var ps4 = Number(pa()[2]) + 1
+        var ps5 = Number(pa()[3]) + Number(q(z))
+        var ps6 = ps5/ps4
+        pa2 = [ps1, ps2, ps3, ps6, ps4, ps5, lg]
+        } else
         pa2 = [Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), q(z), q(z), q(z), lg]
       }
 
@@ -736,7 +784,7 @@ const FillUp = () => {
 
     // console.log(d[1])
     // console.log(qqc)
-    // console.log(g(z))
+     console.log(g(z))
      console.log(q(z))
      console.log(h(z))
     //console.log(parast)

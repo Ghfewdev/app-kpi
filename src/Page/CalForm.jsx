@@ -202,7 +202,7 @@ const CalForm = () => {
   var vcon;
 
   try {
-    if (select !== null) {
+    if (select != null) {
       var io;
       vcon = select.map(qof => qof.fm_con)[0]
       var tttt = vcon.split(", ")
@@ -219,16 +219,20 @@ const CalForm = () => {
       var met = select.map(me => me.fm_method)[0]
       var nn;
       var ansl = q
-      if (vcon !== 0) {
+      if (vcon != 0) {
         ansl = tttt.reduce((x, y) => Number(x) + Number(y), 0);
-      }
+      } else
+        ansl = select[0].fm_solve
       var ss = s.map((m, i) => {
         nn = <p className='inline textr p'><input className='input30' type="text" id={m} required /></p>
         if (io.length === 11 && i === s.length - 1) {
           nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon.split(", ")[Number(sessionStorage.getItem("qur")) - 1]} readOnly /></p>
         }
-        else if (vcon != 0 && i === s.length - 1)
+        else if (vcon != 0 && i === s.length - 1) {
           nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon} readOnly /></p>
+        } else if (m === " *" && i === s.length - 1) {
+          nn = <p className='inline textr p hidden'><input className='input30' type="text" id={m} defaultValue={1} readOnly /></p>
+        }
         return (
           <div key={i}>
             <div><p className='inline p'><label>{m}: &nbsp;&nbsp;</label></p>
@@ -311,6 +315,7 @@ const CalForm = () => {
         nqq1p2.push(q1par2)
         if (q1par1 > q1par2) {
           qq1.push(((q1par2 / q1par1) * 100).toFixed(2))
+          
           if ((q1par2 / q1par1) * 100 > q)
             re1.push("ผ่าน")
           else re1.push("ไม่ผ่าน")
@@ -508,10 +513,13 @@ const CalForm = () => {
     }
 
     setTimeout(() => {
-      if (n === "8" || n === "24" || n === "26") {
+      if (n === "24" || n === "26") {
         qq14[13] = qq14[13] ** (-1)
+      } else if (n === "39", n === "15", n === "48") {
+        qq14[13] = qq14[13]
+        document.getElementById("ccc").hidden = true
       }
-    }, 100)
+    }, 200)
     // if (n === "8" || n ==="24") {
     //   qq14 = qq14**(-1)
     // }
@@ -808,7 +816,7 @@ const CalForm = () => {
     sessionStorage.setItem("hos", hos)
     sessionStorage.setItem("ha", ha)
     sessionStorage.setItem("hb", hb)
-    sessionStorage.setItem("pp", pp)  
+    sessionStorage.setItem("pp", pp)
     sessionStorage.setItem("qur", qur)
     sessionStorage.setItem("edid", fm)
 
@@ -1067,9 +1075,9 @@ const CalForm = () => {
     } catch {
     }
     //console.log(props)
-    if (props !== null) {
-      
-      
+    if (props != null) {
+
+
       var hosi = Number(localStorage.getItem("id")) - 10
       //console.log(hosi)
       if (localStorage.getItem("token").split("$")[1] === "9" && fc === 0 && met === 1)
@@ -1220,7 +1228,7 @@ const CalForm = () => {
           </div>
           <br /><br />
           <div className="textc"><h3>สรุปผล</h3></div>
-          <div className='container mt-3'>
+          <div className='container mt-3' id="ccc">
             <br />
             <table className='table table-bordered border-primary'>
 
@@ -1336,8 +1344,13 @@ const CalForm = () => {
                   //     qq14[index] = ((qq14[index] ** -1) * 10000).toFixed(2)
                   // }
 
-                  if (n === "8" || n === "24" || n === "26") {
+                  if (n === "24" || n === "26") {
                     qq14[index] = ((qq14[index] ** (-1)) * 10000).toFixed(2)
+                  } else if (n === "39", n === "15", n === "48") {
+                    qq14[index] = ((qq14[index] ** (-1)) * 100).toFixed(2)
+                    //console.log(qq1)
+                    //console.log(qq12)
+                    //console.log(qq13)
                   }
 
                   if (isNaN(qq14[index]))
@@ -1353,7 +1366,6 @@ const CalForm = () => {
                     qq12[index] = "-"
                   if (qq3[index] === "-")
                     qq13[index] = "-"
-
 
                   //console.log("qqall" ,qqall)
                   return (
@@ -1685,8 +1697,11 @@ const CalForm = () => {
         </div>
       else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 0) {
         var ois = qq14[hosi]
-         if (n === "8" || n === "24" || n === "26")
-           ois = ((qq14[hosi] ** -1) * 10000).toFixed(2)
+        if (n === "24" || n === "26")
+          ois = ((qq14[hosi] ** -1) * 10000).toFixed(2)
+        else if (n === "39", n === "15", n === "48") {
+          ois = ((qq14[hosi] ** -1) * 100).toFixed(2)
+        }
 
         a = <div>
 
@@ -1724,7 +1739,7 @@ const CalForm = () => {
               </thead>
               <tbody>
                 {props.map((item, index) => {
-                  
+
                   var y = "";
                   var u = <h4 className="bi bi-x-circle redt"></h4>;
                   for (var i = 1; i <= props[0].fm_paras.split(', ').length; i++) {
@@ -2367,8 +2382,8 @@ const CalForm = () => {
 
       else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 1) {
         var ois = qq14[hosi]
-        // if (qq14[hosi] > 100)
-        //   ois = ((qq14[hosi] ** -1) * 10000).toFixed(2)
+        if (qq14[hosi] > 100)
+          ois = ((qq14[hosi] ** -1) * 10000).toFixed(2)
         a = <div>
 
           <div className='container mt-3'>
@@ -2900,66 +2915,72 @@ const CalForm = () => {
     return pag
   }
 
-const od = () => {
-  //setTimeout(() => {
+  const od = () => {
+    //setTimeout(() => {
     // printf.map((t,i) => {
     //   document.getElementById("evname").value = t.ev_name
-        
+
     //   })
     //}, 500)
-    
+
     var autoevent = printf.map(e => [e.ev_name, e.fms_id, e.ev_res, e.ev_point, e.ev_target, e.ev_result, e.ev_problem])[0]
-        if (document.getElementById("od").checked === true) {
-            document.getElementById("evname").value = autoevent[0]
-            document.getElementById("fmsid").value = autoevent[1]
-            document.getElementById("evres").value = autoevent[2]
-            document.getElementById("evpoint").value = autoevent[3]
-            document.getElementById("evtarget").value = autoevent[4]
-            //console.log(autoevent)
-            if (sessionStorage.getItem("qur") === "2") {
-                document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
-                document.getElementById("rre2").value = (autoevent[5]).split(", ")[1]
-              }
-            else if (sessionStorage.getItem("qur") === "3") {
-                document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
-                document.getElementById("rre2").value = (autoevent[5]).split(", ")[1]
-                document.getElementById("rre3").value = (autoevent[5]).split(", ")[2]
-            }
-            else if (sessionStorage.getItem("qur") === "4") {
-                document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
-                document.getElementById("rre2").value = (autoevent[5]).split(", ")[1]
-                document.getElementById("rre3").value = (autoevent[5]).split(", ")[2]
-                document.getElementById("rre3").value = (autoevent[5]).split(", ")[3]
-            }
-            document.getElementById("problem").value = autoevent[6]
-            setTimeout(() => {
-              document.getElementById("od").checked = false
-            }, 500);
-        }
-        else {
-            document.getElementById("evname").value = ""
-            document.getElementById("fmsid").value = ""
-            document.getElementById("evres").value = ""
-            document.getElementById("evpoint").value = ""
-            document.getElementById("evtarget").value = ""
-            if (sessionStorage.getItem("qur") === "2") {
-                document.getElementById("rre1").value = ""
-                document.getElementById("rre2").value = ""
-              }
-            else if (sessionStorage.getItem("qur") === "3") {
-                document.getElementById("rre1").value = ""
-                document.getElementById("rre2").value = ""
-                document.getElementById("rre3").value = ""
-            }
-            else if (sessionStorage.getItem("qur") === "4") {
-                document.getElementById("rre1").value = ""
-                document.getElementById("rre2").value = ""
-                document.getElementById("rre3").value = ""
-                document.getElementById("rre4").value = ""
-            }
-            document.getElementById("problem").value = ""
-}
-}
+    if (document.getElementById("od").checked === true) {
+      document.getElementById("evname").value = autoevent[0]
+      document.getElementById("fmsid").value = autoevent[1]
+      document.getElementById("evres").value = autoevent[2]
+      document.getElementById("evpoint").value = autoevent[3]
+      document.getElementById("evtarget").value = autoevent[4]
+      //console.log(autoevent)
+      if (sessionStorage.getItem("qur") === "1") {
+        document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
+      }
+      else if (sessionStorage.getItem("qur") === "2") {
+        document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
+        document.getElementById("rre2").value = (autoevent[5]).split(", ")[1]
+      }
+      else if (sessionStorage.getItem("qur") === "3") {
+        document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
+        document.getElementById("rre2").value = (autoevent[5]).split(", ")[1]
+        document.getElementById("rre3").value = (autoevent[5]).split(", ")[2]
+      }
+      else if (sessionStorage.getItem("qur") === "4") {
+        document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
+        document.getElementById("rre2").value = (autoevent[5]).split(", ")[1]
+        document.getElementById("rre3").value = (autoevent[5]).split(", ")[2]
+        document.getElementById("rre4").value = (autoevent[5]).split(", ")[3]
+      }
+      document.getElementById("problem").value = autoevent[6]
+      setTimeout(() => {
+        document.getElementById("od").checked = false
+      }, 500);
+    }
+    else {
+      document.getElementById("evname").value = ""
+      document.getElementById("fmsid").value = ""
+      document.getElementById("evres").value = ""
+      document.getElementById("evpoint").value = ""
+      document.getElementById("evtarget").value = ""
+      if (sessionStorage.getItem("qur") === "1") {
+        document.getElementById("rre1").value = ""
+      }
+      else if (sessionStorage.getItem("qur") === "2") {
+        document.getElementById("rre1").value = ""
+        document.getElementById("rre2").value = ""
+      }
+      else if (sessionStorage.getItem("qur") === "3") {
+        document.getElementById("rre1").value = ""
+        document.getElementById("rre2").value = ""
+        document.getElementById("rre3").value = ""
+      }
+      else if (sessionStorage.getItem("qur") === "4") {
+        document.getElementById("rre1").value = ""
+        document.getElementById("rre2").value = ""
+        document.getElementById("rre3").value = ""
+        document.getElementById("rre4").value = ""
+      }
+      document.getElementById("problem").value = ""
+    }
+  }
 
   const n = param.split("ลำดับที่: ")[1];
   sessionStorage.setItem("fm", n)
@@ -2972,12 +2993,17 @@ const od = () => {
         g += ", "
       }
     }
+
+    if (s.length === 1 && met === 1) {
+      g = "1, " + g
+    }
+
     return g
   }
 
   function qg(val) {
     sts(s);
-    
+
     var q = 0;
     var p = 0;
     var pr1;
@@ -2989,52 +3015,71 @@ const od = () => {
         }
       }
     } else {
-    for (var i = 1; i <= val.length; i++) {
-      if (`${s[i - 1]}`[(s[i - 1].length) - 1] === "*") {
-        q += parseFloat(document.getElementById(`${val[i - 1]}`).value);
-        if (p === 0) {
-          p += parseFloat(document.getElementById(`${val[i - 1]}`).value);
-          pr1 = parseFloat(document.getElementById(`${val[i - 1]}`).value);
-        }
-        else {
-          p /= parseFloat(document.getElementById(`${val[i - 1]}`).value);
-          pr2 = parseFloat(document.getElementById(`${val[i - 1]}`).value);
-        }
+      for (var i = 1; i <= val.length; i++) {
+        if (`${s[i - 1]}`[(s[i - 1].length) - 1] === "*") {
+          q += parseFloat(document.getElementById(`${val[i - 1]}`).value);
+          if (p === 0) {
+            p += parseFloat(document.getElementById(`${val[i - 1]}`).value);
+            pr1 = parseFloat(document.getElementById(`${val[i - 1]}`).value);
+          }
+          else {
+            p /= parseFloat(document.getElementById(`${val[i - 1]}`).value);
+            pr2 = parseFloat(document.getElementById(`${val[i - 1]}`).value);
+          }
 
+        }
       }
-    }
-  
-    if (t[1] === 3)
-      q = q
-    //q = q / val.length
-    else if (t[1] === 2) {
-      if (fc === 0 && pr2 !== 0)
+
+      if (t[1] === 3)
+        q = q
+      //q = q / val.length
+      else if (t[1] === 2) {
+        if (fc === 0 && pr2 != 0)
+          q = pr1
+        else
+          q = pr2
+      }
+      else if (t[1] === 1 && pr2 === 1) {
         q = pr1
-      else
-        q = pr2
-    }
-    else if (t[1] === 1) {
-      if (n === "8" || n === "24" || n === "26") {
-        q = p * 100;
-      } else {
-        q = (p ** (-1)) * 100;
+      } else if (t[1] === 1) {
+        if (n === "24" || n === "26") {
+          q = p * 100;
+        } else {
+          q = (p ** (-1)) * 100;
+        }
       }
+      else if (t[1] === 1) {
+        if (n === "24" || n === "26") {
+          q = p * 100;
+        } else {
+          q = (p ** (-1)) * 100;
+        }
+      }
+
     }
-  }
+    //console.log(pr1)
 
     return q
 
   }
 
   function hg(val) {
+    sts(s);
     var h;
     var g = 0;
+    var uioo1;
+    var uioo2;
     for (var i = 1; i <= val.length; i++) {
       if (`${s[i - 1]}`[(s[i - 1].length) - 1] === "*") {
-        if (g === 0)
+        if (g === 0) {
           g += Number(document.getElementById(`${val[i - 1]}`).value);
+          uioo1 = g
+        }
+          
         else {
           g /= Number(document.getElementById(`${val[i - 1]}`).value);
+          uioo2 = g
+
         }
       }
     }
@@ -3054,13 +3099,13 @@ const od = () => {
       h = "ไม่ผ่าน"
     }
 
-    if (n === "5") {
+    if (n === "5" || n === "20" || n === "20.2") {
       if ((g ** (-1)) * 100 <= t[0]) {
         h = "ผ่าน"
       } else {
         h = "ไม่ผ่าน"
       }
-    } else if (n === "8" || n === "24" || n === "26") {
+    } else if (n === "24" || n === "26") {
       if ((g) * 100 >= t[0]) {
         h = "ผ่าน"
       } else {
@@ -3069,9 +3114,7 @@ const od = () => {
     }
 
     if (met === 2 && s.length >= 2) {
-      if (Number(document.getElementById(val[val.length - 1]).value) <= Number(pa()[3]))
-      h = "ผ่าน"
-      else if (Number(document.getElementById(val[val.length - 1]).value) <= Number(document.getElementById(val[val.length - 2]).value))
+      if (Number(document.getElementById(val[val.length - 1]).value) <= Number(uioo1))
         h = "ผ่าน"
       else {
         h = "ไม่ผ่าน"
@@ -3080,6 +3123,18 @@ const od = () => {
     }
 
     if (s.length === 1) {
+      if (g >= t[0])
+        h = "ผ่าน"
+      else
+        h = "ไม่ผ่าน"
+    } else if (s.length === 2 && n === "39", n === "15", n === "48") {
+      if (g >= t[0])
+      h = "ผ่าน"
+       else 
+        h = "ไม่ผ่าน"
+    }
+
+    if (parast === 1) {
       if (g >= t[0])
       h = "ผ่าน"
        else 
@@ -3136,8 +3191,8 @@ const od = () => {
         if (iff === 0) {
           p1 = 0
           pp1 = 0
-          p1 += pa()[0] - parar[i-1] + Number(document.getElementById(`${val[i - 1]}`).value);
-          pp1 += pa()[2] - parar[i-1] + Number(document.getElementById(`${val[i - 1]}`).value);
+          p1 += pa()[0] - parar[i - 1] + Number(document.getElementById(`${val[i - 1]}`).value);
+          pp1 += pa()[2] - parar[i - 1] + Number(document.getElementById(`${val[i - 1]}`).value);
           po1 += Number(document.getElementById(`${val[i - 1]}`).value);
           t1 += pa()[0] - Number(sessionStorage.getItem("pp")) + Number(document.getElementById(`${val[i - 1]}`).value);
           tt1 += pa()[2] - Number(sessionStorage.getItem("pp")) + Number(document.getElementById(`${val[i - 1]}`).value);
@@ -3158,16 +3213,20 @@ const od = () => {
       }
     }
 
-     if (n === "8" || n === "24" || n === "26") {
-       are = (((p2 / p1) ** (-1)) * 100).toFixed(2)
-       sare = (((pp2 / pp1) ** (-1)) * 100).toFixed(2)
-       oo = (((po2 / po1) ** (-1)) * 100).toFixed(2)
-     }
-     else {
-       are = ((p2 / p1) * 100).toFixed(2)
-       sare = ((pp2 / pp1) * 100).toFixed(2)
-       oo = ((po2 / po1) * 100).toFixed(2)
-     }
+    if (n === "24" || n === "26") {
+      are = (((p2 / p1) ** (-1)) * 100).toFixed(2)
+      sare = (((pp2 / pp1) ** (-1)) * 100).toFixed(2)
+      oo = (((po2 / po1) ** (-1)) * 100).toFixed(2)
+    } else if (n === "39", n === "15", n === "48") {
+      are = (((p2 / p1) ** (-1))).toFixed(2)
+      sare = (((pp2 / pp1) ** (-1))).toFixed(2)
+      oo = (((po2 / po1) ** (-1))).toFixed(2)
+    }
+    else {
+      are = ((p2 / p1) * 100).toFixed(2)
+      sare = ((pp2 / pp1) * 100).toFixed(2)
+      oo = ((po2 / po1) * 100).toFixed(2)
+    }
 
     // are = (((p1 / p2) ** (-1)) * 100).toFixed(2)
     // sare = (((pp1 / pp2) ** (-1)) * 100).toFixed(2)
@@ -3222,7 +3281,7 @@ const od = () => {
         pp2 = pp2
         sare = pp1
       }
-      else if (fc === 0 && t2 !== 0) {
+      else if (fc === 0 && t2 != 0) {
         p1 = t1
         p2 = t2
         are = t2
@@ -3239,13 +3298,25 @@ const od = () => {
       }
 
     }
+    //console.log(q1par2)
+    //console.log(q1par1/q1par2)
 
     pa2 = [p1, p2, are, sare, pp1, pp2, lg]
 
     sts(s);
 
     if (parast === 1) {
+      if (parast === 1 && t[1] === 1) {
+        var ps1 = Number(pa()[0]) + 1
+        var ps2 = Number(pa()[1]) + Number(qg(s))
+        var ps3 = ps2 / ps1
+        var ps4 = Number(pa()[2]) + 1
+        var ps5 = Number(pa()[3]) + Number(qg(s))
+        var ps6 = ps5 / ps4
+        pa2 = [ps1, ps2, ps3, ps6, ps4, ps5, lg]
+      } else {
         pa2 = [Number(pa()[0]) + Number(qg(s)), Number(pa()[0]) + Number(qg(s)), Number(pa()[0]) + Number(qg(s)), qg(s), qg(s), qg(s), lg]
+      }
     }
 
     return pa2

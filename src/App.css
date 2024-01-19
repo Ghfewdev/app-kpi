@@ -328,3 +328,7 @@
   max-width: 650px;
   height: auto;
 }
+
+.hidden {
+  visibility: hidden;
+}
