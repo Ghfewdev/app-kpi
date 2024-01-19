@@ -385,24 +385,20 @@ const FillUp = () => {
         nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon[localStorage.getItem("id") - 10]} readOnly /></p>
       else if (vcon != 0 && i === z.length - 1)
         nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon} readOnly /></p>
-      else if (m === " *" && i === z.length - 1) {
+      else if (m === "*" && i === z.length - 1) {
       nn = <p className='inline textr p hidden'><input className='input30' type="text" id={m} defaultValue={1} readOnly /></p>
     }
-
       try {
         if ((k[1])[2] === "1") {
           if (qqc === 3 || qqc === 4)
             nn = <p className='inline textr p'><input className='input30' type="text" id={m} disabled /></p>
         }
-      } catch { }
-
+      } catch {}
       if (group === "-") {
         group = <></>
         nn = <></>
       }
-
       var sii = <></>
-
       if (y === "-") {
         sii = <button className='btn btn-primary'>บันทึกและส่งข้อมูลโครงการ</button>
       }
@@ -534,8 +530,6 @@ const FillUp = () => {
           }
         }
       }
-      if (isNaN(g))
-        h = "ไม่ผ่าน"
 
       // if (g * 100 > 100)
       //   g = g ** (-1)
@@ -560,9 +554,10 @@ const FillUp = () => {
       }
 
       if(t[1] === 2 && numpa >= 2) {
-        if (Number(document.getElementById(val[val.length-1]).value) <= Number(uioo1))
-        h = "ผ่าน"
-        else if (Number(document.getElementById(val[val.length-1]).value) <= Number(pa()[3]))
+        if (Number(document.getElementById(val[val.length-1]).value) <= Number(uioo2)) {
+          h = "ผ่าน"
+        }
+        else if (Number(uioo2)+Number(pa()[2]) <= document.getElementById(val[val.length-1]).value)
         h = "ผ่าน"
        else {
         h = "ไม่ผ่าน"
@@ -690,15 +685,15 @@ const FillUp = () => {
       
       if (vcon != 0) {
         p1 = p1
-        p2 = p2
+        p2 = 0
         are = p1
         pp1 = pp1
-        pp2 = pp2
+        pp2 = 0
         sare = pp1
       }
       else if (fc === 0 && p2 != 0) {
         p1 = p1
-        p2 = p2
+        p2 = 0
         are = p2
         pp1 = 0
         pp2 = pp2

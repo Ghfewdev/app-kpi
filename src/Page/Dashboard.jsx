@@ -6,6 +6,7 @@ import "chartjs-gauge";
 import Solve from "../Component/Solve";
 import Authen from '../Component/Authen';
 import Fetch from '../Component/Fetch';
+import Solve2 from '../Component/solve2';
 
 
 const Dashboard = () => {
@@ -68,9 +69,15 @@ const Dashboard = () => {
             var sov = <th><h4 className='greent'>{(a.fm_solve)}</h4></th>
             var tc = [(a.h1).toFixed(2), (a.h2).toFixed(2), (a.h3).toFixed(2), (a.h4).toFixed(2), (a.h5).toFixed(2), (a.h6).toFixed(2), (a.h7).toFixed(2), (a.h8).toFixed(2), (a.h9).toFixed(2), (a.h10).toFixed(2), (a.h11).toFixed(2), (a.d1).toFixed(2), (a.d2).toFixed(2), (a.re_sum).toFixed(2)]
             if (itp[i] === 1) {
+              if (a.fm_id === "20" || a.fm_id === "20.2") {
+              ifr = <th><div style={{ width: 155 }}>
+                <Solve2 name={a.re_sum} name2={(a.fm_solve)} do={160} class={"respondash"} />
+              </div></th>
+              } else {
               ifr = <th><div style={{ width: 155 }}>
                 <Solve name={a.re_sum} name2={(a.fm_solve)} do={160} class={"respondash"} />
               </div></th>
+              }
             }
             else if (itp[i] === 2) {
               tc = [a.h1, a.h2, a.h3, a.h4, a.h5, a.h6, a.h7, a.h8, a.h9, a.h10, a.h11, a.d1, a.d2, a.re_sum]
@@ -82,7 +89,7 @@ const Dashboard = () => {
               } else {
                 var t = opp[i].split(", ")
                 var tt = t.reduce((x, y) => Number(x) + Number(y), 0);
-                if (a.pa1 > tt )
+                if (a.pa1 >= tt )
                 ifr = <th><h2 className='greent'>{a.pa1}</h2></th>
                 else {
                   ifr = <th><h2 className='redt'>{a.pa1}</h2></th>

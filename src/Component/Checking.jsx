@@ -98,8 +98,16 @@ const Checking = () => {
             if (!yg.includes(String(i)))
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else if (String(i) !== f && sb1.includes(String([i, f]))) {
-            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
-          }
+              var iop = sb1.split(",")
+              var iiop = [String(i),f]
+              if (iop.includes(iiop[1]))
+              y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
+              else if (String(i) !== f && sb1.includes(String([i, f])))
+              y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
+              //console.log(iop)
+              //console.log(iiop)
+            }
+            
             else if (i === f && !sb1.includes(String([i, f])))
             y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
             else
@@ -154,7 +162,6 @@ const Checking = () => {
             else
             y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
           }
-
             return (
               <tr key={f}>
                 <td>{f}</td>

@@ -8,6 +8,7 @@ import Users from "../Component/Users";
 import "chartjs-gauge";
 import Solve from "../Component/Solve";
 import axios from "axios";
+import Solve2 from "../Component/solve2";
 
 const CalForm = () => {
 
@@ -230,7 +231,7 @@ const CalForm = () => {
         }
         else if (vcon != 0 && i === s.length - 1) {
           nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon} readOnly /></p>
-        } else if (m === " *" && i === s.length - 1) {
+        } else if (m === "*" && i === s.length - 1) {
           nn = <p className='inline textr p hidden'><input className='input30' type="text" id={m} defaultValue={1} readOnly /></p>
         }
         return (
@@ -241,8 +242,7 @@ const CalForm = () => {
           </div>
         )
       }
-      )
-        ;
+      );
       var b = a[0]
       var c = []
       for (var i = 0; i < b.length; i++) {
@@ -257,7 +257,6 @@ const CalForm = () => {
       z = select.map(zz => zz.fm_name)[0]
       p = e.toFixed(2)
       r = d
-
     } else
       console.log("err")
   } catch {
@@ -1066,6 +1065,7 @@ const CalForm = () => {
   function show(props) {
     var a;
     var qwe = 0;
+    
     try {
       if (localStorage.getItem("token").split("$")[1] === "9")
         qwe = pa()[5]
@@ -1076,7 +1076,13 @@ const CalForm = () => {
     }
     //console.log(props)
     if (props != null) {
-
+      var sev = <div style={{ width: 530 }}>
+                <Solve name={qq14[13]} do={530} name2={q} class={"responcal"} />
+              </div>
+      if (n === "20" || n === "20.2")
+      var sev = <div style={{ width: 530 }}>
+                <Solve2 name={qq14[13]} do={530} name2={q} class={"responcal"} />
+              </div>
 
       var hosi = Number(localStorage.getItem("id")) - 10
       //console.log(hosi)
@@ -1402,11 +1408,8 @@ const CalForm = () => {
             <div className="col-4 textc">
             </div>
             <div className="col-1 col-md-4">
-              <div style={{ width: 530 }}>
-                <Solve name={qq14[13]} do={530} name2={q} class={"responcal"} />
-              </div>
+              {sev}
             </div>
-
           </div>
 
         </div>
@@ -3034,10 +3037,11 @@ const CalForm = () => {
         q = q
       //q = q / val.length
       else if (t[1] === 2) {
-        if (fc === 0 && pr2 != 0)
+        if (fc === 0 && pr2 != 0) {
           q = pr1
-        else
-          q = pr2
+        }
+         else
+           q = pr2
       }
       else if (t[1] === 1 && pr2 === 1) {
         q = pr1
@@ -3114,7 +3118,7 @@ const CalForm = () => {
     }
 
     if (met === 2 && s.length >= 2) {
-      if (Number(document.getElementById(val[val.length - 1]).value) <= Number(uioo1))
+      if (Number(uioo2) <= Number(uioo1))
         h = "ผ่าน"
       else {
         h = "ไม่ผ่าน"
@@ -3275,10 +3279,10 @@ const CalForm = () => {
     if (t[1] === 2) {
       if (vcon != 0) {
         p1 = p1
-        p2 = p2
+        p2 = 0
         are = p1
         pp1 = pp1
-        pp2 = pp2
+        pp2 = 0
         sare = pp1
       }
       else if (fc === 0 && t2 != 0) {

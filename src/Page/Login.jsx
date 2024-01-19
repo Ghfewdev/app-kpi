@@ -2,7 +2,6 @@ import React from 'react'
 import Footer from '../Component/Footer';
 
 const Login = () => {
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -35,10 +34,7 @@ const Login = () => {
       .catch((error) => {
         console.log("Error: ", error)
       })
-
   }
-
-
   return (
     <>
       <div className='bgi'>
@@ -64,7 +60,6 @@ const Login = () => {
           </div>
         </div>
         <div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></div>
-        
       </div>
       <Footer />
     </>
