@@ -512,7 +512,7 @@ const CalForm = () => {
     }
 
     setTimeout(() => {
-      if (n === "24" || n === "26") {
+      if (n === "24" || n === "26" || n === "8") {
         qq14[13] = qq14[13] ** (-1)
       } else if (n === "39", n === "15", n === "48") {
         qq14[13] = qq14[13]
@@ -819,7 +819,7 @@ const CalForm = () => {
     sessionStorage.setItem("qur", qur)
     sessionStorage.setItem("edid", fm)
 
-    console.log(pa2(s), pa(), qq14[13], qg(s), hg(s), parast)
+    console.log(pa2(s), pa(), qq14[13], qg(s), hg(s), parast, qq14)
     //console.log(vcon.split(", ")[Number(sessionStorage.getItem("qur"))-1])
     //console.log(n)
   }
@@ -1083,10 +1083,14 @@ const CalForm = () => {
       var sev = <div style={{ width: 530 }}>
                 <Solve2 name={qq14[13]} do={530} name2={q} class={"responcal"} />
               </div>
+      else if (n === "24" || n === "26" || n === "8")
+      var sev = <div style={{ width: 530 }}>
+                <Solve name={((qq14[13]**(-1))*10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
+              </div>
 
       var hosi = Number(localStorage.getItem("id")) - 10
       //console.log(hosi)
-      if (localStorage.getItem("token").split("$")[1] === "9" && fc === 0 && met === 1)
+      if (localStorage.getItem("token").split("$")[1] === "9" && fc === 0 && met === 1) {
         a = <div>
 
           <div className='container mt-3'>
@@ -1350,14 +1354,11 @@ const CalForm = () => {
                   //     qq14[index] = ((qq14[index] ** -1) * 10000).toFixed(2)
                   // }
 
-                  if (n === "24" || n === "26") {
+                  if (n === "24" || n === "26" || n === "8") {
                     qq14[index] = ((qq14[index] ** (-1)) * 10000).toFixed(2)
                   } else if (n === "39", n === "15", n === "48") {
                     qq14[index] = ((qq14[index] ** (-1)) * 100).toFixed(2)
-                    //console.log(qq1)
-                    //console.log(qq12)
-                    //console.log(qq13)
-                  }
+                  } 
 
                   if (isNaN(qq14[index]))
                     qq14[index] = "-"
@@ -1413,7 +1414,7 @@ const CalForm = () => {
           </div>
 
         </div>
-      else if (met === 2)
+    } else if (met === 2)
         a = <div>
 
           <div className='container mt-3'>
@@ -1700,7 +1701,7 @@ const CalForm = () => {
         </div>
       else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 0) {
         var ois = qq14[hosi]
-        if (n === "24" || n === "26")
+        if (n === "24" || n === "26" || n === "8")
           ois = ((qq14[hosi] ** -1) * 10000).toFixed(2)
         else if (n === "39", n === "15", n === "48") {
           ois = ((qq14[hosi] ** -1) * 100).toFixed(2)
@@ -3042,18 +3043,21 @@ const CalForm = () => {
         }
          else
            q = pr2
+      } else if (n === "5") {
+        q = (p ** (-1)) * 100
       }
       else if (t[1] === 1 && pr2 === 1) {
         q = pr1
+        console.log(val.length)
       } else if (t[1] === 1) {
-        if (n === "24" || n === "26") {
+        if (n === "24" || n === "26" || n === "8") {
           q = p * 100;
         } else {
           q = (p ** (-1)) * 100;
         }
       }
       else if (t[1] === 1) {
-        if (n === "24" || n === "26") {
+        if (n === "24" || n === "26" || n === "8") {
           q = p * 100;
         } else {
           q = (p ** (-1)) * 100;
@@ -3103,13 +3107,20 @@ const CalForm = () => {
       h = "ไม่ผ่าน"
     }
 
-    if (n === "5" || n === "20" || n === "20.2") {
+    if (n === "5") {
+      if ((g ** (-1) * 100) <= t[0]) {
+        h = "ผ่าน"
+      } else {
+        h = "ไม่ผ่าน"
+      }
+    }
+    else if (n === "5" || n === "20" || n === "20.2") {
       if ((g ** (-1)) * 100 <= t[0]) {
         h = "ผ่าน"
       } else {
         h = "ไม่ผ่าน"
       }
-    } else if (n === "24" || n === "26") {
+    } else if (n === "24" || n === "26" || n === "8") {
       if ((g) * 100 >= t[0]) {
         h = "ผ่าน"
       } else {
@@ -3217,7 +3228,7 @@ const CalForm = () => {
       }
     }
 
-    if (n === "24" || n === "26") {
+    if (n === "24" || n === "26" || n === "8") {
       are = (((p2 / p1) ** (-1)) * 100).toFixed(2)
       sare = (((pp2 / pp1) ** (-1)) * 100).toFixed(2)
       oo = (((po2 / po1) ** (-1)) * 100).toFixed(2)
@@ -3225,8 +3236,7 @@ const CalForm = () => {
       are = (((p2 / p1) ** (-1))).toFixed(2)
       sare = (((pp2 / pp1) ** (-1))).toFixed(2)
       oo = (((po2 / po1) ** (-1))).toFixed(2)
-    }
-    else {
+    } else {
       are = ((p2 / p1) * 100).toFixed(2)
       sare = ((pp2 / pp1) * 100).toFixed(2)
       oo = ((po2 / po1) * 100).toFixed(2)

@@ -68,7 +68,7 @@ const Checking = () => {
   var yg;
   if (7 <= pq <= 9)
     sq = <div className='container-fluid' id='pqq'>
-    <h2>ข้อมูลการส่งตัวชี้วัดรายหน่อยงานไตรมาสที่ 1 (ไตรมาสปัจจุบัน)</h2>
+    <h2>ข้อมูลการส่งตัวชี้วัดรายหน่วยงานไตรมาสที่ 1 (ไตรมาสปัจจุบัน)</h2>
     <br />
     <table className='table table-bordered border-primary'>
       <thead className="table-dark">
@@ -100,12 +100,14 @@ const Checking = () => {
             else if (String(i) !== f && sb1.includes(String([i, f]))) {
               var iop = sb1.split(",")
               var iiop = [String(i),f]
-              if (iop.includes(iiop[1]))
+              if (iop.includes(iiop[1])) {
               y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
+              console.log(iop)
+              console.log(iiop)
+            }
               else if (String(i) !== f && sb1.includes(String([i, f])))
               y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
-              //console.log(iop)
-              //console.log(iiop)
+              
             }
             
             else if (i === f && !sb1.includes(String([i, f])))
@@ -126,7 +128,7 @@ const Checking = () => {
   </div>
   else if (pq <= 10)
     sq = <div className='container-fluid' id='pqq'>
-      <h2>ข้อมูลการส่งตัวชี้วัดรายหน่อยงานไตรมาสที่ 2 (ไตรมาสปัจจุบัน)</h2>
+      <h2>ข้อมูลการส่งตัวชี้วัดรายหน่วยงานไตรมาสที่ 2 (ไตรมาสปัจจุบัน)</h2>
       <br />
       <table className='table table-bordered border-primary'>
         <thead className="table-dark">
@@ -174,7 +176,7 @@ const Checking = () => {
     </div>
   else if (pq <= 3)
     sq = <div className='container-fluid' id='pqq'>
-      <h2>ข้อมูลการส่งตัวชี้วัดรายหน่อยงานไตรมาสที่ 3 (ไตรมาสปัจจุบัน)</h2>
+      <h2>ข้อมูลการส่งตัวชี้วัดรายหน่วยงานไตรมาสที่ 3 (ไตรมาสปัจจุบัน)</h2>
       <br />
       <table className='table table-bordered border-primary'>
         <thead className="table-dark">
@@ -223,7 +225,7 @@ const Checking = () => {
     </div>
   else if (4 <= pq <= 6)
     sq = <div className='container-fluid' id='pqq'>
-      <h2>ข้อมูลการส่งตัวชี้วัดรายหน่อยงานไตรมาสที่ 4 (ไตรมาสปัจจุบัน)</h2>
+      <h2>ข้อมูลการส่งตัวชี้วัดรายหน่วยงานไตรมาสที่ 4 (ไตรมาสปัจจุบัน)</h2>
       <br />
       <table className='table table-bordered border-primary'>
         <thead className="table-dark">
@@ -324,7 +326,7 @@ const Checking = () => {
       <br />
       {sq}
       <div className='container-fluid' id='pq1' hidden>
-        <h2>ข้อมูลการส่งตัวชี้วัดรายหน่อยงานไตรมาสที่ 1</h2>
+        <h2>ข้อมูลการส่งตัวชี้วัดรายหน่วยงานไตรมาสที่ 1</h2>
         <br />
         <table className='table table-bordered border-primary'>
           <thead className="table-dark">
@@ -372,7 +374,7 @@ const Checking = () => {
         </table>
       </div>
       <div className='container-fluid' id='pq2' hidden>
-        <h2>ข้อมูลการส่งตัวชี้วัดรายหน่อยงานไตรมาสที่ 2</h2>
+        <h2>ข้อมูลการส่งตัวชี้วัดรายหน่วยงานไตรมาสที่ 2</h2>
         <br />
         <table className='table table-bordered border-primary'>
           <thead className="table-dark">
@@ -420,7 +422,7 @@ const Checking = () => {
         </table>
       </div>
       <div className='container-fluid' id='pq3' hidden>
-        <h2>ข้อมูลการส่งตัวชี้วัดรายหน่อยงานไตรมาสที่ 3</h2>
+        <h2>ข้อมูลการส่งตัวชี้วัดรายหน่วยงานไตรมาสที่ 3</h2>
         <br />
         <table className='table table-bordered border-primary'>
           <thead className="table-dark">
@@ -468,7 +470,7 @@ const Checking = () => {
         </table>
       </div>
       <div className='container-fluid' id='pq4' hidden>
-        <h2>ข้อมูลการส่งตัวชี้วัดรายหน่อยงานไตรมาสที่ 4</h2>
+        <h2>ข้อมูลการส่งตัวชี้วัดรายหน่วยงานไตรมาสที่ 4</h2>
         <br />
         <table className='table table-bordered border-primary'>
           <thead className="table-dark">
