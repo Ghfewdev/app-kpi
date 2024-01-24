@@ -3065,6 +3065,9 @@ const CalForm = () => {
       }
 
     }
+
+    if(isNaN(p))
+    q = 0
     //console.log(pr1)
 
     return q
@@ -3155,6 +3158,9 @@ const CalForm = () => {
        else 
         h = "ไม่ผ่าน"
     }
+
+    if (isNaN(g))
+    h = "ไม่ผ่าน"
 
     return h
   }

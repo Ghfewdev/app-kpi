@@ -133,6 +133,8 @@ const AddEvevt = () => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
+        document.getElementById("submit").disabled = true
+
         const JsonData2 = {
             fmid: d[1],
             qur: qrc,

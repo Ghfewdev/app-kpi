@@ -167,6 +167,7 @@ const FillUp = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    document.getElementById("submit").disabled = true
     const data = new FormData(event.currentTarget);
     const JsonData = {
       formid: d[1],
@@ -503,7 +504,11 @@ const FillUp = () => {
 
     if (isNaN(q)) {
          sessionStorage.setItem("non", "no")
-      } 
+      }
+    
+      if (isNaN(p)) {
+        q = 0
+     } 
 
     // if (parast === 1)
     // q = document.getElementById([z]).value
@@ -593,6 +598,9 @@ const FillUp = () => {
        else 
         h = "ไม่ผ่าน"
     }
+
+    if (isNaN(g))
+    h = "ไม่ผ่าน"
 
     return h
   }
