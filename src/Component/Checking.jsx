@@ -14,6 +14,107 @@ const Checking = () => {
   const fres = Fetch().map(f => f.fm_res);
   const fn = fet.length;
 
+  function checkk(val) {
+
+    var chg1 = []
+    var chg2 = []
+    var chg3 = []
+    var chg4 = []
+    var chg5 = []
+    var chg6 = []
+    var chg7 = []
+    var chg8 = []
+    var chg9 = []
+    var chg10 = []
+    var chg11 = []
+    var chg12 = []
+    var chg13 = []
+
+    for (var d = 0; d <= b1.length; d++) {
+      if (val[d] != undefined) {
+        if (val[d].includes(10))
+          chg1.push(val[d][1])
+        if (val[d].includes(11))
+          chg2.push(val[d][1])
+        if (val[d].includes(12))
+          chg3.push(val[d][1])
+        if (val[d].includes(13))
+          chg4.push(val[d][1])
+        if (val[d].includes(14))
+          chg5.push(val[d][1])
+        if (val[d].includes(15))
+          chg6.push(val[d][1])
+        if (val[d].includes(16))
+          chg7.push(val[d][1])
+        if (val[d].includes(17))
+          chg8.push(val[d][1])
+        if (val[d].includes(18))
+          chg9.push(val[d][1])
+        if (val[d].includes(19))
+          chg10.push(val[d][1])
+        if (val[d].includes(20))
+          chg11.push(val[d][1])
+        if (val[d].includes(21))
+          chg12.push(val[d][1])
+        if (val[d].includes(22))
+          chg13.push(val[d][1])
+      }
+    }
+
+    var y = <tbody>{fet.map((f, j) => {
+      var check = <h4 className="bi bi-x-circle"></h4>
+      var y = "";
+      yg = String((fres[j]))
+      for (var i = 10; i <= 22; i++) {
+        if (!yg.includes(String(i)))
+          y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+        else if (String(i) !== f && sb1.includes(String([i, f]))) {
+          if (i === 10 && chg1.includes(f))
+            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
+          else if (i === 11 && chg2.includes(f))
+            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
+          else if (i === 12 && chg3.includes(f))
+            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
+          else if (i === 13 && chg4.includes(f))
+            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
+          else if (i === 14 && chg5.includes(f))
+            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
+          else if (i === 15 && chg6.includes(f))
+            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
+          else if (i === 16 && chg7.includes(f))
+            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
+          else if (i === 17 && chg8.includes(f))
+            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
+          else if (i === 18 && chg9.includes(f))
+            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
+          else if (i === 19 && chg10.includes(f))
+            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
+          else if (i === 20 && chg11.includes(f))
+            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
+          else if (i === 21 && chg12.includes(f))
+            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
+          else if (i === 22 && chg13.includes(f))
+            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
+          else
+            y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
+        }
+        else if (i === f && !sb1.includes(String([i, f])))
+          y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
+        else
+          y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
+      }
+      return (
+        <tr key={f}>
+          <td>{f}</td>
+          {parse(y)}
+        </tr>
+      )
+    })}
+    </tbody>
+
+    return y
+
+  }
 
   if (tableData1 != undefined) {
     var a1 = tableData1.map(t => t.fm_res);
@@ -68,64 +169,30 @@ const Checking = () => {
   var yg;
   if (7 <= pq <= 9)
     sq = <div className='container-fluid' id='pqq'>
-    <h2>ข้อมูลการส่งตัวชี้วัดรายหน่วยงานไตรมาสที่ 1 (ไตรมาสปัจจุบัน)</h2>
-    <br />
-    <table className='table table-bordered border-primary'>
-      <thead className="table-dark">
-        <tr>
-          <th scope="col">ตัวชี้วัด</th>
-          <th scope="col">รพก</th>
-          <th scope="col">รพต</th>
-          <th scope="col">รพจ</th>
-          <th scope="col">รพท</th>
-          <th scope="col">รพว</th>
-          <th scope="col">รพล</th>
-          <th scope="col">รพร</th>
-          <th scope="col">รพส</th>
-          <th scope="col">รพข</th>
-          <th scope="col">รพค</th>
-          <th scope="col">รพบ</th>
-          <th scope="col">สก</th>
-          <th scope="col">ศบฉ</th>
-        </tr>
-      </thead>
-      <tbody>
-        {fet.map((f, j) => {
-          var check = <h4 className="bi bi-x-circle"></h4>
-          var y = "";
-          yg = String((fres[j]))
-          for (var i = 10; i <= 22; i++) {
-            if (!yg.includes(String(i)))
-            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else if (String(i) !== f && sb1.includes(String([i, f]))) {
-              var iop = sb1.split(",")
-              var iiop = [String(i),f]
-              if (iop.includes(iiop[1])) {
-              y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
-              console.log(iop)
-              console.log(iiop)
-            }
-              else if (String(i) !== f && sb1.includes(String([i, f])))
-              y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
-              
-            }
-            
-            else if (i === f && !sb1.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else
-            y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
-          }
-          //console.log(yg)
-          return (
-            <tr key={f}>
-              <td>{f}</td>
-              {parse(y)}
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
-  </div>
+      <h2>ข้อมูลการส่งตัวชี้วัดรายหน่วยงานไตรมาสที่ 1 (ไตรมาสปัจจุบัน)</h2>
+      <br />
+      <table className='table table-bordered border-primary'>
+        <thead className="table-dark">
+          <tr>
+            <th scope="col">ตัวชี้วัด</th>
+            <th scope="col">รพก</th>
+            <th scope="col">รพต</th>
+            <th scope="col">รพจ</th>
+            <th scope="col">รพท</th>
+            <th scope="col">รพว</th>
+            <th scope="col">รพล</th>
+            <th scope="col">รพร</th>
+            <th scope="col">รพส</th>
+            <th scope="col">รพข</th>
+            <th scope="col">รพค</th>
+            <th scope="col">รพบ</th>
+            <th scope="col">สก</th>
+            <th scope="col">ศบฉ</th>
+          </tr>
+        </thead>
+          {checkk(b1)}
+      </table>
+    </div>
   else if (pq <= 10)
     sq = <div className='container-fluid' id='pqq'>
       <h2>ข้อมูลการส่งตัวชี้วัดรายหน่วยงานไตรมาสที่ 2 (ไตรมาสปัจจุบัน)</h2>
@@ -149,29 +216,7 @@ const Checking = () => {
             <th scope="col">ศบฉ</th>
           </tr>
         </thead>
-        <tbody>
-        {fet.map((f, j) => {
-          var check = <h4 className="bi bi-x-circle"></h4>
-          var y = "";
-          yg = String(fres[j])
-          for (var i = 10; i <= 22; i++) {
-            if (!yg.includes(String(i)))
-            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else if (String(i) !== f && sb2.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
-            else if (i === f && !sb2.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else
-            y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
-          }
-            return (
-              <tr key={f}>
-                <td>{f}</td>
-                {parse(y)}
-              </tr>
-            )
-          })}
-        </tbody>
+        {checkk(b2)}
       </table>
     </div>
   else if (pq <= 3)
@@ -197,30 +242,7 @@ const Checking = () => {
             <th scope="col">ศบฉ</th>
           </tr>
         </thead>
-        <tbody>
-        {fet.map((f, j) => {
-          var check = <h4 className="bi bi-x-circle"></h4>
-          var y = "";
-          yg = String(fres[j])
-          for (var i = 10; i <= 22; i++) {
-            if (!yg.includes(String(i)))
-            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else if (String(i) !== f && sb3.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
-            else if (i === f && !sb3.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else
-            y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
-          }
-
-            return (
-              <tr key={f}>
-                <td>{f}</td>
-                {parse(y)}
-              </tr>
-            )
-          })}
-        </tbody>
+        {checkk(b3)}
       </table>
     </div>
   else if (4 <= pq <= 6)
@@ -246,30 +268,7 @@ const Checking = () => {
             <th scope="col">ศบฉ</th>
           </tr>
         </thead>
-        <tbody>
-        {fet.map((f, j) => {
-          var check = <h4 className="bi bi-x-circle"></h4>
-          var y = "";
-          yg = String(fres[j])
-          for (var i = 10; i <= 22; i++) {
-            if (!yg.includes(String(i)))
-            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else if (String(i) !== f && sb4.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
-            else if (i === f && !sb4.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else
-            y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
-          }
-
-            return (
-              <tr key={f}>
-                <td>{f}</td>
-                {parse(y)}
-              </tr>
-            )
-          })}
-        </tbody>
+        {checkk(b4)}
       </table>
     </div>
 
@@ -347,30 +346,7 @@ const Checking = () => {
               <th scope="col">ศบฉ</th>
             </tr>
           </thead>
-          <tbody>
-          {fet.map((f, j) => {
-          var check = <h4 className="bi bi-x-circle"></h4>
-          var y = "";
-          yg = String(fres[j])
-          for (var i = 10; i <= 22; i++) {
-            if (!yg.includes(String(i)))
-            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else if (String(i) !== f && sb1.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
-            else if (i === f && !sb1.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else
-            y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
-          }
-
-              return (
-                <tr key={f}>
-                  <td>{f}</td>
-                  {parse(y)}
-                </tr>
-              )
-            })}
-          </tbody>
+          {checkk(b1)}
         </table>
       </div>
       <div className='container-fluid' id='pq2' hidden>
@@ -395,30 +371,7 @@ const Checking = () => {
               <th scope="col">ศบฉ</th>
             </tr>
           </thead>
-          <tbody>
-          {fet.map((f, j) => {
-          var check = <h4 className="bi bi-x-circle"></h4>
-          var y = "";
-          yg = String(fres[j])
-          for (var i = 10; i <= 22; i++) {
-            if (!yg.includes(String(i)))
-            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else if (String(i) !== f && sb2.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
-            else if (i === f && !sb2.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else
-            y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
-          }
-
-              return (
-                <tr key={f}>
-                  <td>{f}</td>
-                  {parse(y)}
-                </tr>
-              )
-            })}
-          </tbody>
+          {checkk(b2)}
         </table>
       </div>
       <div className='container-fluid' id='pq3' hidden>
@@ -443,30 +396,7 @@ const Checking = () => {
               <th scope="col">ศบฉ</th>
             </tr>
           </thead>
-          <tbody>
-          {fet.map((f, j) => {
-          var check = <h4 className="bi bi-x-circle"></h4>
-          var y = "";
-          yg = String(fres[j])
-          for (var i = 10; i <= 22; i++) {
-            if (!yg.includes(String(i)))
-            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else if (String(i) !== f && sb3.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
-            else if (i === f && !sb3.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else
-            y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
-          }
-
-              return (
-                <tr key={f}>
-                  <td>{f}</td>
-                  {parse(y)}
-                </tr>
-              )
-            })}
-          </tbody>
+          {checkk(b3)}
         </table>
       </div>
       <div className='container-fluid' id='pq4' hidden>
@@ -491,30 +421,7 @@ const Checking = () => {
               <th scope="col">ศบฉ</th>
             </tr>
           </thead>
-          <tbody>
-          {fet.map((f, j) => {
-          var check = <h4 className="bi bi-x-circle"></h4>
-          var y = "";
-          yg = String(fres[j])
-          for (var i = 10; i <= 22; i++) {
-            if (!yg.includes(String(i)))
-            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else if (String(i) !== f && sb4.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
-            else if (i === f && !sb4.includes(String([i, f])))
-            y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
-            else
-            y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
-          }
-
-              return (
-                <tr key={f}>
-                  <td>{f}</td>
-                  {parse(y)}
-                </tr>
-              )
-            })}
-          </tbody>
+          {checkk(b4)}
         </table>
       </div>
     </>

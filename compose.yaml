@@ -2,6 +2,8 @@ services:
   web:
     build: ./app-kpi
     restart: always
+    volumes:
+      - ./files:/app/files
     ports:
       - "3000:80"
     networks:

@@ -226,7 +226,7 @@ const CalForm = () => {
         ansl = select[0].fm_solve
       var ss = s.map((m, i) => {
         nn = <p className='inline textr p'><input className='input30' type="text" id={m} required /></p>
-        if (io.length === 11 && i === s.length - 1) {
+        if (io.length === 13 && i === s.length - 1) {
           nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon.split(", ")[Number(sessionStorage.getItem("qur")) - 1]} readOnly /></p>
         }
         else if (vcon != 0 && i === s.length - 1) {
@@ -314,14 +314,15 @@ const CalForm = () => {
         nqq1p2.push(q1par2)
         if (q1par1 > q1par2) {
           qq1.push(((q1par2 / q1par1) * 100).toFixed(2))
-          
-          if ((q1par2 / q1par1) * 100 > q)
+          qq1.push((((q1par2 / q1par1) * 100).toFixed(2)**(-1)))
+
+          if ((q1par2 / q1par1) * 100 >= q)
             re1.push("ผ่าน")
           else re1.push("ไม่ผ่าน")
         }
         else {
           qq1.push(((q1par1 / q1par2) * 100).toFixed(2))
-          if ((q1par1 / q1par2) * 100 > q)
+          if ((q1par1 / q1par2) * 100 >= q)
             re1.push("ผ่าน")
           else re1.push("ไม่ผ่าน")
         }
@@ -514,11 +515,10 @@ const CalForm = () => {
     setTimeout(() => {
       if (n === "24" || n === "26" || n === "8") {
         qq14[13] = qq14[13] ** (-1)
-      } else if (n === "39", n === "15", n === "48") {
+      } else if (n === "39" || n === "15" || n === "48") {
         qq14[13] = qq14[13]
-        document.getElementById("ccc").hidden = true
       }
-    }, 200)
+    }, 300)
     // if (n === "8" || n ==="24") {
     //   qq14 = qq14**(-1)
     // }
@@ -819,7 +819,7 @@ const CalForm = () => {
     sessionStorage.setItem("qur", qur)
     sessionStorage.setItem("edid", fm)
 
-    console.log(pa2(s), pa(), qq14[13], qg(s), hg(s), parast, qq14)
+    console.log(pa2(s), pa(), qq14[13], qg(s), hg(s), parast)
     //console.log(vcon.split(", ")[Number(sessionStorage.getItem("qur"))-1])
     //console.log(n)
   }
@@ -1065,7 +1065,7 @@ const CalForm = () => {
   function show(props) {
     var a;
     var qwe = 0;
-    
+
     try {
       if (localStorage.getItem("token").split("$")[1] === "9")
         qwe = pa()[5]
@@ -1077,16 +1077,20 @@ const CalForm = () => {
     //console.log(props)
     if (props != null) {
       var sev = <div style={{ width: 530 }}>
-                <Solve name={qq14[13]} do={530} name2={q} class={"responcal"} />
-              </div>
+        <Solve name={qq14[13]} do={530} name2={q} class={"responcal"} />
+      </div>
       if (n === "20" || n === "20.2")
-      var sev = <div style={{ width: 530 }}>
-                <Solve2 name={qq14[13]} do={530} name2={q} class={"responcal"} />
-              </div>
+        var sev = <div style={{ width: 530 }}>
+          <Solve2 name={qq14[13]} do={530} name2={q} class={"responcal"} />
+        </div>
       else if (n === "24" || n === "26" || n === "8")
-      var sev = <div style={{ width: 530 }}>
-                <Solve name={((qq14[13]**(-1))*10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
-              </div>
+        var sev = <div style={{ width: 530 }}>
+          <Solve name={((qq14[13] ** (-1)) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
+        </div>
+       else if (n === "39" || n === "15" || n === "48")
+         var sev = <div style={{ width: 530 }}>
+           <Solve name={(qq14[13]**(-1) * 100).toFixed(2)} do={530} name2={q} class={"responcal"} />
+         </div>
 
       var hosi = Number(localStorage.getItem("id")) - 10
       //console.log(hosi)
@@ -1356,9 +1360,10 @@ const CalForm = () => {
 
                   if (n === "24" || n === "26" || n === "8") {
                     qq14[index] = ((qq14[index] ** (-1)) * 10000).toFixed(2)
-                  } else if (n === "39", n === "15", n === "48") {
+                  } else if (n === "39" || n === "15" || n === "48") {
                     qq14[index] = ((qq14[index] ** (-1)) * 100).toFixed(2)
-                  } 
+                    qq1[13] = ((qq1[14])*100).toFixed(2)
+                  }
 
                   if (isNaN(qq14[index]))
                     qq14[index] = "-"
@@ -1414,7 +1419,7 @@ const CalForm = () => {
           </div>
 
         </div>
-    } else if (met === 2)
+      } else if (met === 2)
         a = <div>
 
           <div className='container mt-3'>
@@ -1703,7 +1708,7 @@ const CalForm = () => {
         var ois = qq14[hosi]
         if (n === "24" || n === "26" || n === "8")
           ois = ((qq14[hosi] ** -1) * 10000).toFixed(2)
-        else if (n === "39", n === "15", n === "48") {
+        else if (n === "39"|| n === "15" || n === "48") {
           ois = ((qq14[hosi] ** -1) * 100).toFixed(2)
         }
 
@@ -3010,6 +3015,7 @@ const CalForm = () => {
 
     var q = 0;
     var p = 0;
+    var d = 0;
     var pr1;
     var pr2;
     if (parast === 1) {
@@ -3022,9 +3028,10 @@ const CalForm = () => {
       for (var i = 1; i <= val.length; i++) {
         if (`${s[i - 1]}`[(s[i - 1].length) - 1] === "*") {
           q += parseFloat(document.getElementById(`${val[i - 1]}`).value);
-          if (p === 0) {
+          if (d === 0) {
             p += parseFloat(document.getElementById(`${val[i - 1]}`).value);
             pr1 = parseFloat(document.getElementById(`${val[i - 1]}`).value);
+            d = 1
           }
           else {
             p /= parseFloat(document.getElementById(`${val[i - 1]}`).value);
@@ -3041,8 +3048,8 @@ const CalForm = () => {
         if (fc === 0 && pr2 != 0) {
           q = pr1
         }
-         else
-           q = pr2
+        else
+          q = pr2
       } else if (n === "5") {
         q = (p ** (-1)) * 100
       }
@@ -3066,8 +3073,9 @@ const CalForm = () => {
 
     }
 
-    if(isNaN(p))
-    q = 0
+    if (q === Infinity) {
+      q = 0
+    }
     //console.log(pr1)
 
     return q
@@ -3078,18 +3086,20 @@ const CalForm = () => {
     sts(s);
     var h;
     var g = 0;
+    var d = 0;
     var uioo1;
     var uioo2;
     for (var i = 1; i <= val.length; i++) {
       if (`${s[i - 1]}`[(s[i - 1].length) - 1] === "*") {
-        if (g === 0) {
+        if (d === 0) {
           g += Number(document.getElementById(`${val[i - 1]}`).value);
-          uioo1 = g
+          uioo1 = Number(document.getElementById(`${val[i - 1]}`).value);
+          d = 1
         }
-          
+
         else {
           g /= Number(document.getElementById(`${val[i - 1]}`).value);
-          uioo2 = g
+          uioo2 = Number(document.getElementById(`${val[i - 1]}`).value);
 
         }
       }
@@ -3132,7 +3142,10 @@ const CalForm = () => {
     }
 
     if (met === 2 && s.length >= 2) {
-      if (Number(uioo2) <= Number(uioo1))
+      console.log(Number(pa2(s)[3]), uioo2)
+      if (Number(uioo1) >= Number(uioo2))
+        h = "ผ่าน"
+      else if (Number(pa2(s)[3]) >= Number(uioo2))
         h = "ผ่าน"
       else {
         h = "ไม่ผ่าน"
@@ -3145,22 +3158,22 @@ const CalForm = () => {
         h = "ผ่าน"
       else
         h = "ไม่ผ่าน"
-    } else if (s.length === 2 && n === "39", n === "15", n === "48") {
+    } else if (s.length === 2 && n === "39" || n === "15" || n === "48") {
       if (g >= t[0])
-      h = "ผ่าน"
-       else 
+        h = "ผ่าน"
+      else
         h = "ไม่ผ่าน"
     }
 
     if (parast === 1) {
       if (g >= t[0])
-      h = "ผ่าน"
-       else 
+        h = "ผ่าน"
+      else
         h = "ไม่ผ่าน"
     }
 
     if (isNaN(g))
-    h = "ไม่ผ่าน"
+      h = "ไม่ผ่าน"
 
     return h
   }
@@ -3238,7 +3251,7 @@ const CalForm = () => {
       are = (((p2 / p1) ** (-1)) * 100).toFixed(2)
       sare = (((pp2 / pp1) ** (-1)) * 100).toFixed(2)
       oo = (((po2 / po1) ** (-1)) * 100).toFixed(2)
-    } else if (n === "39", n === "15", n === "48") {
+    } else if (n === "39" || n === "15" || n === "48") {
       are = (((p2 / p1) ** (-1))).toFixed(2)
       sare = (((pp2 / pp1) ** (-1))).toFixed(2)
       oo = (((po2 / po1) ** (-1))).toFixed(2)
