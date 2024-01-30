@@ -8,7 +8,7 @@ const Post = () => {
     setTimeout(() => {
       sessionStorage.removeItem("postfi")
       location = "addevent"
-    }, 3000)
+    }, 2000)
   } else {
     location = "/"
   }

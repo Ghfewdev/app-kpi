@@ -241,7 +241,7 @@ const FillUp = () => {
       })
       .then(data => {
         setForms({ ...forms, form: data })
-      })
+      });
 
     fetch(import.meta.env.VITE_APP_API + `/form/res/${localStorage.getItem("id")}`)
       .then(response => {
@@ -249,7 +249,7 @@ const FillUp = () => {
       })
       .then(data2 => {
         setForms({ ...forms, formres: data2 })
-      })
+      });
 
   }
 
@@ -504,7 +504,8 @@ const FillUp = () => {
     }
 
     if (isNaN(q)) {
-      sessionStorage.setItem("non", "no")
+      //sessionStorage.setItem("non", "no")
+      q = 0
     }
 
     if (p === Infinity) {
@@ -844,7 +845,10 @@ const FillUp = () => {
   }
 
   useEffect(() => {
-    fetchUserDataForm()
+    fetchUserDataForm();
+    setTimeout(() => {
+      refech();
+    }, 200);
   }, [])
 
   return (

@@ -369,7 +369,7 @@ const CalForm = () => {
           else re2.push("ไม่ผ่าน")
         }
         else {
-          qq2.push(((q2par2 / q2par1) * 100).toFixed(2))
+          qq2.push(((q2par1 / q2par2) * 100).toFixed(2))
           if ((q2par1 / q2par2) * 100 > q)
             re2.push("ผ่าน")
           else re2.push("ไม่ผ่าน")
@@ -414,7 +414,7 @@ const CalForm = () => {
           else re2.push("ไม่ผ่าน")
         }
         else {
-          qq3.push(((q3par2 / q3par1) * 100).toFixed(2))
+          qq3.push(((q3par1 / q3par2) * 100).toFixed(2))
           if ((q3par1 / q3par2) * 100 > q)
             re2.push("ผ่าน")
           else re2.push("ไม่ผ่าน")
@@ -458,7 +458,7 @@ const CalForm = () => {
           else re4.push("ไม่ผ่าน")
         }
         else {
-          qq4.push(((q4par2 / q4par1) * 100).toFixed(2))
+          qq4.push(((q4par1 / q4par2) * 100).toFixed(2))
           if ((q4par1 / q4par2) * 100 > q)
             re4.push("ผ่าน")
           else re4.push("ไม่ผ่าน")
@@ -2130,7 +2130,7 @@ const CalForm = () => {
                     re14[index] = <h4 className="bi bi-check-circle greent"></h4>
                   else re14[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
-                  //console.log("qqall" ,qqall)
+                  //console.log("qq", qq2)
                   return (
                     <tr key={index}>
                       <td>{an[index]}</td>
@@ -2390,9 +2390,16 @@ const CalForm = () => {
         </div>
 
       else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 1) {
-        var ois = qq14[hosi]
-        if (qq14[hosi] > 100)
-          ois = ((qq14[hosi] ** -1) * 10000).toFixed(2)
+        if (qq4[hosi] === "-")
+          qq4[hosi] = qq3[hosi]
+        if (qq3[hosi] === "-")
+          qq4[hosi] = qq2[hosi]
+        if (qq2[hosi] === "-")
+          qq4[hosi] = qq1[hosi]
+        var ois = qq4[hosi]
+        if (qq4[hosi] > 100)
+          ois = ((qq4[hosi] ** -1) * 10000).toFixed(2)
+
         a = <div>
 
           <div className='container mt-3'>
@@ -3074,6 +3081,10 @@ const CalForm = () => {
     }
 
     if (q === Infinity) {
+      q = 0
+    }
+
+    if (isNaN(q)) {
       q = 0
     }
     //console.log(pr1)

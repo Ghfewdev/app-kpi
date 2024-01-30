@@ -70,27 +70,34 @@ const Dashboard = () => {
             var tc = [(a.h1).toFixed(2), (a.h2).toFixed(2), (a.h3).toFixed(2), (a.h4).toFixed(2), (a.h5).toFixed(2), (a.h6).toFixed(2), (a.h7).toFixed(2), (a.h8).toFixed(2), (a.h9).toFixed(2), (a.h10).toFixed(2), (a.h11).toFixed(2), (a.d1).toFixed(2), (a.d2).toFixed(2), (a.re_sum).toFixed(2)]
             if (itp[i] === 1) {
               if (a.fm_id === "20" || a.fm_id === "20.2") {
-              ifr = <th><div style={{ width: 155 }}>
-                <Solve2 name={a.re_sum} name2={(a.fm_solve)} do={160} class={"respondash"} />
-              </div></th>
+                ifr = <th><div style={{ width: 155 }}>
+                  <Solve2 name={a.re_sum} name2={(a.fm_solve)} do={160} class={"respondash"} />
+                </div></th>
               } else {
-              ifr = <th><div style={{ width: 155 }}>
-                <Solve name={a.re_sum} name2={(a.fm_solve)} do={160} class={"respondash"} />
-              </div></th>
+                ifr = <th><div style={{ width: 155 }}>
+                  <Solve name={a.re_sum} name2={(a.fm_solve)} do={160} class={"respondash"} />
+                </div></th>
               }
             }
             else if (itp[i] === 2) {
               tc = [a.h1, a.h2, a.h3, a.h4, a.h5, a.h6, a.h7, a.h8, a.h9, a.h10, a.h11, a.d1, a.d2, a.re_sum]
-              if (opp[i] === "0") {
+              
+              if (a.fm_id === "47") {
+                if ((a.pa1 / 7) >= Number(opp[i]))
+                  ifr = <th><h4 className='greent'>{Math.floor(a.pa1 / 7)}</h4></th>
+                else
+                  ifr = <th><h4 className='redt'>{Math.floor(a.pa1 / 7)}</h4></th>
+              }
+              else if (opp[i] === "0") {
                 if (a.pa2 === 0)
                   ifr = <th><h4 className='greent'>{a.pa1}</h4></th>
                 else
                   ifr = <th><h4 className='greent'>{a.pa2}</h4></th>
               } else {
                 var t = opp[i].split(", ")
-                var tt = t.reduce((x, y) => Number(x) + Number(y), 0);
-                if (a.pa1 >= tt )
-                ifr = <th><h2 className='greent'>{a.pa1}</h2></th>
+              var tt = t.reduce((x, y) => Number(x) + Number(y), 0);
+                if (a.pa1 >= tt)
+                  ifr = <th><h2 className='greent'>{a.pa1}</h2></th>
                 else {
                   ifr = <th><h2 className='redt'>{a.pa1}</h2></th>
                 }
@@ -100,9 +107,9 @@ const Dashboard = () => {
             else if (itp[i] === 3) {
               tc = [a.h1, a.h2, a.h3, a.h4, a.h5, a.h6, a.h7, a.h8, a.h9, a.h10, a.h11, a.d1, a.d2, a.re_sum]
               if (a.re_sum === 36)
-              ifr = <th><h5 className='greent'>ส่งข้อมูลครบ</h5></th>
+                ifr = <th><h5 className='greent'>ส่งข้อมูลครบ</h5></th>
               else
-              ifr = <th><h5 className='greent'>โครงการ</h5></th>
+                ifr = <th><h5 className='greent'>โครงการ</h5></th>
             }
             return (
               <tr key={i}>
