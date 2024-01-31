@@ -488,6 +488,9 @@ const FillUp = () => {
       if (d[1] === "5") {
         q = (p ** (-1)) * 100;
       }
+      else if (d[1] === "20" || d[1] === "20.2") {
+        q = (p);
+      }
       else if (t[1] === 1 && pr2 === 1) {
         q = pr1
       } else if (t[1] === 1) {
@@ -560,8 +563,8 @@ const FillUp = () => {
           h = "ไม่ผ่าน"
         }
       }
-      else if (d[1] === "5" || d[1] === "20" || d[1] === "20.2") {
-        if ((g ** (-1)) * 100 <= t[0]) {
+      else if (d[1] === "20" || d[1] === "20.2") {
+        if ((g) <= t[0]) {
           h = "ผ่าน"
         } else {
           h = "ไม่ผ่าน"
@@ -683,6 +686,10 @@ const FillUp = () => {
       are = (((p2 / p1) ** (-1))).toFixed(2)
       sare = (((pp2 / pp1) ** (-1))).toFixed(2)
       oo = (((po2 / po1) ** (-1))).toFixed(2)
+    } else if (d[1] === "20" || d[1] === "20.2") {
+      are = ((p1 / p2)).toFixed(2)
+      sare = ((pp1 / pp2)).toFixed(2)
+      oo = ((po1 / po2)).toFixed(2)
     }
     else {
       are = ((p2 / p1) * 100).toFixed(2)
@@ -819,7 +826,7 @@ const FillUp = () => {
     console.log(h(z))
     //console.log(parast)
     console.log(pa2(z))
-    console.log(pa())
+    //console.log(pa())
 
 
 

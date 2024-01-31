@@ -314,7 +314,7 @@ const CalForm = () => {
         nqq1p2.push(q1par2)
         if (q1par1 > q1par2) {
           qq1.push(((q1par2 / q1par1) * 100).toFixed(2))
-          qq1.push((((q1par2 / q1par1) * 100).toFixed(2)**(-1)))
+          qq1.push((((q1par2 / q1par1) * 100).toFixed(2) ** (-1)))
 
           if ((q1par2 / q1par1) * 100 >= q)
             re1.push("ผ่าน")
@@ -517,6 +517,8 @@ const CalForm = () => {
         qq14[13] = qq14[13] ** (-1)
       } else if (n === "39" || n === "15" || n === "48") {
         qq14[13] = qq14[13]
+      } else if (n === "20" || n === "20.2") {
+        qq14 = qqn1p14.map((q, i) => ((q / qqn2p14[i])).toFixed(2));
       }
     }, 300)
     // if (n === "8" || n ==="24") {
@@ -819,9 +821,9 @@ const CalForm = () => {
     sessionStorage.setItem("qur", qur)
     sessionStorage.setItem("edid", fm)
 
-    console.log(pa2(s), pa(), qq14[13], qg(s), hg(s), parast)
+    console.log(pa2(s), qq14[13], qg(s), hg(s), parast)
     //console.log(vcon.split(", ")[Number(sessionStorage.getItem("qur"))-1])
-    //console.log(n)
+    //console.log(qq1)
   }
 
   function reu() {
@@ -1081,16 +1083,16 @@ const CalForm = () => {
       </div>
       if (n === "20" || n === "20.2")
         var sev = <div style={{ width: 530 }}>
-          <Solve2 name={qq14[13]} do={530} name2={q} class={"responcal"} />
+          <Solve2 name={(qqn1p14[13] / qqn2p14[13]).toFixed(2)} do={530} name2={q} class={"responcal"} />
         </div>
       else if (n === "24" || n === "26" || n === "8")
         var sev = <div style={{ width: 530 }}>
           <Solve name={((qq14[13] ** (-1)) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
         </div>
-       else if (n === "39" || n === "15" || n === "48")
-         var sev = <div style={{ width: 530 }}>
-           <Solve name={(qq14[13]**(-1) * 100).toFixed(2)} do={530} name2={q} class={"responcal"} />
-         </div>
+      else if (n === "39" || n === "15" || n === "48")
+        var sev = <div style={{ width: 530 }}>
+          <Solve name={(qq14[13] ** (-1) * 100).toFixed(2)} do={530} name2={q} class={"responcal"} />
+        </div>
 
       var hosi = Number(localStorage.getItem("id")) - 10
       //console.log(hosi)
@@ -1296,7 +1298,59 @@ const CalForm = () => {
                     uu4 = <h4 className="bi bi-check-circle greent"></h4>
 
 
-                  //q1-4
+                  if (n === "24" || n === "26" || n === "8") {
+                    qq14[index] = ((qq14[index] ** (-1)) * 10000).toFixed(2)
+                  } else if (n === "39" || n === "15" || n === "48") {
+                    qq14[index] = ((qq14[index] ** (-1)) * 100).toFixed(2)
+                    qq1[13] = ((qq1[14]) * 100).toFixed(2)
+                  } else if (n === "20" || n === "20.2") {
+                    qq1[13] = (q1par1 / q1par2).toFixed(2)
+                    if (qq1[13] < q)
+                      re1[13] = "ผ่าน"
+                    else
+                      re1[13] = "ไม่ผ่าน"
+                    qq12[index] = (qqn1p12[index] / qqn2p12[index]).toFixed(2)
+                    qq13[index] = (qqn1p13[index] / qqn2p13[index]).toFixed(2)
+                    qq14[index] = (qqn1p14[index] / qqn2p14[index]).toFixed(2)
+                  }
+
+                  if (isNaN(qq12[index]))
+                    qq12[index] = "-"
+                  if (Number(qq12[index]) > Number(q))
+                    re12.push("ผ่าน")
+                  else re12.push("ไม่ผ่าน")
+                  if (Number(qq12[index]) < Number(q) && (n === "20" || n === "20.2"))
+                  re12[index] = "ผ่าน"
+                  else re12[index] = "ไม่ผ่าน"
+                  if (re12[index] === "ผ่าน")
+                    re12[index] = <h4 className="bi bi-check-circle greent"></h4>
+                  else re12[index] = <h4 className="bi bi-x-circle redt"></h4>;
+
+                  if (isNaN(qq13[index]))
+                    qq13[index] = "-"
+                  if (Number(qq13[index]) > Number(q))
+                    re13.push("ผ่าน")
+                  else re13.push("ไม่ผ่าน")
+                  if (Number(qq13[index]) < Number(q) && (n === "20" || n === "20.2"))
+                  re13[index] = "ผ่าน"
+                  else re13[index] = "ไม่ผ่าน"
+                  if (re13[index] === "ผ่าน")
+                    re13[index] = <h4 className="bi bi-check-circle greent"></h4>
+                  else re13[index] = <h4 className="bi bi-x-circle redt"></h4>;
+
+
+                  if (isNaN(qq14[index]))
+                    qq14[index] = "-"
+                  if (Number(qq14[index]) > Number(q))
+                    re14.push("ผ่าน")
+                  else re14.push("ไม่ผ่าน")
+                  if (Number(qq14[index]) < Number(q) && (n === "20" || n === "20.2"))
+                  re14[index] = "ผ่าน"
+                  else re14[index] = "ไม่ผ่าน"
+                  if (re14[index] === "ผ่าน")
+                    re14[index] = <h4 className="bi bi-check-circle greent"></h4>
+                  else re14[index] = <h4 className="bi bi-x-circle redt"></h4>;
+
                   if (isNaN(qq1[index]))
                     qq1[index] = "-"
                   if (isNaN(qq2[index]))
@@ -1306,102 +1360,22 @@ const CalForm = () => {
                   if (isNaN(qq4[index]))
                     qq4[index] = "-"
 
-                  //q12
-                  // if (qq12[index] > 100) {
-                  //   if (qq2[index] === "-")
-                  //     qq12[index] = "-"
-                  //   else
-                  //     qq12[index] = ((qq12[index] ** -1) * 10000).toFixed(2)
-                  // }
-                  if (isNaN(qq12[index]))
-                    qq12[index] = "-"
-                  if (Number(qq12[index]) > Number(q))
-                    re12.push("ผ่าน")
-                  else re12.push("ไม่ผ่าน")
-                  if (re12[index] === "ผ่าน")
-                    re12[index] = <h4 className="bi bi-check-circle greent"></h4>
-                  else re12[index] = <h4 className="bi bi-x-circle redt"></h4>;
-
-                  //q34
-                  // if (qq34[index] > 100)
-                  //   qq34[index] = ((qq34[index] ** -1) * 10000).toFixed(2)
-                  // if (isNaN(qq34[index]))
-                  //   qq34[index] = "-"
-                  // if (Number(qq34[index]) > Number(q))
-                  //   re34.push("ผ่าน")
-                  // else re34.push("ไม่ผ่าน")
-                  // if (re34[index] === "ผ่าน")
-                  //   re34[index] = <h4 className="bi bi-check-circle greent"></h4>
-                  // else re34[index] = <h4 className="bi bi-x-circle redt"></h4>;
-
-                  //q13
-                  // if (qq13[index] > 100) {
-                  //   if (qq3[index] === "-")
-                  //     qq13[index] = "-"
-                  //   else
-                  //     qq13[index] = ((qq13[index] ** -1) * 10000).toFixed(2)
-                  // }
-                  if (isNaN(qq13[index]))
-                    qq13[index] = "-"
-                  if (Number(qq13[index]) > Number(q))
-                    re13.push("ผ่าน")
-                  else re13.push("ไม่ผ่าน")
-                  if (re13[index] === "ผ่าน")
-                    re13[index] = <h4 className="bi bi-check-circle greent"></h4>
-                  else re13[index] = <h4 className="bi bi-x-circle redt"></h4>;
-
-                  //q14
-                  // if (qq14[index] > 100) {
-                  //   if (qq4[index] === "-")
-                  //     qq14[index] = "-"
-                  //   else
-                  //     qq14[index] = ((qq14[index] ** -1) * 10000).toFixed(2)
-                  // }
-
-                  if (n === "24" || n === "26" || n === "8") {
-                    qq14[index] = ((qq14[index] ** (-1)) * 10000).toFixed(2)
-                  } else if (n === "39" || n === "15" || n === "48") {
-                    qq14[index] = ((qq14[index] ** (-1)) * 100).toFixed(2)
-                    qq1[13] = ((qq1[14])*100).toFixed(2)
-                  }
-
-                  if (isNaN(qq14[index]))
-                    qq14[index] = "-"
-                  if (Number(qq14[index]) > Number(q))
-                    re14.push("ผ่าน")
-                  else re14.push("ไม่ผ่าน")
-                  if (re14[index] === "ผ่าน")
-                    re14[index] = <h4 className="bi bi-check-circle greent"></h4>
-                  else re14[index] = <h4 className="bi bi-x-circle redt"></h4>;
-
                   if (qq2[index] === "-")
                     qq12[index] = "-"
                   if (qq3[index] === "-")
                     qq13[index] = "-"
 
-                  //console.log("qqall" ,qqall)
                   return (
                     <tr key={index}>
                       <td>{an[index]}</td>
                       <td className="textc">{qq1[index]}</td>
                       <td className="textc">{uu1}</td>
-                      {/* <td className="textc">{qq2[index]}</td>
-                      <td className="textc">{uu2}</td> */}
                       <td className="textc">{qq12[index]}</td>
                       <td className="textc">{re12[index]}</td>
-                      {/* <td className="textc">{qq3[index]}</td>
-                      <td className="textc">{uu3}</td> */}
                       <td className="textc">{qq13[index]}</td>
                       <td className="textc">{re13[index]}</td>
-                      {/* <td className="textc">{qq4[index]}</td>
-                      <td className="textc">{uu4}</td> */}
-                      {/* <td className="textc">{qq34[index]}</td>
-                      <td className="textc">{re34[index]}</td> */}
-                      {/* <td className="textc">{qq4[index]}</td>
-                      <td className="textc">{uu4}</td> */}
                       <td className="textc">{qq14[index]}</td>
                       <td className="textc">{re14[index]}</td>
-                      {/* <td className="textc"><button className="btn btn-success" onClick={e => handlesum(index)}>เรียกดู</button></td> */}
                     </tr>
                   );
                 })}
@@ -1705,11 +1679,13 @@ const CalForm = () => {
           <br /><br /><br /><br /><br /><br />
         </div>
       else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 0) {
-        var ois = qq14[hosi]
-        if (n === "24" || n === "26" || n === "8")
-          ois = ((qq14[hosi] ** -1) * 10000).toFixed(2)
-        else if (n === "39"|| n === "15" || n === "48") {
-          ois = ((qq14[hosi] ** -1) * 100).toFixed(2)
+        var ois = <Solve name={qq14[hosi]} do={530} name2={q} class={"responcal"} />
+        if (n === "24" || n === "26" || n === "8") {
+          ois = <Solve name={((qq14[hosi] ** -1) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
+        } else if (n === "39" || n === "15" || n === "48") {
+          ois = <Solve name={((qq14[hosi] ** -1) * 100).toFixed(2)} do={530} name2={q} class={"responcal"} />
+        } else if (n === "20" || n === "20.2") {
+          ois = <Solve2 name={(qqn1p14[13] / qqn2p14[13]).toFixed(2)} do={530} name2={q} class={"responcal"} />
         }
 
         a = <div>
@@ -1863,7 +1839,7 @@ const CalForm = () => {
             </div>
             <div className="col-1 col-md-4">
               <div style={{ width: 530 }}>
-                <Solve name={ois} do={530} name2={q} class={"responcal"} />
+                {ois}
               </div>
             </div>
 
@@ -3060,9 +3036,13 @@ const CalForm = () => {
       } else if (n === "5") {
         q = (p ** (-1)) * 100
       }
+      else if (n === "20" || n === "20.2") {
+        q = (p);
+        console.log(val.length)
+      }
       else if (t[1] === 1 && pr2 === 1) {
         q = pr1
-        console.log(val.length)
+
       } else if (t[1] === 1) {
         if (n === "24" || n === "26" || n === "8") {
           q = p * 100;
@@ -3138,8 +3118,8 @@ const CalForm = () => {
         h = "ไม่ผ่าน"
       }
     }
-    else if (n === "5" || n === "20" || n === "20.2") {
-      if ((g ** (-1)) * 100 <= t[0]) {
+    else if (n === "20" || n === "20.2") {
+      if ((g) <= t[0]) {
         h = "ผ่าน"
       } else {
         h = "ไม่ผ่าน"
@@ -3266,7 +3246,12 @@ const CalForm = () => {
       are = (((p2 / p1) ** (-1))).toFixed(2)
       sare = (((pp2 / pp1) ** (-1))).toFixed(2)
       oo = (((po2 / po1) ** (-1))).toFixed(2)
-    } else {
+    } else if (n === "20" || n === "20.2") {
+      are = ((p1 / p2)).toFixed(2)
+      sare = ((pp1 / pp2)).toFixed(2)
+      oo = ((po1 / po2)).toFixed(2)
+    }
+    else {
       are = ((p2 / p1) * 100).toFixed(2)
       sare = ((pp2 / pp1) * 100).toFixed(2)
       oo = ((po2 / po1) * 100).toFixed(2)

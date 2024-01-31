@@ -73,10 +73,14 @@ const Dashboard = () => {
                 ifr = <th><div style={{ width: 155 }}>
                   <Solve2 name={a.re_sum} name2={(a.fm_solve)} do={160} class={"respondash"} />
                 </div></th>
+                sov = <th><h4 className='redt'>{(a.fm_solve)}</h4></th>
               } else {
                 ifr = <th><div style={{ width: 155 }}>
                   <Solve name={a.re_sum} name2={(a.fm_solve)} do={160} class={"respondash"} />
                 </div></th>
+                if (a.fm_id === "5") {
+                  sov = <th><h4 className='redt'>{(a.fm_solve)}</h4></th>
+                }
               }
             }
             else if (itp[i] === 2) {
