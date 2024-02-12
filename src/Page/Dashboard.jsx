@@ -87,10 +87,10 @@ const Dashboard = () => {
               tc = [a.h1, a.h2, a.h3, a.h4, a.h5, a.h6, a.h7, a.h8, a.h9, a.h10, a.h11, a.d1, a.d2, a.re_sum]
               
               if (a.fm_id === "47") {
-                if ((a.pa1 / 7) >= Number(opp[i]))
-                  ifr = <th><h4 className='greent'>{Math.floor(a.pa1 / 7)}</h4></th>
+                if ((a.pa1 / 13) >= Number(opp[i]))
+                  ifr = <th><h4 className='greent'>{Math.trunc(a.pa1 / 13)}</h4></th>
                 else
-                  ifr = <th><h4 className='redt'>{Math.floor(a.pa1 / 7)}</h4></th>
+                  ifr = <th><h4 className='redt'>{Math.trunc(a.pa1 / 13)}</h4></th>
               }
               else if (opp[i] === "0") {
                 if (a.pa2 === 0)

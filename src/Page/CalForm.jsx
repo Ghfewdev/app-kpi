@@ -225,14 +225,18 @@ const CalForm = () => {
       } else
         ansl = select[0].fm_solve
       var ss = s.map((m, i) => {
-        nn = <p className='inline textr p'><input className='input30' type="text" id={m} required /></p>
+        var nn
+        if (String(m)[m.length - 1] === "*")
+          nn = <p className='inline textr p'><input className='input30' type="number" id={m} required /></p>
+        else
+          nn = <p className='inline textr p'><input className='input30' type="text" id={m} required /></p>
         if (io.length === 13 && i === s.length - 1) {
           nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon.split(", ")[Number(sessionStorage.getItem("qur")) - 1]} readOnly /></p>
         }
         else if (vcon != 0 && i === s.length - 1) {
           nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon} readOnly /></p>
         } else if (m === "*" && i === s.length - 1) {
-          nn = <p className='inline textr p hidden'><input className='input30' type="text" id={m} defaultValue={1} readOnly /></p>
+          nn = <p className='inline textr p hidden'><input className='input30' type="number" id={m} defaultValue={1} readOnly /></p>
         }
         return (
           <div key={i}>
@@ -818,6 +822,8 @@ const CalForm = () => {
       hb = 25
       fm = 22
     }
+
+    callpara();
 
     sessionStorage.setItem("ag", ag)
     sessionStorage.setItem("deid", id)

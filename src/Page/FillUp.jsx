@@ -380,14 +380,17 @@ const FillUp = () => {
           pi = <></>
         group = <>{g1}{pi}{g2}</>
       }
-
-      var nn = <p className='inline textr p'><input className='input30' type="text" id={m} required /></p>
+      var nn
+      if(String(m)[m.length-1] === "*")
+      nn = <p className='inline textr p'><input className='input30' type="number" id={m} required /></p>
+      else
+      nn = <p className='inline textr p'><input className='input30' type="text" id={m} required /></p>
       if (vcon.length === 13 && i === z.length - 1)
         nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon[localStorage.getItem("id") - 10]} readOnly /></p>
       else if (vcon != 0 && i === z.length - 1)
         nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon} readOnly /></p>
       else if (m === "*" && i === z.length - 1) {
-        nn = <p className='inline textr p hidden'><input className='input30' type="text" id={m} defaultValue={1} readOnly /></p>
+        nn = <p className='inline textr p hidden'><input className='input30' type="number" id={m} defaultValue={1} readOnly /></p>
       }
       try {
         if ((k[1])[2] === "1") {
