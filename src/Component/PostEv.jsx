@@ -44,7 +44,7 @@ const PostEv = () => {
   setTimeout(() => {
     sessionStorage.removeItem("postev")
     location = "/"
-  }, 2000)
+  }, 3000)
 } else {
   location = "/"
 }

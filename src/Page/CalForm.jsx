@@ -493,7 +493,13 @@ const CalForm = () => {
     //qq1-4
     var qqn1p14 = qqn1p12.map((q, i) => q + qqn1p34[i]);
     var qqn2p14 = qqn2p12.map((q, i) => q + qqn2p34[i]);
-    var qq14 = qqn1p14.map((q, i) => ((qqn2p14[i] / q) * 100).toFixed(2));
+    var qq14 = qqn1p14.map((q, i) => {
+      if (qqn2p14[i] === 0 && q === 0)
+        return 0
+      else
+        return ((qqn2p14[i] / q) * 100).toFixed(2)
+    });
+
     var re14 = [];
     // if (qq14[11] > 100)
     //   qq14[11] = ((qq14[11] ** -1) * 10000).toFixed(2)
@@ -697,10 +703,17 @@ const CalForm = () => {
     sessionStorage.setItem("hb", hb)
   }
 
+  const callpara = () => {
+    s.map((m, i) => {
+      setTimeout(() => {
+        document.getElementById(m).value = sessionStorage.getItem("pp").split(",")[i]
+      }, 200)
+    })
+  }
+
   const setid = (id, dep, para, qur) => {
     deid = id;
     var pp = para.split(", ")
-
     var ha;
     var hb;
     var fm;
@@ -806,12 +819,6 @@ const CalForm = () => {
       fm = 22
     }
 
-    s.map((m, i) => {
-      setTimeout(() => {
-        document.getElementById(m).value = sessionStorage.getItem("pp").split(",")[i]
-      }, 200)
-    })
-
     sessionStorage.setItem("ag", ag)
     sessionStorage.setItem("deid", id)
     sessionStorage.setItem("hos", hos)
@@ -821,7 +828,8 @@ const CalForm = () => {
     sessionStorage.setItem("qur", qur)
     sessionStorage.setItem("edid", fm)
 
-    console.log(pa2(s), qq14[13], qg(s), hg(s), parast)
+    //console.log(pa2(s), qq14[13], qg(s), hg(s), parast)
+    console.log(pa(), pa2(s))
     //console.log(vcon.split(", ")[Number(sessionStorage.getItem("qur"))-1])
     //console.log(qq1)
   }
@@ -838,10 +846,109 @@ const CalForm = () => {
       rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value + ", " + document.getElementById("rre3").value + ", " + document.getElementById("rre4").value
     return rr
   }
-
-
   //console.log(printf)
 
+  const handledelpara = (val) => {
+
+    s.map((m, i) => {
+      document.getElementById(m).value = 0
+    })
+
+    var loo = ", " + sessionStorage.getItem("hos") + "_" + sessionStorage.getItem("qur").split("_")
+    var log = String(pa2(s)[6]).replace(String(loo), "")
+    var h = pa2(s)[3]
+    var sum = pa2(s)[2]
+
+    console.log(log)
+
+    if (isNaN(h)) {
+      h = 0
+    }
+
+    if (isNaN(sum)) {
+      sum = 0
+    }
+
+    const JsonData2 = {
+      "h": h,
+      "hpa1": pa2(s)[4],
+      "hpa2": pa2(s)[5],
+      "pa1": pa2(s)[0],
+      "pa2": pa2(s)[1],
+      "log": log,
+      "sum": sum
+    };
+
+    var text = "ยืนยันว่าต้องการลบหรือไม่"
+
+    setTimeout(() => {
+
+      if (confirm(text) === true) {
+
+        fetch(import.meta.env.VITE_APP_API + `/detail/delete/${val}/${sessionStorage.getItem("hos")}/${select[0].fm_id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(JsonData2)
+        })
+          .then(response => {
+            return response.json();
+          })
+          .then(data => {
+            if (data.status === "ok") {
+              alert("ลบข้อมูลสำเร็จ");
+              window.location = "calform";
+            } else {
+              alert("ลบข้อมูลไม่สำเร็จ");
+            }
+          })
+          .catch((error) => {
+            console.log("error", error);
+          })
+
+      }
+      else {
+        console.log("pa2(s)")
+      }
+
+    }, 200);
+
+  }
+
+  const handledelev = (val) => {
+
+    var text = "ยืนยันว่าต้องการลบหรือไม่"
+
+    setTimeout(() => {
+
+      if (confirm(text) === true) {
+
+        fetch(import.meta.env.VITE_APP_API + "/event/delete/" + val, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json"
+          },
+        })
+          .then(response => {
+            return response.json();
+          })
+          .then(data => {
+            if (data.status === "ok") {
+              window.location = "calform";
+            } else {
+              alert("บันทึกไม่สำเร็จ");
+            }
+          })
+          .catch((error) => {
+            console.log("error", error);
+          })
+
+      }
+
+    }, 200);
+
+  }
 
   const handlesum = (event) => {
     event.preventDefault();
@@ -1078,6 +1185,7 @@ const CalForm = () => {
     }
     //console.log(props)
     if (props != null) {
+      var po = props.map(p => p.de_qur)
       var sev = <div style={{ width: 530 }}>
         <Solve name={qq14[13]} do={530} name2={q} class={"responcal"} />
       </div>
@@ -1130,6 +1238,7 @@ const CalForm = () => {
                   <th className="textc" scope="col">สรุปผล</th>
                   {/* <th className="textc" scope="col">ข้อมูลโครงการ</th> */}
                   <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
+                  <th className="textc" scope="col">ลบข้อมูลตัวชี้วัด</th>
                   {/* <th className="textc" scope="col">แก้ไขโครงการ</th> */}
                 </tr>
               </thead>
@@ -1142,6 +1251,13 @@ const CalForm = () => {
                   }
                   if (item.de_result === "ผ่าน")
                     u = <h4 className="bi bi-check-circle greent"></h4>
+                  var po = <></>
+                  if (item.de_qur === "1") {
+                    po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger" disabled>ลบข้อมูล</button></td>
+                  }
+                  else {
+                    po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger">ลบข้อมูล</button></td>
+                  }
                   return (
                     <tr key={index}>
                       <td>{item.us_agency}</td>
@@ -1152,7 +1268,8 @@ const CalForm = () => {
                       <td>{item.fd_update}</td>
                       <td className="textc">{u}</td>
                       {/* <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td> */}
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), callpara() }} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      {po}
                       {/* <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td> */}
                     </tr>
                   );
@@ -1177,6 +1294,7 @@ const CalForm = () => {
                   <th className="textc" scope="col" width="100">วันที่อัปเดต</th>
                   <th className="textc" scope='col' width="170">รายละเอียด</th>
                   <th className="textc" scope='col' width="120">แก้ไข</th>
+                  <th className="textc" scope='col' width="120">ลบข้อมูล</th>
                 </tr>
               </thead>
               <tbody>
@@ -1236,6 +1354,7 @@ const CalForm = () => {
                       <td>{e.ed_update.split("T")[0]}</td>
                       <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                       <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      <td className="textc"><button onClick={e => { detev(rr, uu, qq), handledelev(rr) }} type="button" className="btn btn-danger">ลบข้อมูล</button></td>
                     </tr>
                   )
                 })}
@@ -1303,6 +1422,8 @@ const CalForm = () => {
                   } else if (n === "39" || n === "15" || n === "48") {
                     qq14[index] = ((qq14[index] ** (-1)) * 100).toFixed(2)
                     qq1[13] = ((qq1[14]) * 100).toFixed(2)
+                    if (qq14[index] === "Infinity")
+                      qq14[index] = "-"
                   } else if (n === "20" || n === "20.2") {
                     qq1[13] = (q1par1 / q1par2).toFixed(2)
                     if (qq1[13] < q)
@@ -1320,7 +1441,7 @@ const CalForm = () => {
                     re12.push("ผ่าน")
                   else re12.push("ไม่ผ่าน")
                   if (Number(qq12[index]) < Number(q) && (n === "20" || n === "20.2"))
-                  re12[index] = "ผ่าน"
+                    re12[index] = "ผ่าน"
                   else re12[index] = "ไม่ผ่าน"
                   if (re12[index] === "ผ่าน")
                     re12[index] = <h4 className="bi bi-check-circle greent"></h4>
@@ -1332,20 +1453,20 @@ const CalForm = () => {
                     re13.push("ผ่าน")
                   else re13.push("ไม่ผ่าน")
                   if (Number(qq13[index]) < Number(q) && (n === "20" || n === "20.2"))
-                  re13[index] = "ผ่าน"
+                    re13[index] = "ผ่าน"
                   else re13[index] = "ไม่ผ่าน"
                   if (re13[index] === "ผ่าน")
                     re13[index] = <h4 className="bi bi-check-circle greent"></h4>
                   else re13[index] = <h4 className="bi bi-x-circle redt"></h4>;
 
 
-                  if (isNaN(qq14[index]))
+                  if (isNaN(qq14[index]) || qq14[index] === 0)
                     qq14[index] = "-"
                   if (Number(qq14[index]) > Number(q))
                     re14.push("ผ่าน")
                   else re14.push("ไม่ผ่าน")
                   if (Number(qq14[index]) < Number(q) && (n === "20" || n === "20.2"))
-                  re14[index] = "ผ่าน"
+                    re14[index] = "ผ่าน"
                   else re14[index] = "ไม่ผ่าน"
                   if (re14[index] === "ผ่าน")
                     re14[index] = <h4 className="bi bi-check-circle greent"></h4>
@@ -1426,6 +1547,7 @@ const CalForm = () => {
                   <th className="textc" scope="col">วันที่อัปเดต</th>
                   <th className="textc" scope="col">สรุปผล</th>
                   <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
+                  <th className="textc" scope="col">ลบข้อมูลตัวชี้วัด</th>
                 </tr>
               </thead>
               <tbody>
@@ -1437,6 +1559,13 @@ const CalForm = () => {
                   }
                   if (item.de_result === "ผ่าน")
                     u = <h4 className="bi bi-check-circle greent"></h4>
+                  var po = <></>
+                  if (item.de_qur === "1") {
+                    po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger" disabled>ลบข้อมูล</button></td>
+                  }
+                  else {
+                    po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger">ลบข้อมูล</button></td>
+                  }
                   return (
                     <tr key={index}>
                       <td>{item.us_agency}</td>
@@ -1447,6 +1576,7 @@ const CalForm = () => {
                       <td>{item.fd_update}</td>
                       <td className="textc">{u}</td>
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      {po}
                     </tr>
                   );
                 })}
@@ -1470,6 +1600,7 @@ const CalForm = () => {
                   <th className="textc" scope="col" width="100">วันที่อัปเดต</th>
                   <th className="textc" scope='col' width="170">รายละเอียด</th>
                   <th className="textc" scope='col' width="120">แก้ไข</th>
+                  <th className="textc" scope='col' width="120">ลบข้อมูล</th>
                 </tr>
               </thead>
               <tbody>
@@ -1529,6 +1660,7 @@ const CalForm = () => {
                       <td>{e.ed_update.split("T")[0]}</td>
                       <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                       <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      <td className="textc"><button onClick={e => { detev(rr, uu, qq), handledelev(rr) }} type="button" className="btn btn-danger">ลบข้อมูล</button></td>
                     </tr>
                   )
                 })}
@@ -1611,6 +1743,7 @@ const CalForm = () => {
                   <th className="textc" scope="col" width="100">วันที่อัปเดต</th>
                   <th className="textc" scope='col' width="170">รายละเอียด</th>
                   <th className="textc" scope='col' width="120">แก้ไข</th>
+                  <th className="textc" scope='col' width="120">ลบข้อมูล</th>
                 </tr>
               </thead>
               <tbody>
@@ -1670,6 +1803,7 @@ const CalForm = () => {
                       <td>{e.ed_update.split("T")[0]}</td>
                       <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                       <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      <td className="textc"><button onClick={e => { detev(rr, uu, qq), handledelev(rr) }} type="button" className="btn btn-danger">ลบข้อมูล</button></td>
                     </tr>
                   )
                 })}
@@ -1720,6 +1854,7 @@ const CalForm = () => {
                   <th className="textc" scope="col">วันที่อัปเดต</th>
                   <th className="textc" scope="col">สรุปผล</th>
                   <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
+                  <th className="textc" scope="col">ลบข้อมูลตัวชี้วัด</th>
                 </tr>
               </thead>
               <tbody>
@@ -1732,6 +1867,13 @@ const CalForm = () => {
                   }
                   if (item.de_result === "ผ่าน")
                     u = <h4 className="bi bi-check-circle greent"></h4>
+                  var po = <></>
+                  if (item.de_qur === "1") {
+                    po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger" disabled>ลบข้อมูล</button></td>
+                  }
+                  else {
+                    po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger">ลบข้อมูล</button></td>
+                  }
                   return (
                     <tr key={index}>
                       <td>{item.us_agency}</td>
@@ -1742,6 +1884,7 @@ const CalForm = () => {
                       <td>{item.fd_update}</td>
                       <td className="textc">{u}</td>
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      {po}
                     </tr>
                   );
                 })}
@@ -1762,6 +1905,7 @@ const CalForm = () => {
                     <th className="textc" scope="col" width="100">วันที่อัปเดต</th>
                     <th className="textc" scope='col' width="170">รายละเอียด</th>
                     <th className="textc" scope='col' width="120">แก้ไข</th>
+                    <th className="textc" scope='col' width="120">ลบข้อมูล</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1821,6 +1965,7 @@ const CalForm = () => {
                         <td>{e.ed_update.split("T")[0]}</td>
                         <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                         <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                        <td className="textc"><button onClick={e => { detev(rr, uu, qq), handledelev(rr) }} type="button" className="btn btn-danger">ลบข้อมูล</button></td>
                       </tr>
                     )
                   })}
@@ -1880,6 +2025,7 @@ const CalForm = () => {
                   <th className="textc" scope="col">วันที่อัปเดต</th>
                   <th className="textc" scope="col">สรุปผล</th>
                   <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
+                  <th className="textc" scope="col">ลบข้อมูลตัวชี้วัด</th>
                 </tr>
               </thead>
               <tbody>
@@ -1891,6 +2037,13 @@ const CalForm = () => {
                   }
                   if (item.de_result === "ผ่าน")
                     u = <h4 className="bi bi-check-circle greent"></h4>
+                  var po = <></>
+                  if (item.de_qur === "1") {
+                    po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger" disabled>ลบข้อมูล</button></td>
+                  }
+                  else {
+                    po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger">ลบข้อมูล</button></td>
+                  }
                   return (
                     <tr key={index}>
                       <td>{item.us_agency}</td>
@@ -1901,6 +2054,7 @@ const CalForm = () => {
                       <td>{item.fd_update}</td>
                       <td className="textc">{u}</td>
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      {po}
                     </tr>
                   );
                 })}
@@ -1922,6 +2076,7 @@ const CalForm = () => {
                     <th className="textc" scope="col" width="100">วันที่อัปเดต</th>
                     <th className="textc" scope='col' width="170">รายละเอียด</th>
                     <th className="textc" scope='col' width="120">แก้ไข</th>
+                    <th className="textc" scope='col' width="120">ลบข้อมูล</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1981,6 +2136,7 @@ const CalForm = () => {
                         <td>{e.ed_update.split("T")[0]}</td>
                         <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                         <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                        <td className="textc"><button onClick={e => { detev(rr, uu, qq), handledelev(rr) }} type="button" className="btn btn-danger">ลบข้อมูล</button></td>
                       </tr>
                     )
                   })}
@@ -2191,6 +2347,13 @@ const CalForm = () => {
                   }
                   if (item.de_result === "ผ่าน")
                     u = <h4 className="bi bi-check-circle greent"></h4>
+                  var po = <></>
+                  if (item.de_qur === "1") {
+                    po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger" disabled>ลบข้อมูล</button></td>
+                  }
+                  else {
+                    po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger">ลบข้อมูล</button></td>
+                  }
                   return (
                     <tr key={index}>
                       <td>{item.us_agency}</td>
@@ -2201,6 +2364,7 @@ const CalForm = () => {
                       <td>{item.fd_update}</td>
                       <td className="textc">{u}</td>
                       <td className="textc"><button disabled onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      {po}
                     </tr>
                   );
                 })}
@@ -2408,6 +2572,7 @@ const CalForm = () => {
                   <th className="textc" scope="col">วันที่อัปเดต</th>
                   <th className="textc" scope="col">สรุปผล</th>
                   <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
+                  <th className="textc" scope="col">ลบข้อมูลตัวชี้วัด</th>
                 </tr>
               </thead>
               <tbody>
@@ -2419,6 +2584,13 @@ const CalForm = () => {
                   }
                   if (item.de_result === "ผ่าน")
                     u = <h4 className="bi bi-check-circle greent"></h4>
+                  var po = <></>
+                  if (item.de_qur === "1") {
+                    po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger" disabled>ลบข้อมูล</button></td>
+                  }
+                  else {
+                    po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger">ลบข้อมูล</button></td>
+                  }
                   return (
                     <tr key={index}>
                       <td>{item.us_agency}</td>
@@ -2429,6 +2601,7 @@ const CalForm = () => {
                       <td>{item.fd_update}</td>
                       <td className="textc">{u}</td>
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      {po}
                     </tr>
                   );
                 })}
@@ -2450,6 +2623,7 @@ const CalForm = () => {
                     <th className="textc" scope="col" width="100">วันที่อัปเดต</th>
                     <th className="textc" scope='col' width="170">รายละเอียด</th>
                     <th className="textc" scope='col' width="120">แก้ไข</th>
+                    <th className="textc" scope='col' width="120">ลบข้อมูล</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -2509,6 +2683,7 @@ const CalForm = () => {
                         <td>{e.ed_update.split("T")[0]}</td>
                         <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                         <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                        <td className="textc"><button onClick={e => { detev(rr, uu, qq), handledelev(rr) }} type="button" className="btn btn-danger">ลบข้อมูล</button></td>
                       </tr>
                     )
                   })}
@@ -3038,7 +3213,7 @@ const CalForm = () => {
       }
       else if (n === "20" || n === "20.2") {
         q = (p);
-        console.log(val.length)
+        //console.log(val.length)
       }
       else if (t[1] === 1 && pr2 === 1) {
         q = pr1
@@ -3133,7 +3308,7 @@ const CalForm = () => {
     }
 
     if (met === 2 && s.length >= 2) {
-      console.log(Number(pa2(s)[3]), uioo2)
+      //console.log(Number(pa2(s)[3]), uioo2)
       if (Number(uioo1) >= Number(uioo2))
         h = "ผ่าน"
       else if (Number(pa2(s)[3]) >= Number(uioo2))
@@ -3280,7 +3455,7 @@ const CalForm = () => {
         // if (p1 < 0)
         //   p1 = 0
         // if (p1 < p2)
-        are = ((p1 / p2) * 100).toFixed(2)
+        are = ((p2 / p1) * 100).toFixed(2)
         // else
         //   are = ((p2 / p1) * 100).toFixed(2)
         // if (isNaN(are))
@@ -3292,7 +3467,7 @@ const CalForm = () => {
         } else {
           pp1 = pa()[2]
           pp2 = pa()[3]
-          sare = ((pp1 / pp2) * 100).toFixed(2)
+          sare = ((pp2 / pp1) * 100).toFixed(2)
         }
 
 
