@@ -326,11 +326,13 @@ const CalForm = () => {
         }
         else {
           qq1.push(((q1par1 / q1par2) * 100).toFixed(2))
+          qq1.push((((q1par2 / q1par1)* 100).toFixed(2)))
           if ((q1par1 / q1par2) * 100 >= q)
             re1.push("ผ่าน")
           else re1.push("ไม่ผ่าน")
         }
       }
+      
     }
 
     //console.log("re1 = ", re1)
@@ -524,7 +526,7 @@ const CalForm = () => {
 
     setTimeout(() => {
       // if (n === "24" || n === "26" || n === "8") {
-        if (n === "24" || n === "26") {
+      if (n === "24" || n === "26") {
         qq14[13] = qq14[13] ** (-1)
       } else if (n === "39" || n === "15" || n === "48") {
         qq14[13] = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
@@ -836,7 +838,7 @@ const CalForm = () => {
     sessionStorage.setItem("edid", fm)
 
     //console.log(pa2(s), qq14[13], qg(s), hg(s), parast)
-    console.log(pa(), pa2(s))
+    console.log(pa(), pa2(s), hg(s), qg(s))
     //console.log(vcon.split(", ")[Number(sessionStorage.getItem("qur"))-1])
     //console.log(qq1)
   }
@@ -1427,11 +1429,20 @@ const CalForm = () => {
                   if (re4[index] === "ผ่าน")
                     uu4 = <h4 className="bi bi-check-circle greent"></h4>
 
-                    if (n === "24" || n === "26") {
-                      qq14[index] = ((qq14[index] ** (-1)) * 10000).toFixed(2)
-                  // if (n === "24" || n === "26" || n === "8") {
-                  //   qq14[index] = ((qq14[index] ** (-1)) * 10000).toFixed(2)
-                  } else if (n === "39" || n === "15" || n === "48") {
+                  if (n === "24" || n === "26") {
+                    qq14[index] = ((qq14[index] ** (-1)) * 10000).toFixed(2)
+
+                    // if (n === "24" || n === "26" || n === "8") {
+                    //   qq14[index] = ((qq14[index] ** (-1)) * 10000).toFixed(2)
+                  }
+                  else if (n === "8") {
+                    qq1[13] = qq1[14]
+                    if (qq1[13] > q)
+                      re1[13] = "ผ่าน"
+                    else
+                      re1[13] = "ไม่ผ่าน"
+                  }
+                  else if (n === "39" || n === "15" || n === "48") {
                     qq14[index] = ((qqn1p14[index] / qqn2p14[index])).toFixed(2)
                     qq1[13] = qq1[14]
                     if (qq14[index] === "Infinity")
@@ -1446,6 +1457,8 @@ const CalForm = () => {
                     qq13[index] = (qqn1p13[index] / qqn2p13[index]).toFixed(2)
                     qq14[index] = (qqn1p14[index] / qqn2p14[index]).toFixed(2)
                   }
+
+                  
 
                   if (isNaN(qq12[index]))
                     qq12[index] = "-"
@@ -3233,11 +3246,11 @@ const CalForm = () => {
       //   q = pr1
 
       // }
-       else if (t[1] === 1) {
+      else if (t[1] === 1) {
         if (n === "24" || n === "26") {
           q = p * 100;
-        // if (n === "24" || n === "26" || n === "8") {
-        //   q = p * 100;
+          // if (n === "24" || n === "26" || n === "8") {
+          //   q = p * 100;
         } else {
           q = (p ** (-1)) * 100;
         }
@@ -3245,8 +3258,8 @@ const CalForm = () => {
       else if (t[1] === 1) {
         if (n === "24" || n === "26") {
           q = p * 100;
-        // if (n === "24" || n === "26" || n === "8") {
-        //   q = p * 100;
+          // if (n === "24" || n === "26" || n === "8") {
+          //   q = p * 100;
         } else {
           q = (p ** (-1)) * 100;
         }
@@ -3311,6 +3324,12 @@ const CalForm = () => {
       } else {
         h = "ไม่ผ่าน"
       }
+    } else if (n === "8") {
+      if ((g ** (-1) * 100) >= t[0]) {
+        h = "ผ่าน"
+      } else {
+        h = "ไม่ผ่าน"
+      }
     }
     else if (n === "20" || n === "20.2") {
       if ((g) <= t[0]) {
@@ -3318,7 +3337,7 @@ const CalForm = () => {
       } else {
         h = "ไม่ผ่าน"
       }
-    // } else if (n === "24" || n === "26" || n === "8") {
+      // } else if (n === "24" || n === "26" || n === "8") {
     } else if (n === "24" || n === "26") {
       if ((g) * 100 >= t[0]) {
         h = "ผ่าน"
@@ -3434,7 +3453,7 @@ const CalForm = () => {
     }
 
     // if (n === "24" || n === "26" || n === "8") {
-      if (n === "24" || n === "26") {
+    if (n === "24" || n === "26") {
       are = (((p2 / p1) ** (-1)) * 100).toFixed(2)
       sare = (((pp2 / pp1) ** (-1)) * 100).toFixed(2)
       oo = (((po2 / po1) ** (-1)) * 100).toFixed(2)
