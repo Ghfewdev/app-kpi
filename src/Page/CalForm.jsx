@@ -843,13 +843,13 @@ const CalForm = () => {
   function reu() {
     var rr
     if (sessionStorage.getItem("qur") == 1)
-      rr = document.getElementById("rre1").value
+      rr = String(document.getElementById("rre1").value).replaceAll(", ", " ")
     if (sessionStorage.getItem("qur") == 2)
-      rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value
+      rr = String(document.getElementById("rre1").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre2").value).replaceAll(", ", " ")
     if (sessionStorage.getItem("qur") == 3)
-      rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value + ", " + document.getElementById("rre3").value
+      rr = String(document.getElementById("rre1").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre2").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre3").value).replaceAll(", ", " ")
     if (sessionStorage.getItem("qur") == 4)
-      rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value + ", " + document.getElementById("rre3").value + ", " + document.getElementById("rre4").value
+      rr = String(document.getElementById("rre1").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre2").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre3").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre4").value).replaceAll(", ", " ")
     return rr
   }
   //console.log(printf)

@@ -139,18 +139,20 @@ const AddEvevt = () => {
             fmid: d[1],
             qur: qrc,
             fmsid: data.get("fmsid"),
-            evname: String(data.get("evname")).replaceAll(","," "),
-            evres: String(data.get("evres")).replaceAll(","," "),
+            evname: data.get("evname"),
+            evres: data.get("evres"),
             evstatus: data.get("evstatus"),
             evbudget: dcdd("dc"),
             evbuded: dcdd("dd"),
-            evpoint: String(data.get("evpoint")).replaceAll(","," "),
-            evtarget: String(data.get("evtarget")).replaceAll(","," "),
-            result: String(reu()).replaceAll(","," "),
-            problem: String(data.get("problem")).replaceAll(","," "),
+            evpoint: data.get("evpoint"),
+            evtarget: data.get("evtarget"),
+            result: reu(),
+            problem: data.get("problem"),
             str: data.get("et"),
             evimg: name
         };
+
+        console.log(JsonData2)
 
         fetch(import.meta.env.VITE_APP_API + "/ev/add", {
             method: "POST",
@@ -279,13 +281,13 @@ const AddEvevt = () => {
     function reu() {
         var rr
         if (qqc === 1)
-            rr = document.getElementById("rre1").value
+            rr = String(document.getElementById("rre1").value).replaceAll(", ", " ")
         else if (qqc === 2)
-            rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value
+            rr = String(document.getElementById("rre1").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre2").value).replaceAll(", ", " ")
         else if (qqc === 3)
-            rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value + ", " + document.getElementById("rre3").value
+            rr = String(document.getElementById("rre1").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre2").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre3").value).replaceAll(", ", " ")
         else if (qqc === 4)
-            rr = document.getElementById("rre1").value + ", " + document.getElementById("rre2").value + ", " + document.getElementById("rre3").value + ", " + document.getElementById("rre4").value
+            rr = String(document.getElementById("rre1").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre2").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre3").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre4").value).replaceAll(", ", " ")
         return rr
     }
 
@@ -342,7 +344,7 @@ const AddEvevt = () => {
             document.getElementById("evres").value = autoevent[2]
             document.getElementById("evpoint").value = autoevent[3]
             document.getElementById("evtarget").value = autoevent[4]
-            console.log(autoevent)
+            //console.log(autoevent)
             if (qqc === 2)
                 document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
             else if (qqc === 3) {
