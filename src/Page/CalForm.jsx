@@ -318,7 +318,7 @@ const CalForm = () => {
         nqq1p2.push(q1par2)
         if (q1par1 > q1par2) {
           qq1.push(((q1par2 / q1par1) * 100).toFixed(2))
-          qq1.push((((q1par2 / q1par1) * 100).toFixed(2) ** (-1)))
+          qq1.push((((q1par1 / q1par2)).toFixed(2)))
 
           if ((q1par2 / q1par1) * 100 >= q)
             re1.push("ผ่าน")
@@ -526,7 +526,7 @@ const CalForm = () => {
       if (n === "24" || n === "26" || n === "8") {
         qq14[13] = qq14[13] ** (-1)
       } else if (n === "39" || n === "15" || n === "48") {
-        qq14[13] = qq14[13]
+        qq14[13] = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
       } else if (n === "20" || n === "20.2") {
         qq14 = qqn1p14.map((q, i) => ((q / qqn2p14[i])).toFixed(2));
       }
@@ -1205,7 +1205,7 @@ const CalForm = () => {
         </div>
       else if (n === "39" || n === "15" || n === "48")
         var sev = <div style={{ width: 530 }}>
-          <Solve name={(qq14[13] ** (-1) * 100).toFixed(2)} do={530} name2={q} class={"responcal"} />
+          <Solve name={((qqn1p14[13] / qqn2p14[13])).toFixed(2)} do={530} name2={q} class={"responcal"} />
         </div>
 
       var hosi = Number(localStorage.getItem("id")) - 10
@@ -1426,8 +1426,8 @@ const CalForm = () => {
                   if (n === "24" || n === "26" || n === "8") {
                     qq14[index] = ((qq14[index] ** (-1)) * 10000).toFixed(2)
                   } else if (n === "39" || n === "15" || n === "48") {
-                    qq14[index] = ((qq14[index] ** (-1)) * 100).toFixed(2)
-                    qq1[13] = ((qq1[14]) * 100).toFixed(2)
+                    qq14[index] = ((qqn1p14[index] / qqn2p14[index])).toFixed(2)
+                    qq1[13] = qq1[14]
                     if (qq14[index] === "Infinity")
                       qq14[index] = "-"
                   } else if (n === "20" || n === "20.2") {
@@ -1823,7 +1823,7 @@ const CalForm = () => {
         if (n === "24" || n === "26" || n === "8") {
           ois = <Solve name={((qq14[hosi] ** -1) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
         } else if (n === "39" || n === "15" || n === "48") {
-          ois = <Solve name={((qq14[hosi] ** -1) * 100).toFixed(2)} do={530} name2={q} class={"responcal"} />
+          ois = <Solve name={((qqn1p14[hosi] / qqn2p14[hosi])).toFixed(2)} do={530} name2={q} class={"responcal"} />
         } else if (n === "20" || n === "20.2") {
           ois = <Solve2 name={(qqn1p14[13] / qqn2p14[13]).toFixed(2)} do={530} name2={q} class={"responcal"} />
         }
