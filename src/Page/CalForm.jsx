@@ -523,7 +523,8 @@ const CalForm = () => {
     }
 
     setTimeout(() => {
-      if (n === "24" || n === "26" || n === "8") {
+      // if (n === "24" || n === "26" || n === "8") {
+        if (n === "24" || n === "26") {
         qq14[13] = qq14[13] ** (-1)
       } else if (n === "39" || n === "15" || n === "48") {
         qq14[13] = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
@@ -1199,7 +1200,11 @@ const CalForm = () => {
         var sev = <div style={{ width: 530 }}>
           <Solve2 name={(qqn1p14[13] / qqn2p14[13]).toFixed(2)} do={530} name2={q} class={"responcal"} />
         </div>
-      else if (n === "24" || n === "26" || n === "8")
+      // else if (n === "24" || n === "26" || n === "8")
+      //   var sev = <div style={{ width: 530 }}>
+      //     <Solve name={((qq14[13] ** (-1)) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
+      //   </div>
+      else if (n === "24" || n === "26")
         var sev = <div style={{ width: 530 }}>
           <Solve name={((qq14[13] ** (-1)) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
         </div>
@@ -1422,9 +1427,10 @@ const CalForm = () => {
                   if (re4[index] === "ผ่าน")
                     uu4 = <h4 className="bi bi-check-circle greent"></h4>
 
-
-                  if (n === "24" || n === "26" || n === "8") {
-                    qq14[index] = ((qq14[index] ** (-1)) * 10000).toFixed(2)
+                    if (n === "24" || n === "26") {
+                      qq14[index] = ((qq14[index] ** (-1)) * 10000).toFixed(2)
+                  // if (n === "24" || n === "26" || n === "8") {
+                  //   qq14[index] = ((qq14[index] ** (-1)) * 10000).toFixed(2)
                   } else if (n === "39" || n === "15" || n === "48") {
                     qq14[index] = ((qqn1p14[index] / qqn2p14[index])).toFixed(2)
                     qq1[13] = qq1[14]
@@ -1820,7 +1826,9 @@ const CalForm = () => {
         </div>
       else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 0) {
         var ois = <Solve name={qq14[hosi]} do={530} name2={q} class={"responcal"} />
-        if (n === "24" || n === "26" || n === "8") {
+        // if (n === "24" || n === "26" || n === "8") {
+        //   ois = <Solve name={((qq14[hosi] ** -1) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
+        if (n === "24" || n === "26") {
           ois = <Solve name={((qq14[hosi] ** -1) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
         } else if (n === "39" || n === "15" || n === "48") {
           ois = <Solve name={((qqn1p14[hosi] / qqn2p14[hosi])).toFixed(2)} do={530} name2={q} class={"responcal"} />
@@ -3225,15 +3233,19 @@ const CalForm = () => {
         q = pr1
 
       } else if (t[1] === 1) {
-        if (n === "24" || n === "26" || n === "8") {
+        if (n === "24" || n === "26") {
           q = p * 100;
+        // if (n === "24" || n === "26" || n === "8") {
+        //   q = p * 100;
         } else {
           q = (p ** (-1)) * 100;
         }
       }
       else if (t[1] === 1) {
-        if (n === "24" || n === "26" || n === "8") {
+        if (n === "24" || n === "26") {
           q = p * 100;
+        // if (n === "24" || n === "26" || n === "8") {
+        //   q = p * 100;
         } else {
           q = (p ** (-1)) * 100;
         }
@@ -3305,7 +3317,8 @@ const CalForm = () => {
       } else {
         h = "ไม่ผ่าน"
       }
-    } else if (n === "24" || n === "26" || n === "8") {
+    // } else if (n === "24" || n === "26" || n === "8") {
+    } else if (n === "24" || n === "26") {
       if ((g) * 100 >= t[0]) {
         h = "ผ่าน"
       } else {
@@ -3419,7 +3432,8 @@ const CalForm = () => {
       }
     }
 
-    if (n === "24" || n === "26" || n === "8") {
+    // if (n === "24" || n === "26" || n === "8") {
+      if (n === "24" || n === "26") {
       are = (((p2 / p1) ** (-1)) * 100).toFixed(2)
       sare = (((pp2 / pp1) ** (-1)) * 100).toFixed(2)
       oo = (((po2 / po1) ** (-1)) * 100).toFixed(2)
