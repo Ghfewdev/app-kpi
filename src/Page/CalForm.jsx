@@ -3229,10 +3229,11 @@ const CalForm = () => {
         q = (p);
         //console.log(val.length)
       }
-      else if (t[1] === 1 && pr2 === 1) {
-        q = pr1
+      // else if (t[1] === 1 && pr2 === 1) {
+      //   q = pr1
 
-      } else if (t[1] === 1) {
+      // }
+       else if (t[1] === 1) {
         if (n === "24" || n === "26") {
           q = p * 100;
         // if (n === "24" || n === "26" || n === "8") {
