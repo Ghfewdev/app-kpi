@@ -1214,6 +1214,16 @@ const CalForm = () => {
         var sev = <div style={{ width: 530 }}>
           <Solve name={((qqn1p14[13] / qqn2p14[13])).toFixed(2)} do={530} name2={q} class={"responcal"} />
         </div>
+      
+      var insum = qq14[13]
+
+      if (n === "20" || n === "20.2")
+      insum = (qqn1p14[13] / qqn2p14[13]).toFixed(2)
+      else if (n === "24" || n === "26")
+      insum = ((qq14[13] ** (-1)) * 10000).toFixed(2)
+      else if (n === "39" || n === "15" || n === "48")
+      insum = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
+      
 
       var hosi = Number(localStorage.getItem("id")) - 10
       //console.log(hosi)
@@ -1271,6 +1281,9 @@ const CalForm = () => {
                   else {
                     po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger">ลบข้อมูล</button></td>
                   }
+                  // if (index === props.length) {
+
+                  // }
                   return (
                     <tr key={index}>
                       <td>{item.us_agency}</td>
@@ -1287,6 +1300,60 @@ const CalForm = () => {
                     </tr>
                   );
                 })}
+                <tr>
+                <td colSpan="2">รวม</td>
+                {f.map((p, i)=> {
+                  var cout
+                  var cout2
+                  var cout3
+                  var rvf
+                  for (var j = 0;j <= props.length-1;j++) {
+                   //if (select.map(ss => ss.de_paras.split(", "))[0] != undefined) {
+                   if (props.length === 1) {
+                    rvf = (select.map((ss, oi) => ss.de_paras.split(", "))[0])[i]
+                   } else if (j === 0) {
+                     cout = select.map((ss, oi) => ss.de_paras.split(", "))[0]
+                     rvf = cout
+                   } else if (j === props.length-1) {
+                    cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                    cout3 = (rvf.map((d, ii) => {
+                      if(isNaN(d)) {
+                        d = 0
+                      } 
+                      if (isNaN(cout2[ii])) {
+                        cout2[ii] = 0
+                      }
+                      return (
+                      Number(d) + Number(cout2[ii])
+                      )}))
+                    rvf = cout3[i]
+                   }
+                    else {
+                     cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                     cout3 = (rvf.map((d, ii) => {
+                      if(isNaN(d)) {
+                        d = 0
+                      } 
+                      if (isNaN(cout2[ii])) {
+                        cout2[ii] = 0
+                      }
+                      return (
+                      Number(d) + Number(cout2[ii])
+                      )}))
+                     rvf = cout3
+                   }
+                    
+                   }
+                  
+                    return (
+                      <td key={p}>{rvf}</td>
+                    );
+                  })}
+                  
+                  <td >{insum}</td>
+                  <td colSpan="5"></td>
+                </tr>
+                
               </tbody>
             </table>
             <br /><br />
@@ -1603,8 +1670,63 @@ const CalForm = () => {
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
                       {po}
                     </tr>
+                    
                   );
                 })}
+
+<tr>
+                <td colSpan="2">รวม</td>
+                {f.map((p, i)=> {
+                  var cout
+                  var cout2
+                  var cout3
+                  var rvf
+                  for (var j = 0;j <= props.length-1;j++) {
+                   //if (select.map(ss => ss.de_paras.split(", "))[0] != undefined) {
+                   if (props.length === 1) {
+                    rvf = (select.map((ss, oi) => ss.de_paras.split(", "))[0])[i]
+                   } else if (j === 0) {
+                     cout = select.map((ss, oi) => ss.de_paras.split(", "))[0]
+                     rvf = cout
+                   } else if (j === props.length-1) {
+                    cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                    cout3 = (rvf.map((d, ii) => {
+                      if(isNaN(d)) {
+                        d = 0
+                      } 
+                      if (isNaN(cout2[ii])) {
+                        cout2[ii] = 0
+                      }
+                      return (
+                      Number(d) + Number(cout2[ii])
+                      )}))
+                    rvf = cout3[i]
+                   }
+                    else {
+                     cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                     cout3 = (rvf.map((d, ii) => {
+                      if(isNaN(d)) {
+                        d = 0
+                      } 
+                      if (isNaN(cout2[ii])) {
+                        cout2[ii] = 0
+                      }
+                      return (
+                      Number(d) + Number(cout2[ii])
+                      )}))
+                     rvf = cout3
+                   }
+                    
+                   }
+                  
+                    return (
+                      <td key={p}>{rvf}</td>
+                    );
+                  })}
+                  
+                  <td >{qwe}</td>
+                  <td colSpan="5"></td>
+                </tr>
               </tbody>
             </table>
             <br /><br />
