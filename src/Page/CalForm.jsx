@@ -19,6 +19,7 @@ const CalForm = () => {
   const [eve, setEve] = useState([]);
   const [tableData1, setTableData1] = useState([]);
   const [file, setFile] = useState();
+  const [file2, setFile2] = useState();
   const [printf, setPrintf] = useState([]);
   const [fetchs, setFetchs] = useState([]);
   const [param, setParam] = useState("");
@@ -326,13 +327,13 @@ const CalForm = () => {
         }
         else {
           qq1.push(((q1par1 / q1par2) * 100).toFixed(2))
-          qq1.push((((q1par2 / q1par1)* 100).toFixed(2)))
+          qq1.push((((q1par2 / q1par1) * 100).toFixed(2)))
           if ((q1par1 / q1par2) * 100 >= q)
             re1.push("ผ่าน")
           else re1.push("ไม่ผ่าน")
         }
       }
-      
+
     }
 
     //console.log("re1 = ", re1)
@@ -1126,6 +1127,7 @@ const CalForm = () => {
   }
 
   var name = "";
+  var name2 = "";
 
   const upload = () => {
     const formdata = new FormData();
@@ -1158,6 +1160,52 @@ const CalForm = () => {
             if (data.status === "ok") {
               // console.log(jsonImg)
               alert("บันทึกสำเร็จ");
+            } else {
+              alert("บันทึกไม่สำเร็จ");
+            }
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
+      }, 300)
+
+    } else {
+      alert("เลือกไฟล์ก่อน")
+    }
+  }
+
+  const upload2 = () => {
+    const formdata = new FormData();
+    if (file2 != undefined) {
+      formdata.append("file", file2)
+      axios.post(import.meta.env.VITE_APP_API + "/upload2", formdata)
+        .then(res => {
+          name2 = res.data.filename
+          sessionStorage.setItem("pdf", name2)
+        })
+        .catch(er => console.log(er));
+
+      setTimeout(() => {
+        const jsonImg = {
+          "evpdf": sessionStorage.getItem("pdf"),
+          //"evimg": name,
+          "evid": sessionStorage.getItem("evid")
+        }
+        fetch(import.meta.env.VITE_APP_API + "/ev/edit/pdf", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(jsonImg)
+        })
+          .then(response => {
+            return response.json();
+          })
+          .then(data => {
+            if (data.status === "ok") {
+              // console.log(jsonImg)
+              alert("บันทึกสำเร็จ");
+              window.location.reload()
             } else {
               alert("บันทึกไม่สำเร็จ");
             }
@@ -1214,16 +1262,16 @@ const CalForm = () => {
         var sev = <div style={{ width: 530 }}>
           <Solve name={((qqn1p14[13] / qqn2p14[13])).toFixed(2)} do={530} name2={q} class={"responcal"} />
         </div>
-      
+
       var insum = qq14[13]
 
       if (n === "20" || n === "20.2")
-      insum = (qqn1p14[13] / qqn2p14[13]).toFixed(2)
+        insum = (qqn1p14[13] / qqn2p14[13]).toFixed(2)
       else if (n === "24" || n === "26")
-      insum = ((qq14[13] ** (-1)) * 10000).toFixed(2)
+        insum = ((qq14[13] ** (-1)) * 10000).toFixed(2)
       else if (n === "39" || n === "15" || n === "48")
-      insum = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
-      
+        insum = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
+
 
       var hosi = Number(localStorage.getItem("id")) - 10
       //console.log(hosi)
@@ -1301,59 +1349,61 @@ const CalForm = () => {
                   );
                 })}
                 <tr>
-                <td colSpan="2">รวม</td>
-                {f.map((p, i)=> {
-                  var cout
-                  var cout2
-                  var cout3
-                  var rvf
-                  for (var j = 0;j <= props.length-1;j++) {
-                   //if (select.map(ss => ss.de_paras.split(", "))[0] != undefined) {
-                   if (props.length === 1) {
-                    rvf = (select.map((ss, oi) => ss.de_paras.split(", "))[0])[i]
-                   } else if (j === 0) {
-                     cout = select.map((ss, oi) => ss.de_paras.split(", "))[0]
-                     rvf = cout
-                   } else if (j === props.length-1) {
-                    cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
-                    cout3 = (rvf.map((d, ii) => {
-                      if(isNaN(d)) {
-                        d = 0
-                      } 
-                      if (isNaN(cout2[ii])) {
-                        cout2[ii] = 0
+                  <td colSpan="2">รวม</td>
+                  {f.map((p, i) => {
+                    var cout
+                    var cout2
+                    var cout3
+                    var rvf
+                    for (var j = 0; j <= props.length - 1; j++) {
+                      //if (select.map(ss => ss.de_paras.split(", "))[0] != undefined) {
+                      if (props.length === 1) {
+                        rvf = (select.map((ss, oi) => ss.de_paras.split(", "))[0])[i]
+                      } else if (j === 0) {
+                        cout = select.map((ss, oi) => ss.de_paras.split(", "))[0]
+                        rvf = cout
+                      } else if (j === props.length - 1) {
+                        cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                        cout3 = (rvf.map((d, ii) => {
+                          if (isNaN(d)) {
+                            d = 0
+                          }
+                          if (isNaN(cout2[ii])) {
+                            cout2[ii] = 0
+                          }
+                          return (
+                            Number(d) + Number(cout2[ii])
+                          )
+                        }))
+                        rvf = cout3[i]
                       }
-                      return (
-                      Number(d) + Number(cout2[ii])
-                      )}))
-                    rvf = cout3[i]
-                   }
-                    else {
-                     cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
-                     cout3 = (rvf.map((d, ii) => {
-                      if(isNaN(d)) {
-                        d = 0
-                      } 
-                      if (isNaN(cout2[ii])) {
-                        cout2[ii] = 0
+                      else {
+                        cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                        cout3 = (rvf.map((d, ii) => {
+                          if (isNaN(d)) {
+                            d = 0
+                          }
+                          if (isNaN(cout2[ii])) {
+                            cout2[ii] = 0
+                          }
+                          return (
+                            Number(d) + Number(cout2[ii])
+                          )
+                        }))
+                        rvf = cout3
                       }
-                      return (
-                      Number(d) + Number(cout2[ii])
-                      )}))
-                     rvf = cout3
-                   }
-                    
-                   }
-                  
+
+                    }
+
                     return (
                       <td key={p}>{rvf}</td>
                     );
                   })}
-                  
+
                   <td >{insum}</td>
                   <td colSpan="5"></td>
                 </tr>
-                
+
               </tbody>
             </table>
             <br /><br />
@@ -1375,6 +1425,7 @@ const CalForm = () => {
                   <th className="textc" scope='col' width="170">รายละเอียด</th>
                   <th className="textc" scope='col' width="120">แก้ไข</th>
                   <th className="textc" scope='col' width="120">ลบข้อมูล</th>
+                  <th className="textc" scope='col' width="120">ไฟล์แนบ</th>
                 </tr>
               </thead>
               <tbody>
@@ -1435,6 +1486,7 @@ const CalForm = () => {
                       <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                       <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
                       <td className="textc"><button onClick={e => { detev(rr, uu, qq), handledelev(rr) }} type="button" className="btn btn-danger">ลบข้อมูล</button></td>
+                      <td className="textc"><button onClick={() => { window.open(import.meta.env.VITE_APP_API + `/pdfs/${e.files}`) }} type="button" className="btn btn-outline-danger">PDF</button></td>
                     </tr>
                   )
                 })}
@@ -1525,7 +1577,7 @@ const CalForm = () => {
                     qq14[index] = (qqn1p14[index] / qqn2p14[index]).toFixed(2)
                   }
 
-                  
+
 
                   if (isNaN(qq12[index]))
                     qq12[index] = "-"
@@ -1670,60 +1722,62 @@ const CalForm = () => {
                       <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
                       {po}
                     </tr>
-                    
+
                   );
                 })}
 
-<tr>
-                <td colSpan="2">รวม</td>
-                {f.map((p, i)=> {
-                  var cout
-                  var cout2
-                  var cout3
-                  var rvf
-                  for (var j = 0;j <= props.length-1;j++) {
-                   //if (select.map(ss => ss.de_paras.split(", "))[0] != undefined) {
-                   if (props.length === 1) {
-                    rvf = (select.map((ss, oi) => ss.de_paras.split(", "))[0])[i]
-                   } else if (j === 0) {
-                     cout = select.map((ss, oi) => ss.de_paras.split(", "))[0]
-                     rvf = cout
-                   } else if (j === props.length-1) {
-                    cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
-                    cout3 = (rvf.map((d, ii) => {
-                      if(isNaN(d)) {
-                        d = 0
-                      } 
-                      if (isNaN(cout2[ii])) {
-                        cout2[ii] = 0
+                <tr>
+                  <td colSpan="2">รวม</td>
+                  {f.map((p, i) => {
+                    var cout
+                    var cout2
+                    var cout3
+                    var rvf
+                    for (var j = 0; j <= props.length - 1; j++) {
+                      //if (select.map(ss => ss.de_paras.split(", "))[0] != undefined) {
+                      if (props.length === 1) {
+                        rvf = (select.map((ss, oi) => ss.de_paras.split(", "))[0])[i]
+                      } else if (j === 0) {
+                        cout = select.map((ss, oi) => ss.de_paras.split(", "))[0]
+                        rvf = cout
+                      } else if (j === props.length - 1) {
+                        cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                        cout3 = (rvf.map((d, ii) => {
+                          if (isNaN(d)) {
+                            d = 0
+                          }
+                          if (isNaN(cout2[ii])) {
+                            cout2[ii] = 0
+                          }
+                          return (
+                            Number(d) + Number(cout2[ii])
+                          )
+                        }))
+                        rvf = cout3[i]
                       }
-                      return (
-                      Number(d) + Number(cout2[ii])
-                      )}))
-                    rvf = cout3[i]
-                   }
-                    else {
-                     cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
-                     cout3 = (rvf.map((d, ii) => {
-                      if(isNaN(d)) {
-                        d = 0
-                      } 
-                      if (isNaN(cout2[ii])) {
-                        cout2[ii] = 0
+                      else {
+                        cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                        cout3 = (rvf.map((d, ii) => {
+                          if (isNaN(d)) {
+                            d = 0
+                          }
+                          if (isNaN(cout2[ii])) {
+                            cout2[ii] = 0
+                          }
+                          return (
+                            Number(d) + Number(cout2[ii])
+                          )
+                        }))
+                        rvf = cout3
                       }
-                      return (
-                      Number(d) + Number(cout2[ii])
-                      )}))
-                     rvf = cout3
-                   }
-                    
-                   }
-                  
+
+                    }
+
                     return (
                       <td key={p}>{rvf}</td>
                     );
                   })}
-                  
+
                   <td >{qwe}</td>
                   <td colSpan="5"></td>
                 </tr>
@@ -1748,6 +1802,7 @@ const CalForm = () => {
                   <th className="textc" scope='col' width="170">รายละเอียด</th>
                   <th className="textc" scope='col' width="120">แก้ไข</th>
                   <th className="textc" scope='col' width="120">ลบข้อมูล</th>
+                  <th className="textc" scope='col' width="120">ไฟล์แนบ</th>
                 </tr>
               </thead>
               <tbody>
@@ -1808,6 +1863,7 @@ const CalForm = () => {
                       <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                       <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
                       <td className="textc"><button onClick={e => { detev(rr, uu, qq), handledelev(rr) }} type="button" className="btn btn-danger">ลบข้อมูล</button></td>
+                      <td className="textc"><button onClick={() => { window.open(import.meta.env.VITE_APP_API + `/pdfs/${e.files}`) }} type="button" className="btn btn-outline-danger">PDF</button></td>
                     </tr>
                   )
                 })}
@@ -1891,6 +1947,7 @@ const CalForm = () => {
                   <th className="textc" scope='col' width="170">รายละเอียด</th>
                   <th className="textc" scope='col' width="120">แก้ไข</th>
                   <th className="textc" scope='col' width="120">ลบข้อมูล</th>
+                  <th className="textc" scope='col' width="120">ไฟล์แนบ</th>
                 </tr>
               </thead>
               <tbody>
@@ -1951,6 +2008,7 @@ const CalForm = () => {
                       <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                       <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
                       <td className="textc"><button onClick={e => { detev(rr, uu, qq), handledelev(rr) }} type="button" className="btn btn-danger">ลบข้อมูล</button></td>
+                      <td className="textc"><button onClick={() => { window.open(import.meta.env.VITE_APP_API + `/pdfs/${e.files}`) }} type="button" className="btn btn-outline-danger">PDF</button></td>
                     </tr>
                   )
                 })}
@@ -2055,6 +2113,7 @@ const CalForm = () => {
                     <th className="textc" scope='col' width="170">รายละเอียด</th>
                     <th className="textc" scope='col' width="120">แก้ไข</th>
                     <th className="textc" scope='col' width="120">ลบข้อมูล</th>
+                    <th className="textc" scope='col' width="120">ไฟล์แนบ</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -2115,6 +2174,7 @@ const CalForm = () => {
                         <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                         <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
                         <td className="textc"><button onClick={e => { detev(rr, uu, qq), handledelev(rr) }} type="button" className="btn btn-danger">ลบข้อมูล</button></td>
+                        <td className="textc"><button onClick={() => { window.open(import.meta.env.VITE_APP_API + `/pdfs/${e.files}`) }} type="button" className="btn btn-outline-danger">PDF</button></td>
                       </tr>
                     )
                   })}
@@ -2207,6 +2267,61 @@ const CalForm = () => {
                     </tr>
                   );
                 })}
+                <tr>
+                  <td colSpan="2">รวม</td>
+                  {f.map((p, i) => {
+                    var cout
+                    var cout2
+                    var cout3
+                    var rvf
+                    for (var j = 0; j <= props.length - 1; j++) {
+                      //if (select.map(ss => ss.de_paras.split(", "))[0] != undefined) {
+                      if (props.length === 1) {
+                        rvf = (select.map((ss, oi) => ss.de_paras.split(", "))[0])[i]
+                      } else if (j === 0) {
+                        cout = select.map((ss, oi) => ss.de_paras.split(", "))[0]
+                        rvf = cout
+                      } else if (j === props.length - 1) {
+                        cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                        cout3 = (rvf.map((d, ii) => {
+                          if (isNaN(d)) {
+                            d = 0
+                          }
+                          if (isNaN(cout2[ii])) {
+                            cout2[ii] = 0
+                          }
+                          return (
+                            Number(d) + Number(cout2[ii])
+                          )
+                        }))
+                        rvf = cout3[i]
+                      }
+                      else {
+                        cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                        cout3 = (rvf.map((d, ii) => {
+                          if (isNaN(d)) {
+                            d = 0
+                          }
+                          if (isNaN(cout2[ii])) {
+                            cout2[ii] = 0
+                          }
+                          return (
+                            Number(d) + Number(cout2[ii])
+                          )
+                        }))
+                        rvf = cout3
+                      }
+
+                    }
+
+                    return (
+                      <td key={p}>{rvf}</td>
+                    );
+                  })}
+
+                  <td >{insum}</td>
+                  <td colSpan="5"></td>
+                </tr>
               </tbody>
             </table>
             <br /><br />
@@ -2226,6 +2341,7 @@ const CalForm = () => {
                     <th className="textc" scope='col' width="170">รายละเอียด</th>
                     <th className="textc" scope='col' width="120">แก้ไข</th>
                     <th className="textc" scope='col' width="120">ลบข้อมูล</th>
+                    <th className="textc" scope='col' width="120">ไฟล์แนบ</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -2286,9 +2402,11 @@ const CalForm = () => {
                         <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                         <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
                         <td className="textc"><button onClick={e => { detev(rr, uu, qq), handledelev(rr) }} type="button" className="btn btn-danger">ลบข้อมูล</button></td>
+                        <td className="textc"><button onClick={() => { window.open(import.meta.env.VITE_APP_API + `/pdfs/${e.files}`) }} type="button" className="btn btn-outline-danger">PDF</button></td>
                       </tr>
                     )
                   })}
+
                 </tbody>
               </table>
             </div>
@@ -2433,6 +2551,7 @@ const CalForm = () => {
                     </tr>
                   );
                 })}
+
 
               </tbody>
             </table>
@@ -2773,6 +2892,7 @@ const CalForm = () => {
                     <th className="textc" scope='col' width="170">รายละเอียด</th>
                     <th className="textc" scope='col' width="120">แก้ไข</th>
                     <th className="textc" scope='col' width="120">ลบข้อมูล</th>
+                    <th className="textc" scope='col' width="120">ไฟล์แนบ</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -2833,6 +2953,7 @@ const CalForm = () => {
                         <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
                         <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
                         <td className="textc"><button onClick={e => { detev(rr, uu, qq), handledelev(rr) }} type="button" className="btn btn-danger">ลบข้อมูล</button></td>
+                        <td className="textc"><button onClick={() => { window.open(import.meta.env.VITE_APP_API + `/pdfs/${e.files}`) }} type="button" className="btn btn-outline-danger">PDF</button></td>
                       </tr>
                     )
                   })}
@@ -3756,6 +3877,20 @@ const CalForm = () => {
                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body textl7">
+                <div className='up2'>
+                    
+                    <br />
+                    <label>แนบไฟล์ PDF: &nbsp;&nbsp;</label><br />
+                    <input defaultValue={file2} type='file' name='pdf' onChange={(e) => setFile2(e.target.files[0])} />
+                    <button type="button" className='btn btn-primary' onClick={upload2}>Upload PDF</button>
+                    <br />
+                    <label>**หมายเหตุชื่อไฟล์ต้องเป็นภาษาอังกฤษหรือตัวเลขเท่านั้น**</label>
+                    <br />
+                  
+                </div>
+                <br />
+                <hr style={{"width": "80%"}} />
+                <br />
                   <label>ข้อมูลก่อนหน้า <input id="od" type="checkbox" onClick={e => od()} /></label>
                   <br />
                   <br />
@@ -3841,11 +3976,13 @@ const CalForm = () => {
                     <br />
                     <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label><br />
                     <input type='file' name='evimg' onChange={(e) => setFile(e.target.files[0])} />
-                    <button className='btn btn-primary' onClick={upload}>Upload</button>
+                    <button type="button" className='btn btn-primary' onClick={upload}>Upload</button>
                     <br />
                     <label>**หมายเหตุชื่อไฟล์ต้องเป็นภาษาอังกฤษหรือตัวเลขเท่านั้น**</label>
                     <br />
                   </div>
+                  <br />
+                  
                 </div>
 
                 <div className="modal-footer">

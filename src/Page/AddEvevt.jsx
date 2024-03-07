@@ -10,6 +10,7 @@ const AddEvevt = () => {
 
     const [tableData1, setTableData1] = useState([]);
     const [file, setFile] = useState();
+    const [file2, setFile2] = useState();
     const [events, setEvents] = useState([]);
     const [quar, setQuar] = useState([]);
     const [qrc, setQrc] = useState(1);
@@ -39,6 +40,7 @@ const AddEvevt = () => {
     var qc = 0;
     var qqc;
     var name;
+    var name2;
     if (dep === "รพ.กลาง") {
         hos = "h1"
         ha = 0
@@ -149,7 +151,8 @@ const AddEvevt = () => {
             result: reu(),
             problem: data.get("problem"),
             str: data.get("et"),
-            evimg: name
+            evimg: name,
+            pdf: name2
         };
 
         console.log(JsonData2)
@@ -314,7 +317,7 @@ const AddEvevt = () => {
             axios.post(import.meta.env.VITE_APP_API + "/upload", formdata)
                 .then(res => {
                     name = res.data.filename
-                    console.log(name)
+                    //console.log(name)
                 })
                 .catch(er => console.log(er));
         } else {
@@ -322,6 +325,20 @@ const AddEvevt = () => {
         }
     }
 
+    const upload2 = () => {
+        const formdata = new FormData();
+        if (file2 != undefined) {
+            formdata.append("file", file2)
+            axios.post(import.meta.env.VITE_APP_API + "/upload2", formdata)
+                .then(res => {
+                    name2 = res.data.filename
+                    console.log(name2)
+                })
+                .catch(er => console.log(er));
+        } else {
+            name2 = ""
+        }
+    }
 
     const dis = () => {
         //console.log(file.name)
@@ -329,6 +346,7 @@ const AddEvevt = () => {
         if (document.getElementById("submit").disabled === true) {
             document.getElementById("submit").disabled = false
             upload();
+            upload2();
         }
         else {
             document.getElementById("submit").disabled = true
@@ -568,6 +586,18 @@ const AddEvevt = () => {
                                                         <br />
                                                         <label>แนบไฟล์รูปภาพ: &nbsp;&nbsp;</label><br />
                                                         <input type='file' onChange={(e) => setFile(e.target.files[0])} />
+                                                        {/* <button id="upl" className='btn btn-primary' onClick={upload}>Upload</button> */}
+                                                        <br /><br />
+                                                        <label>**หมายเหตุชื่อไฟล์ต้องเป็นภาษาอังกฤษหรือตัวเลขเท่านั้น**</label>
+                                                        <br />
+                                                    </div>
+                                                    <br />
+                                                    <hr style={{"width": "80%"}} />
+                                                    
+                                                    <div className='up2'>
+                                                        <br />
+                                                        <label>แนบไฟล์ PDF: &nbsp;&nbsp;</label><br />
+                                                        <input type='file' onChange={(e) => setFile2(e.target.files[0])} />
                                                         {/* <button id="upl" className='btn btn-primary' onClick={upload}>Upload</button> */}
                                                         <br /><br />
                                                         <label>**หมายเหตุชื่อไฟล์ต้องเป็นภาษาอังกฤษหรือตัวเลขเท่านั้น**</label>
