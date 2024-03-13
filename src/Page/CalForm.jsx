@@ -960,10 +960,10 @@ const CalForm = () => {
 
   }
 
-  const handlesum = (event) => {
-    event.preventDefault();
+  const handlesum = () => {
+    // event.preventDefault();
 
-    const data = new FormData(event.currentTarget);
+    // const data = new FormData(event.currentTarget);
     const JsonData = {
       paras: gg(s),
       ans: qg(s),
@@ -1267,7 +1267,7 @@ const CalForm = () => {
 
       if (n === "20" || n === "20.2")
         insum = (qqn1p14[13] / qqn2p14[13]).toFixed(2)
-      else if (n === "24" || n === "26")
+      else if (n === "24")
         insum = ((qq14[13] ** (-1)) * 10000).toFixed(2)
       else if (n === "39" || n === "15" || n === "48")
         insum = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
@@ -1393,6 +1393,16 @@ const CalForm = () => {
                         rvf = cout3
                       }
 
+                    }
+                    
+                    if (n === "39" || n === "15" || n === "48") {
+                      if (i === 0) {
+                        rvf = (rvf/props.length).toFixed(2)
+                      }
+                      
+                      else if (i === 1) {
+                        rvf = rvf/props.length
+                      }
                     }
 
                     return (
@@ -1764,13 +1774,22 @@ const CalForm = () => {
                           if (isNaN(cout2[ii])) {
                             cout2[ii] = 0
                           }
+                          
                           return (
                             Number(d) + Number(cout2[ii])
                           )
                         }))
+
                         rvf = cout3
+
                       }
 
+                    }
+
+                    if(n === "16") {
+                      if(i === 1) {
+                        rvf = 2100
+                      }
                     }
 
                     return (
@@ -2313,6 +2332,9 @@ const CalForm = () => {
                       }
 
                     }
+
+                    if(i === 1)
+                    rvf = 287
 
                     return (
                       <td key={p}>{rvf}</td>
@@ -3498,14 +3520,9 @@ const CalForm = () => {
           q = (p ** (-1)) * 100;
         }
       }
-      else if (t[1] === 1) {
-        if (n === "24" || n === "26") {
-          q = p * 100;
-          // if (n === "24" || n === "26" || n === "8") {
-          //   q = p * 100;
-        } else {
-          q = (p ** (-1)) * 100;
-        }
+      
+      if (s.length === 2 && n === "39" || n === "15" || n === "48") {
+        q = pr1
       }
 
     }
@@ -3567,13 +3584,15 @@ const CalForm = () => {
       } else {
         h = "ไม่ผ่าน"
       }
-    } else if (n === "8") {
-      if ((g ** (-1) * 100) >= t[0]) {
-        h = "ผ่าน"
-      } else {
-        h = "ไม่ผ่าน"
-      }
-    }
+    } 
+     else if (n === "8") {
+       if ((g ** (-1) * 100) >= t[0] && (g ** (-1) * 100) !== Infinity) {
+         h = "ผ่าน"
+       } else {
+         h = "ไม่ผ่าน"
+       }
+       //console.log((g ** (-1) * 100))
+     }
     else if (n === "20" || n === "20.2") {
       if ((g) <= t[0]) {
         h = "ผ่าน"
@@ -3848,7 +3867,7 @@ const CalForm = () => {
 
         <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog modal-lg">
-            <form onSubmit={handlesum}>
+            
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" id="exampleModalLabel">แก้ไขการส่งข้อมูล</h5>
@@ -3861,10 +3880,10 @@ const CalForm = () => {
 
                 <div className="modal-footer">
                   <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
-                  <button id="submit" type="submit" className="btn btn-primary">แก้ไขข้อมูล</button>
+                  <button id="submit" onClick={e => handlesum()} type="button" className="btn btn-primary">แก้ไขข้อมูล</button>
                 </div>
               </div>
-            </form>
+            
           </div>
         </div>
 
