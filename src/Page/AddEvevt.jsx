@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Authen from '../Component/Authen';
 import Footer from '../Component/Footer';
 import axios from "axios";
+import parse from "html-react-parser";
 
 
 const AddEvevt = () => {
@@ -12,8 +13,10 @@ const AddEvevt = () => {
     const [file, setFile] = useState();
     const [file2, setFile2] = useState();
     const [events, setEvents] = useState([]);
+    const [eventsq, setEventsq] = useState([]);
     const [quar, setQuar] = useState([]);
     const [qrc, setQrc] = useState(1);
+    const [autoo, setAutoo] = useState("");
     const [forms, setForms] = useState({
         form: [],
         fill: [],
@@ -268,6 +271,14 @@ const AddEvevt = () => {
                 setQuar(data);
             });
 
+        // fetch(import.meta.env.VITE_APP_API + `/evdeq/${d[1]}/${localStorage.getItem("id")}/1`)
+        //     .then(response => {
+        //         return response.json();
+        //     })
+        //     .then(data => {
+        //         setEventsq(data);
+        //     });
+
         //console.log(val)
 
     }
@@ -354,9 +365,49 @@ const AddEvevt = () => {
         }
     }
 
-    const defu = () => {
-        var autoevent = events.map(e => [e.ev_name, e.fms_id, e.ev_res, e.ev_point, e.ev_target, e.ev_result, e.ev_problem])[0]
+    const shooow = () => {
         if (document.getElementById("def").checked === true) {
+           var inl = eventsq.length
+            for (var f = 0; f <= 11; f++) {
+                if (f > inl - 1) {
+                    document.getElementById(`dbu${f}`).hidden = true
+                } else {
+                    document.getElementById(`dbu${f}`).hidden = false
+                }
+            }
+        } else {
+            document.getElementById("evnaem").value = ""
+            document.getElementById("fmsid").value = ""
+            document.getElementById("evres").value = ""
+            document.getElementById("evpoint").value = ""
+            document.getElementById("evtarget").value = ""
+            if (qqc === 2)
+                document.getElementById("rre1").value = ""
+            else if (qqc === 3) {
+                document.getElementById("rre1").value = ""
+                document.getElementById("rre2").value = ""
+            }
+            else if (qqc === 4) {
+                document.getElementById("rre1").value = ""
+                document.getElementById("rre2").value = ""
+                document.getElementById("rre3").value = ""
+            }
+            document.getElementById("problem").value = ""
+            var inl = eventsq.length
+            for (var f = 0; f <= 11; f++) {
+                    document.getElementById(`dbu${f}`).hidden = true
+            }
+            
+        }
+        
+    }
+
+    const defu = (val) => {
+        
+        //console.log(eventsq, qqc, d[1], document.getElementById("0"))
+        var autoevent = eventsq.map(e => [e.ev_name, e.fms_id, e.ev_res, e.ev_point, e.ev_target, e.ev_result, e.ev_problem])[val]
+
+        if (document.getElementById(`def${val}`).checked === true) {
             document.getElementById("evnaem").value = autoevent[0]
             document.getElementById("fmsid").value = autoevent[1]
             document.getElementById("evres").value = autoevent[2]
@@ -395,9 +446,24 @@ const AddEvevt = () => {
             }
             document.getElementById("problem").value = ""
         }
+
+
     }
 
     const qurc = (val) => {
+
+
+
+        fetch(import.meta.env.VITE_APP_API + `/evdeq/${d[1]}/${localStorage.getItem("id")}/${val - 1}`)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                setEventsq(data);
+            });
+
+
+
         if (val === "2") {
             qqc = 2
             document.getElementById("rre2").required = true
@@ -407,6 +473,8 @@ const AddEvevt = () => {
             document.getElementById("tm3").hidden = true
             document.getElementById("tm4").hidden = true
             document.getElementById("dbu").hidden = false
+
+
         } else if (val === "3") {
             qqc = 3
             document.getElementById("rre2").required = true
@@ -435,7 +503,12 @@ const AddEvevt = () => {
             document.getElementById("tm4").hidden = true
             document.getElementById("dbu").hidden = true
         }
+
+
+
+
     }
+
 
     useEffect(() => {
         fetchUserDataForm();
@@ -483,7 +556,7 @@ const AddEvevt = () => {
                                                     <br /><br />
                                                 </div>
                                                 <p className='inline p'><label>ส่งข้อมูลประจำ:&nbsp;&nbsp;</label></p>
-                                                <p className='inline textr p'><select value={qrc} name="qur" onClick={e => qurc(qrc)} onChange={e => setQrc(e.target.value)} >
+                                                <p className='inline textr p'><select value={qrc} name="qur" onClick={e => qurc(qrc)} onChange={e => { qurc(qrc), setQrc(e.target.value) }} >
                                                     <option value={1}>ไตรมาสที่ 1</option>
                                                     <option value={2}>ไตรมาสที่ 2</option>
                                                     <option value={3}>ไตรมาสที่ 3</option>
@@ -496,8 +569,20 @@ const AddEvevt = () => {
                                                     <label><b>แบบรายงานความก้าวหน้ารายโครงการ / กิจกรรม</b></label>
                                                     <br />
                                                     <br />
-                                                    <div id='dbu' hidden><label>ใช้ข้อมูลจากไตรมาสก่อนหน้า</label>: <input type="checkbox" id='def' onClick={e => defu()} />
-                                                        <br />
+                                                    <div id='dbu' hidden>
+                                                        <div><label>ใช้ข้อมูลจากไตรมาสก่อนหน้า</label>: <input type='checkbox' id="def" onClick={() => shooow()} /><br /></div>
+                                                        <div id='dbu0' hidden><label>กิจกรรม 1</label>: <input type='radio' name='deff' id="def0" onClick={() => defu(0)} /><br /></div>
+                                                        <div id='dbu1' hidden><label>กิจกรรม 2</label>: <input type='radio' name='deff' id="def1" onClick={() => defu(1)} /><br /></div>
+                                                        <div id='dbu2' hidden><label>กิจกรรม 3</label>: <input type='radio' name='deff' id="def2" onClick={() => defu(2)} /><br /></div>
+                                                        <div id='dbu3' hidden><label>กิจกรรม 4</label>: <input type='radio' name='deff' id="def3" onClick={() => defu(3)} /><br /></div>
+                                                        <div id='dbu4' hidden><label>กิจกรรม 5</label>: <input type='radio' name='deff' id="def4" onClick={() => defu(4)} /><br /></div>
+                                                        <div id='dbu5' hidden><label>กิจกรรม 6</label>: <input type='radio' name='deff' id="def5" onClick={() => defu(5)} /><br /></div>
+                                                        <div id='dbu6' hidden><label>กิจกรรม 7</label>: <input type='radio' name='deff' id="def6" onClick={() => defu(6)} /><br /></div>
+                                                        <div id='dbu7' hidden><label>กิจกรรม 8</label>: <input type='radio' name='deff' id="def7" onClick={() => defu(7)} /><br /></div>
+                                                        <div id='dbu8' hidden><label>กิจกรรม 9</label>: <input type='radio' name='deff' id="def8" onClick={() => defu(8)} /><br /></div>
+                                                        <div id='dbu9' hidden><label>กิจกรรม 10</label>: <input type='radio' name='deff' id="def9" onClick={() => defu(9)} /><br /></div>
+                                                        <div id='dbu10' hidden><label>กิจกรรม 11</label>: <input type='radio' name='deff' id="def10" onClick={() => defu(10)} /><br /></div>
+                                                        <div id='dbu11' hidden><label>กิจกรรม 12</label>: <input type='radio' name='deff' id="def11" onClick={() => defu(11)} /><br /></div>
                                                         <br />
                                                     </div>
                                                     <label>ชื่อโครงการ / กิจกรรม</label>
@@ -592,8 +677,8 @@ const AddEvevt = () => {
                                                         <br />
                                                     </div>
                                                     <br />
-                                                    <hr style={{"width": "80%"}} />
-                                                    
+                                                    <hr style={{ "width": "80%" }} />
+
                                                     <div className='up2'>
                                                         <br />
                                                         <label>แนบไฟล์ PDF: &nbsp;&nbsp;</label><br />

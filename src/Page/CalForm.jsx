@@ -9,12 +9,13 @@ import "chartjs-gauge";
 import Solve from "../Component/Solve";
 import axios from "axios";
 import Solve2 from "../Component/solve2";
+import Dash from "../Component/Dash";
 
 const CalForm = () => {
 
   Authen();
 
-
+  const [fd, setFd] = useState([]);
   const [events, setEvents] = useState([]);
   const [eve, setEve] = useState([]);
   const [tableData1, setTableData1] = useState([]);
@@ -29,8 +30,11 @@ const CalForm = () => {
   const [qt3, setQt3] = useState([]);
   const [qt4, setQt4] = useState([]);
   const [formres, setFormres] = useState([])
+  const [fide, setFide] = useState(0)
+
   var fetc = Fetch();
   var fusers = Users();
+  var resu;
   var ta = [];
   var hos;
   var deid = 0;
@@ -85,16 +89,20 @@ const CalForm = () => {
     console.log("err")
   }
 
-  // const dis = () => {
-  //    console.log(gg(s))
-  //    console.log(qg(s))
-  //    console.log(hg(s))
-  //    console.log(deid)
-  //  } 
+   const dis = () => {
+      console.log(gg(s))
+      console.log(qg(s))
+      console.log(hg(s))
+      console.log(deid)
+      if (document.getElementById("submit").hidden === true) {
+        document.getElementById("submit").hidden = false
+      }
+    else {
+      document.getElementById("submit").hidden = true
+    }
+    } 
 
   const handleonChange = (val) => {
-
-
 
     if (localStorage.getItem("token").split("$")[1] === "9" || localStorage.getItem("token").split("$")[1] === "1") {
       fetch(import.meta.env.VITE_APP_API + `/all/${val}`)
@@ -112,7 +120,6 @@ const CalForm = () => {
         .then(data => {
           setEve(data);
         });
-
 
     } else {
       fetch(import.meta.env.VITE_APP_API + `/all/hp/${localStorage.getItem("id")}/${val}`)
@@ -183,9 +190,16 @@ const CalForm = () => {
         .then(data7 => {
           setFormres(data7);
         });
+      
+        fetch(import.meta.env.VITE_APP_API + `/dashh?fm=${val}`)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setFd(data);
+        });
 
     }
-
 
   }
 
@@ -220,6 +234,12 @@ const CalForm = () => {
       var fc = select.map(ffc => ffc.fm_com)[0]
       var met = select.map(me => me.fm_method)[0]
       var nn;
+      var cc = <></>
+      var cs = <button id="submit" onClick={() => handlesum()} type="button" className="btn btn-primary">แก้ไขข้อมูล</button>
+      if (fide === "47") {
+        cs = <button id="submit" hidden onClick={() => handlesum()} type="button" className="btn btn-primary">แก้ไขข้อมูล</button>
+        cc = <label>ยืนยัน: <input type="checkbox" onClick={e => dis()} /> </label>
+      }
       var ansl = q
       if (vcon != 0) {
         ansl = tttt.reduce((x, y) => Number(x) + Number(y), 0);
@@ -238,7 +258,21 @@ const CalForm = () => {
           nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon} readOnly /></p>
         } else if (m === "*" && i === s.length - 1) {
           nn = <p className='inline textr p hidden'><input className='input30' type="number" id={m} defaultValue={1} readOnly /></p>
-        }
+        } 
+
+        //console.log(fide)
+
+        if (fide === "47" && i !== s.length - 1) {
+          nn = <p className='inline textr p'><input className='input30' type="checkbox" id={m} value={m} /></p>
+        } else if (vcon != 0 && i === s.length - 1)
+        nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={0} readOnly /></p>
+      //  try {
+      //    if ((k[1])[2] === "1") {
+      //      if (qqc === 3 || qqc === 4)
+      //        nn = <p className='inline textr p'><input className='input30' type="text" id={m} disabled /></p>
+      //    }
+      //  } catch { }
+
         return (
           <div key={i}>
             <div><p className='inline p'><label>{m}: &nbsp;&nbsp;</label></p>
@@ -248,7 +282,8 @@ const CalForm = () => {
         )
       }
       );
-      var b = a[0]
+      //var b = a[0]
+      var b = s
       var c = []
       for (var i = 0; i < b.length; i++) {
         c.push(parseFloat(b[i]))
@@ -535,9 +570,9 @@ const CalForm = () => {
         qq14 = qqn1p14.map((q, i) => ((q / qqn2p14[i])).toFixed(2));
       }
     }, 300)
-    // if (n === "8" || n ==="24") {
-    //   qq14 = qq14**(-1)
-    // }
+    //  if (n === "8") {
+    //    qq14 = qq14**(-1)
+    //  }
 
     //var qqall = qq1.map(q => [qq1[11], qq2[11], qq12[11], qq3[11], qq4[11], qq34[11], qq14[11]])[0]
   }
@@ -603,6 +638,7 @@ const CalForm = () => {
     sessionStorage.setItem("qur", qur)
     sessionStorage.setItem("evid", val)
     sessionStorage.setItem("edid", dep)
+    
   }
 
   const setp = (dep) => {
@@ -712,11 +748,13 @@ const CalForm = () => {
   }
 
   const callpara = () => {
-    s.map((m, i) => {
+    if (fide !== "47") {
+      s.map((m, i) => {
       setTimeout(() => {
         document.getElementById(m).value = sessionStorage.getItem("pp").split(",")[i]
       }, 200)
     })
+    }
   }
 
   const setid = (id, dep, para, qur) => {
@@ -838,8 +876,10 @@ const CalForm = () => {
     sessionStorage.setItem("qur", qur)
     sessionStorage.setItem("edid", fm)
 
+    //console.log(fd)
     //console.log(pa2(s), qq14[13], qg(s), hg(s), parast)
     console.log(pa(), pa2(s), hg(s), qg(s))
+    //console.log(a)
     //console.log(vcon.split(", ")[Number(sessionStorage.getItem("qur"))-1])
     //console.log(qq1)
   }
@@ -1230,13 +1270,18 @@ const CalForm = () => {
 
   function show(props) {
     var a;
-    var qwe = 0;
-
+    var qwe = 0
+    var hidex = localStorage.getItem("id") - 10
+    var fcc = 0
     try {
-      if (localStorage.getItem("token").split("$")[1] === "9")
-        qwe = pa()[5]
+      if (localStorage.getItem("token").split("$")[1] === "9") {
+        qwe = fd.dash[0].calp[1];
+      //   fcc = (fd.dash[0].calp[1]/fd.dash[0].calp[0])*100
+      // console.log(fd)
+      }
       else {
-        qwe = pa()[2]
+        qwe = fd.dash[0].hos.h[hidex]
+        fcc = fd.dash[0].calp[1]
       }
     } catch {
     }
@@ -1397,7 +1442,7 @@ const CalForm = () => {
                     
                     if (n === "39" || n === "15" || n === "48") {
                       if (i === 0) {
-                        rvf = (rvf/props.length).toFixed(2)
+                        rvf = rvf/props.length
                       }
                       
                       else if (i === 1) {
@@ -1406,7 +1451,7 @@ const CalForm = () => {
                     }
 
                     return (
-                      <td key={p}>{rvf}</td>
+                      <td key={p}>{(rvf).toFixed(2)}</td>
                     );
                   })}
 
@@ -1564,13 +1609,13 @@ const CalForm = () => {
                     // if (n === "24" || n === "26" || n === "8") {
                     //   qq14[index] = ((qq14[index] ** (-1)) * 10000).toFixed(2)
                   }
-                  else if (n === "8") {
-                    qq1[13] = qq1[14]
-                    if (qq1[13] > q)
-                      re1[13] = "ผ่าน"
-                    else
-                      re1[13] = "ไม่ผ่าน"
-                  }
+                  // else if (n === "8") {
+                  //   qq1[13] = qq1[14]
+                  //   if (qq1[13] > q)
+                  //     re1[13] = "ผ่าน"
+                  //   else
+                  //     re1[13] = "ไม่ผ่าน"
+                  // }
                   else if (n === "39" || n === "15" || n === "48") {
                     qq14[index] = ((qqn1p14[index] / qqn2p14[index])).toFixed(2)
                     qq1[13] = qq1[14]
@@ -2220,7 +2265,12 @@ const CalForm = () => {
 
         </div>
       }
-      else if (localStorage.getItem("token").split("$")[1] === "9" && fc === 1)
+      else if (localStorage.getItem("token").split("$")[1] === "9" && fc === 1) {
+      if (n === "26") {
+        fcc = ((fd.dash[0].calp[1]/fd.dash[0].calp[0])*100).toFixed(2)
+      } else if (n === "3.1") {
+        fcc = ((fd.dash[0].calp[0]/fd.dash[0].calp[1])*100).toFixed(2)
+      }
         a = <div>
 
           <div className='container mt-3'>
@@ -2341,7 +2391,7 @@ const CalForm = () => {
                     );
                   })}
 
-                  <td >{insum}</td>
+                  <td >{fcc}</td>
                   <td colSpan="5"></td>
                 </tr>
               </tbody>
@@ -2591,6 +2641,7 @@ const CalForm = () => {
           </div>
 
         </div>
+        }
       else if (localStorage.getItem("token").split("$")[1] === "1" && fc === 1)
         a = <div>
 
@@ -3368,7 +3419,7 @@ const CalForm = () => {
 
       } else pag = <>ไม่พบการส่งข้อมูลเข้ามา</>
     } catch {
-      console.log("err")
+      //console.log("err")
     }
 
     return pag
@@ -3457,6 +3508,25 @@ const CalForm = () => {
       g = "1, " + g
     }
 
+    if (n === "47") {
+      g = ""
+      var co = 0
+      for (var i = 1; i <= val.length-1; i++) {
+        if (document.getElementById(`${val[i - 1]}`).checked === true) {
+          g += "1"
+          co += 1
+        }
+        else {
+          g += "0"
+        }
+        if (i != val.length-1) {
+          g += ", "
+        } else {
+          g += ", " + co
+        }
+      }
+    }
+
     return g
   }
 
@@ -3535,6 +3605,15 @@ const CalForm = () => {
       q = 0
     }
     //console.log(pr1)
+    if (n === "47") {
+      q = 0
+      for (var i = 1; i <= val.length; i++) {
+        if (document.getElementById(`${val[i - 1]}`).checked === true) {
+          q += 1;
+        }
+      }
+      document.getElementById("รวม*").value = q
+    }
 
     return q
 
@@ -3853,7 +3932,7 @@ const CalForm = () => {
           <br />
           <h1>การสรุปผลตัวชี้วัด</h1>
           <br />
-          <select value={param} onClick={e => handleonChange(n)} onChange={e => setParam(e.target.value)} >
+          <select value={param} onClick={e => {handleonChange(n), setFide(n)}} onChange={e => {setParam(e.target.value), setFide(n)}} >
             <option>เลือกดูตัวชี้วัด</option>
             {formmm}
           </select>
@@ -3875,12 +3954,13 @@ const CalForm = () => {
                 </div>
                 <div className="modal-body textl4">
                   {ss}
-                  {/* <br /><label>ยืนยัน: <input type="checkbox" onClick={e => dis()} /> </label><br /> */}
+                  <br />{cc}<br />
                 </div>
+                
 
                 <div className="modal-footer">
                   <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
-                  <button id="submit" onClick={e => handlesum()} type="button" className="btn btn-primary">แก้ไขข้อมูล</button>
+                  {cs}
                 </div>
               </div>
             

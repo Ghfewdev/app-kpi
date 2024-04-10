@@ -7,6 +7,7 @@ import Solve from "../Component/Solve";
 import Authen from '../Component/Authen';
 import Fetch from '../Component/Fetch';
 import Solve2 from '../Component/solve2';
+import Dash from '../Component/Dash';
 
 
 const Dashboard = () => {
@@ -15,7 +16,7 @@ const Dashboard = () => {
 
   const [ans, setAns] = useState([]);
   const fet = Fetch();
-
+  const kpi = Dash(4);
   const itp = fet.map(r => r.fm_method);
   const opp = fet.map(t => t.fm_con);
 
@@ -34,7 +35,7 @@ const Dashboard = () => {
   var an;
 
   //console.log(opp)
-
+console.log(kpi)
   if (ans != []) {
     an = <div className='container textc'>
       <br />

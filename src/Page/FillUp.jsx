@@ -382,7 +382,7 @@ const FillUp = () => {
       }
       var nn
       if(String(m)[m.length-1] === "*")
-      nn = <p className='inline textr p'><input className='input30' type="number" id={m} required /></p>
+      nn = <p className='inline textr p'><input className='input30' type="text" id={m} required /></p>
       else
       nn = <p className='inline textr p'><input className='input30' type="text" id={m} required /></p>
       if (vcon.length === 13 && i === z.length - 1)
@@ -390,8 +390,12 @@ const FillUp = () => {
       else if (vcon != 0 && i === z.length - 1)
         nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon} readOnly /></p>
       else if (m === "*" && i === z.length - 1) {
-        nn = <p className='inline textr p hidden'><input className='input30' type="number" id={m} defaultValue={1} readOnly /></p>
+        nn = <p className='inline textr p hidden'><input className='input30' type="text" id={m} defaultValue={1} readOnly /></p>
       }
+       if (d[1] === "47" && i !== z.length - 1) {
+         nn = <p className='inline textr p'><input className='input30' type="checkbox" id={m} value={group} /></p>
+       } else if (vcon != 0 && i === z.length - 1)
+       nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={0} readOnly /></p>
       try {
         if ((k[1])[2] === "1") {
           if (qqc === 3 || qqc === 4)
@@ -440,6 +444,25 @@ const FillUp = () => {
       g = "1, " + g
     // if(numpa === 0)
     // g = 1
+
+    if (d[1] === "47") {
+      g = ""
+      var co = 0
+      for (var i = 1; i <= val.length-1; i++) {
+        if (document.getElementById(`${val[i - 1]}`).checked === true) {
+          g += "1"
+          co += 1
+        }
+        else {
+          g += "0"
+        }
+        if (i != val.length-1) {
+          g += ", "
+        } else {
+          g += ", " + co
+        }
+      }
+    }
 
     return g
   }
@@ -523,6 +546,15 @@ const FillUp = () => {
     // q = document.getElementById([z]).value
     // else if (parast === 1)
     // q = 1
+    if (d[1] === "47") {
+      q = 0
+      for (var i = 1; i <= val.length; i++) {
+        if (document.getElementById(`${val[i - 1]}`).checked === true) {
+          q += 1;
+        }
+      }
+      document.getElementById("รวม*").value = q
+    }
 
     return q
   }
@@ -626,6 +658,14 @@ const FillUp = () => {
     if (isNaN(g)) {
       h = "ไม่ผ่าน"
       //g = 0
+    }
+
+    if(d[1] === "47") {
+      if(q(z) >= vcon) {
+        h = "ผ่าน"
+      } else {
+        h = "ไม่ผ่าน"
+      }
     }
 
     return h
@@ -819,6 +859,10 @@ const FillUp = () => {
       }
 
     }
+
+    // if(d[1] === "47") {
+    //   pa2 = [Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), q(z), q(z), q(z), 0]
+    // }
 
     return pa2
 
