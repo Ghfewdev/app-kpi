@@ -5,10 +5,7 @@ const Post = () => {
 
   if (sessionStorage.getItem("postfi") === "1") {
     Senddetail();
-    setTimeout(() => {
-      sessionStorage.removeItem("postfi")
-      location = "addevent"
-    }, 3000)
+    
   } else {
     location = "/"
   }
@@ -23,7 +20,7 @@ const Post = () => {
             <br />
 
             <h1 className='textc'>
-              บันทึกข้อมูลสำเร็จ
+              กำลังดำเนินการบันทึกข้อมูลกรุณารอดำเนินการ
             </h1>
             <br />
 

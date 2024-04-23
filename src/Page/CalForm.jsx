@@ -90,10 +90,10 @@ const CalForm = () => {
   }
 
    const dis = () => {
-      console.log(gg(s))
-      console.log(qg(s))
-      console.log(hg(s))
-      console.log(deid)
+      // console.log(gg(s))
+      // console.log(qg(s))
+      // console.log(hg(s))
+      // console.log(deid)
       if (document.getElementById("submit").hidden === true) {
         document.getElementById("submit").hidden = false
       }

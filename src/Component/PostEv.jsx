@@ -30,7 +30,10 @@ const PostEv = () => {
       })
       .then(data => {
         if (data.status === "ok") {
-          console.log("logadd: success")
+          setTimeout(() => {
+            sessionStorage.removeItem("postev")
+            location = "/"
+          }, 1000)
         } else {
           console.log("logadd: failure")
         }
@@ -41,10 +44,7 @@ const PostEv = () => {
   
   //}, []);
   
-  setTimeout(() => {
-    sessionStorage.removeItem("postev")
-    location = "/"
-  }, 3000)
+  
 } else {
   location = "/"
 }
@@ -59,7 +59,7 @@ const PostEv = () => {
             <br />
 
             <h1 className='textc'>
-              บันทึกข้อมูลโครงการสำเร็จ
+              กำลังบันทึกข้อมูลโครงการกรุณารอดำเนินการ
             </h1>
             <br />
 
