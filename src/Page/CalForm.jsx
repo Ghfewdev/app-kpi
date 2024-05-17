@@ -264,8 +264,11 @@ const CalForm = () => {
 
         if (fide === "47" && i !== s.length - 1) {
           nn = <p className='inline textr p'><input className='input30' type="checkbox" id={m} value={m} /></p>
-        } else if (vcon != 0 && i === s.length - 1)
-        nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={0} readOnly /></p>
+        } else if (vcon != 0 && i === s.length - 1) {
+          if (fc !== 0)
+          nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={0} readOnly /></p>
+        }
+
       //  try {
       //    if ((k[1])[2] === "1") {
       //      if (qqc === 3 || qqc === 4)
@@ -1314,9 +1317,18 @@ const CalForm = () => {
         insum = (qqn1p14[13] / qqn2p14[13]).toFixed(2)
       else if (n === "24")
         insum = ((qq14[13] ** (-1)) * 10000).toFixed(2)
+      // else if (n === "48")
+      //   insum = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
       else if (n === "39" || n === "15" || n === "48")
         insum = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
+      else if (n === "31" || n === "32" || n === "33") {
+        insum = qq14[12]
+      }
 
+      if (n === "31" || n === "32" || n === "33")
+        var sev = <div style={{ width: 530 }}>
+          <Solve name={insum} do={530} name2={q} class={"responcal"} />
+        </div>
 
       var hosi = Number(localStorage.getItem("id")) - 10
       //console.log(hosi)
@@ -1416,8 +1428,15 @@ const CalForm = () => {
                           if (isNaN(cout2[ii])) {
                             cout2[ii] = 0
                           }
+
+                        var counting = Number(d) + Number(cout2[ii])
+
+                        if (n === "33" || n === "32" || n === "31") {
+                          counting = Number(cout2[ii])
+                        }
+                        
                           return (
-                            Number(d) + Number(cout2[ii])
+                            counting
                           )
                         }))
                         rvf = cout3[i]
@@ -1593,7 +1612,7 @@ const CalForm = () => {
                   var uu3 = <h4 className="bi bi-x-circle redt"></h4>;
                   var uu4 = <h4 className="bi bi-x-circle redt"></h4>;
 
-
+                  
                   if (re1[index] === "ผ่าน")
                     uu1 = <h4 className="bi bi-check-circle greent"></h4>
                   if (re2[index] === "ผ่าน")
@@ -1616,6 +1635,7 @@ const CalForm = () => {
                   //   else
                   //     re1[13] = "ไม่ผ่าน"
                   // }
+                  
                   else if (n === "39" || n === "15" || n === "48") {
                     qq14[index] = ((qqn1p14[index] / qqn2p14[index])).toFixed(2)
                     qq1[13] = qq1[14]
@@ -1633,7 +1653,11 @@ const CalForm = () => {
                   }
 
 
-
+                  // console.log(qqn1p12.map((q, i) => ((qqn2p12[i] / q) * 100).toFixed(2)))
+                  if (n === "15") {
+                    qq12 = qqn1p12.map((q, i) => ((q / qqn2p12[i])).toFixed(2))
+                    qq13 = qqn1p13.map((q, i) => ((q / qqn2p13[i])).toFixed(2))
+                  }
                   if (isNaN(qq12[index]))
                     qq12[index] = "-"
                   if (Number(qq12[index]) > Number(q))

@@ -6,7 +6,8 @@ const Post = () => {
   if (sessionStorage.getItem("postfi") === "1") {
     Senddetail();
     
-  } else {
+  } 
+  else {
     location = "/"
   }
 

@@ -30,22 +30,26 @@ const PostEv = () => {
       })
       .then(data => {
         if (data.status === "ok") {
-          setTimeout(() => {
+           setTimeout(() => {
             sessionStorage.removeItem("postev")
             location = "/"
-          }, 1000)
-        } else {
-          console.log("logadd: failure")
-        }
+           }, 1000)
+        } 
+        // else {
+        //   console.log("logadd: failure")
+        //   location = "/fillup"
+        // }
       })
       .catch((error) => {
         console.log("Error: ", error)
+        location = "/fillup"
       })
   
   //}, []);
   
   
-} else {
+} 
+else {
   location = "/"
 }
 

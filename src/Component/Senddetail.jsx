@@ -30,17 +30,19 @@ const Senddetail = () => {
       .then(data => {
         if (data.status === "ok") {
           //console.log("logadd: success")
-          setTimeout(() => {
+           setTimeout(() => {
             sessionStorage.removeItem("postfi")
             location = "addevent"
-          }, 1000)
-        } else {
-          //console.log("logadd: failure")
-          location = "/"
-        }
+           }, 1000)
+        } 
+        // else {
+        //   //console.log("logadd: failure")
+        //   location = "/"
+        // }
       })
       .catch((error) => {
         console.log("Error: ", error)
+        location = "/"
       })
   //}, []);
   

@@ -394,8 +394,11 @@ const FillUp = () => {
       }
        if (d[1] === "47" && i !== z.length - 1) {
          nn = <p className='inline textr p'><input className='input30' type="checkbox" id={m} value={group} /></p>
-       } else if (vcon != 0 && i === z.length - 1)
-       nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={0} readOnly /></p>
+       } else if (vcon != 0 && i === z.length - 1) {
+        if (fc !== 0)
+         nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={0} readOnly /></p>
+       }
+      
       try {
         if ((k[1])[2] === "1") {
           if (qqc === 3 || qqc === 4)
@@ -870,7 +873,7 @@ const FillUp = () => {
 
   const dis = () => {
 
-    // console.log(d[1])
+    console.log(d[1], fc)
     // console.log(qqc)
     console.log(g(z))
     console.log(q(z))
