@@ -31,6 +31,10 @@ const CalForm = () => {
   const [qt4, setQt4] = useState([]);
   const [formres, setFormres] = useState([])
   const [fide, setFide] = useState(0)
+  const [sumq1, setSumq1] = useState(0)
+  const [sumq2, setSumq2] = useState(0)
+  const [sumq3, setSumq3] = useState(0)
+  const [sumq4, setSumq4] = useState(0)
 
   var fetc = Fetch();
   var fusers = Users();
@@ -884,7 +888,7 @@ const CalForm = () => {
     console.log(pa(), pa2(s), hg(s), qg(s))
     //console.log(a)
     //console.log(vcon.split(", ")[Number(sessionStorage.getItem("qur"))-1])
-    //console.log(qq1)
+    console.log(qq1)
   }
 
   function reu() {
@@ -1276,9 +1280,11 @@ const CalForm = () => {
     var qwe = 0
     var hidex = localStorage.getItem("id") - 10
     var fcc = 0
+    var tsum
     try {
       if (localStorage.getItem("token").split("$")[1] === "9") {
         qwe = fd.dash[0].calp[1];
+        
       //   fcc = (fd.dash[0].calp[1]/fd.dash[0].calp[0])*100
       // console.log(fd)
       }
@@ -1290,6 +1296,7 @@ const CalForm = () => {
     }
     //console.log(props)
     if (props != null) {
+      
       var po = props.map(p => p.de_qur)
       var sev = <div style={{ width: 530 }}>
         <Solve name={qq14[13]} do={530} name2={q} class={"responcal"} />
@@ -1331,6 +1338,60 @@ const CalForm = () => {
         </div>
 
       var hosi = Number(localStorage.getItem("id")) - 10
+
+      var sumqq1 = String(Number(qq1[0])+Number(qq1[1])+Number(qq1[2])+Number(qq1[3])+Number(qq1[4])+Number(qq1[5])+
+      Number(qq1[6])+Number(qq1[7])+Number(qq1[8])+Number(qq1[9])+Number(qq1[10]))
+
+      var sumqq2 = String(Number(qq2[0])+Number(qq2[1])+Number(qq2[2])+Number(qq2[3])+Number(qq2[4])+Number(qq2[5])+
+      Number(qq2[6])+Number(qq2[7])+Number(qq2[8])+Number(qq2[9])+Number(qq2[10]))
+      if (isNaN(sumqq2))
+        sumqq2 = "0"
+
+      var sumqq3 = String(Number(qq3[0])+Number(qq3[1])+Number(qq3[2])+Number(qq3[3])+Number(qq3[4])+Number(qq3[5])+
+      Number(qq3[6])+Number(qq3[7])+Number(qq3[8])+Number(qq3[9])+Number(qq3[10]))
+      if (isNaN(sumqq3))
+        sumqq3 = "0"
+
+      var sumqq4 = String(Number(qq4[0])+Number(qq4[1])+Number(qq4[2])+Number(qq4[3])+Number(qq4[4])+Number(qq4[5])+
+      Number(qq4[6])+Number(qq4[7])+Number(qq4[8])+Number(qq4[9])+Number(qq4[10]))
+      if (isNaN(sumqq4))
+        sumqq4 = "0"
+
+      tsum = <div>
+      <table className='container mt-2 table table-bordered border-primary'>
+      <thead className="table-dark textc">
+          <tr>
+            <th>
+              ไตรมาสที่ 1
+            </th>
+            <th>
+              ไตรมาสที่ 2
+            </th>
+            <th>
+              ไตรมาสที่ 3
+            </th>
+            <th>
+              ไตรมาสที่ 4
+            </th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td className="textc">{sumqq1}</td>
+            <td className="textc">
+            {sumqq2}
+            </td>
+            <td className="textc">
+            {sumqq3}
+            </td>
+            <td className="textc">
+            {sumqq4}
+            </td>
+          </tr>
+      </tbody>
+    </table>
+    </div>
+      
       //console.log(hosi)
       if (localStorage.getItem("token").split("$")[1] === "9" && fc === 0 && met === 1) {
         a = <div>
@@ -1578,22 +1639,21 @@ const CalForm = () => {
                   <th scope="col" rowSpan="2">ส่วนราชการ</th>
                   <th scope='col' colSpan="2">ไตรมาสที่ 1</th>
                   <th scope='col' colSpan="2">ไตรมาสที่ 2</th>
-                  {/* <th scope='col' colSpan="2">ครี่งปีแรก</th> */}
+                  <th scope='col' colSpan="2">ไตรมาส 1+2</th>
                   <th scope='col' colSpan="2">ไตรมาสที่ 3</th>
+                  <th scope='col' colSpan="2">ไตรมาส 1+2+3</th>
                   <th scope='col' colSpan="2">ไตรมาสที่ 4</th>
-                  {/* <th scope='col' colSpan="2">ครี่งปีหลัง</th> */}
-                  {/* <th scope="col" colSpan="2">ผลดำเนินการ</th> */}
-                  {/* <th scope="col" rowSpan="2">รายละเอียด</th> */}
+                  <th scope='col' colSpan="2">ไตรมาส 1+2+3+4</th>
 
                 </tr>
 
                 <tr>
-                  {/* <th scope='col'>ผล</th>
+                  <th scope='col'>ผล</th>
                   <th scope='col'>สรุป</th>
                   <th scope='col'>ผล</th>
-                  <th scope='col'>สรุป</th> */}
-                  {/* <th scope='col'>ผล</th>
-                  <th scope="col">สรุป</th> */}
+                  <th scope='col'>สรุป</th>
+                  <th scope='col'>ผล</th>
+                  <th scope="col">สรุป</th>
                   <th scope='col'>ผล</th>
                   <th scope='col'>สรุป</th>
                   <th scope='col'>ผล</th>
@@ -1714,10 +1774,16 @@ const CalForm = () => {
                       <td>{an[index]}</td>
                       <td className="textc">{qq1[index]}</td>
                       <td className="textc">{uu1}</td>
+                      <td className="textc">{qq2[index]}</td>
+                      <td className="textc">{uu2}</td>
                       <td className="textc">{qq12[index]}</td>
                       <td className="textc">{re12[index]}</td>
+                      <td className="textc">{qq3[index]}</td>
+                      <td className="textc">{uu3}</td>
                       <td className="textc">{qq13[index]}</td>
                       <td className="textc">{re13[index]}</td>
+                      <td className="textc">{qq4[index]}</td>
+                      <td className="textc">{uu4}</td>
                       <td className="textc">{qq14[index]}</td>
                       <td className="textc">{re14[index]}</td>
                     </tr>
@@ -1961,6 +2027,7 @@ const CalForm = () => {
           <br /><br />
           <div className="textc"><h3>สรุปผล</h3></div>
           <br /><br />
+          {tsum}
           <div className="textc">
             <p className="fl">{qwe}</p>
           </div>
@@ -2407,7 +2474,7 @@ const CalForm = () => {
 
                     }
 
-                    if(i === 1)
+                    if(i === 1 && n !== "3.1")
                     rvf = 287
 
                     return (
