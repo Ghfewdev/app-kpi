@@ -246,9 +246,15 @@ const CalForm = () => {
       }
       var ansl = q
       if (vcon != 0) {
-        ansl = tttt.reduce((x, y) => Number(x) + Number(y), 0);
+        if (localStorage.getItem("id") === "23") {
+          ansl = tttt.reduce((x, y) => Number(x) + Number(y), 0);
+        }
+        else {
+          ansl = tttt[Number(localStorage.getItem("id")) - 10]
+        }
       } else
         ansl = select[0].fm_solve
+
       var ss = s.map((m, i) => {
         var nn
         if (String(m)[m.length - 1] === "*")
@@ -1344,16 +1350,31 @@ const CalForm = () => {
 
       var sumqq2 = String(Number(qq2[0])+Number(qq2[1])+Number(qq2[2])+Number(qq2[3])+Number(qq2[4])+Number(qq2[5])+
       Number(qq2[6])+Number(qq2[7])+Number(qq2[8])+Number(qq2[9])+Number(qq2[10]))
-      if (isNaN(sumqq2))
-        sumqq2 = "0"
+      
 
       var sumqq3 = String(Number(qq3[0])+Number(qq3[1])+Number(qq3[2])+Number(qq3[3])+Number(qq3[4])+Number(qq3[5])+
       Number(qq3[6])+Number(qq3[7])+Number(qq3[8])+Number(qq3[9])+Number(qq3[10]))
-      if (isNaN(sumqq3))
-        sumqq3 = "0"
+      
 
       var sumqq4 = String(Number(qq4[0])+Number(qq4[1])+Number(qq4[2])+Number(qq4[3])+Number(qq4[4])+Number(qq4[5])+
       Number(qq4[6])+Number(qq4[7])+Number(qq4[8])+Number(qq4[9])+Number(qq4[10]))
+      
+
+      
+      if (localStorage.getItem("id") !== "23") {
+        var insum = qq14[hosi]
+        sumqq1 = String(Number(qq1[hosi]));
+        sumqq2 = String(Number(qq2[hosi]));
+        sumqq3 = String(Number(qq3[hosi]));
+        sumqq4 = String(Number(qq4[hosi]));
+      }
+
+      if (isNaN(sumqq2))
+        sumqq2 = "0"
+
+      if (isNaN(sumqq3))
+        sumqq3 = "0"
+
       if (isNaN(sumqq4))
         sumqq4 = "0"
 
@@ -1898,7 +1919,13 @@ const CalForm = () => {
                             Number(d) + Number(cout2[ii])
                           )
                         }))
+                        
                         rvf = cout3[i]
+
+                        if (n === "2") {
+                          console.log(ansl)
+                          rvf = String(ansl)
+                        }
                       }
                       else {
                         cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
@@ -2250,6 +2277,78 @@ const CalForm = () => {
                     </tr>
                   );
                 })}
+                <tr>
+                  <td colSpan="2">รวม</td>
+                  {f.map((p, i) => {
+                    var cout
+                    var cout2
+                    var cout3
+                    var rvf
+                    for (var j = 0; j <= props.length - 1; j++) {
+                      //if (select.map(ss => ss.de_paras.split(", "))[0] != undefined) {
+                      if (props.length === 1) {
+                        rvf = (select.map((ss, oi) => ss.de_paras.split(", "))[0])[i]
+                      } else if (j === 0) {
+                        cout = select.map((ss, oi) => ss.de_paras.split(", "))[0]
+                        rvf = cout
+                      } else if (j === props.length - 1) {
+                        cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                        cout3 = (rvf.map((d, ii) => {
+                          if (isNaN(d)) {
+                            d = 0
+                          }
+                          if (isNaN(cout2[ii])) {
+                            cout2[ii] = 0
+                          }
+
+                        var counting = Number(d) + Number(cout2[ii])
+
+                        if (n === "33" || n === "32" || n === "31") {
+                          counting = Number(cout2[ii])
+                        }
+                        
+                          return (
+                            counting
+                          )
+                        }))
+                        rvf = cout3[i]
+                      }
+                      else {
+                        cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                        cout3 = (rvf.map((d, ii) => {
+                          if (isNaN(d)) {
+                            d = 0
+                          }
+                          if (isNaN(cout2[ii])) {
+                            cout2[ii] = 0
+                          }
+                          return (
+                            Number(d) + Number(cout2[ii])
+                          )
+                        }))
+                        rvf = cout3
+                      }
+
+                    }
+                    
+                    if (n === "39" || n === "15" || n === "48") {
+                      if (i === 0) {
+                        rvf = rvf/props.length
+                      }
+                      
+                      else if (i === 1) {
+                        rvf = rvf/props.length
+                      }
+                    }
+
+                    return (
+                      <td key={p}>{(rvf).toFixed(2)}</td>
+                    );
+                  })}
+
+                  <td >{insum}</td>
+                  <td colSpan="5"></td>
+                </tr>
               </tbody>
             </table>
             <br /><br />
@@ -3037,6 +3136,80 @@ const CalForm = () => {
                     </tr>
                   );
                 })}
+                <tr>
+                  <td colSpan="2">รวม</td>
+                  {f.map((p, i) => {
+                    var cout
+                    var cout2
+                    var cout3
+                    var rvf
+                    for (var j = 0; j <= props.length - 1; j++) {
+                      //if (select.map(ss => ss.de_paras.split(", "))[0] != undefined) {
+                      if (props.length === 1) {
+                        rvf = (select.map((ss, oi) => ss.de_paras.split(", "))[0])[i]
+                      } else if (j === 0) {
+                        cout = select.map((ss, oi) => ss.de_paras.split(", "))[0]
+                        rvf = cout
+                      } else if (j === props.length - 1) {
+                        cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                        cout3 = (rvf.map((d, ii) => {
+                          if (isNaN(d)) {
+                            d = 0
+                          }
+                          if (isNaN(cout2[ii])) {
+                            cout2[ii] = 0
+                          }
+
+                        var counting = Number(d) + Number(cout2[ii])
+
+                        if (n === "33" || n === "32" || n === "31") {
+                          counting = Number(cout2[ii])
+                        }
+                        
+                        
+
+                          return (
+                            counting
+                          )
+                        }))
+                        rvf = cout3[i]
+                      }
+                      else {
+                        cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                        cout3 = (rvf.map((d, ii) => {
+                          if (isNaN(d)) {
+                            d = 0
+                          }
+                          if (isNaN(cout2[ii])) {
+                            cout2[ii] = 0
+                          }
+                          return (
+                            Number(d) + Number(cout2[ii])
+                          )
+                        }))
+                        rvf = cout3
+                      }
+
+                    }
+                    
+                    if (n === "39" || n === "15" || n === "48") {
+                      if (i === 0) {
+                        rvf = rvf/props.length
+                      }
+                      
+                      else if (i === 1) {
+                        rvf = rvf/props.length
+                      }
+                    }
+
+                    return (
+                      <td key={p}>{(rvf).toFixed(2)}</td>
+                    );
+                  })}
+
+                  <td >{insum}</td>
+                  <td colSpan="5"></td>
+                </tr>
               </tbody>
             </table>
             <br /><br />
