@@ -30,7 +30,7 @@ const Checking = () => {
     var chg12 = []
     var chg13 = []
 
-    for (var d = 0; d <= b1.length; d++) {
+    for (var d = 0; d <= val.length; d++) {
       if (val[d] != undefined) {
         if (val[d].includes(10))
           chg1.push(val[d][1])
@@ -89,14 +89,22 @@ const Checking = () => {
             y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
           else if (i === 19 && chg10.includes(f))
             y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
-          else if (i === 20 && chg11.includes(f))
+          else if (i === 20 && chg11.includes(f)) {
+            // console.log(chg11)
             y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
-          else if (i === 21 && chg12.includes(f))
+          }
+            
+          else if (i === 21 && chg12.includes(f)) {
             y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
-          else if (i === 22 && chg13.includes(f))
+          }
+          else if (i === 22 && chg13.includes(f)) {
+            console.log(chg13)
             y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
-          else
+          }
+          else {
             y += `<td><h4 className="bi bi-clock-fill redt"></h4></td>`
+          }
+
         }
         else if (i === f && !sb1.includes(String([i, f])))
           y += `<td><h4 className="bi bi-dash-circle bluet"></h4></td>`
@@ -112,6 +120,7 @@ const Checking = () => {
     })}
     </tbody>
 
+    // console.log(chg13)
     return y
 
   }
@@ -164,10 +173,11 @@ const Checking = () => {
   }, []);
 
   var pq = new Date().getUTCMonth() + 1
-  //console.log(pq, b1)
+  // console.log(pq, b1)
+  console.log(pq)
   var sq;
   var yg;
-  if (7 <= pq <= 9)
+  if (pq <= 9 && pq >= 7)
     sq = <div className='container-fluid' id='pqq'>
       <h2>ข้อมูลการส่งตัวชี้วัดรายหน่วยงานไตรมาสที่ 1 (ไตรมาสปัจจุบัน)</h2>
       <br />
@@ -190,7 +200,7 @@ const Checking = () => {
             <th scope="col">ศบฉ</th>
           </tr>
         </thead>
-          {checkk(b1)}
+        {checkk(b1)}
       </table>
     </div>
   else if (pq <= 10)
@@ -245,7 +255,7 @@ const Checking = () => {
         {checkk(b3)}
       </table>
     </div>
-  else if (4 <= pq <= 6)
+  else if (pq <= 6 && pq >= 4)
     sq = <div className='container-fluid' id='pqq'>
       <h2>ข้อมูลการส่งตัวชี้วัดรายหน่วยงานไตรมาสที่ 4 (ไตรมาสปัจจุบัน)</h2>
       <br />

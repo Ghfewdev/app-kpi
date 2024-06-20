@@ -400,7 +400,7 @@ const FillUp = () => {
        }
       
       try {
-        if ((k[1])[2] === "1") {
+        if ((k[1])[2] === "1" && d[1] === "3.1") {
           if (qqc === 3 || qqc === 4)
             nn = <p className='inline textr p'><input className='input30' type="text" id={m} disabled /></p>
         }
