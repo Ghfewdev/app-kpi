@@ -98,7 +98,7 @@ const Checking = () => {
             y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
           }
           else if (i === 22 && chg13.includes(f)) {
-            console.log(chg13)
+            // console.log(chg13)
             y += `<td><h4 className="bi bi-check-circle-fill greent"></h4></td>`
           }
           else {
@@ -177,7 +177,7 @@ const Checking = () => {
   console.log(pq)
   var sq;
   var yg;
-  if (pq <= 9 && pq >= 7)
+  if (pq <= 9 && pq > 7)
     sq = <div className='container-fluid' id='pqq'>
       <h2>ข้อมูลการส่งตัวชี้วัดรายหน่วยงานไตรมาสที่ 1 (ไตรมาสปัจจุบัน)</h2>
       <br />
