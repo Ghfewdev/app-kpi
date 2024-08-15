@@ -22,6 +22,7 @@ const AddEvevt = () => {
         fill: [],
         formres: []
     });
+    const [nqq, setNqq] = useState(1)
     const [secec, setSececs] = useState({
         sece: "",
         check: ""
@@ -405,6 +406,7 @@ const AddEvevt = () => {
     const defu = (val) => {
         
         //console.log(eventsq, qqc, d[1], document.getElementById("0"))
+
         var autoevent = eventsq.map(e => [e.ev_name, e.fms_id, e.ev_res, e.ev_point, e.ev_target, e.ev_result, e.ev_problem])[val]
 
         if (document.getElementById(`def${val}`).checked === true) {
@@ -413,7 +415,8 @@ const AddEvevt = () => {
             document.getElementById("evres").value = autoevent[2]
             document.getElementById("evpoint").value = autoevent[3]
             document.getElementById("evtarget").value = autoevent[4]
-            //console.log(autoevent)
+            // console.log(autoevent)
+            console.log(d[1])
             if (qqc === 2)
                 document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
             else if (qqc === 3) {
@@ -424,6 +427,20 @@ const AddEvevt = () => {
                 document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
                 document.getElementById("rre2").value = (autoevent[5]).split(", ")[1]
                 document.getElementById("rre3").value = (autoevent[5]).split(", ")[2]
+            }
+            if (d[1] === "11") {
+                console.log(nqq)
+                if (nqq === "2")
+                    document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
+                else if (nqq === "3") {
+                    document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
+                    document.getElementById("rre2").value = (autoevent[5]).split(", ")[1]
+                }
+                else if (nqq === "4") {
+                    document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
+                    document.getElementById("rre2").value = (autoevent[5]).split(", ")[1]
+                    document.getElementById("rre3").value = (autoevent[5]).split(", ")[2]
+                }
             }
             document.getElementById("problem").value = autoevent[6]
         }
@@ -556,11 +573,11 @@ const AddEvevt = () => {
                                                     <br /><br />
                                                 </div>
                                                 <p className='inline p'><label>ส่งข้อมูลประจำ:&nbsp;&nbsp;</label></p>
-                                                <p className='inline textr p'><select value={qrc} name="qur" onClick={e => qurc(qrc)} onChange={e => { qurc(qrc), setQrc(e.target.value) }} >
-                                                    <option value={1}>ไตรมาสที่ 1</option>
-                                                    <option value={2}>ไตรมาสที่ 2</option>
-                                                    <option value={3}>ไตรมาสที่ 3</option>
-                                                    <option value={4}>ไตรมาสที่ 4</option>
+                                                <p className='inline textr p'><select value={qrc} name="qur" onClick={e => qurc(qrc)} onChange={e => { qurc(qrc), setQrc(e.target.value), setNqq(e.target.value) }} >
+                                                    <option value={1} >ไตรมาสที่ 1</option>
+                                                    <option value={2} >ไตรมาสที่ 2</option>
+                                                    <option value={3} >ไตรมาสที่ 3</option>
+                                                    <option value={4} >ไตรมาสที่ 4</option>
                                                 </select></p>
                                                 <br /><br />
 
