@@ -295,7 +295,22 @@ const AddEvevt = () => {
 
     function reu() {
         var rr
-        if (qqc === 1)
+
+        if (!qqc) {
+            console.log(nqq)
+            if (nqq === "1") {
+                rr = String(document.getElementById("rre1").value).replaceAll(", ", " ")
+            }
+            else if (nqq === "2")
+                rr = String(document.getElementById("rre1").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre2").value).replaceAll(", ", " ")
+            else if (nqq === "3") {
+                rr = String(document.getElementById("rre1").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre2").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre3").value).replaceAll(", ", " ")
+            }
+            else if (nqq === "4") {
+                rr = String(document.getElementById("rre1").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre2").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre3").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre4").value).replaceAll(", ", " ")
+            }
+        } else {
+            if (qqc === 1)
             rr = String(document.getElementById("rre1").value).replaceAll(", ", " ")
         else if (qqc === 2)
             rr = String(document.getElementById("rre1").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre2").value).replaceAll(", ", " ")
@@ -303,7 +318,12 @@ const AddEvevt = () => {
             rr = String(document.getElementById("rre1").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre2").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre3").value).replaceAll(", ", " ")
         else if (qqc === 4)
             rr = String(document.getElementById("rre1").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre2").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre3").value).replaceAll(", ", " ") + ", " + String(document.getElementById("rre4").value).replaceAll(", ", " ")
+        
+        }
+        
         return rr
+
+        
     }
 
 
@@ -428,7 +448,7 @@ const AddEvevt = () => {
                 document.getElementById("rre2").value = (autoevent[5]).split(", ")[1]
                 document.getElementById("rre3").value = (autoevent[5]).split(", ")[2]
             }
-            if (d[1] === "11") {
+            if (!qqc) {
                 console.log(nqq)
                 if (nqq === "2")
                     document.getElementById("rre1").value = (autoevent[5]).split(", ")[0]
