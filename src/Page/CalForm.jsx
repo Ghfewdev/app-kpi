@@ -35,6 +35,8 @@ const CalForm = () => {
   const [sumq2, setSumq2] = useState(0)
   const [sumq3, setSumq3] = useState(0)
   const [sumq4, setSumq4] = useState(0)
+  const [forms, setForms] = useState([]);
+  const [yee, setYee] = useState("2567");
 
   var fetc = Fetch();
   var fusers = Users();
@@ -1025,15 +1027,15 @@ const CalForm = () => {
       result: hg(s),
       deid: sessionStorage.getItem("deid")
     };
-    const JsonData2 = {
-      "h": pa2(s)[3],
-      "hpa1": pa2(s)[4],
-      "hpa2": pa2(s)[5],
-      "pa1": pa2(s)[0],
-      "pa2": pa2(s)[1],
-      "log": pa2(s)[6],
-      "sum": pa2(s)[2]
-    };
+    // const JsonData2 = {
+    //   "h": pa2(s)[3],
+    //   "hpa1": pa2(s)[4],
+    //   "hpa2": pa2(s)[5],
+    //   "pa1": pa2(s)[0],
+    //   "pa2": pa2(s)[1],
+    //   "log": pa2(s)[6],
+    //   "sum": pa2(s)[2]
+    // };
     const JsonData6 = {
       user: sessionStorage.getItem("edid"),
       detail: sessionStorage.getItem("deid")
@@ -1060,27 +1062,27 @@ const CalForm = () => {
         console.log("error", error);
       })
 
-    fetch(import.meta.env.VITE_APP_API + `/result/update/${sessionStorage.getItem("hos")}/${select[0].fm_id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(JsonData2)
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        if (data.status === "ok") {
-          //alert("แก้ไขสำเร็จ");
-          //window.location = "calform";
-        } else {
-          alert("บันทึกไม่สำเร็จ");
-        }
-      })
-      .catch((error) => {
-        console.log("error", error);
-      })
+    // fetch(import.meta.env.VITE_APP_API + `/result/update/${sessionStorage.getItem("hos")}/${select[0].fm_id}`, {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify(JsonData2)
+    // })
+    //   .then(response => {
+    //     return response.json();
+    //   })
+    //   .then(data => {
+    //     if (data.status === "ok") {
+    //       //alert("แก้ไขสำเร็จ");
+    //       //window.location = "calform";
+    //     } else {
+    //       alert("บันทึกไม่สำเร็จ");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log("error", error);
+    //   })
 
     fetch(import.meta.env.VITE_APP_API + "/formed/update", {
       method: "PUT",
@@ -1585,7 +1587,7 @@ const CalForm = () => {
                     }
 
                     return (
-                      <td key={p}>{(rvf).toFixed(2)}</td>
+                      <td key={p}>{Number(rvf).toFixed(2)}</td>
                     );
                   })}
 
@@ -2382,7 +2384,7 @@ const CalForm = () => {
                     }
 
                     return (
-                      <td key={p}>{(rvf).toFixed(2)}</td>
+                      <td key={p}>{Number(rvf).toFixed(2)}</td>
                     );
                   })}
 
@@ -3243,7 +3245,7 @@ const CalForm = () => {
                     }
 
                     return (
-                      <td key={p}>{(rvf).toFixed(2)}</td>
+                      <td key={p}>{Number(rvf).toFixed(2)}</td>
                     );
                   })}
 
@@ -4049,6 +4051,18 @@ const CalForm = () => {
     return g
   }
 
+  const fetchUserDataFormV = (val) => {
+    
+    fetch(import.meta.env.VITE_APP_API + `/checked/year/1/${localStorage.getItem("id")}/${val}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        setTableData1(data)
+      })
+
+  }
+
   const pa2 = (val) => {
     var pa2;
     var p1 = 0;
@@ -4214,12 +4228,12 @@ const CalForm = () => {
 
   useEffect(() => {
     if (localStorage.getItem("id") === "23") {
-      fetch(import.meta.env.VITE_APP_API + "/checked/s/1/c")
+      fetch(import.meta.env.VITE_APP_API + "/checked/s/1/2567")
         .then((data) => data.json())
         .then((data) => setTableData1(data));
     }
     else {
-      fetch(import.meta.env.VITE_APP_API + "/checked/1/" + localStorage.getItem("id"))
+      fetch(import.meta.env.VITE_APP_API + "/checked/year/1/" + localStorage.getItem("id") + "/2567")
         .then((data) => data.json())
         .then((data) => setTableData1(data));
     }
@@ -4236,6 +4250,13 @@ const CalForm = () => {
           <br />
           <h1>การสรุปผลตัวชี้วัด</h1>
           <br />
+          <h3>เลือกปีงบประมาณ</h3>
+            <select name="d4" value={yee} id="u1" onChange={e => {fetchUserDataFormV(e.target.value), setYee(e.target.value)}}>
+              <option value="2567">2567</option>
+              <option value="2568">2568</option>
+            </select>
+            
+          
           <select value={param} onClick={e => {handleonChange(n), setFide(n)}} onChange={e => {setParam(e.target.value), setFide(n)}} >
             <option>เลือกดูตัวชี้วัด</option>
             {formmm}
@@ -4244,6 +4265,7 @@ const CalForm = () => {
           <br />
         </div>
         <div>{show(select)}</div>
+
 
         <br /><br />
 

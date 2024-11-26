@@ -7,13 +7,13 @@ function out(para) {
     console.log("now loading")
 }
 
-const Fetch = () => {
+const Fetch2 = () => {
 
     const [fetchs,setFetchs] = useState([]);
     
           useEffect(()=> {
             
-            fetch(import.meta.env.VITE_APP_API+"/form/year/2567")
+            fetch(import.meta.env.VITE_APP_API+"/form/year/2568")
               .then(response => {
                 return response.json();
               })
@@ -28,4 +28,4 @@ const Fetch = () => {
 
 }
 
-export default Fetch
+export default Fetch2

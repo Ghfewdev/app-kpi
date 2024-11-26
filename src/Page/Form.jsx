@@ -164,7 +164,21 @@ const rese = () => {
 
   const fetchUserDataForm = () => {
 
-    fetch(import.meta.env.VITE_APP_API+"/form")
+    
+    fetch(import.meta.env.VITE_APP_API+"/form/year/2567")
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        setForms({ ...forms, form: data })
+      })
+
+  }
+
+  const fetchUserDataFormV = (val) => {
+
+    
+    fetch(import.meta.env.VITE_APP_API+`/form/year/${val}`)
       .then(response => {
         return response.json();
       })
@@ -322,6 +336,11 @@ const rese = () => {
   var y = w[0]
   var t = forms.fill.map(f => [f.fm_solve, f.fm_method])[0]
   //console.log(t)
+
+    const selectyear = (val) => {
+      fetchUserDataFormV(val);
+    }
+
   try {
     var z = y.split(", ")
     var n = z.map((m, i) => (
@@ -356,6 +375,11 @@ const rese = () => {
             <br /><br />
 
             <div className="textc">
+            <h3>เลือกปีงบประมาณ</h3>
+            <select name="d4" id="u1" onChange={e => selectyear(e.target.value)}>
+              <option value="2567">2567</option>
+              <option value="2568">2568</option>
+            </select>
               <h4>เลือกดูรายละเอียดของตัวชี้วัด</h4>
               <select value={secec.sece} onClick={e => handleonChange(d[1])} onChange={e => setSececs({ ...secec, sece: e.target.value })} >
                 <option> ตัวชี้วัดทั้งหมด </option>

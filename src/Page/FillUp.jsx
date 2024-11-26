@@ -198,6 +198,10 @@ const FillUp = () => {
       })
       .then(data => {
         if (data.status === "ok") {
+          sessionStorage.setItem("postfi", "1")
+          setTimeout(() => {
+            window.location = "post";
+          }, 500)
         } else {
           alert("01 บันทึกไม่สำเร็จ");
           window.location = "fillup"
@@ -207,29 +211,29 @@ const FillUp = () => {
         console.log("error1", error);
       })
 
-    fetch(import.meta.env.VITE_APP_API + `/result/update/${hos}/${d[1]}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(JsonData3)
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        if (data.status === "ok") {
-          sessionStorage.setItem("postfi", "1")
-          setTimeout(() => {
-            window.location = "post";
-          }, 500)
-        } else {
-          alert("03 บันทึกไม่สำเร็จ");
-        }
-      })
-      .catch((error) => {
-        console.log("error3", error);
-      })
+    // fetch(import.meta.env.VITE_APP_API + `/result/update/${hos}/${d[1]}`, {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify(JsonData3)
+    // })
+    //   .then(response => {
+    //     return response.json();
+    //   })
+    //   .then(data => {
+    //     if (data.status === "ok") {
+          // sessionStorage.setItem("postfi", "1")
+          // setTimeout(() => {
+          //   window.location = "post";
+          // }, 500)
+    //     } else {
+    //       alert("03 บันทึกไม่สำเร็จ");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log("error3", error);
+    //   })
 
   }
 
@@ -243,7 +247,7 @@ const FillUp = () => {
         setForms({ ...forms, form: data })
       });
 
-    fetch(import.meta.env.VITE_APP_API + `/form/res/${localStorage.getItem("id")}`)
+    fetch(import.meta.env.VITE_APP_API + `/form/res/${localStorage.getItem("id")}/2567`)
       .then(response => {
         return response.json();
       })
@@ -254,13 +258,21 @@ const FillUp = () => {
   }
 
   const refech = () => {
-    fetch(import.meta.env.VITE_APP_API + `/form/res/${localStorage.getItem("id")}`)
+    // fetch(import.meta.env.VITE_APP_API + `/form/res/${localStorage.getItem("id")}`)
+    //   .then(response => {
+    //     return response.json();
+    //   })
+    //   .then(data2 => {
+    //     setForms({ ...forms, formres: data2 })
+    //   })
+
+      fetch(import.meta.env.VITE_APP_API + `/form/res/${localStorage.getItem("id")}/2567`)
       .then(response => {
         return response.json();
       })
       .then(data2 => {
         setForms({ ...forms, formres: data2 })
-      })
+      });
   }
 
   var d = secec.sece.split("ที่่: ")
@@ -905,6 +917,19 @@ const FillUp = () => {
     }
   }
 
+  const fetchUserDataFormV = (val) => {
+
+    
+    fetch(import.meta.env.VITE_APP_API + `/form/res/${localStorage.getItem("id")}/${val}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        setForms({ ...forms, formres: data })
+      })
+
+  }
+
   useEffect(() => {
     fetchUserDataForm();
     setTimeout(() => {
@@ -927,7 +952,11 @@ const FillUp = () => {
             </h1>
             <br /><br />
             <div className="textc">
-
+            <h3>เลือกปีงบประมาณและตัวชี้วัด</h3>
+            <select name="d4" id="u1" onChange={e => fetchUserDataFormV(e.target.value)}>
+              <option value="2567">2567</option>
+              <option value="2568">2568</option>
+            </select>
               <select value={secec.sece} onClick={e => handleonChange(d[1])} onChange={e => setSececs({ ...secec, sece: e.target.value })} >
                 <option> ชื่อและรหัสตัวชี้วัด </option>
                 {forms.formres.map(form => (

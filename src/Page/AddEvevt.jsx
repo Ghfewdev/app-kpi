@@ -37,6 +37,19 @@ const AddEvevt = () => {
         });
     }
 
+    const fetchUserDataFormV = (val) => {
+
+    
+        fetch(import.meta.env.VITE_APP_API + `/checked/year/1/${localStorage.getItem("id")}/${val}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        setTableData1(data)
+      })
+    
+      }
+
     const dep = localStorage.getItem("department");
     var hos;
     var ha;
@@ -570,6 +583,12 @@ const AddEvevt = () => {
                         </h1>
                         <br /><br />
                         <div className="textc">
+
+                        <h3>เลือกปีงบประมาณและตัวชี้วัด</h3>
+            <select name="d4" id="u1" onChange={e => fetchUserDataFormV(e.target.value)}>
+              <option value="2567">2567</option>
+              <option value="2568">2568</option>
+            </select>
 
                             <select value={secec.sece} onClick={e => handleonChange(d[1])} onChange={e => setSececs({ ...secec, sece: e.target.value })} >
                                 <option> ชื่อและรหัสตัวชี้วัด </option>
