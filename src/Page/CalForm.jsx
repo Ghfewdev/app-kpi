@@ -4053,13 +4053,24 @@ const CalForm = () => {
 
   const fetchUserDataFormV = (val) => {
     
-    fetch(import.meta.env.VITE_APP_API + `/checked/year/1/${localStorage.getItem("id")}/${val}`)
+      if (localStorage.getItem("id") === "23") {
+        fetch(import.meta.env.VITE_APP_API + "/checked/s/1/"+ val)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setTableData1(data)
+        })
+      }
+      else {
+        fetch(import.meta.env.VITE_APP_API + `/checked/year/1/${localStorage.getItem("id")}/${val}`)
       .then(response => {
         return response.json();
       })
       .then(data => {
         setTableData1(data)
       })
+      }
 
   }
 
