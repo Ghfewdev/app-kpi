@@ -61,11 +61,11 @@ const UserEdit = () => {
               <option value="รพ.เจริญกรุงประชารักษ์">&nbsp;รพ.เจริญกรุงประชารักษ์</option>
               <option value="รพ.หลวงพ่อทวีศักดิ์">&nbsp;รพ.หลวงพ่อทวีศักดิ์</option>
               <option value="รพ.เวชการุณย์รัศมิ์">&nbsp;รพ.เวชการุณย์รัศมิ์</option>
-              <option value="รพ.ลาดกระบัง">&nbsp;รพ.ลาดกระบัง</option>
+              <option value="รพ.นคราภิบาล">&nbsp;รพ.นคราภิบาล</option>
               <option value="รพ.ราชพิพัฒน์">&nbsp;รพ.ราชพิพัฒน์</option>
               <option value="รพ.สิรินธร">&nbsp;รพ.สิรินธร</option>
               <option value="รพ.ผู้สูงอายุบางขุนเทียน">&nbsp;รพ.ผู้สูงอายุบางขุนเทียน</option>
-              <option value="รพ.คลองสามวา">&nbsp;รพ.คลองสามวา</option>
+              <option value="รพ.รัตนประชารักษ์">&nbsp;รพ.รัตนประชารักษ์</option>
               <option value="รพ.บางนา">&nbsp;รพ.บางนา</option>
               <option value="สก.">&nbsp;สก.</option>
               <option value="ศบฉ.">&nbsp;ศบฉ.</option>

@@ -33,7 +33,7 @@ const Form = () => {
 const rese = () => {
   const jsonres = {
     res: resp,
-    id: Number(d[1])
+    id: String(d[1])
   }
   
   fetch(import.meta.env.VITE_APP_API+"/update/form/res", {
@@ -99,7 +99,7 @@ const rese = () => {
       <label>กำหนดหน่วยงานที่รับผิดชอบ:&nbsp;&nbsp;</label>
                             <br />
                             {/* <input id='res-00' type="checkbox" onClick={e => res("00")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>หน่วยงานสังกัดสำนักการแพทย์&nbsp;&nbsp;&nbsp;&nbsp; </label> */}
-                            <input id='res-all' type="checkbox" onClick={e => res("all")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>ทุกหน่วยงานในสังกัด&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-all' type="checkbox" onClick={e => {res("all"), console.log(d[1])}} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>ทุกหน่วยงานในสังกัด&nbsp;&nbsp;&nbsp;&nbsp; </label>
                             <input id='res-21' type="checkbox" onClick={e => res("21")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>สก.&nbsp;&nbsp;&nbsp;&nbsp; </label>
                             <input id='res-22' type="checkbox" onClick={e => res("22")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>ศบฉ.&nbsp;&nbsp;&nbsp;&nbsp; </label>
                             <br /><label>โรงพยาบาลสังกัดสำนักการแพทย์:&nbsp;&nbsp;&nbsp;&nbsp; </label><br />
@@ -110,11 +110,11 @@ const rese = () => {
                             <input id='res-13' type="checkbox" onClick={e => res("13")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพท.&nbsp;&nbsp;&nbsp;&nbsp; </label>
                             <br />
                             <input id='res-14' type="checkbox" onClick={e => res("14")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพว.&nbsp;&nbsp;&nbsp;&nbsp; </label>
-                            <input id='res-15' type="checkbox" onClick={e => res("15")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพล.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-15' type="checkbox" onClick={e => res("15")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพภ.&nbsp;&nbsp;&nbsp;&nbsp; </label>
                             <input id='res-16' type="checkbox" onClick={e => res("16")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพร.&nbsp;&nbsp;&nbsp;&nbsp; </label>
                             <input id='res-17' type="checkbox" onClick={e => res("17")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพส.&nbsp;&nbsp;&nbsp;&nbsp; </label>
                             <input id='res-18' type="checkbox" onClick={e => res("18")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพข.&nbsp;&nbsp;&nbsp;&nbsp; </label>
-                            <input id='res-19' type="checkbox" onClick={e => res("19")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพค.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-19' type="checkbox" onClick={e => res("19")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพป.&nbsp;&nbsp;&nbsp;&nbsp; </label>
                             <input id='res-20' type="checkbox" onClick={e => res("20")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพบ.&nbsp;&nbsp;&nbsp;&nbsp; </label>
                             <br />
                             <br />
@@ -135,7 +135,7 @@ const rese = () => {
             name: data.get("name"),
             solve: data.get("solve"),
             def: data.get("define"),
-            id: Number(d[1])
+            id: String(d[1])
         };
 
         fetch(import.meta.env.VITE_APP_API+"/update/form", {
@@ -329,7 +329,7 @@ const rese = () => {
             else
                 resp += ", " + v
         }
-        console.log(resp)
+        // console.log(resp)
     }
 
   var w = forms.fill.map(fil => fil.fm_paras)

@@ -15,10 +15,13 @@ const Dashboard = () => {
   Authen();
 
   const [ans, setAns] = useState([]);
+  const [all, setAll] = useState([]);
+  const [all2, setAll2] = useState([]);
   const fet = Fetch();
   const kpi = Dash(4);
   const itp = fet.map(r => r.fm_method);
   const opp = fet.map(t => t.fm_con);
+  
 
   useEffect(() => {
 
@@ -30,12 +33,22 @@ const Dashboard = () => {
         setAns(data);
       });
 
+      fetch(import.meta.env.VITE_APP_API + "/all")
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        setAll(data);
+      });
+
   }, [])
 
   var an;
 
+  
+
   //console.log(opp)
-console.log(kpi)
+console.log(all)
   if (ans != []) {
     an = <div className='container textc'>
       <br />
@@ -52,11 +65,11 @@ console.log(kpi)
             <th>รพจ</th>
             <th>รพท</th>
             <th>รพว</th>
-            <th>รพล</th>
+            <th>รพภ</th>
             <th>รพร</th>
             <th>รพส</th>
             <th>รพข</th>
-            <th>รพค</th>
+            <th>รพป</th>
             <th>รพบ</th>
             <th>สก.</th>
             <th>ศบฉ.</th>

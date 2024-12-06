@@ -405,11 +405,11 @@ const AddForm = () => {
                                         <label>รพจ:&nbsp;&nbsp;</label> <input id={703} name='fixq3' className='input20' type="number" /><br /><br />
                                         <label>รพท:&nbsp;&nbsp;</label> <input id={704} name='fixq4' className='input20' type="number" /><br /><br />
                                         <label>รพว:&nbsp;&nbsp;</label> <input id={705} name='fixq5' className='input20' type="number" /><br /><br />
-                                        <label>รพล:&nbsp;&nbsp;</label> <input id={706} name='fixq6' className='input20' type="number" /><br /><br />
+                                        <label>รพภ:&nbsp;&nbsp;</label> <input id={706} name='fixq6' className='input20' type="number" /><br /><br />
                                         <label>รพร:&nbsp;&nbsp;</label> <input id={707} name='fixq7' className='input20' type="number" /><br /><br />
                                         <label>รพส:&nbsp;&nbsp;</label> <input id={708} name='fixq8' className='input20' type="number" /><br /><br />
                                         <label>รพข:&nbsp;&nbsp;</label> <input id={709} name='fixq9' className='input20' type="number" /><br /><br />
-                                        <label>รพค:&nbsp;&nbsp;</label> <input id={710} name='fixq10' className='input20' type="number" /><br /><br />
+                                        <label>รพป:&nbsp;&nbsp;</label> <input id={710} name='fixq10' className='input20' type="number" /><br /><br />
                                         <label>รพบ:&nbsp;&nbsp;</label> <input id={711} name='fixq11' className='input20' type="number" /><br /><br />
                                     </div>
                                 </div>
@@ -431,11 +431,11 @@ const AddForm = () => {
 
                             <br />
                             <input id='res-14' type="checkbox" onClick={e => res("14")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพว.&nbsp;&nbsp;&nbsp;&nbsp; </label>
-                            <input id='res-15' type="checkbox" onClick={e => res("15")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพล.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-15' type="checkbox" onClick={e => res("15")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพภ.&nbsp;&nbsp;&nbsp;&nbsp; </label>
                             <input id='res-16' type="checkbox" onClick={e => res("16")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพร.&nbsp;&nbsp;&nbsp;&nbsp; </label>
                             <input id='res-17' type="checkbox" onClick={e => res("17")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพส.&nbsp;&nbsp;&nbsp;&nbsp; </label>
                             <input id='res-18' type="checkbox" onClick={e => res("18")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพข.&nbsp;&nbsp;&nbsp;&nbsp; </label>
-                            <input id='res-19' type="checkbox" onClick={e => res("19")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพค.&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                            <input id='res-19' type="checkbox" onClick={e => res("19")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพป.&nbsp;&nbsp;&nbsp;&nbsp; </label>
                             <input id='res-20' type="checkbox" onClick={e => res("20")} />&nbsp;:&nbsp;&nbsp;&nbsp;<label>รพบ.&nbsp;&nbsp;&nbsp;&nbsp; </label>
                             <br /><br />
                             <div className='textr2'>

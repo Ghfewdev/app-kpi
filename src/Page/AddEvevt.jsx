@@ -88,7 +88,7 @@ const AddEvevt = () => {
         hb = 9
     }
 
-    else if (dep === "รพ.ลาดกระบัง") {
+    else if (dep === "รพ.นคราภิบาล") {
         hos = "h6"
         ha = 10
         hb = 11
@@ -112,7 +112,7 @@ const AddEvevt = () => {
         hb = 17
     }
 
-    else if (dep === "รพ.คลองสามวา") {
+    else if (dep === "รพ.รัตนประชารักษ์") {
         hos = "h10"
         ha = 18
         hb = 19

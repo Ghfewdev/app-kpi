@@ -54,7 +54,7 @@ const FillUp = () => {
     hb = 9
   }
 
-  else if (dep === "รพ.ลาดกระบัง") {
+  else if (dep === "รพ.นคราภิบาล") {
     hos = "h6"
     ha = 10
     hb = 11
@@ -78,7 +78,7 @@ const FillUp = () => {
     hb = 17
   }
 
-  else if (dep === "รพ.คลองสามวา") {
+  else if (dep === "รพ.รัตนประชารักษ์") {
     hos = "h10"
     ha = 18
     hb = 19
