@@ -581,7 +581,7 @@ const CalForm = () => {
       // if (n === "24" || n === "26" || n === "8") {
       if (n === "24" || n === "26") {
         qq14[13] = qq14[13] ** (-1)
-      } else if (n === "39" || n === "15" || n === "48") {
+      } else if (n === "39" || n === "15" || n === "48" || n === "49_68") {
         qq14[13] = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
       } else if (n === "20" || n === "20.2") {
         qq14 = qqn1p14.map((q, i) => ((q / qqn2p14[i])).toFixed(2));
@@ -1324,7 +1324,7 @@ const CalForm = () => {
         var sev = <div style={{ width: 530 }}>
           <Solve name={((qq14[13] ** (-1)) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
         </div>
-      else if (n === "39" || n === "15" || n === "48")
+      else if (n === "39" || n === "15" || n === "48" || n === "49_68")
         var sev = <div style={{ width: 530 }}>
           <Solve name={((qqn1p14[13] / qqn2p14[13])).toFixed(2)} do={530} name2={q} class={"responcal"} />
         </div>
@@ -1347,7 +1347,7 @@ const CalForm = () => {
         
       // else if (n === "48")
       //   insum = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
-      else if (n === "39" || n === "15" || n === "48") {
+      else if (n === "39" || n === "15" || n === "48" || n === "49_68") {
         insum = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
         qq2[13] = (nqq2p1[13] / nqq2p2[13]).toFixed(2)
         qq3[13] = (nqq3p1[13] / nqq3p2[13]).toFixed(2)
@@ -1576,7 +1576,7 @@ const CalForm = () => {
 
                     }
                     
-                    if (n === "39" || n === "15" || n === "48") {
+                    if (n === "39" || n === "15" || n === "48" || n === "49_68") {
                       if (i === 0) {
                         rvf = rvf/props.length
                       }
@@ -1584,6 +1584,9 @@ const CalForm = () => {
                       else if (i === 1) {
                         rvf = rvf/props.length
                       }
+
+                      console.log(i)
+                      console.log(rvf)
                     }
 
                     return (
@@ -1755,7 +1758,7 @@ const CalForm = () => {
                   //     re1[13] = "ไม่ผ่าน"
                   // }
                   
-                  else if (n === "39" || n === "15" || n === "48") {
+                  else if (n === "39" || n === "15" || n === "48" || n === "49_68") {
                     qq14[index] = ((qqn1p14[index] / qqn2p14[index])).toFixed(2)
                     qq1[13] = qq1[14]
                     if (qq14[index] === "Infinity")
@@ -2247,7 +2250,7 @@ const CalForm = () => {
         //   ois = <Solve name={((qq14[hosi] ** -1) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
         if (n === "24" || n === "26") {
           ois = <Solve name={((qq14[hosi] ** -1) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
-        } else if (n === "39" || n === "15" || n === "48") {
+        } else if (n === "39" || n === "15" || n === "48" || n === "49_68") {
           ois = <Solve name={((qqn1p14[hosi] / qqn2p14[hosi])).toFixed(2)} do={530} name2={q} class={"responcal"} />
         } else if (n === "20" || n === "20.2") {
           ois = <Solve2 name={(qqn1p14[13] / qqn2p14[13]).toFixed(2)} do={530} name2={q} class={"responcal"} />
@@ -2373,7 +2376,7 @@ const CalForm = () => {
 
                     }
                     
-                    if (n === "39" || n === "15" || n === "48") {
+                    if (n === "39" || n === "15" || n === "48" || n === "49_68") {
                       if (i === 0) {
                         rvf = rvf/props.length
                       }
@@ -2381,6 +2384,8 @@ const CalForm = () => {
                       else if (i === 1) {
                         rvf = rvf/props.length
                       }
+                      
+                      console.log(n, rvf, i)
                     }
 
                     return (
@@ -3234,7 +3239,7 @@ const CalForm = () => {
 
                     }
                     
-                    if (n === "39" || n === "15" || n === "48") {
+                    if (n === "39" || n === "15" || n === "48" || n === "49_68") {
                       if (i === 0) {
                         rvf = rvf/props.length
                       }
@@ -3242,6 +3247,9 @@ const CalForm = () => {
                       else if (i === 1) {
                         rvf = rvf/props.length
                       }
+                      console.log(i)
+                      console.log(rvf)
+                      console.log(n)
                     }
 
                     return (
@@ -3897,7 +3905,7 @@ const CalForm = () => {
         }
       }
       
-      if (s.length === 2 && n === "39" || n === "15" || n === "48") {
+      if (s.length === 2 && n === "39" || n === "15" || n === "48" || n === "49_68") {
         q = pr1
       }
 
@@ -4010,7 +4018,7 @@ const CalForm = () => {
         h = "ผ่าน"
       else
         h = "ไม่ผ่าน"
-    } else if (s.length === 2 && n === "39" || n === "15" || n === "48") {
+    } else if (s.length === 2 && n === "39" || n === "15" || n === "48" || n === "49_68") {
       if (g >= t[0])
         h = "ผ่าน"
       else
@@ -4127,7 +4135,7 @@ const CalForm = () => {
       are = (((p2 / p1) ** (-1)) * 100).toFixed(2)
       sare = (((pp2 / pp1) ** (-1)) * 100).toFixed(2)
       oo = (((po2 / po1) ** (-1)) * 100).toFixed(2)
-    } else if (n === "39" || n === "15" || n === "48") {
+    } else if (n === "39" || n === "15" || n === "48" || n === "49_68") {
       are = (((p2 / p1) ** (-1))).toFixed(2)
       sare = (((pp2 / pp1) ** (-1))).toFixed(2)
       oo = (((po2 / po1) ** (-1))).toFixed(2)

@@ -176,15 +176,15 @@ const FillUp = () => {
       ans: q(z),
       result: h(z)
     };
-    const JsonData3 = {
-      "h": pa2(z)[3],
-      "hpa1": pa2(z)[4],
-      "hpa2": pa2(z)[5],
-      "pa1": pa2(z)[0],
-      "pa2": pa2(z)[1],
-      "log": pa2(z)[6],
-      "sum": pa2(z)[2]
-    };
+    // const JsonData3 = {
+    //   "h": pa2(z)[3],
+    //   "hpa1": pa2(z)[4],
+    //   "hpa2": pa2(z)[5],
+    //   "pa1": pa2(z)[0],
+    //   "pa2": pa2(z)[1],
+    //   "log": pa2(z)[6],
+    //   "sum": pa2(z)[2]
+    // };
 
     fetch(import.meta.env.VITE_APP_API + "/form/fill", {
       method: "POST",
@@ -661,6 +661,13 @@ const FillUp = () => {
           h = "ไม่ผ่าน"
         }
       }
+      else if (d[1] === "49_68") {
+        if (g >= t[0])
+          h = "ผ่าน"
+        else {
+          h = "ไม่ผ่าน"
+        }
+      }
     }
 
     if (parast === 1) {
@@ -686,212 +693,211 @@ const FillUp = () => {
     return h
   }
 
-  const pa = () => {
-    var fp1 = fetchs.map(a => [a.pa1, a.pa2, a.h1pa, a.h1pb, a.h2pa, a.h2pb, a.h3pa, a.h3pb, a.h4pa, a.h4pb, a.h5pa, a.h5pb, a.h6pa, a.h6pb, a.h7pa, a.h7pb, a.h8pa, a.h8pb, a.h9pa, a.h9pb, a.h10pa, a.h10pb, a.h11pa, a.h11pb, a.d1pa, a.d1pb, a.d2pa, a.d2pb, a.re_log])
-    var ffp1 = fp1[0]
-    var ffp = [ffp1[0], ffp1[1], ffp1[ha + 2], ffp1[hb + 2], ffp1[28]]
-    return ffp
-  }
+  // const pa = () => {
+  //   var fp1 = fetchs.map(a => [a.pa1, a.pa2, a.h1pa, a.h1pb, a.h2pa, a.h2pb, a.h3pa, a.h3pb, a.h4pa, a.h4pb, a.h5pa, a.h5pb, a.h6pa, a.h6pb, a.h7pa, a.h7pb, a.h8pa, a.h8pb, a.h9pa, a.h9pb, a.h10pa, a.h10pb, a.h11pa, a.h11pb, a.d1pa, a.d1pb, a.d2pa, a.d2pb, a.re_log])
+  //   var ffp1 = fp1[0]
+  //   var ffp = [ffp1[0], ffp1[1], ffp1[ha + 2], ffp1[hb + 2], ffp1[28]]
+  //   return ffp
+  // }
 
-  const pa2 = (val) => {
-    var pa2;
-    var p1 = 0;
-    var p2 = 0;
-    var pp1 = 0;
-    var pp2 = 0;
-    var po1 = 0;
-    var po2 = 0;
-    //var parar = localStorage.getItem("pp").split(",")
-    var sare;
-    var are;
-    var oo;
-    var lg = pa()[4];
-    var iff = 0;
-    for (var i = 1; i <= val.length; i++) {
-      if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
-        if (iff === 0) {
-          p1 = 0
-          pp1 = 0
-          p1 += pa()[0] + Number(document.getElementById(`${val[i - 1]}`).value);
-          pp1 += pa()[2] + Number(document.getElementById(`${val[i - 1]}`).value);
-          po1 += Number(document.getElementById(`${val[i - 1]}`).value);
-          iff = 1
-        }
-        else {
-          p2 = 0
-          pp2 = 0
-          p2 += pa()[1] + Number(document.getElementById(`${val[i - 1]}`).value);
-          pp2 += pa()[3] + Number(document.getElementById(`${val[i - 1]}`).value);
-          po2 += Number(document.getElementById(`${val[i - 1]}`).value);
-          //console.log("p1", p1, pp1)
-          //console.log("p2", p2, pp2)
-        }
-      }
-    }
-    // if ((p1 / p2) * 100 > 100) {
-    //   are = (((p1 / p2) ** (-1)) * 100).toFixed(2)
-    //   sare = (((pp1 / pp2) ** (-1)) * 100).toFixed(2)
-    //   oo = (((po1 / po2) ** (-1)) * 100).toFixed(2)
-    // }
-    // else {
-    //   are = ((p1 / p2) * 100).toFixed(2)
-    //   sare = ((pp1 / pp2) * 100).toFixed(2)
-    //   oo = ((po1 / po2) * 100).toFixed(2)
-    // }
+  // const pa2 = (val) => {
+  //   var pa2;
+  //   var p1 = 0;
+  //   var p2 = 0;
+  //   var pp1 = 0;
+  //   var pp2 = 0;
+  //   var po1 = 0;
+  //   var po2 = 0;
+  //   //var parar = localStorage.getItem("pp").split(",")
+  //   var sare;
+  //   var are;
+  //   var oo;
+  //   var lg = pa()[4];
+  //   var iff = 0;
+  //   for (var i = 1; i <= val.length; i++) {
+  //     if (`${z[i - 1]}`[(z[i - 1].length) - 1] === "*") {
+  //       if (iff === 0) {
+  //         p1 = 0
+  //         pp1 = 0
+  //         p1 += pa()[0] + Number(document.getElementById(`${val[i - 1]}`).value);
+  //         pp1 += pa()[2] + Number(document.getElementById(`${val[i - 1]}`).value);
+  //         po1 += Number(document.getElementById(`${val[i - 1]}`).value);
+  //         iff = 1
+  //       }
+  //       else {
+  //         p2 = 0
+  //         pp2 = 0
+  //         p2 += pa()[1] + Number(document.getElementById(`${val[i - 1]}`).value);
+  //         pp2 += pa()[3] + Number(document.getElementById(`${val[i - 1]}`).value);
+  //         po2 += Number(document.getElementById(`${val[i - 1]}`).value);
+  //         //console.log("p1", p1, pp1)
+  //         //console.log("p2", p2, pp2)
+  //       }
+  //     }
+  //   }
+  //   // if ((p1 / p2) * 100 > 100) {
+  //   //   are = (((p1 / p2) ** (-1)) * 100).toFixed(2)
+  //   //   sare = (((pp1 / pp2) ** (-1)) * 100).toFixed(2)
+  //   //   oo = (((po1 / po2) ** (-1)) * 100).toFixed(2)
+  //   // }
+  //   // else {
+  //   //   are = ((p1 / p2) * 100).toFixed(2)
+  //   //   sare = ((pp1 / pp2) * 100).toFixed(2)
+  //   //   oo = ((po1 / po2) * 100).toFixed(2)
+  //   // }
 
-    // if (d[1] === "24" || d[1] === "26" || d[1] === "8") {
-      if (d[1] === "24" || d[1] === "26") {
-      are = (((p2 / p1) ** (-1)) * 100).toFixed(2)
-      sare = (((pp2 / pp1) ** (-1)) * 100).toFixed(2)
-      oo = (((po2 / po1) ** (-1)) * 100).toFixed(2)
-    } else if (d[1] === "39"|| d[1] === "15" || d[1] === "48") {
-      are = (((p2 / p1) ** (-1))).toFixed(2)
-      sare = (((pp2 / pp1) ** (-1))).toFixed(2)
-      oo = (((po2 / po1) ** (-1))).toFixed(2)
-    } else if (d[1] === "20" || d[1] === "20.2") {
-      are = ((p1 / p2)).toFixed(2)
-      sare = ((pp1 / pp2)).toFixed(2)
-      oo = ((po1 / po2)).toFixed(2)
-    }
-    else {
-      are = ((p2 / p1) * 100).toFixed(2)
-      sare = ((pp2 / pp1) * 100).toFixed(2)
-      oo = ((po2 / po1) * 100).toFixed(2)
-    }
+  //   // if (d[1] === "24" || d[1] === "26" || d[1] === "8") {
+  //     if (d[1] === "24" || d[1] === "26") {
+  //     are = (((p2 / p1) ** (-1)) * 100).toFixed(2)
+  //     sare = (((pp2 / pp1) ** (-1)) * 100).toFixed(2)
+  //     oo = (((po2 / po1) ** (-1)) * 100).toFixed(2)
+  //   } else if (d[1] === "39"|| d[1] === "15" || d[1] === "48") {
+  //     are = (((p2 / p1) ** (-1))).toFixed(2)
+  //     sare = (((pp2 / pp1) ** (-1))).toFixed(2)
+  //     oo = (((po2 / po1) ** (-1))).toFixed(2)
+  //   } else if (d[1] === "20" || d[1] === "20.2") {
+  //     are = ((p1 / p2)).toFixed(2)
+  //     sare = ((pp1 / pp2)).toFixed(2)
+  //     oo = ((po1 / po2)).toFixed(2)
+  //   }
+  //   else {
+  //     are = ((p2 / p1) * 100).toFixed(2)
+  //     sare = ((pp2 / pp1) * 100).toFixed(2)
+  //     oo = ((po2 / po1) * 100).toFixed(2)
+  //   }
 
-    if (fc === 1) {
-      if (lg.includes(hos)) {
-        // var loo = sessionStorage.getItem("hos") + "_" + sessionStorage.getItem("qur").split("_")
-        p1 = p1 - pp1 + po1
-        p2 = p2 - pp2 + po2
-        // if (p1 < 0)
-        //   p1 = 0
-        // if (p1 < p2)
-        //are = ((p1 / p2) * 100).toFixed(2)
-        // else
-        are = ((p2 / p1) * 100).toFixed(2)
-        // if (isNaN(are))
-        pp1 = po1
-        pp2 = po2
-        sare = oo
-        lg += ", " + hos + "_" + qqc
-      } else {
-        if (isNaN(lg)) {
-          lg += ", " + hos + "_" + qqc
-        }
-        else {
-          lg += hos + "_" + qqc
-        }
-      }
-    }
+  //   if (fc === 1) {
+  //     if (lg.includes(hos)) {
+  //       // var loo = sessionStorage.getItem("hos") + "_" + sessionStorage.getItem("qur").split("_")
+  //       p1 = p1 - pp1 + po1
+  //       p2 = p2 - pp2 + po2
+  //       // if (p1 < 0)
+  //       //   p1 = 0
+  //       // if (p1 < p2)
+  //       //are = ((p1 / p2) * 100).toFixed(2)
+  //       // else
+  //       are = ((p2 / p1) * 100).toFixed(2)
+  //       // if (isNaN(are))
+  //       pp1 = po1
+  //       pp2 = po2
+  //       sare = oo
+  //       lg += ", " + hos + "_" + qqc
+  //     } else {
+  //       if (isNaN(lg)) {
+  //         lg += ", " + hos + "_" + qqc
+  //       }
+  //       else {
+  //         lg += hos + "_" + qqc
+  //       }
+  //     }
+  //   }
 
-    if (t[1] === 2) {
+  //   if (t[1] === 2) {
 
-      if (vcon != 0) {
-        p1 = p1
-        p2 = 0
-        are = p1
-        pp1 = pp1
-        pp2 = 0
-        sare = pp1
-      }
-      else if (fc === 0 && p2 != 0) {
-        p1 = p1
-        p2 = 0
-        are = p2
-        pp1 = 0
-        pp2 = pp2
-        sare = pp2
-      } else {
-        p1 = p1
-        p2 = p2
-        are = p1
-        pp1 = pp1
-        pp2 = 0
-        sare = pp1
-      }
+  //     if (vcon != 0) {
+  //       p1 = p1
+  //       p2 = 0
+  //       are = p1
+  //       pp1 = pp1
+  //       pp2 = 0
+  //       sare = pp1
+  //     }
+  //     else if (fc === 0 && p2 != 0) {
+  //       p1 = p1
+  //       p2 = 0
+  //       are = p2
+  //       pp1 = 0
+  //       pp2 = pp2
+  //       sare = pp2
+  //     } else {
+  //       p1 = p1
+  //       p2 = p2
+  //       are = p1
+  //       pp1 = pp1
+  //       pp2 = 0
+  //       sare = pp1
+  //     }
 
-    }
+  //   }
 
-    if (numpa === 0) {
-      p1 = 0
-      p2 = 0
-      are = 0
-      pp1 = 0
-      pp2 = 0
-      sare = 0
-    }
+  //   if (numpa === 0) {
+  //     p1 = 0
+  //     p2 = 0
+  //     are = 0
+  //     pp1 = 0
+  //     pp2 = 0
+  //     sare = 0
+  //   }
 
-    if (isNaN((sare))) {
-      sare = 0
-    }
-    else if (isNaN(are)) {
-      are = 0
-    }
-    else if (isNaN(oo)) {
-      oo = 0
-    }
+  //   if (isNaN((sare))) {
+  //     sare = 0
+  //   }
+  //   else if (isNaN(are)) {
+  //     are = 0
+  //   }
+  //   else if (isNaN(oo)) {
+  //     oo = 0
+  //   }
 
-    pa2 = [p1, p2, are, sare, pp1, pp2, lg]
+  //   pa2 = [p1, p2, are, sare, pp1, pp2, lg]
 
-    if (parast === 1) {
+  //   if (parast === 1) {
 
-      if (lg.includes(hos)) {
-        if (lg === "") {
-          lg += hos + "_" + qqc
-        }
-        else {
-          lg += ", " + hos + "_" + qqc
-        }
+  //     if (lg.includes(hos)) {
+  //       if (lg === "") {
+  //         lg += hos + "_" + qqc
+  //       }
+  //       else {
+  //         lg += ", " + hos + "_" + qqc
+  //       }
 
-        if (t[1] === 1) {
-          var ps1 = Number(pa()[0]) + 1
-          var ps2 = Number(pa()[1]) + Number(q(z))
-          var ps3 = ps2 / ps1
-          var ps4 = Number(pa()[2]) + 1
-          var ps5 = Number(pa()[3]) + Number(q(z))
-          var ps6 = ps5 / ps4
-          pa2 = [ps1, ps2, ps3, ps6, ps4, ps5, lg]
-        } else
-          pa2 = [Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), Number(pa()[2]) + Number(q(z)), Number(pa()[2]) + Number(q(z)), Number(pa()[2]) + Number(q(z)), lg]
-      } else {
-        if (lg === "") {
-          lg += hos + "_" + qqc
-        }
-        else {
-          lg += ", " + hos + "_" + qqc
-        }
-        if (t[1] === 1) {
-          var ps1 = Number(pa()[0]) + 1
-          var ps2 = Number(pa()[1]) + Number(q(z))
-          var ps3 = ps2 / ps1
-          var ps4 = Number(pa()[2]) + 1
-          var ps5 = Number(pa()[3]) + Number(q(z))
-          var ps6 = ps5 / ps4
-          pa2 = [ps1, ps2, ps3, ps6, ps4, ps5, lg]
-        } else
-          pa2 = [Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), q(z), q(z), q(z), lg]
-      }
+  //       if (t[1] === 1) {
+  //         var ps1 = Number(pa()[0]) + 1
+  //         var ps2 = Number(pa()[1]) + Number(q(z))
+  //         var ps3 = ps2 / ps1
+  //         var ps4 = Number(pa()[2]) + 1
+  //         var ps5 = Number(pa()[3]) + Number(q(z))
+  //         var ps6 = ps5 / ps4
+  //         pa2 = [ps1, ps2, ps3, ps6, ps4, ps5, lg]
+  //       } else
+  //         pa2 = [Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), Number(pa()[2]) + Number(q(z)), Number(pa()[2]) + Number(q(z)), Number(pa()[2]) + Number(q(z)), lg]
+  //     } else {
+  //       if (lg === "") {
+  //         lg += hos + "_" + qqc
+  //       }
+  //       else {
+  //         lg += ", " + hos + "_" + qqc
+  //       }
+  //       if (t[1] === 1) {
+  //         var ps1 = Number(pa()[0]) + 1
+  //         var ps2 = Number(pa()[1]) + Number(q(z))
+  //         var ps3 = ps2 / ps1
+  //         var ps4 = Number(pa()[2]) + 1
+  //         var ps5 = Number(pa()[3]) + Number(q(z))
+  //         var ps6 = ps5 / ps4
+  //         pa2 = [ps1, ps2, ps3, ps6, ps4, ps5, lg]
+  //       } else
+  //         pa2 = [Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), q(z), q(z), q(z), lg]
+  //     }
 
-    }
+  //   }
 
-    // if(d[1] === "47") {
-    //   pa2 = [Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), q(z), q(z), q(z), 0]
-    // }
+  //   // if(d[1] === "47") {
+  //   //   pa2 = [Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), Number(pa()[0]) + Number(q(z)), q(z), q(z), q(z), 0]
+  //   // }
 
-    return pa2
+  //   return pa2
 
-  }
+  // }
 
   const dis = () => {
 
-    console.log(d[1], fc)
-    // console.log(qqc)
-    console.log(g(z))
-    console.log(q(z))
-    console.log(h(z))
+    // console.log(d[1], fc)
+    // console.log(g(z))
+    // console.log(q(z))
+    // console.log(h(z))
     //console.log(parast)
-    console.log(pa2(z))
+    // console.log(pa2(z))
     //console.log(pa())
 
 
