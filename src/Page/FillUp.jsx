@@ -634,8 +634,8 @@ const FillUp = () => {
         if (Number(uioo1) >= Number(uioo2)) {
           h = "ผ่าน"
         }
-        else if (Number(uioo2) + Number(pa()[2]) <= Number(uioo1))
-          h = "ผ่าน"
+        // else if (Number(uioo2) + Number(pa()[2]) <= Number(uioo1))
+        //   h = "ผ่าน"
         else {
           h = "ไม่ผ่าน"
         }
