@@ -553,7 +553,7 @@ const FillUp = () => {
       q = 0
     }
 
-    if (p === Infinity) {
+    if (q === Infinity) {
       q = 0
     }
 
@@ -634,8 +634,8 @@ const FillUp = () => {
         if (Number(uioo1) >= Number(uioo2)) {
           h = "ผ่าน"
         }
-        // else if (Number(uioo2) + Number(pa()[2]) <= Number(uioo1))
-        //   h = "ผ่าน"
+        else if (Number(uioo2) + Number(pa()[2]) <= Number(uioo1))
+          h = "ผ่าน"
         else {
           h = "ไม่ผ่าน"
         }
@@ -893,9 +893,9 @@ const FillUp = () => {
   const dis = () => {
 
     // console.log(d[1], fc)
-    // console.log(g(z))
-    // console.log(q(z))
-    // console.log(h(z))
+    console.log(g(z))
+    console.log(q(z))
+    console.log(h(z))
     //console.log(parast)
     // console.log(pa2(z))
     //console.log(pa())
