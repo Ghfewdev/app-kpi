@@ -7,6 +7,7 @@ const FillUp = () => {
   Authen();
 
   const [quar, setQuar] = useState([]);
+  const [exfill, setExfill] = useState([])
   const [fetchs, setFetchs] = useState([]);
   const [forms, setForms] = useState({
     form: [],
@@ -322,7 +323,15 @@ const FillUp = () => {
         setQuar(data);
       });
 
-    //console.log(val)
+      fetch(import.meta.env.VITE_APP_API + `/detail/user/${localStorage.getItem("id")}/${val}`)
+      .then(response2 => {
+        return response2.json();
+      })
+      .then(data2 => {
+        setExfill(data2)
+      })
+
+    console.log(exfill)
 
   }
 
@@ -631,11 +640,15 @@ const FillUp = () => {
       }
 
       if (t[1] === 2 && numpa >= 2) {
+        console.log(Number(exfill.map(a => (a.de_ans))[0]), uioo2, t[1], numpa, (Number(uioo2) + Number(exfill.map(a => (a.de_ans))[0])) >= Number(uioo1))
         if (Number(uioo1) >= Number(uioo2)) {
           h = "ผ่าน"
         }
-        else if (Number(uioo2) + Number(pa()[2]) <= Number(uioo1))
+        else if ((Number(uioo2) + Number(exfill.map(a => (a.de_ans))[0])) >= Number(uioo1)) {
           h = "ผ่าน"
+        }
+        // else if (Number(uioo2) + Number(pa()[2]) <= Number(uioo1))
+        //   h = "ผ่าน"
         else {
           h = "ไม่ผ่าน"
         }

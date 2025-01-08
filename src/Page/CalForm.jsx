@@ -16,6 +16,7 @@ const CalForm = () => {
   Authen();
 
   const [fd, setFd] = useState([]);
+  const [exfill, setExfill] = useState([])
   const [events, setEvents] = useState([]);
   const [eve, setEve] = useState([]);
   const [tableData1, setTableData1] = useState([]);
@@ -95,18 +96,18 @@ const CalForm = () => {
     console.log("err")
   }
 
-   const dis = () => {
-      // console.log(gg(s))
-      // console.log(qg(s))
-      // console.log(hg(s))
-      // console.log(deid)
-      if (document.getElementById("submit").hidden === true) {
-        document.getElementById("submit").hidden = false
-      }
+  const dis = () => {
+    // console.log(gg(s))
+    // console.log(qg(s))
+    // console.log(hg(s))
+    // console.log(deid)
+    if (document.getElementById("submit").hidden === true) {
+      document.getElementById("submit").hidden = false
+    }
     else {
       document.getElementById("submit").hidden = true
     }
-    } 
+  }
 
   const handleonChange = (val) => {
 
@@ -143,6 +144,14 @@ const CalForm = () => {
         .then(data => {
           setEve(data);
         });
+
+      fetch(import.meta.env.VITE_APP_API + `/detail/user/${localStorage.getItem("id")}/${val}`)
+        .then(response2 => {
+          return response2.json();
+        })
+        .then(data2 => {
+          setExfill(data2)
+        })
 
     }
 
@@ -196,8 +205,8 @@ const CalForm = () => {
         .then(data7 => {
           setFormres(data7);
         });
-      
-        fetch(import.meta.env.VITE_APP_API + `/dashh?fm=${val}`)
+
+      fetch(import.meta.env.VITE_APP_API + `/dashh?fm=${val}`)
         .then(response => {
           return response.json();
         })
@@ -270,7 +279,7 @@ const CalForm = () => {
           nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon} readOnly /></p>
         } else if (m === "*" && i === s.length - 1) {
           nn = <p className='inline textr p hidden'><input className='input30' type="number" id={m} defaultValue={1} readOnly /></p>
-        } 
+        }
 
         //console.log(fide)
 
@@ -278,15 +287,15 @@ const CalForm = () => {
           nn = <p className='inline textr p'><input className='input30' type="checkbox" id={m} value={m} /></p>
         } else if (vcon != 0 && i === s.length - 1) {
           if (fc !== 0)
-          nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={0} readOnly /></p>
+            nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={0} readOnly /></p>
         }
 
-      //  try {
-      //    if ((k[1])[2] === "1") {
-      //      if (qqc === 3 || qqc === 4)
-      //        nn = <p className='inline textr p'><input className='input30' type="text" id={m} disabled /></p>
-      //    }
-      //  } catch { }
+        //  try {
+        //    if ((k[1])[2] === "1") {
+        //      if (qqc === 3 || qqc === 4)
+        //        nn = <p className='inline textr p'><input className='input30' type="text" id={m} disabled /></p>
+        //    }
+        //  } catch { }
 
         return (
           <div key={i}>
@@ -530,7 +539,7 @@ const CalForm = () => {
     var re12 = [];
     // if (qq12[11] > 100)
     //   qq12[11] = ((qq12[11] ** -1) * 10000).toFixed(2)
-    
+
 
     //qq3-4
     var qqn1p34 = nqq3p1.map((q, i) => q + nqq4p1[i]);
@@ -547,7 +556,7 @@ const CalForm = () => {
     var re13 = [];
     // if (qq13[11] > 100)
     //   qq13[11] = ((qq13[11] ** -1) * 10000).toFixed(2)
-    
+
 
     //qq1-4
     var qqn1p14 = qqn1p12.map((q, i) => q + qqn1p34[i]);
@@ -655,7 +664,7 @@ const CalForm = () => {
     sessionStorage.setItem("qur", qur)
     sessionStorage.setItem("evid", val)
     sessionStorage.setItem("edid", dep)
-    
+
   }
 
   const setp = (dep) => {
@@ -767,10 +776,10 @@ const CalForm = () => {
   const callpara = () => {
     if (fide !== "47") {
       s.map((m, i) => {
-      setTimeout(() => {
-        document.getElementById(m).value = sessionStorage.getItem("pp").split(",")[i]
-      }, 200)
-    })
+        setTimeout(() => {
+          document.getElementById(m).value = sessionStorage.getItem("pp").split(",")[i]
+        }, 200)
+      })
     }
   }
 
@@ -1295,9 +1304,9 @@ const CalForm = () => {
     try {
       if (localStorage.getItem("token").split("$")[1] === "9") {
         qwe = fd.dash[0].calp[1];
-        
-      //   fcc = (fd.dash[0].calp[1]/fd.dash[0].calp[0])*100
-      // console.log(fd)
+
+        //   fcc = (fd.dash[0].calp[1]/fd.dash[0].calp[0])*100
+        // console.log(fd)
       }
       else {
         qwe = fd.dash[0].hos.h[hidex]
@@ -1307,7 +1316,7 @@ const CalForm = () => {
     }
     //console.log(props)
     if (props != null) {
-      
+
       var po = props.map(p => p.de_qur)
       var sev = <div style={{ width: 530 }}>
         <Solve name={qq14[13]} do={530} name2={q} class={"responcal"} />
@@ -1337,14 +1346,14 @@ const CalForm = () => {
         qq3[13] = qq3[12]
         qq2[13] = qq2[12]
       }
-        
-      
+
+
       else if (n === "24") {
         insum = ((qq14[13] ** (-1)) * 10000).toFixed(2)
-        qq13 = qqn1p13.map((q, i) => (q / (qqn2p13[i])*100).toFixed(2));
-        qq12 = qqn1p12.map((q, i) => (q / (qqn2p12[i])*100).toFixed(2));
+        qq13 = qqn1p13.map((q, i) => (q / (qqn2p13[i]) * 100).toFixed(2));
+        qq12 = qqn1p12.map((q, i) => (q / (qqn2p12[i]) * 100).toFixed(2));
       }
-        
+
       // else if (n === "48")
       //   insum = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
       else if (n === "39" || n === "15" || n === "48" || n === "49_68") {
@@ -1357,7 +1366,7 @@ const CalForm = () => {
         qq13 = qqn1p13.map((q, i) => (q / (qqn2p13[i])).toFixed(2));
         qq12 = qqn1p12.map((q, i) => (q / (qqn2p12[i])).toFixed(2));
       }
-        
+
       else if (n === "31" || n === "32" || n === "33") {
         insum = qq14[12]
         qq1[13] = qq1[12]
@@ -1376,22 +1385,22 @@ const CalForm = () => {
 
       var hosi = Number(localStorage.getItem("id")) - 10
 
-      var sumqq1 = String(Number(qq1[0])+Number(qq1[1])+Number(qq1[2])+Number(qq1[3])+Number(qq1[4])+Number(qq1[5])+
-      Number(qq1[6])+Number(qq1[7])+Number(qq1[8])+Number(qq1[9])+Number(qq1[10]))
+      var sumqq1 = String(Number(qq1[0]) + Number(qq1[1]) + Number(qq1[2]) + Number(qq1[3]) + Number(qq1[4]) + Number(qq1[5]) +
+        Number(qq1[6]) + Number(qq1[7]) + Number(qq1[8]) + Number(qq1[9]) + Number(qq1[10]))
 
-      var sumqq2 = String(Number(qq2[0])+Number(qq2[1])+Number(qq2[2])+Number(qq2[3])+Number(qq2[4])+Number(qq2[5])+
-      Number(qq2[6])+Number(qq2[7])+Number(qq2[8])+Number(qq2[9])+Number(qq2[10]))
-      
+      var sumqq2 = String(Number(qq2[0]) + Number(qq2[1]) + Number(qq2[2]) + Number(qq2[3]) + Number(qq2[4]) + Number(qq2[5]) +
+        Number(qq2[6]) + Number(qq2[7]) + Number(qq2[8]) + Number(qq2[9]) + Number(qq2[10]))
 
-      var sumqq3 = String(Number(qq3[0])+Number(qq3[1])+Number(qq3[2])+Number(qq3[3])+Number(qq3[4])+Number(qq3[5])+
-      Number(qq3[6])+Number(qq3[7])+Number(qq3[8])+Number(qq3[9])+Number(qq3[10]))
-      
 
-      var sumqq4 = String(Number(qq4[0])+Number(qq4[1])+Number(qq4[2])+Number(qq4[3])+Number(qq4[4])+Number(qq4[5])+
-      Number(qq4[6])+Number(qq4[7])+Number(qq4[8])+Number(qq4[9])+Number(qq4[10]))
-      
+      var sumqq3 = String(Number(qq3[0]) + Number(qq3[1]) + Number(qq3[2]) + Number(qq3[3]) + Number(qq3[4]) + Number(qq3[5]) +
+        Number(qq3[6]) + Number(qq3[7]) + Number(qq3[8]) + Number(qq3[9]) + Number(qq3[10]))
 
-      
+
+      var sumqq4 = String(Number(qq4[0]) + Number(qq4[1]) + Number(qq4[2]) + Number(qq4[3]) + Number(qq4[4]) + Number(qq4[5]) +
+        Number(qq4[6]) + Number(qq4[7]) + Number(qq4[8]) + Number(qq4[9]) + Number(qq4[10]))
+
+
+
       if (localStorage.getItem("id") !== "23") {
         var insum = qq14[hosi]
         sumqq1 = String(Number(qq1[hosi]));
@@ -1402,7 +1411,7 @@ const CalForm = () => {
 
       if (isNaN(sumqq1))
         sumqq1 = "0"
-      
+
 
       if (isNaN(sumqq2))
         sumqq2 = "0"
@@ -1414,40 +1423,40 @@ const CalForm = () => {
         sumqq4 = "0"
 
       tsum = <div>
-      <table className='container mt-2 table table-bordered border-primary'>
-      <thead className="table-dark textc">
-          <tr>
-            <th>
-              ไตรมาสที่ 1
-            </th>
-            <th>
-              ไตรมาสที่ 2
-            </th>
-            <th>
-              ไตรมาสที่ 3
-            </th>
-            <th>
-              ไตรมาสที่ 4
-            </th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr>
-            <td className="textc">{sumqq1}</td>
-            <td className="textc">
-            {sumqq2}
-            </td>
-            <td className="textc">
-            {sumqq3}
-            </td>
-            <td className="textc">
-            {sumqq4}
-            </td>
-          </tr>
-      </tbody>
-    </table>
-    </div>
-      
+        <table className='container mt-2 table table-bordered border-primary'>
+          <thead className="table-dark textc">
+            <tr>
+              <th>
+                ไตรมาสที่ 1
+              </th>
+              <th>
+                ไตรมาสที่ 2
+              </th>
+              <th>
+                ไตรมาสที่ 3
+              </th>
+              <th>
+                ไตรมาสที่ 4
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="textc">{sumqq1}</td>
+              <td className="textc">
+                {sumqq2}
+              </td>
+              <td className="textc">
+                {sumqq3}
+              </td>
+              <td className="textc">
+                {sumqq4}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       //console.log(hosi)
       if (localStorage.getItem("token").split("$")[1] === "9" && fc === 0 && met === 1) {
         a = <div>
@@ -1546,12 +1555,12 @@ const CalForm = () => {
                             cout2[ii] = 0
                           }
 
-                        var counting = Number(d) + Number(cout2[ii])
+                          var counting = Number(d) + Number(cout2[ii])
 
-                        if (n === "33" || n === "32" || n === "31") {
-                          counting = Number(cout2[ii])
-                        }
-                        
+                          if (n === "33" || n === "32" || n === "31") {
+                            counting = Number(cout2[ii])
+                          }
+
                           return (
                             counting
                           )
@@ -1575,14 +1584,14 @@ const CalForm = () => {
                       }
 
                     }
-                    
+
                     if (n === "39" || n === "15" || n === "48" || n === "49_68") {
                       if (i === 0) {
-                        rvf = rvf/props.length
+                        rvf = rvf / props.length
                       }
-                      
+
                       else if (i === 1) {
-                        rvf = rvf/props.length
+                        rvf = rvf / props.length
                       }
 
                       console.log(i)
@@ -1731,7 +1740,7 @@ const CalForm = () => {
                   var uu3 = <h4 className="bi bi-x-circle redt"></h4>;
                   var uu4 = <h4 className="bi bi-x-circle redt"></h4>;
 
-                  
+
                   if (re1[index] === "ผ่าน")
                     uu1 = <h4 className="bi bi-check-circle greent"></h4>
                   if (re2[index] === "ผ่าน")
@@ -1743,13 +1752,13 @@ const CalForm = () => {
 
                   if (n === "24" || n === "26") {
                     qq14[index] = ((qq14[index] ** (-1)) * 10000).toFixed(2)
-                  
-                  
+
+
 
                     // if (n === "24" || n === "26" || n === "8") {
                     //   qq14[index] = ((qq14[index] ** (-1)) * 10000).toFixed(2)
                   }
-                  
+
                   // else if (n === "8") {
                   //   qq1[13] = qq1[14]
                   //   if (qq1[13] > q)
@@ -1757,7 +1766,7 @@ const CalForm = () => {
                   //   else
                   //     re1[13] = "ไม่ผ่าน"
                   // }
-                  
+
                   else if (n === "39" || n === "15" || n === "48" || n === "49_68") {
                     qq14[index] = ((qqn1p14[index] / qqn2p14[index])).toFixed(2)
                     qq1[13] = qq1[14]
@@ -1782,7 +1791,7 @@ const CalForm = () => {
                   }
                   if (isNaN(qq12[index]))
                     qq12[index] = "-"
-                  
+
                   if (Number(qq12[index]) <= Number(q) && (n === "20" || n === "20.2"))
                     re12[index] = "ผ่าน"
                   else if (Number(qq12[index]) >= Number(q)) {
@@ -1964,13 +1973,13 @@ const CalForm = () => {
                             Number(d) + Number(cout2[ii])
                           )
                         }))
-                        
+
                         rvf = cout3[i]
 
-                         if (n === "2") {
-                           if (i === 4)
-                           rvf = String(ansl)
-                         }
+                        if (n === "2") {
+                          if (i === 4)
+                            rvf = String(ansl)
+                        }
                       }
                       else {
                         cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
@@ -1981,7 +1990,7 @@ const CalForm = () => {
                           if (isNaN(cout2[ii])) {
                             cout2[ii] = 0
                           }
-                          
+
                           return (
                             Number(d) + Number(cout2[ii])
                           )
@@ -1993,8 +2002,8 @@ const CalForm = () => {
 
                     }
 
-                    if(n === "16") {
-                      if(i === 1) {
+                    if (n === "16") {
+                      if (i === 1) {
                         rvf = 2100
                       }
                     }
@@ -2346,12 +2355,12 @@ const CalForm = () => {
                             cout2[ii] = 0
                           }
 
-                        var counting = Number(d) + Number(cout2[ii])
+                          var counting = Number(d) + Number(cout2[ii])
 
-                        if (n === "33" || n === "32" || n === "31") {
-                          counting = Number(cout2[ii])
-                        }
-                        
+                          if (n === "33" || n === "32" || n === "31") {
+                            counting = Number(cout2[ii])
+                          }
+
                           return (
                             counting
                           )
@@ -2375,16 +2384,16 @@ const CalForm = () => {
                       }
 
                     }
-                    
+
                     if (n === "39" || n === "15" || n === "48" || n === "49_68") {
                       if (i === 0) {
-                        rvf = rvf/props.length
+                        rvf = rvf / props.length
                       }
-                      
+
                       else if (i === 1) {
-                        rvf = rvf/props.length
+                        rvf = rvf / props.length
                       }
-                      
+
                       console.log(n, rvf, i)
                     }
 
@@ -2503,11 +2512,11 @@ const CalForm = () => {
         </div>
       }
       else if (localStorage.getItem("token").split("$")[1] === "9" && fc === 1) {
-      if (n === "26") {
-        fcc = ((fd.dash[0].calp[1]/fd.dash[0].calp[0])*100).toFixed(2)
-      } else if (n === "3.1") {
-        fcc = ((fd.dash[0].calp[0]/fd.dash[0].calp[1])*100).toFixed(2)
-      }
+        if (n === "26") {
+          fcc = ((fd.dash[0].calp[1] / fd.dash[0].calp[0]) * 100).toFixed(2)
+        } else if (n === "3.1") {
+          fcc = ((fd.dash[0].calp[0] / fd.dash[0].calp[1]) * 100).toFixed(2)
+        }
         a = <div>
 
           <div className='container mt-3'>
@@ -2620,8 +2629,8 @@ const CalForm = () => {
 
                     }
 
-                    if(i === 1 && n !== "3.1")
-                    rvf = 287
+                    if (i === 1 && n !== "3.1")
+                      rvf = 287
 
                     return (
                       <td key={p}>{rvf}</td>
@@ -2878,7 +2887,7 @@ const CalForm = () => {
           </div>
 
         </div>
-        }
+      }
       else if (localStorage.getItem("token").split("$")[1] === "1" && fc === 1)
         a = <div>
 
@@ -3207,13 +3216,13 @@ const CalForm = () => {
                             cout2[ii] = 0
                           }
 
-                        var counting = Number(d) + Number(cout2[ii])
+                          var counting = Number(d) + Number(cout2[ii])
 
-                        if (n === "33" || n === "32" || n === "31") {
-                          counting = Number(cout2[ii])
-                        }
-                        
-                        
+                          if (n === "33" || n === "32" || n === "31") {
+                            counting = Number(cout2[ii])
+                          }
+
+
 
                           return (
                             counting
@@ -3238,14 +3247,14 @@ const CalForm = () => {
                       }
 
                     }
-                    
+
                     if (n === "39" || n === "15" || n === "48" || n === "49_68") {
                       if (i === 0) {
-                        rvf = rvf/props.length
+                        rvf = rvf / props.length
                       }
-                      
+
                       else if (i === 1) {
-                        rvf = rvf/props.length
+                        rvf = rvf / props.length
                       }
                       console.log(i)
                       console.log(rvf)
@@ -3825,7 +3834,7 @@ const CalForm = () => {
     if (n === "47") {
       g = ""
       var co = 0
-      for (var i = 1; i <= val.length-1; i++) {
+      for (var i = 1; i <= val.length - 1; i++) {
         if (document.getElementById(`${val[i - 1]}`).checked === true) {
           g += "1"
           co += 1
@@ -3833,7 +3842,7 @@ const CalForm = () => {
         else {
           g += "0"
         }
-        if (i != val.length-1) {
+        if (i != val.length - 1) {
           g += ", "
         } else {
           g += ", " + co
@@ -3904,7 +3913,7 @@ const CalForm = () => {
           q = (p ** (-1)) * 100;
         }
       }
-      
+
       if (s.length === 2 && n === "39" || n === "15" || n === "48" || n === "49_68") {
         q = pr1
       }
@@ -3977,15 +3986,15 @@ const CalForm = () => {
       } else {
         h = "ไม่ผ่าน"
       }
-    } 
-     else if (n === "8") {
-       if ((g ** (-1) * 100) >= t[0] && (g ** (-1) * 100) !== Infinity) {
-         h = "ผ่าน"
-       } else {
-         h = "ไม่ผ่าน"
-       }
-       //console.log((g ** (-1) * 100))
-     }
+    }
+    else if (n === "8") {
+      if ((g ** (-1) * 100) >= t[0] && (g ** (-1) * 100) !== Infinity) {
+        h = "ผ่าน"
+      } else {
+        h = "ไม่ผ่าน"
+      }
+      //console.log((g ** (-1) * 100))
+    }
     else if (n === "20" || n === "20.2") {
       if ((g) <= t[0]) {
         h = "ผ่าน"
@@ -4005,11 +4014,24 @@ const CalForm = () => {
       //console.log(Number(pa2(s)[3]), uioo2)
       if (Number(uioo1) >= Number(uioo2))
         h = "ผ่าน"
-      else if (Number(pa2(s)[3]) >= Number(uioo2))
-        h = "ผ่าน"
+      // else if (Number(pa2(s)[3]) >= Number(uioo2))
+      //   h = "ผ่าน"
       else {
         h = "ไม่ผ่าน"
       }
+
+      // if (t[1] === 2 && numpa >= 2) {
+      //   console.log(Number(exfill.map(a => (a.de_ans))[0]), uioo2, t[1], numpa, (Number(uioo2) + Number(exfill.map(a => (a.de_ans))[0])) >= Number(uioo1))
+      //   if (Number(uioo1) >= Number(uioo2)) {
+      //     h = "ผ่าน"
+      //   }
+      //   else if ((Number(uioo2) + Number(exfill.map(a => (a.de_ans))[0])) >= Number(uioo1)) {
+      //     h = "ผ่าน"
+      //   }
+      //   else {
+      //     h = "ไม่ผ่าน"
+      //   }
+      // }
 
     }
 
@@ -4060,25 +4082,25 @@ const CalForm = () => {
   }
 
   const fetchUserDataFormV = (val) => {
-    
-      if (localStorage.getItem("id") === "23") {
-        fetch(import.meta.env.VITE_APP_API + "/checked/s/1/"+ val)
+
+    if (localStorage.getItem("id") === "23") {
+      fetch(import.meta.env.VITE_APP_API + "/checked/s/1/" + val)
         .then(response => {
           return response.json();
         })
         .then(data => {
           setTableData1(data)
         })
-      }
-      else {
-        fetch(import.meta.env.VITE_APP_API + `/checked/year/1/${localStorage.getItem("id")}/${val}`)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        setTableData1(data)
-      })
-      }
+    }
+    else {
+      fetch(import.meta.env.VITE_APP_API + `/checked/year/1/${localStorage.getItem("id")}/${val}`)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setTableData1(data)
+        })
+    }
 
   }
 
@@ -4270,13 +4292,13 @@ const CalForm = () => {
           <h1>การสรุปผลตัวชี้วัด</h1>
           <br />
           <h3>เลือกปีงบประมาณ</h3>
-            <select name="d4" value={yee} id="u1" onChange={e => {fetchUserDataFormV(e.target.value), setYee(e.target.value)}}>
-              <option value="2567">2567</option>
-              <option value="2568">2568</option>
-            </select>
-            
-          
-          <select value={param} onClick={e => {handleonChange(n), setFide(n)}} onChange={e => {setParam(e.target.value), setFide(n)}} >
+          <select name="d4" value={yee} id="u1" onChange={e => { fetchUserDataFormV(e.target.value), setYee(e.target.value) }}>
+            <option value="2567">2567</option>
+            <option value="2568">2568</option>
+          </select>
+
+
+          <select value={param} onClick={e => { handleonChange(n), setFide(n) }} onChange={e => { setParam(e.target.value), setFide(n) }} >
             <option>เลือกดูตัวชี้วัด</option>
             {formmm}
           </select>
@@ -4291,24 +4313,24 @@ const CalForm = () => {
 
         <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog modal-lg">
-            
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLabel">แก้ไขการส่งข้อมูล</h5>
-                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div className="modal-body textl4">
-                  {ss}
-                  <br />{cc}<br />
-                </div>
-                
 
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
-                  {cs}
-                </div>
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">แก้ไขการส่งข้อมูล</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-            
+              <div className="modal-body textl4">
+                {ss}
+                <br />{cc}<br />
+              </div>
+
+
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                {cs}
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -4321,8 +4343,8 @@ const CalForm = () => {
                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body textl7">
-                <div className='up2'>
-                    
+                  <div className='up2'>
+
                     <br />
                     <label>แนบไฟล์ PDF: &nbsp;&nbsp;</label><br />
                     <input defaultValue={file2} type='file' name='pdf' onChange={(e) => setFile2(e.target.files[0])} />
@@ -4330,11 +4352,11 @@ const CalForm = () => {
                     <br />
                     <label>**หมายเหตุชื่อไฟล์ต้องเป็นภาษาอังกฤษหรือตัวเลขเท่านั้น**</label>
                     <br />
-                  
-                </div>
-                <br />
-                <hr style={{"width": "80%"}} />
-                <br />
+
+                  </div>
+                  <br />
+                  <hr style={{ "width": "80%" }} />
+                  <br />
                   <label>ข้อมูลก่อนหน้า <input id="od" type="checkbox" onClick={e => od()} /></label>
                   <br />
                   <br />
@@ -4426,7 +4448,7 @@ const CalForm = () => {
                     <br />
                   </div>
                   <br />
-                  
+
                 </div>
 
                 <div className="modal-footer">
