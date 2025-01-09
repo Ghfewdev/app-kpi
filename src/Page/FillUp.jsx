@@ -559,7 +559,12 @@ const FillUp = () => {
 
     if (isNaN(q)) {
       //sessionStorage.setItem("non", "no")
-      q = 0
+      if (d[1] === "34_68") {
+        q = 100
+      }
+      else {
+        q = 0
+      }
     }
 
     if (q === Infinity) {
@@ -579,6 +584,8 @@ const FillUp = () => {
       }
       document.getElementById("รวม*").value = q
     }
+
+    
 
     return q
   }
@@ -691,7 +698,13 @@ const FillUp = () => {
     }
 
     if (isNaN(g)) {
-      h = "ไม่ผ่าน"
+      
+      if (d[1] === "34_68") {
+        h = "ผ่าน"
+      }
+      else {
+        h = "ไม่ผ่าน"
+      }
       //g = 0
     }
 

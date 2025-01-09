@@ -3925,7 +3925,12 @@ const CalForm = () => {
     }
 
     if (isNaN(q)) {
-      q = 0
+      if (n === "34_68") {
+        q = 100
+      }
+      else {
+        q = 0
+      }
     }
     //console.log(pr1)
     if (n === "47") {
@@ -4054,8 +4059,16 @@ const CalForm = () => {
         h = "ไม่ผ่าน"
     }
 
-    if (isNaN(g))
-      h = "ไม่ผ่าน"
+    if (isNaN(g)) {
+
+      if (n === "34_68") {
+        h = "ผ่าน"
+      }
+      else {
+        h = "ไม่ผ่าน"
+      }
+
+    }
 
     return h
   }
