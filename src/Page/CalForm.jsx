@@ -2255,6 +2255,7 @@ const CalForm = () => {
         </div>
       else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 0) {
         var ois = <Solve name={qq14[hosi]} do={530} name2={q} class={"responcal"} />
+        // console.log(qq14[hosi], qq14)
         // if (n === "24" || n === "26" || n === "8") {
         //   ois = <Solve name={((qq14[hosi] ** -1) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
         if (n === "24" || n === "26") {
@@ -2263,6 +2264,8 @@ const CalForm = () => {
           ois = <Solve name={((qqn1p14[hosi] / qqn2p14[hosi])).toFixed(2)} do={530} name2={q} class={"responcal"} />
         } else if (n === "20" || n === "20.2") {
           ois = <Solve2 name={(qqn1p14[13] / qqn2p14[13]).toFixed(2)} do={530} name2={q} class={"responcal"} />
+        } else if (n === "34_68" && qq14[hosi] === 0) {
+          ois = <Solve name={100} do={530} name2={q} class={"responcal"} />
         }
 
         a = <div>
