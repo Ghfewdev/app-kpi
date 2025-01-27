@@ -268,10 +268,16 @@ const CalForm = () => {
 
       var ss = s.map((m, i) => {
         var nn
-        if (String(m)[m.length - 1] === "*")
+
+        if (String(m)[m.length - 1] === "*") {
           nn = <p className='inline textr p'><input className='input30' type="number" id={m} required /></p>
-        else
+          
+        } 
+        else {
           nn = <p className='inline textr p'><input className='input30' type="text" id={m} required /></p>
+          
+        }
+          
         if (io.length === 13 && i === s.length - 1) {
           nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon.split(", ")[Number(sessionStorage.getItem("qur")) - 1]} readOnly /></p>
         }
@@ -592,8 +598,11 @@ const CalForm = () => {
         qq14[13] = qq14[13] ** (-1)
       } else if (n === "39" || n === "15" || n === "48" || n === "49_68") {
         qq14[13] = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
-      } else if (n === "20" || n === "20.2") {
+      } else if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68") {
         qq14 = qqn1p14.map((q, i) => ((q / qqn2p14[i])).toFixed(2));
+      } else if (n === "23_68") {
+        qq14 = qqn1p14.map((q, i) => ((qqn1p14[i] - qqn2p14[i])/qqn2p14[i]).toFixed(2));
+        console.log(qq14)
       }
     }, 300)
     //  if (n === "8") {
@@ -774,6 +783,7 @@ const CalForm = () => {
   }
 
   const callpara = () => {
+    // console.log(fide)
     if (fide !== "47") {
       s.map((m, i) => {
         setTimeout(() => {
@@ -905,9 +915,10 @@ const CalForm = () => {
     //console.log(fd)
     //console.log(pa2(s), qq14[13], qg(s), hg(s), parast)
     // console.log(pa(), pa2(s), hg(s), qg(s))
-    //console.log(a)
+    console.log(hg(s), qg(s))
+    // console.log(a)
     //console.log(vcon.split(", ")[Number(sessionStorage.getItem("qur"))-1])
-    console.log(qq12[1], re12, q)
+    // console.log(qq12[1], re12, q)
   }
 
   function reu() {
@@ -1321,7 +1332,7 @@ const CalForm = () => {
       var sev = <div style={{ width: 530 }}>
         <Solve name={qq14[13]} do={530} name2={q} class={"responcal"} />
       </div>
-      if (n === "20" || n === "20.2")
+      if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68")
         var sev = <div style={{ width: 530 }}>
           <Solve2 name={(qqn1p14[13] / qqn2p14[13]).toFixed(2)} do={530} name2={q} class={"responcal"} />
         </div>
@@ -1340,7 +1351,7 @@ const CalForm = () => {
 
       var insum = qq14[13]
 
-      if (n === "20" || n === "20.2") {
+      if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68") {
         insum = (qqn1p14[13] / qqn2p14[13]).toFixed(2)
         qq4[13] = qq4[12]
         qq3[13] = qq3[12]
@@ -1459,6 +1470,13 @@ const CalForm = () => {
 
       //console.log(hosi)
       if (localStorage.getItem("token").split("$")[1] === "9" && fc === 0 && met === 1) {
+        var qqo
+        if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68") {
+          qqo = "น้อยกว่าหรือเท่ากับ " + q + " นาที"
+        } else {
+          qqo = "ร้อยละ " + q
+        }
+
         a = <div>
 
           <div className='container mt-3'>
@@ -1468,7 +1486,7 @@ const CalForm = () => {
             <br /><br />
             <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
             <br /><br />
-            <label>ค่าเป้าหมาย: </label><br /> <input className="input20" disabled value={"ร้อยละ " + q} />
+            <label>ค่าเป้าหมาย: </label><br /> <input className="input20" disabled value={qqo} />
             <br /><br />
             {/* <label>วิธีการคำนวณ: </label><br /> <input className="input10" disabled value={w} />
             <br /><br /> */}
@@ -1772,7 +1790,7 @@ const CalForm = () => {
                     qq1[13] = qq1[14]
                     if (qq14[index] === "Infinity")
                       qq14[index] = "-"
-                  } else if (n === "20" || n === "20.2") {
+                  } else if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68") {
                     qq1[13] = (q1par1 / q1par2).toFixed(2)
                     if (qq1[13] < q)
                       re1[13] = "ผ่าน"
@@ -1792,7 +1810,7 @@ const CalForm = () => {
                   if (isNaN(qq12[index]))
                     qq12[index] = "-"
 
-                  if (Number(qq12[index]) <= Number(q) && (n === "20" || n === "20.2"))
+                  if (Number(qq12[index]) <= Number(q) && (n === "20" || n === "20.2" || n === "3_68" || n === "12_68"))
                     re12[index] = "ผ่าน"
                   else if (Number(qq12[index]) >= Number(q)) {
                     re12.push("ผ่าน");
@@ -1806,7 +1824,7 @@ const CalForm = () => {
                   if (isNaN(qq13[index]))
                     qq13[index] = "-"
 
-                  if (Number(qq13[index]) < Number(q) && (n === "20" || n === "20.2"))
+                  if (Number(qq13[index]) < Number(q) && (n === "20" || n === "20.2" || n === "3_68" || n === "12_68"))
                     re13[index] = "ผ่าน"
                   else if (Number(qq13[index]) > Number(q))
                     re13.push("ผ่าน")
@@ -1820,7 +1838,7 @@ const CalForm = () => {
                   if (isNaN(qq14[index]) || qq14[index] === 0)
                     qq14[index] = "-"
 
-                  if (Number(qq14[index]) < Number(q) && (n === "20" || n === "20.2"))
+                  if (Number(qq14[index]) < Number(q) && (n === "20" || n === "20.2" || n === "3_68" || n === "12_68"))
                     re14[index] = "ผ่าน"
                   else if (Number(qq14[index]) > Number(q))
                     re14.push("ผ่าน")
@@ -2005,6 +2023,12 @@ const CalForm = () => {
                     if (n === "16") {
                       if (i === 1) {
                         rvf = 2100
+                      }
+                    }
+
+                    if (n === "1_68") {
+                      if (i === 3) {
+                        rvf = 1000000
                       }
                     }
 
@@ -2254,6 +2278,15 @@ const CalForm = () => {
           <br /><br /><br /><br /><br /><br />
         </div>
       else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 0) {
+        console.log(qq14[hosi])
+
+        var qqo
+        if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68") {
+          qqo = "น้อยกว่าหรือเท่ากับ " + q + " นาที"
+        } else {
+          qqo = "ร้อยละ " + q
+        }
+
         var ois = <Solve name={qq14[hosi]} do={530} name2={q} class={"responcal"} />
         // console.log(qq14[hosi], qq14)
         // if (n === "24" || n === "26" || n === "8") {
@@ -2262,10 +2295,12 @@ const CalForm = () => {
           ois = <Solve name={((qq14[hosi] ** -1) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
         } else if (n === "39" || n === "15" || n === "48" || n === "49_68") {
           ois = <Solve name={((qqn1p14[hosi] / qqn2p14[hosi])).toFixed(2)} do={530} name2={q} class={"responcal"} />
-        } else if (n === "20" || n === "20.2") {
+        } else if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68") {
           ois = <Solve2 name={(qqn1p14[13] / qqn2p14[13]).toFixed(2)} do={530} name2={q} class={"responcal"} />
         } else if (n === "34_68" && qq14[hosi] === 0) {
           ois = <Solve name={100} do={530} name2={q} class={"responcal"} />
+        } else if (n === "23_68") {
+          ois = <Solve2 name={qq14[hosi]} do={530} name2={1} class={"responcal"} />
         }
 
         a = <div>
@@ -2277,7 +2312,7 @@ const CalForm = () => {
             <br /><br />
             <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
             <br /><br />
-            <label>ค่าเป้าหมาย: </label><br /> <input className="input20" disabled value={"ร้อยละ " + q} />
+            <label>ค่าเป้าหมาย: </label><br /> <input className="input20" disabled value={qqo} />
             <br /><br />
             {/* <label>วิธีการคำนวณ: </label><br /> <input className="input10" disabled value={w} />
             <br /><br /> */}
@@ -2362,7 +2397,10 @@ const CalForm = () => {
 
                           if (n === "33" || n === "32" || n === "31") {
                             counting = Number(cout2[ii])
-                          }
+                          } 
+                          // else if (n === "23_68") {
+                          //   counting = Number(cout2[ii])
+                          // }
 
                           return (
                             counting
@@ -3899,7 +3937,7 @@ const CalForm = () => {
       } else if (n === "5") {
         q = (p ** (-1)) * 100
       }
-      else if (n === "20" || n === "20.2") {
+      else if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68") {
         q = (p);
         //console.log(val.length)
       }
@@ -3944,6 +3982,11 @@ const CalForm = () => {
         }
       }
       document.getElementById("รวม*").value = q
+    }
+
+    if(n === "23_68") {
+      // console.log(pr1,pr2)
+      q = ((pr1-pr2)/pr2)*100
     }
 
     return q
@@ -4003,7 +4046,7 @@ const CalForm = () => {
       }
       //console.log((g ** (-1) * 100))
     }
-    else if (n === "20" || n === "20.2") {
+    else if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68") {
       if ((g) <= t[0]) {
         h = "ผ่าน"
       } else {
@@ -4071,6 +4114,17 @@ const CalForm = () => {
         h = "ไม่ผ่าน"
       }
 
+    }
+
+    if(n === "23_68") {
+      
+      var q = ((uioo1-uioo2)/uioo2)*100
+      console.log(uioo1,q)
+      if (q >= 0) {
+        h = "ผ่าน"
+      } else {
+        h = "ไม่ผ่าน"
+      }
     }
 
     return h
@@ -4177,7 +4231,7 @@ const CalForm = () => {
       are = (((p2 / p1) ** (-1))).toFixed(2)
       sare = (((pp2 / pp1) ** (-1))).toFixed(2)
       oo = (((po2 / po1) ** (-1))).toFixed(2)
-    } else if (n === "20" || n === "20.2") {
+    } else if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68") {
       are = ((p1 / p2)).toFixed(2)
       sare = ((pp1 / pp2)).toFixed(2)
       oo = ((po1 / po2)).toFixed(2)

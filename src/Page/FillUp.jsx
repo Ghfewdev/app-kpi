@@ -585,7 +585,10 @@ const FillUp = () => {
       document.getElementById("รวม*").value = q
     }
 
-    
+    if(n === "23_68") {
+      // console.log(pr1,pr2)
+      q = ((pr1-pr2)/pr2)*100
+    }
 
     return q
   }
@@ -710,6 +713,17 @@ const FillUp = () => {
 
     if(d[1] === "47") {
       if(q(z) >= vcon) {
+        h = "ผ่าน"
+      } else {
+        h = "ไม่ผ่าน"
+      }
+    }
+
+    if(d[1] === "23_68") {
+      
+      var q = ((uioo1-uioo2)/uioo2)*100
+      console.log(uioo1,q)
+      if (q >= 0) {
         h = "ผ่าน"
       } else {
         h = "ไม่ผ่าน"
