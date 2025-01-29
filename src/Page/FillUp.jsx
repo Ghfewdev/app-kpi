@@ -529,11 +529,13 @@ const FillUp = () => {
       if (t[1] === 3)
         q = q
       //q = q / val.length
-      else if (t[1] === 2)
+      if (t[1] === 2) {
         if (fc === 0 && pr2 != 0)
           q = pr1
         else
           q = pr2
+      }
+        
 
       if (d[1] === "5") {
         q = (p ** (-1)) * 100;
@@ -650,18 +652,28 @@ const FillUp = () => {
       }
 
       if (t[1] === 2 && numpa >= 2) {
-        console.log(Number(exfill.map(a => (a.de_ans))[0]), uioo2, t[1], numpa, (Number(uioo2) + Number(exfill.map(a => (a.de_ans))[0])) >= Number(uioo1))
+        // console.log(Number(exfill.map(a => (a.de_ans))[0]), uioo2, t[1], numpa, (Number(uioo2) + Number(exfill.map(a => (a.de_ans))[0])) >= Number(uioo1))
         if (Number(uioo1) >= Number(uioo2)) {
           h = "ผ่าน"
         }
-        else if ((Number(uioo2) + Number(exfill.map(a => (a.de_ans))[0])) >= Number(uioo1)) {
-          h = "ผ่าน"
-        }
+        // else if ((Number(uioo2) + Number(exfill.map(a => (a.de_ans))[0])) >= Number(uioo1)) {
+        //   h = "ผ่าน"
+        // }
         // else if (Number(uioo2) + Number(pa()[2]) <= Number(uioo1))
         //   h = "ผ่าน"
         else {
           h = "ไม่ผ่าน"
         }
+
+        if (d[1] === "22_68") {
+          if (Number(uioo1) > 0) {
+            h = "ผ่าน"
+          } else {
+            h = "ไม่ผ่าน"
+          }
+          console.log(uioo1, uioo2)
+        }
+
       }
 
     }
@@ -676,7 +688,7 @@ const FillUp = () => {
     //console.log("h", numpa, g, d[1])
 
     if (numpa === 2) {
-      if (d[1] === "39" || d[1] === "15" || d[1] === "48") {
+      if (d[1] === "39" || d[1] === "15" || d[1] === "48" || d[1] === "49_68" || d[1] === "39_68" || d[1] === "48_68" || d[1] === "43_68") {
         console.log(g)
         if (g >= t[0])
           h = "ผ่าน"
@@ -729,6 +741,8 @@ const FillUp = () => {
         h = "ไม่ผ่าน"
       }
     }
+
+    
 
     return h
   }

@@ -596,7 +596,7 @@ const CalForm = () => {
       // if (n === "24" || n === "26" || n === "8") {
       if (n === "24" || n === "26") {
         qq14[13] = qq14[13] ** (-1)
-      } else if (n === "39" || n === "15" || n === "48" || n === "49_68") {
+      } else if (n === "39" || n === "15" || n === "48" || n === "49_68"  || n === "39_68" || n === "48_68" || n === "43_68") {
         qq14[13] = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
       } else if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68") {
         qq14 = qqn1p14.map((q, i) => ((q / qqn2p14[i])).toFixed(2));
@@ -1344,7 +1344,7 @@ const CalForm = () => {
         var sev = <div style={{ width: 530 }}>
           <Solve name={((qq14[13] ** (-1)) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
         </div>
-      else if (n === "39" || n === "15" || n === "48" || n === "49_68")
+      else if (n === "39" || n === "15" || n === "48" || n === "49_68"  || n === "39_68" || n === "48_68" || n === "43_68")
         var sev = <div style={{ width: 530 }}>
           <Solve name={((qqn1p14[13] / qqn2p14[13])).toFixed(2)} do={530} name2={q} class={"responcal"} />
         </div>
@@ -1367,7 +1367,7 @@ const CalForm = () => {
 
       // else if (n === "48")
       //   insum = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
-      else if (n === "39" || n === "15" || n === "48" || n === "49_68") {
+      else if (n === "39" || n === "15" || n === "48" || n === "49_68" || n === "39_68" || n === "48_68" || n === "43_68") {
         insum = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
         qq2[13] = (nqq2p1[13] / nqq2p2[13]).toFixed(2)
         qq3[13] = (nqq3p1[13] / nqq3p2[13]).toFixed(2)
@@ -1473,7 +1473,14 @@ const CalForm = () => {
         var qqo
         if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68") {
           qqo = "น้อยกว่าหรือเท่ากับ " + q + " นาที"
-        } else {
+        }
+        else if (n === "26_68") {
+          qqo = q + " แห่ง"
+        }
+        else if (n === "29_68") {
+          qqo = q + " คน"
+        }
+        else {
           qqo = "ร้อยละ " + q
         }
 
@@ -1603,7 +1610,7 @@ const CalForm = () => {
 
                     }
 
-                    if (n === "39" || n === "15" || n === "48" || n === "49_68") {
+                    if (n === "39" || n === "15" || n === "48" || n === "49_68" || n === "39_68" || n === "48_68" || n === "43_68") {
                       if (i === 0) {
                         rvf = rvf / props.length
                       }
@@ -1612,8 +1619,12 @@ const CalForm = () => {
                         rvf = rvf / props.length
                       }
 
-                      console.log(i)
-                      console.log(rvf)
+                    }
+
+                    console.log(rvf)
+
+                    if(i === 1 && rvf === Infinity) {
+                      rvf = 0
                     }
 
                     return (
@@ -1785,7 +1796,7 @@ const CalForm = () => {
                   //     re1[13] = "ไม่ผ่าน"
                   // }
 
-                  else if (n === "39" || n === "15" || n === "48" || n === "49_68") {
+                  else if (n === "39" || n === "15" || n === "48" || n === "49_68" || n === "39_68" || n === "48_68" || n === "43_68") {
                     qq14[index] = ((qqn1p14[index] / qqn2p14[index])).toFixed(2)
                     qq1[13] = qq1[14]
                     if (qq14[index] === "Infinity")
@@ -1896,248 +1907,267 @@ const CalForm = () => {
           </div>
 
         </div>
-      } else if (met === 2)
+      } else if (met === 2) {
+        
+        var qqo
+        if (n === "28_68") {
+          qqo = ansl + " ชมรม"
+        }
+        else {
+          qqo = ansl
+        }
+
+        if (n === "22_68") {
+          if (localStorage.getItem("token").split("$")[1] === "9") {
+            qqo = ansl + " แห่ง"
+          }
+          else {
+            qqo = 1 + " แห่ง"
+          }
+        }
+
         a = <div>
 
-          <div className='container mt-3'>
-            <h3>รายละเอียดการส่งตัวชี้วัด </h3>
-            <br />
-            <label>ชื่อตัวชี้วัด: </label><br /> <input className="input100" disabled value={z} />
-            <br /><br />
-            <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
-            <br /><br />
-            <label>ค่าเป้าหมาย: </label><br /> <input className="input20" disabled value={ansl} />
-            <br /><br />
-            {/* <label>วิธีการคำนวณ: </label><br /> <input className="input10" disabled value={w} />
-            <br /><br /> */}
-            <div>หมายเหตุ:&nbsp;&nbsp; {f.map(ff => <a key={ff}><br />{ff}</a>)}</div>
-            <br />
-            <table className='table table-bordered border-primary'>
+        <div className='container mt-3'>
+          <h3>รายละเอียดการส่งตัวชี้วัด </h3>
+          <br />
+          <label>ชื่อตัวชี้วัด: </label><br /> <input className="input100" disabled value={z} />
+          <br /><br />
+          <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
+          <br /><br />
+          <label>ค่าเป้าหมาย: </label><br /> <input className="input20" disabled value={qqo} />
+          <br /><br />
+          {/* <label>วิธีการคำนวณ: </label><br /> <input className="input10" disabled value={w} />
+          <br /><br /> */}
+          <div>หมายเหตุ:&nbsp;&nbsp; {f.map(ff => <a key={ff}><br />{ff}</a>)}</div>
+          <br />
+          <table className='table table-bordered border-primary'>
 
-              <thead className="table-dark">
-                <tr>
-                  <th className="textc" scope="col">ส่วนราชการ</th>
-                  <th className="textc" scope='col'>ไตรมาส</th>
-                  {f.map(p => {
-                    return (
-                      <th className="textc" key={p}>{p[0]}</th>
-                    );
-                  })}
-                  {/* <th className="textc" scope="col">{w}</th> */}
-                  <th className="textc" scope="col">ผลรวม</th>
-                  <th className="textc" scope="col">วันที่ส่ง</th>
-                  <th className="textc" scope="col">วันที่อัปเดต</th>
-                  <th className="textc" scope="col">สรุปผล</th>
-                  <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
-                  <th className="textc" scope="col">ลบข้อมูลตัวชี้วัด</th>
-                </tr>
-              </thead>
-              <tbody>
-                {props.map((item, index) => {
-                  var y = "";
-                  var u = <h4 className="bi bi-x-circle redt"></h4>;
-                  for (var i = 1; i <= props[0].fm_paras.split(', ').length; i++) {
-                    y += `<td>${item.de_paras.split(", ")[i - 1]}</td>`
-                  }
-                  if (item.de_result === "ผ่าน")
-                    u = <h4 className="bi bi-check-circle greent"></h4>
-                  var po = <></>
-                  if (item.de_qur === "1") {
-                    po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger" disabled>ลบข้อมูล</button></td>
-                  }
-                  else {
-                    po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger">ลบข้อมูล</button></td>
-                  }
+            <thead className="table-dark">
+              <tr>
+                <th className="textc" scope="col">ส่วนราชการ</th>
+                <th className="textc" scope='col'>ไตรมาส</th>
+                {f.map(p => {
                   return (
-                    <tr key={index}>
-                      <td>{item.us_agency}</td>
-                      <td>{item.de_qur}</td>
-                      {parse(y)}
-                      <td>{item.de_ans}</td>
-                      <td>{item.fd_date}</td>
-                      <td>{item.fd_update}</td>
-                      <td className="textc">{u}</td>
-                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
-                      {po}
-                    </tr>
+                    <th className="textc" key={p}>{p[0]}</th>
+                  );
+                })}
+                {/* <th className="textc" scope="col">{w}</th> */}
+                <th className="textc" scope="col">ผลรวม</th>
+                <th className="textc" scope="col">วันที่ส่ง</th>
+                <th className="textc" scope="col">วันที่อัปเดต</th>
+                <th className="textc" scope="col">สรุปผล</th>
+                <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
+                <th className="textc" scope="col">ลบข้อมูลตัวชี้วัด</th>
+              </tr>
+            </thead>
+            <tbody>
+              {props.map((item, index) => {
+                var y = "";
+                var u = <h4 className="bi bi-x-circle redt"></h4>;
+                for (var i = 1; i <= props[0].fm_paras.split(', ').length; i++) {
+                  y += `<td>${item.de_paras.split(", ")[i - 1]}</td>`
+                }
+                if (item.de_result === "ผ่าน")
+                  u = <h4 className="bi bi-check-circle greent"></h4>
+                var po = <></>
+                if (item.de_qur === "1") {
+                  po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger" disabled>ลบข้อมูล</button></td>
+                }
+                else {
+                  po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger">ลบข้อมูล</button></td>
+                }
+                return (
+                  <tr key={index}>
+                    <td>{item.us_agency}</td>
+                    <td>{item.de_qur}</td>
+                    {parse(y)}
+                    <td>{item.de_ans}</td>
+                    <td>{item.fd_date}</td>
+                    <td>{item.fd_update}</td>
+                    <td className="textc">{u}</td>
+                    <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                    {po}
+                  </tr>
 
+                );
+              })}
+
+              <tr>
+                <td colSpan="2">รวม</td>
+                {f.map((p, i) => {
+                  var cout
+                  var cout2
+                  var cout3
+                  var rvf
+                  for (var j = 0; j <= props.length - 1; j++) {
+                    //if (select.map(ss => ss.de_paras.split(", "))[0] != undefined) {
+                    if (props.length === 1) {
+                      rvf = (select.map((ss, oi) => ss.de_paras.split(", "))[0])[i]
+                    } else if (j === 0) {
+                      cout = select.map((ss, oi) => ss.de_paras.split(", "))[0]
+                      rvf = cout
+                    } else if (j === props.length - 1) {
+                      cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                      cout3 = (rvf.map((d, ii) => {
+                        if (isNaN(d)) {
+                          d = 0
+                        }
+                        if (isNaN(cout2[ii])) {
+                          cout2[ii] = 0
+                        }
+                        return (
+                          Number(d) + Number(cout2[ii])
+                        )
+                      }))
+
+                      rvf = cout3[i]
+
+                      if (n === "2") {
+                        if (i === 4)
+                          rvf = String(ansl)
+                      }
+                    }
+                    else {
+                      cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                      cout3 = (rvf.map((d, ii) => {
+                        if (isNaN(d)) {
+                          d = 0
+                        }
+                        if (isNaN(cout2[ii])) {
+                          cout2[ii] = 0
+                        }
+
+                        return (
+                          Number(d) + Number(cout2[ii])
+                        )
+                      }))
+
+                      rvf = cout3
+
+                    }
+
+                  }
+
+                  if (n === "16") {
+                    if (i === 1) {
+                      rvf = 2100
+                    }
+                  }
+
+                  if (n === "1_68") {
+                    if (i === 3) {
+                      rvf = 1000000
+                    }
+                  }
+
+                  return (
+                    <td key={p}>{rvf}</td>
                   );
                 })}
 
-                <tr>
-                  <td colSpan="2">รวม</td>
-                  {f.map((p, i) => {
-                    var cout
-                    var cout2
-                    var cout3
-                    var rvf
-                    for (var j = 0; j <= props.length - 1; j++) {
-                      //if (select.map(ss => ss.de_paras.split(", "))[0] != undefined) {
-                      if (props.length === 1) {
-                        rvf = (select.map((ss, oi) => ss.de_paras.split(", "))[0])[i]
-                      } else if (j === 0) {
-                        cout = select.map((ss, oi) => ss.de_paras.split(", "))[0]
-                        rvf = cout
-                      } else if (j === props.length - 1) {
-                        cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
-                        cout3 = (rvf.map((d, ii) => {
-                          if (isNaN(d)) {
-                            d = 0
-                          }
-                          if (isNaN(cout2[ii])) {
-                            cout2[ii] = 0
-                          }
-                          return (
-                            Number(d) + Number(cout2[ii])
-                          )
-                        }))
-
-                        rvf = cout3[i]
-
-                        if (n === "2") {
-                          if (i === 4)
-                            rvf = String(ansl)
-                        }
-                      }
-                      else {
-                        cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
-                        cout3 = (rvf.map((d, ii) => {
-                          if (isNaN(d)) {
-                            d = 0
-                          }
-                          if (isNaN(cout2[ii])) {
-                            cout2[ii] = 0
-                          }
-
-                          return (
-                            Number(d) + Number(cout2[ii])
-                          )
-                        }))
-
-                        rvf = cout3
-
-                      }
-
-                    }
-
-                    if (n === "16") {
-                      if (i === 1) {
-                        rvf = 2100
-                      }
-                    }
-
-                    if (n === "1_68") {
-                      if (i === 3) {
-                        rvf = 1000000
-                      }
-                    }
-
-                    return (
-                      <td key={p}>{rvf}</td>
-                    );
-                  })}
-
-                  <td >{qwe}</td>
-                  <td colSpan="5"></td>
-                </tr>
-              </tbody>
-            </table>
-            <br /><br />
-
-          </div>
-
-          <div className='container mt-3'>
-            <div className="textc"><h3>ข้อมูลโครงการ</h3></div>
-            <br /><br />
-            <table className='table table-bordered border-primary'>
-              <thead className="table-dark">
-                <tr>
-                  <th className="textc" scope="col" width="20">ลำดับ</th>
-                  <th className="textc" scope="col" width="200" >ส่วนราชการ</th>
-                  <th className="textc" scope='col' width="20">ไตรมาส</th>
-                  <th className="textc" scope='col'>ชื่อโครงการ</th>
-                  <th className="textc" scope="col" width="100">วันที่ส่ง</th>
-                  <th className="textc" scope="col" width="100">วันที่อัปเดต</th>
-                  <th className="textc" scope='col' width="170">รายละเอียด</th>
-                  <th className="textc" scope='col' width="120">แก้ไข</th>
-                  <th className="textc" scope='col' width="120">ลบข้อมูล</th>
-                  <th className="textc" scope='col' width="120">ไฟล์แนบ</th>
-                </tr>
-              </thead>
-              <tbody>
-                {eve.map((e, j) => {
-                  var rr = e.ev_id
-                  var qq = e.ev_qur
-                  var uu = e.us_id
-                  var ag
-
-                  if (uu === 10) {
-                    ag = "โรงพยาบาลกลาง";
-                  }
-                  else if (uu === 11) {
-                    ag = "โรงพยาบาลตากสิน"
-                  }
-                  else if (uu === 12) {
-                    ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
-                  }
-                  else if (uu === 13) {
-                    ag = "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ"
-                  }
-                  else if (uu === 14) {
-                    ag = "โรงพยาบาลเวชการุณย์รัศมิ์"
-                  }
-                  else if (uu === 15) {
-                    ag = "โรงพยาบาลนคราภิบาลกรุงเทพมหานคร"
-                  }
-                  else if (uu === 16) {
-                    ag = "โรงพยาบาลราชพิพัฒน์"
-                  }
-                  else if (uu === 17) {
-                    ag = "โรงพยาบาลสิรินธร"
-                  }
-                  else if (uu === 18) {
-                    ag = "โรงพยาบาลผู้สูงอายุบางขุนเทียน"
-                  }
-                  else if (uu === 19) {
-                    ag = "โรงพยาบาลรัตนประชารักษ์"
-                  }
-                  else if (uu === 20) {
-                    ag = "โรงพยาบาลบางนากรุงเทพมหานคร"
-                  }
-                  else if (uu === 21) {
-                    ag = "สก."
-                  }
-                  else if (uu === 22) {
-                    ag = "ศบฉ."
-                  }
-
-                  return (
-                    <tr key={j}>
-                      <td>{e.fms_id}</td>
-                      <td>{ag}</td>
-                      <td>{e.ev_qur}</td>
-                      <td>{e.ev_name}</td>
-                      <td>{e.ed_date.split("T")[0]}</td>
-                      <td>{e.ed_update.split("T")[0]}</td>
-                      <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
-                      <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
-                      <td className="textc"><button onClick={e => { detev(rr, uu, qq), handledelev(rr) }} type="button" className="btn btn-danger">ลบข้อมูล</button></td>
-                      <td className="textc"><button onClick={() => { window.open(import.meta.env.VITE_APP_API + `/pdfs/${e.files}`) }} type="button" className="btn btn-outline-danger">PDF</button></td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </div>
+                <td >{qwe}</td>
+                <td colSpan="5"></td>
+              </tr>
+            </tbody>
+          </table>
           <br /><br />
-          <div className="textc"><h3>สรุปผล</h3></div>
-          <br /><br />
-          {tsum}
-          <div className="textc">
-            <p className="fl">{qwe}</p>
-          </div>
 
         </div>
+
+        <div className='container mt-3'>
+          <div className="textc"><h3>ข้อมูลโครงการ</h3></div>
+          <br /><br />
+          <table className='table table-bordered border-primary'>
+            <thead className="table-dark">
+              <tr>
+                <th className="textc" scope="col" width="20">ลำดับ</th>
+                <th className="textc" scope="col" width="200" >ส่วนราชการ</th>
+                <th className="textc" scope='col' width="20">ไตรมาส</th>
+                <th className="textc" scope='col'>ชื่อโครงการ</th>
+                <th className="textc" scope="col" width="100">วันที่ส่ง</th>
+                <th className="textc" scope="col" width="100">วันที่อัปเดต</th>
+                <th className="textc" scope='col' width="170">รายละเอียด</th>
+                <th className="textc" scope='col' width="120">แก้ไข</th>
+                <th className="textc" scope='col' width="120">ลบข้อมูล</th>
+                <th className="textc" scope='col' width="120">ไฟล์แนบ</th>
+              </tr>
+            </thead>
+            <tbody>
+              {eve.map((e, j) => {
+                var rr = e.ev_id
+                var qq = e.ev_qur
+                var uu = e.us_id
+                var ag
+
+                if (uu === 10) {
+                  ag = "โรงพยาบาลกลาง";
+                }
+                else if (uu === 11) {
+                  ag = "โรงพยาบาลตากสิน"
+                }
+                else if (uu === 12) {
+                  ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
+                }
+                else if (uu === 13) {
+                  ag = "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ"
+                }
+                else if (uu === 14) {
+                  ag = "โรงพยาบาลเวชการุณย์รัศมิ์"
+                }
+                else if (uu === 15) {
+                  ag = "โรงพยาบาลนคราภิบาลกรุงเทพมหานคร"
+                }
+                else if (uu === 16) {
+                  ag = "โรงพยาบาลราชพิพัฒน์"
+                }
+                else if (uu === 17) {
+                  ag = "โรงพยาบาลสิรินธร"
+                }
+                else if (uu === 18) {
+                  ag = "โรงพยาบาลผู้สูงอายุบางขุนเทียน"
+                }
+                else if (uu === 19) {
+                  ag = "โรงพยาบาลรัตนประชารักษ์"
+                }
+                else if (uu === 20) {
+                  ag = "โรงพยาบาลบางนากรุงเทพมหานคร"
+                }
+                else if (uu === 21) {
+                  ag = "สก."
+                }
+                else if (uu === 22) {
+                  ag = "ศบฉ."
+                }
+
+                return (
+                  <tr key={j}>
+                    <td>{e.fms_id}</td>
+                    <td>{ag}</td>
+                    <td>{e.ev_qur}</td>
+                    <td>{e.ev_name}</td>
+                    <td>{e.ed_date.split("T")[0]}</td>
+                    <td>{e.ed_update.split("T")[0]}</td>
+                    <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
+                    <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                    <td className="textc"><button onClick={e => { detev(rr, uu, qq), handledelev(rr) }} type="button" className="btn btn-danger">ลบข้อมูล</button></td>
+                    <td className="textc"><button onClick={() => { window.open(import.meta.env.VITE_APP_API + `/pdfs/${e.files}`) }} type="button" className="btn btn-outline-danger">PDF</button></td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+        <br /><br />
+        <div className="textc"><h3>สรุปผล</h3></div>
+        <br /><br />
+        {tsum}
+        <div className="textc">
+          <p className="fl">{qwe}</p>
+        </div>
+
+      </div>
+      }
       else if (met === 3)
         a = <div>
 
@@ -2293,7 +2323,7 @@ const CalForm = () => {
         //   ois = <Solve name={((qq14[hosi] ** -1) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
         if (n === "24" || n === "26") {
           ois = <Solve name={((qq14[hosi] ** -1) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
-        } else if (n === "39" || n === "15" || n === "48" || n === "49_68") {
+        } else if (n === "39" || n === "15" || n === "48" || n === "49_68" || n === "39_68" || n === "48_68" || n === "43_68") {
           ois = <Solve name={((qqn1p14[hosi] / qqn2p14[hosi])).toFixed(2)} do={530} name2={q} class={"responcal"} />
         } else if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68") {
           ois = <Solve2 name={(qqn1p14[13] / qqn2p14[13]).toFixed(2)} do={530} name2={q} class={"responcal"} />
@@ -2426,7 +2456,7 @@ const CalForm = () => {
 
                     }
 
-                    if (n === "39" || n === "15" || n === "48" || n === "49_68") {
+                    if (n === "39" || n === "15" || n === "48" || n === "49_68" || n === "39_68" || n === "48_68" || n === "43_68") {
                       if (i === 0) {
                         rvf = rvf / props.length
                       }
@@ -2435,7 +2465,13 @@ const CalForm = () => {
                         rvf = rvf / props.length
                       }
 
-                      console.log(n, rvf, i)
+                      // console.log(n, rvf, i)
+                    }
+
+                    console.log(rvf, 1)
+
+                    if(i === 1 && rvf === Infinity) {
+                      rvf = 0
                     }
 
                     return (
@@ -3289,7 +3325,7 @@ const CalForm = () => {
 
                     }
 
-                    if (n === "39" || n === "15" || n === "48" || n === "49_68") {
+                    if (n === "39" || n === "15" || n === "48" || n === "49_68" || n === "39_68" || n === "48_68" || n === "43_68") {
                       if (i === 0) {
                         rvf = rvf / props.length
                       }
@@ -3297,9 +3333,15 @@ const CalForm = () => {
                       else if (i === 1) {
                         rvf = rvf / props.length
                       }
-                      console.log(i)
-                      console.log(rvf)
-                      console.log(n)
+                      // console.log(i)
+                      // console.log(rvf)
+                      // console.log(n)
+                    }
+
+                    console.log(rvf, 2)
+
+                    if(i === 1 && (rvf / props.length) === Infinity) {
+                      rvf = 0
                     }
 
                     return (
@@ -3955,7 +3997,7 @@ const CalForm = () => {
         }
       }
 
-      if (s.length === 2 && n === "39" || n === "15" || n === "48" || n === "49_68") {
+      if (s.length === 2 && n === "39" || n === "15" || n === "48" || n === "49_68" || n === "39_68" || n === "48_68" || n === "43_68") {
         q = pr1
       }
 
@@ -4071,6 +4113,17 @@ const CalForm = () => {
         h = "ไม่ผ่าน"
       }
 
+      if (n === "22_68") {
+        if (Number(uioo1) > 0) {
+          h = "ผ่าน"
+        } else {
+          h = "ไม่ผ่าน"
+        }
+        console.log(uioo1, uioo2)
+      }
+
+      
+
       // if (t[1] === 2 && numpa >= 2) {
       //   console.log(Number(exfill.map(a => (a.de_ans))[0]), uioo2, t[1], numpa, (Number(uioo2) + Number(exfill.map(a => (a.de_ans))[0])) >= Number(uioo1))
       //   if (Number(uioo1) >= Number(uioo2)) {
@@ -4091,7 +4144,7 @@ const CalForm = () => {
         h = "ผ่าน"
       else
         h = "ไม่ผ่าน"
-    } else if (s.length === 2 && n === "39" || n === "15" || n === "48" || n === "49_68") {
+    } else if (s.length === 2 && n === "39" || n === "15" || n === "48" || n === "49_68" || n === "39_68" || n === "48_68" || n === "43_68") {
       if (g >= t[0])
         h = "ผ่าน"
       else
@@ -4227,7 +4280,7 @@ const CalForm = () => {
       are = (((p2 / p1) ** (-1)) * 100).toFixed(2)
       sare = (((pp2 / pp1) ** (-1)) * 100).toFixed(2)
       oo = (((po2 / po1) ** (-1)) * 100).toFixed(2)
-    } else if (n === "39" || n === "15" || n === "48" || n === "49_68") {
+    } else if (n === "39" || n === "15" || n === "48" || n === "49_68"  || n === "39_68" || n === "48_68" || n === "43_68") {
       are = (((p2 / p1) ** (-1))).toFixed(2)
       sare = (((pp2 / pp1) ** (-1))).toFixed(2)
       oo = (((po2 / po1) ** (-1))).toFixed(2)
