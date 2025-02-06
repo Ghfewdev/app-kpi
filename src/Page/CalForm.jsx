@@ -15,6 +15,8 @@ const CalForm = () => {
 
   Authen();
 
+  const [pyear, setPyear] = useState("๖๖");
+  const [pyear2, setPyear2] = useState("๖๗");
   const [fd, setFd] = useState([]);
   const [exfill, setExfill] = useState([])
   const [events, setEvents] = useState([]);
@@ -47,6 +49,18 @@ const CalForm = () => {
   var deid = 0;
   var ag = 12;
   var parast = 0
+
+  const chy = (val) => {
+    setYee(val)
+    if (val === "2567") {
+      setPyear("๖๖")
+      setPyear2("๖๗")
+    }      
+    else if (val === "2568") {
+      setPyear("๖๗")
+      setPyear2("๖๘")
+    }
+  }
 
   const sts = (val) => {
     parast = 0
@@ -3486,33 +3500,33 @@ const CalForm = () => {
         var ep = dp.fms_id
         var fp = dp.ev_res
         var gp = dp.ev_status
-        var guu2 = <><input type="checkbox" />&nbsp; ม.ค.-มี.ค. ๖๗</>;
-        var guu3 = <><input type="checkbox" /> เม.ย.-มิ.ย. ๖๗</>
-        var guu4 = <><input type="checkbox" />&nbsp; ก.ค.-ก.ย. ๖๗</>
+        var guu2 = <><input type="checkbox" />&nbsp; ม.ค.-มี.ค. {pyear2}</>;
+        var guu3 = <><input type="checkbox" /> เม.ย.-มิ.ย. {pyear2}</>
+        var guu4 = <><input type="checkbox" />&nbsp; ก.ค.-ก.ย. {pyear2}</>
 
 
         if (sessionStorage.getItem("qur") == "2") {
-          guu2 = <><input type="checkbox" checked readOnly={true} />&nbsp; ม.ค.-มี.ค. ๖๗</>;
-          guu3 = <><input type="checkbox" checked={false} readOnly={true} /> เม.ย.-มิ.ย. ๖๗</>
-          guu4 = <><input type="checkbox" checked={false} readOnly={true} />&nbsp; ก.ค.-ก.ย. ๖๗</>
+          guu2 = <><input type="checkbox" checked readOnly={true} />&nbsp; ม.ค.-มี.ค. {pyear2}</>;
+          guu3 = <><input type="checkbox" checked={false} readOnly={true} /> เม.ย.-มิ.ย. {pyear2}</>
+          guu4 = <><input type="checkbox" checked={false} readOnly={true} />&nbsp; ก.ค.-ก.ย. {pyear2}</>
 
         }
         else if (sessionStorage.getItem("qur") == "3") {
-          guu2 = <><input type="checkbox" checked readOnly={true} />&nbsp; ม.ค.-มี.ค. ๖๗</>
-          guu3 = <><input type="checkbox" checked readOnly={true} /> เม.ย.-มิ.ย. ๖๗</>
-          guu4 = <><input type="checkbox" checked={false} readOnly={true} />&nbsp; ก.ค.-ก.ย. ๖๗</>
+          guu2 = <><input type="checkbox" checked readOnly={true} />&nbsp; ม.ค.-มี.ค. {pyear2}</>
+          guu3 = <><input type="checkbox" checked readOnly={true} /> เม.ย.-มิ.ย. {pyear2}</>
+          guu4 = <><input type="checkbox" checked={false} readOnly={true} />&nbsp; ก.ค.-ก.ย. {pyear2}</>
 
         }
         else if (sessionStorage.getItem("qur") == "4") {
-          guu2 = <><input type="checkbox" checked readOnly={true} />&nbsp; ม.ค.-มี.ค. ๖๗</>
-          guu3 = <><input type="checkbox" checked readOnly={true} /> เม.ย.-มิ.ย. ๖๗</>
-          guu4 = <><input type="checkbox" checked readOnly={true} />&nbsp; ก.ค.-ก.ย. ๖๗</>
+          guu2 = <><input type="checkbox" checked readOnly={true} />&nbsp; ม.ค.-มี.ค. {pyear2}</>
+          guu3 = <><input type="checkbox" checked readOnly={true} /> เม.ย.-มิ.ย. {pyear2}</>
+          guu4 = <><input type="checkbox" checked readOnly={true} />&nbsp; ก.ค.-ก.ย. {pyear2}</>
 
         }
         else {
-          guu2 = <><input type="checkbox" checked={false} readOnly={true} />&nbsp; ม.ค.-มี.ค. ๖๗</>
-          guu3 = <><input type="checkbox" checked={false} readOnly={true} /> เม.ย.-มิ.ย. ๖๗</>
-          guu4 = <><input type="checkbox" checked={false} readOnly={true} />&nbsp; ก.ค.-ก.ย. ๖๗</>
+          guu2 = <><input type="checkbox" checked={false} readOnly={true} />&nbsp; ม.ค.-มี.ค. {pyear2}</>
+          guu3 = <><input type="checkbox" checked={false} readOnly={true} /> เม.ย.-มิ.ย. {pyear2}</>
+          guu4 = <><input type="checkbox" checked={false} readOnly={true} />&nbsp; ก.ค.-ก.ย. {pyear2}</>
         }
         var gpp = <></>;
         if (gp == 1)
@@ -3745,7 +3759,7 @@ const CalForm = () => {
 
         pag = <div className='fonts col-print-12'>
           <div className='textr0'>
-            ไตรมาสที่ ๑ <input id="q1" type="checkbox" checked readOnly={true} />&nbsp; ต.ค.-ธ.ค. ๖๖
+            ไตรมาสที่ ๑ <input id="q1" type="checkbox" checked readOnly={true} />&nbsp; ต.ค.-ธ.ค. {pyear}
             <br />ไตรมาสที่ ๒ {guu2}
             <br /><b>แบบรายงานความก้าวหน้ารายโครงการ/กิจกรรม</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ไตรมาสที่ ๓ {guu3}
             <br /><b>ส่วนราชการ </b> &nbsp;&nbsp;&nbsp; {ap} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ไตรมาสที่ ๔ {guu4}
@@ -4415,7 +4429,7 @@ const CalForm = () => {
           <h1>การสรุปผลตัวชี้วัด</h1>
           <br />
           <h3>เลือกปีงบประมาณ</h3>
-          <select name="d4" value={yee} id="u1" onChange={e => { fetchUserDataFormV(e.target.value), setYee(e.target.value) }}>
+          <select name="d4" value={yee} id="u1" onChange={e => { fetchUserDataFormV(e.target.value), chy(e.target.value) }}>
             <option value="2567">2567</option>
             <option value="2568">2568</option>
           </select>
