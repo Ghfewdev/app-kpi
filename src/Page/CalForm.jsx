@@ -1392,7 +1392,7 @@ const CalForm = () => {
         qq12 = qqn1p12.map((q, i) => (q / (qqn2p12[i])).toFixed(2));
       }
 
-      else if (n === "31" || n === "32" || n === "33") {
+      else if (n === "31" || n === "32" || n === "33" || n === "30_68" || n === "32_68" || n === "33_68" || n === "34_68" || n === "35_68") {
         insum = qq14[12]
         qq1[13] = qq1[12]
         qq12[13] = qq12[12]
@@ -1403,7 +1403,7 @@ const CalForm = () => {
         qq14[13] = qq14[12]
       }
 
-      if (n === "31" || n === "32" || n === "33")
+      if (n === "31" || n === "32" || n === "33"  || n === "30_68" || n === "32_68" || n === "33_68" || n === "34_68" || n === "35_68")
         var sev = <div style={{ width: 530 }}>
           <Solve name={insum} do={530} name2={q} class={"responcal"} />
         </div>
@@ -1493,6 +1493,9 @@ const CalForm = () => {
         }
         else if (n === "29_68") {
           qqo = q + " คน"
+        }
+        else if (n === "35_68") {
+          qqo = "ระดับ " + q
         }
         else {
           qqo = "ร้อยละ " + q
@@ -1596,7 +1599,7 @@ const CalForm = () => {
 
                           var counting = Number(d) + Number(cout2[ii])
 
-                          if (n === "33" || n === "32" || n === "31") {
+                          if (n === "33" || n === "32" || n === "31"  || n === "30_68" || n === "32_68" || n === "33_68" || n === "34_68" || n === "35_68") {
                             counting = Number(cout2[ii])
                           }
 
@@ -2327,7 +2330,11 @@ const CalForm = () => {
         var qqo
         if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68") {
           qqo = "น้อยกว่าหรือเท่ากับ " + q + " นาที"
-        } else {
+        }
+        else if (n === "35_68") {
+          qqo = "ระดับ " + q
+        }
+        else {
           qqo = "ร้อยละ " + q
         }
 
@@ -2439,7 +2446,7 @@ const CalForm = () => {
 
                           var counting = Number(d) + Number(cout2[ii])
 
-                          if (n === "33" || n === "32" || n === "31") {
+                          if (n === "33" || n === "32" || n === "31" || n === "30_68" || n === "32_68" || n === "33_68" || n === "34_68" || n === "35_68") {
                             counting = Number(cout2[ii])
                           } 
                           // else if (n === "23_68") {
@@ -3309,7 +3316,7 @@ const CalForm = () => {
 
                           var counting = Number(d) + Number(cout2[ii])
 
-                          if (n === "33" || n === "32" || n === "31") {
+                          if (n === "33" || n === "32" || n === "31" || n === "30_68" || n === "32_68" || n === "33_68" || n === "34_68" || n === "35_68") {
                             counting = Number(cout2[ii])
                           }
 
