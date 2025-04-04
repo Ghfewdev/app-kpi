@@ -34,12 +34,16 @@ const CalForm = () => {
   const [qt4, setQt4] = useState([]);
   const [formres, setFormres] = useState([])
   const [fide, setFide] = useState(0)
+  const [sumc, setSumc] = useState(0)
   const [sumq1, setSumq1] = useState(0)
   const [sumq2, setSumq2] = useState(0)
   const [sumq3, setSumq3] = useState(0)
   const [sumq4, setSumq4] = useState(0)
   const [forms, setForms] = useState([]);
   const [yee, setYee] = useState("2567");
+  const [resv, setResv] = useState([]);
+  const [i1, setI1] = useState(0);
+  const [filter, setFilter] = useState(false);
 
   var fetc = Fetch();
   var fusers = Users();
@@ -49,13 +53,14 @@ const CalForm = () => {
   var deid = 0;
   var ag = 12;
   var parast = 0
+  var gggg
 
   const chy = (val) => {
     setYee(val)
     if (val === "2567") {
       setPyear("๖๖")
       setPyear2("๖๗")
-    }      
+    }
     else if (val === "2568") {
       setPyear("๖๗")
       setPyear2("๖๘")
@@ -141,6 +146,8 @@ const CalForm = () => {
         .then(data => {
           setEve(data);
         });
+
+
 
     } else {
       fetch(import.meta.env.VITE_APP_API + `/all/hp/${localStorage.getItem("id")}/${val}`)
@@ -232,6 +239,60 @@ const CalForm = () => {
 
   }
 
+  const c1 = (val) => {
+    if(val === "23") {
+      setFilter(false)
+    } else {
+      setFilter(true)
+      setSumc(gggg)
+    }
+    setI1(Number(val))
+    console.log("oooo" + val)
+    if (val === "23") {
+      fetch(import.meta.env.VITE_APP_API + `/all/${n}`)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setSelect(data)
+        })
+
+      fetch(import.meta.env.VITE_APP_API + `/evde/f/${n}/a`)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setEve(data);
+        });
+
+    }
+    else {
+      fetch(import.meta.env.VITE_APP_API + `/all/hp/${val}/${n}`)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setSelect(data)
+        })
+
+      fetch(import.meta.env.VITE_APP_API + `/evde/${n}/${val}`)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          setEve(data);
+        });
+
+      fetch(import.meta.env.VITE_APP_API + `/detail/user/${val}/${n}`)
+        .then(response2 => {
+          return response2.json();
+        })
+        .then(data2 => {
+          setExfill(data2)
+        })
+    }
+  }
+
   const agen = fusers.map(u => u.us_agency)
   var an = [];
   for (var i = 0; i <= agen.length - 2; i++) {
@@ -239,6 +300,59 @@ const CalForm = () => {
     if (i === agen.length - 2) {
       an.push("ภาพรวมทั้งสำนักการแพทย์")
     }
+  }
+
+  const chosh = (rsv) => {
+
+    var mt = []
+    for (var i = 0; i <= rsv.length - 1; i++) {
+
+      if (rsv[i] === "10") {
+        mt.push("โรงพยาบาลกลาง")
+      }
+      else if (rsv[i] === "11") {
+        mt.push("โรงพยาบาลตากสิน")
+      }
+      else if (rsv[i] === "12") {
+        mt.push("โรงพยาบาลเจริญกรุงประชารักษ์")
+      }
+      else if (rsv[i] === "13") {
+        mt.push("โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ")
+      }
+      else if (rsv[i] === "14") {
+        mt.push("โรงพยาบาลเวชการุณย์รัศมิ์")
+      }
+      else if (rsv[i] === "15") {
+        mt.push("โรงพยาบาลนคราภิบาลกรุงเทพมหานคร")
+      }
+      else if (rsv[i] === "16") {
+        mt.push("โรงพยาบาลราชพิพัฒน์")
+      }
+      else if (rsv[i] === "17") {
+        mt.push("โรงพยาบาลสิรินธร")
+      }
+      else if (rsv[i] === "18") {
+        mt.push("โรงพยาบาลผู้สูงอายุบางขุนเทียน")
+      }
+      else if (rsv[i] === "19") {
+        mt.push("โรงพยาบาลรัตนประชารักษ์")
+      }
+      else if (rsv[i] === "20") {
+        mt.push("โรงพยาบาลบางนากรุงเทพมหานคร")
+      }
+      else if (rsv[i] === "21") {
+        mt.push("สก.")
+      }
+      else if (rsv[i] === "22") {
+        mt.push("ศบฉ.")
+      }
+    }
+
+    const newList = rsv.filter(num => num !== "23");
+    const jsonArray = newList.map((key, i) => ({ key, value: mt[i] }));
+
+    return (jsonArray)
+
   }
 
   var v = "นิยามตัวชี้วัด"
@@ -254,6 +368,11 @@ const CalForm = () => {
       try { io = vcon.split(", ") }
       catch { }
       //console.log(vcon.split(", ")[Number(sessionStorage.getItem("qur")) - 1])
+      var rsv = ((select.map(f => f.fm_res)[0])).split(", ")
+      var seleeh = chosh(rsv)
+      // console.log(rsv)
+      // console.log(seleeh)
+      // setResv(select.map(f => f.fm_res)[0])
       var t = select.map(f => [f.fm_solve, f.fm_method])[0]
       v = select.map(vv => vv.fm_define)[0]
       q = select[0].fm_solve
@@ -285,13 +404,13 @@ const CalForm = () => {
 
         if (String(m)[m.length - 1] === "*") {
           nn = <p className='inline textr p'><input className='input30' type="number" id={m} required /></p>
-          
-        } 
+
+        }
         else {
           nn = <p className='inline textr p'><input className='input30' type="text" id={m} required /></p>
-          
+
         }
-          
+
         if (io.length === 13 && i === s.length - 1) {
           nn = <p className='inline textr p'><input className='input30' type="text" id={m} defaultValue={vcon.split(", ")[Number(sessionStorage.getItem("qur")) - 1]} readOnly /></p>
         }
@@ -341,8 +460,13 @@ const CalForm = () => {
       z = select.map(zz => zz.fm_name)[0]
       p = e.toFixed(2)
       r = d
-    } else
+    } else {
       console.log("err")
+    }
+
+
+
+
   } catch {
     //console.log("err2")
   }
@@ -610,12 +734,12 @@ const CalForm = () => {
       // if (n === "24" || n === "26" || n === "8") {
       if (n === "24" || n === "26") {
         qq14[13] = qq14[13] ** (-1)
-      } else if (n === "39" || n === "15" || n === "48" || n === "49_68"  || n === "39_68" || n === "48_68" || n === "43_68") {
+      } else if (n === "39" || n === "15" || n === "48" || n === "49_68" || n === "39_68" || n === "48_68" || n === "43_68") {
         qq14[13] = ((qqn1p14[13] / qqn2p14[13])).toFixed(2)
       } else if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68") {
         qq14 = qqn1p14.map((q, i) => ((q / qqn2p14[i])).toFixed(2));
       } else if (n === "23_68") {
-        qq14 = qqn1p14.map((q, i) => ((qqn1p14[i] - qqn2p14[i])/qqn2p14[i]).toFixed(2));
+        qq14 = qqn1p14.map((q, i) => ((qqn1p14[i] - qqn2p14[i]) / qqn2p14[i]).toFixed(2));
         console.log(qq14)
       }
     }, 300)
@@ -689,6 +813,8 @@ const CalForm = () => {
     sessionStorage.setItem("edid", dep)
 
   }
+
+
 
   const setp = (dep) => {
 
@@ -960,7 +1086,7 @@ const CalForm = () => {
     var h = pa2(s)[3]
     var sum = pa2(s)[2]
 
-    console.log(log)
+    // console.log(log)
 
     if (isNaN(h)) {
       h = 0
@@ -1320,6 +1446,8 @@ const CalForm = () => {
 
   }
 
+  var insums = 0
+
   function show(props) {
     var a;
     var qwe = 0
@@ -1358,12 +1486,41 @@ const CalForm = () => {
         var sev = <div style={{ width: 530 }}>
           <Solve name={((qq14[13] ** (-1)) * 10000).toFixed(2)} do={530} name2={q} class={"responcal"} />
         </div>
-      else if (n === "39" || n === "15" || n === "48" || n === "49_68"  || n === "39_68" || n === "48_68" || n === "43_68")
+      else if (n === "39" || n === "15" || n === "48" || n === "49_68" || n === "39_68" || n === "48_68" || n === "43_68")
         var sev = <div style={{ width: 530 }}>
           <Solve name={((qqn1p14[13] / qqn2p14[13])).toFixed(2)} do={530} name2={q} class={"responcal"} />
         </div>
 
       var insum = qq14[13]
+
+      if (i1 === 23 || i1 === 0) {
+        insums = insum
+      } else if (i1 === 10) {
+        insums = qq14[0]
+      } else if (i1 === 11) {
+        insums = qq14[1]
+      } else if (i1 === 12) {
+        insums = qq14[2]
+      } else if (i1 === 13) {
+        insums = qq14[3]
+      } else if (i1 === 14) {
+        insums = qq14[4]
+      } else if (i1 === 15) {
+        insums = qq14[5]
+      } else if (i1 === 16) {
+        insums = qq14[6]
+      } else if (i1 === 17) {
+        insums = qq14[7]
+      } else if (i1 === 18) {
+        insums = qq14[8]
+      } else if (i1 === 19) {
+        insums = qq14[9]
+      } else if (i1 === 21) {
+        insums = qq14[10]
+      } else if (i1 === 22) {
+        insums = qq14[11]
+      }
+
 
       if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68") {
         insum = (qqn1p14[13] / qqn2p14[13]).toFixed(2)
@@ -1403,7 +1560,7 @@ const CalForm = () => {
         qq14[13] = qq14[12]
       }
 
-      if (n === "31" || n === "32" || n === "33"  || n === "30_68" || n === "32_68" || n === "33_68" || n === "34_68" || n === "35_68")
+      if (n === "31" || n === "32" || n === "33" || n === "30_68" || n === "32_68" || n === "33_68" || n === "34_68" || n === "35_68")
         var sev = <div style={{ width: 530 }}>
           <Solve name={insum} do={530} name2={q} class={"responcal"} />
         </div>
@@ -1516,6 +1673,16 @@ const CalForm = () => {
             <br /><br /> */}
             <div>หมายเหตุ:&nbsp;&nbsp; {f.map(ff => <a key={ff}><br />{ff}</a>)}</div>
             <br />
+            <div>เรียกดูรายหน่วยงาน:&nbsp;&nbsp; <select name="shos" id="shos" onChange={e => c1(e.target.value)}>
+              <option value={"23"}>ทุกหน่วยงาน</option>
+              {seleeh.map(a => {
+                return (
+                  <option value={a.key}>{a.value}</option>
+                )
+              })}
+            </select>
+            </div>
+            <br />
             <table className='table table-bordered border-primary'>
 
               <thead className="table-dark">
@@ -1588,6 +1755,7 @@ const CalForm = () => {
                         cout = select.map((ss, oi) => ss.de_paras.split(", "))[0]
                         rvf = cout
                       } else if (j === props.length - 1) {
+
                         cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
                         cout3 = (rvf.map((d, ii) => {
                           if (isNaN(d)) {
@@ -1599,7 +1767,7 @@ const CalForm = () => {
 
                           var counting = Number(d) + Number(cout2[ii])
 
-                          if (n === "33" || n === "32" || n === "31"  || n === "30_68" || n === "32_68" || n === "33_68" || n === "34_68" || n === "35_68") {
+                          if (n === "33" || n === "32" || n === "31" || n === "30_68" || n === "32_68" || n === "33_68" || n === "34_68" || n === "35_68") {
                             counting = Number(cout2[ii])
                           }
 
@@ -1608,6 +1776,7 @@ const CalForm = () => {
                           )
                         }))
                         rvf = cout3[i]
+
                       }
                       else {
                         cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
@@ -1623,6 +1792,7 @@ const CalForm = () => {
                           )
                         }))
                         rvf = cout3
+
                       }
 
                     }
@@ -1638,9 +1808,9 @@ const CalForm = () => {
 
                     }
 
-                    console.log(rvf)
+                    // console.log(rvf)
 
-                    if(i === 1 && rvf === Infinity) {
+                    if (i === 1 && rvf === Infinity) {
                       rvf = 0
                     }
 
@@ -1649,7 +1819,7 @@ const CalForm = () => {
                     );
                   })}
 
-                  <td >{insum}</td>
+                  <td >{insums}</td>
                   <td colSpan="5"></td>
                 </tr>
 
@@ -1925,7 +2095,7 @@ const CalForm = () => {
 
         </div>
       } else if (met === 2) {
-        
+
         var qqo
         if (n === "28_68") {
           qqo = ansl + " ชมรม"
@@ -1945,245 +2115,273 @@ const CalForm = () => {
 
         a = <div>
 
-        <div className='container mt-3'>
-          <h3>รายละเอียดการส่งตัวชี้วัด </h3>
-          <br />
-          <label>ชื่อตัวชี้วัด: </label><br /> <input className="input100" disabled value={z} />
-          <br /><br />
-          <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
-          <br /><br />
-          <label>ค่าเป้าหมาย: </label><br /> <input className="input20" disabled value={qqo} />
-          <br /><br />
-          {/* <label>วิธีการคำนวณ: </label><br /> <input className="input10" disabled value={w} />
+          <div className='container mt-3'>
+            <h3>รายละเอียดการส่งตัวชี้วัด </h3>
+            <br />
+            <label>ชื่อตัวชี้วัด: </label><br /> <input className="input100" disabled value={z} />
+            <br /><br />
+            <label>นิยามตัวชี้วัด: </label><br /><textarea className="tacf" disabled value={v} />
+            <br /><br />
+            <label>ค่าเป้าหมาย: </label><br /> <input className="input20" disabled value={qqo} />
+            <br /><br />
+            {/* <label>วิธีการคำนวณ: </label><br /> <input className="input10" disabled value={w} />
           <br /><br /> */}
-          <div>หมายเหตุ:&nbsp;&nbsp; {f.map(ff => <a key={ff}><br />{ff}</a>)}</div>
-          <br />
-          <table className='table table-bordered border-primary'>
 
-            <thead className="table-dark">
-              <tr>
-                <th className="textc" scope="col">ส่วนราชการ</th>
-                <th className="textc" scope='col'>ไตรมาส</th>
-                {f.map(p => {
-                  return (
-                    <th className="textc" key={p}>{p[0]}</th>
-                  );
-                })}
-                {/* <th className="textc" scope="col">{w}</th> */}
-                <th className="textc" scope="col">ผลรวม</th>
-                <th className="textc" scope="col">วันที่ส่ง</th>
-                <th className="textc" scope="col">วันที่อัปเดต</th>
-                <th className="textc" scope="col">สรุปผล</th>
-                <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
-                <th className="textc" scope="col">ลบข้อมูลตัวชี้วัด</th>
-              </tr>
-            </thead>
-            <tbody>
-              {props.map((item, index) => {
-                var y = "";
-                var u = <h4 className="bi bi-x-circle redt"></h4>;
-                for (var i = 1; i <= props[0].fm_paras.split(', ').length; i++) {
-                  y += `<td>${item.de_paras.split(", ")[i - 1]}</td>`
-                }
-                if (item.de_result === "ผ่าน")
-                  u = <h4 className="bi bi-check-circle greent"></h4>
-                var po = <></>
-                if (item.de_qur === "1") {
-                  po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger" disabled>ลบข้อมูล</button></td>
-                }
-                else {
-                  po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger">ลบข้อมูล</button></td>
-                }
+            <div>เรียกดูรายหน่วยงาน:&nbsp;&nbsp; <select name="shos" id="shos" onChange={e => c1(e.target.value)}>
+              <option value={"23"}>ทุกหน่วยงาน</option>
+              {seleeh.map(a => {
                 return (
-                  <tr key={index}>
-                    <td>{item.us_agency}</td>
-                    <td>{item.de_qur}</td>
-                    {parse(y)}
-                    <td>{item.de_ans}</td>
-                    <td>{item.fd_date}</td>
-                    <td>{item.fd_update}</td>
-                    <td className="textc">{u}</td>
-                    <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
-                    {po}
-                  </tr>
-
-                );
-              })}
-
-              <tr>
-                <td colSpan="2">รวม</td>
-                {f.map((p, i) => {
-                  var cout
-                  var cout2
-                  var cout3
-                  var rvf
-                  for (var j = 0; j <= props.length - 1; j++) {
-                    //if (select.map(ss => ss.de_paras.split(", "))[0] != undefined) {
-                    if (props.length === 1) {
-                      rvf = (select.map((ss, oi) => ss.de_paras.split(", "))[0])[i]
-                    } else if (j === 0) {
-                      cout = select.map((ss, oi) => ss.de_paras.split(", "))[0]
-                      rvf = cout
-                    } else if (j === props.length - 1) {
-                      cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
-                      cout3 = (rvf.map((d, ii) => {
-                        if (isNaN(d)) {
-                          d = 0
-                        }
-                        if (isNaN(cout2[ii])) {
-                          cout2[ii] = 0
-                        }
-                        return (
-                          Number(d) + Number(cout2[ii])
-                        )
-                      }))
-
-                      rvf = cout3[i]
-
-                      if (n === "2") {
-                        if (i === 4)
-                          rvf = String(ansl)
-                      }
-                    }
-                    else {
-                      cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
-                      cout3 = (rvf.map((d, ii) => {
-                        if (isNaN(d)) {
-                          d = 0
-                        }
-                        if (isNaN(cout2[ii])) {
-                          cout2[ii] = 0
-                        }
-
-                        return (
-                          Number(d) + Number(cout2[ii])
-                        )
-                      }))
-
-                      rvf = cout3
-
-                    }
-
-                  }
-
-                  if (n === "16") {
-                    if (i === 1) {
-                      rvf = 2100
-                    }
-                  }
-
-                  if (n === "1_68") {
-                    if (i === 3) {
-                      rvf = 1000000
-                    }
-                  }
-
-                  return (
-                    <td key={p}>{rvf}</td>
-                  );
-                })}
-
-                <td >{qwe}</td>
-                <td colSpan="5"></td>
-              </tr>
-            </tbody>
-          </table>
-          <br /><br />
-
-        </div>
-
-        <div className='container mt-3'>
-          <div className="textc"><h3>ข้อมูลโครงการ</h3></div>
-          <br /><br />
-          <table className='table table-bordered border-primary'>
-            <thead className="table-dark">
-              <tr>
-                <th className="textc" scope="col" width="20">ลำดับ</th>
-                <th className="textc" scope="col" width="200" >ส่วนราชการ</th>
-                <th className="textc" scope='col' width="20">ไตรมาส</th>
-                <th className="textc" scope='col'>ชื่อโครงการ</th>
-                <th className="textc" scope="col" width="100">วันที่ส่ง</th>
-                <th className="textc" scope="col" width="100">วันที่อัปเดต</th>
-                <th className="textc" scope='col' width="170">รายละเอียด</th>
-                <th className="textc" scope='col' width="120">แก้ไข</th>
-                <th className="textc" scope='col' width="120">ลบข้อมูล</th>
-                <th className="textc" scope='col' width="120">ไฟล์แนบ</th>
-              </tr>
-            </thead>
-            <tbody>
-              {eve.map((e, j) => {
-                var rr = e.ev_id
-                var qq = e.ev_qur
-                var uu = e.us_id
-                var ag
-
-                if (uu === 10) {
-                  ag = "โรงพยาบาลกลาง";
-                }
-                else if (uu === 11) {
-                  ag = "โรงพยาบาลตากสิน"
-                }
-                else if (uu === 12) {
-                  ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
-                }
-                else if (uu === 13) {
-                  ag = "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ"
-                }
-                else if (uu === 14) {
-                  ag = "โรงพยาบาลเวชการุณย์รัศมิ์"
-                }
-                else if (uu === 15) {
-                  ag = "โรงพยาบาลนคราภิบาลกรุงเทพมหานคร"
-                }
-                else if (uu === 16) {
-                  ag = "โรงพยาบาลราชพิพัฒน์"
-                }
-                else if (uu === 17) {
-                  ag = "โรงพยาบาลสิรินธร"
-                }
-                else if (uu === 18) {
-                  ag = "โรงพยาบาลผู้สูงอายุบางขุนเทียน"
-                }
-                else if (uu === 19) {
-                  ag = "โรงพยาบาลรัตนประชารักษ์"
-                }
-                else if (uu === 20) {
-                  ag = "โรงพยาบาลบางนากรุงเทพมหานคร"
-                }
-                else if (uu === 21) {
-                  ag = "สก."
-                }
-                else if (uu === 22) {
-                  ag = "ศบฉ."
-                }
-
-                return (
-                  <tr key={j}>
-                    <td>{e.fms_id}</td>
-                    <td>{ag}</td>
-                    <td>{e.ev_qur}</td>
-                    <td>{e.ev_name}</td>
-                    <td>{e.ed_date.split("T")[0]}</td>
-                    <td>{e.ed_update.split("T")[0]}</td>
-                    <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
-                    <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
-                    <td className="textc"><button onClick={e => { detev(rr, uu, qq), handledelev(rr) }} type="button" className="btn btn-danger">ลบข้อมูล</button></td>
-                    <td className="textc"><button onClick={() => { window.open(import.meta.env.VITE_APP_API + `/pdfs/${e.files}`) }} type="button" className="btn btn-outline-danger">PDF</button></td>
-                  </tr>
+                  <option value={a.key}>{a.value}</option>
                 )
               })}
-            </tbody>
-          </table>
-        </div>
-        <br /><br />
-        <div className="textc"><h3>สรุปผล</h3></div>
-        <br /><br />
-        {tsum}
-        <div className="textc">
-          <p className="fl">{qwe}</p>
-        </div>
+            </select>
+            </div>
+            <br />
 
-      </div>
+            <div>หมายเหตุ:&nbsp;&nbsp; {f.map(ff => <a key={ff}><br />{ff}</a>)}</div>
+            <br />
+            <table className='table table-bordered border-primary'>
+
+              <thead className="table-dark">
+                <tr>
+                  <th className="textc" scope="col">ส่วนราชการ</th>
+                  <th className="textc" scope='col'>ไตรมาส</th>
+                  {f.map(p => {
+                    return (
+                      <th className="textc" key={p}>{p[0]}</th>
+                    );
+                  })}
+                  {/* <th className="textc" scope="col">{w}</th> */}
+                  <th className="textc" scope="col">ผลรวม</th>
+                  <th className="textc" scope="col">วันที่ส่ง</th>
+                  <th className="textc" scope="col">วันที่อัปเดต</th>
+                  <th className="textc" scope="col">สรุปผล</th>
+                  <th className="textc" scope="col">แก้ไขตัวชี้วัด</th>
+                  <th className="textc" scope="col">ลบข้อมูลตัวชี้วัด</th>
+                </tr>
+              </thead>
+              <tbody>
+                {props.map((item, index) => {
+                  var y = "";
+                  var u = <h4 className="bi bi-x-circle redt"></h4>;
+                  for (var i = 1; i <= props[0].fm_paras.split(', ').length; i++) {
+                    y += `<td>${item.de_paras.split(", ")[i - 1]}</td>`
+                  }
+                  if (item.de_result === "ผ่าน")
+                    u = <h4 className="bi bi-check-circle greent"></h4>
+                  var po = <></>
+                  if (item.de_qur === "1") {
+                    po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger" disabled>ลบข้อมูล</button></td>
+                  }
+                  else {
+                    po = <td className="textc"><button onClick={e => { setid(item.de_id, item.us_agency, item.de_paras, item.de_qur), handledelpara(item.de_id) }} id="bdel" type="button" className="btn btn-danger">ลบข้อมูล</button></td>
+                  }
+                  return (
+                    <tr key={index}>
+                      <td>{item.us_agency}</td>
+                      <td>{item.de_qur}</td>
+                      {parse(y)}
+                      <td>{item.de_ans}</td>
+                      <td>{item.fd_date}</td>
+                      <td>{item.fd_update}</td>
+                      <td className="textc">{u}</td>
+                      <td className="textc"><button onClick={e => setid(item.de_id, item.us_agency, item.de_paras, item.de_qur)} type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      {po}
+                    </tr>
+
+                  );
+                })}
+
+                <tr>
+                  <td colSpan="2">รวม</td>
+                  {f.map((p, i) => {
+                    var all
+                    var cout
+                    var cout2
+                    var cout3
+                    var rvf
+                    for (var j = 0; j <= props.length-1; j++) {
+                      //if (select.map(ss => ss.de_paras.split(", "))[0] != undefined) {
+                      if (props.length === 1) {
+                        rvf = (select.map((ss, oi) => ss.de_paras.split(", "))[0])[i]
+                      } else if (j === 0) {
+                        cout = select.map((ss, oi) => ss.de_paras.split(", "))[0]
+                        rvf = cout
+                      } else if (j === props.length - 1) {
+                        cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                        cout3 = (rvf.map((d, ii) => {
+                          if (isNaN(d)) {
+                            d = 0
+                          }
+                          if (isNaN(cout2[ii])) {
+                            cout2[ii] = 0
+                          }
+                          if (n === "2" && i === 4) {
+                            all = cout2[4]
+                          }
+                          return (
+                            Number(d) + Number(cout2[ii])
+                          )
+                        }))
+                        // console.log(cout3)
+                        rvf = cout3[i]
+
+                        if (n === "2") {
+                          if (i === 4) {
+                            if (filter === true) {
+                              rvf = String(all)
+                            }
+                            else {
+                              rvf = String(310000)
+                            }
+                          } 
+                        }
+
+                        
+
+                      }
+                      // else if (j === props.length) {
+                      //   cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[0]
+                      //   console.log(cout2)
+                      // }
+                      else {
+                        cout2 = select.map((ss, oi) => ss.de_paras.split(", "))[j]
+                        cout3 = (rvf.map((d, ii) => {
+                          if (isNaN(d)) {
+                            d = 0
+                          }
+                          if (isNaN(cout2[ii])) {
+                            cout2[ii] = 0
+                          }
+
+                          return (
+                            Number(d) + Number(cout2[ii])
+                          )
+                        }))
+
+                        rvf = cout3
+
+                      }
+
+                    }
+
+                    if (n === "16") {
+                      if (i === 1) {
+                        rvf = 2100
+                      }
+                    }
+
+                    if (n === "1_68") {
+                      if (i === 3) {
+                        rvf = 1000000
+                      }
+                    }
+
+                    return (
+                      <td key={p}>{rvf}</td>
+                    );
+                  })}
+                  <td></td>
+                  <td colSpan="5"></td>
+                </tr>
+              </tbody>
+            </table>
+            <br /><br />
+
+          </div>
+
+          <div className='container mt-3'>
+            <div className="textc"><h3>ข้อมูลโครงการ</h3></div>
+            <br /><br />
+            <table className='table table-bordered border-primary'>
+              <thead className="table-dark">
+                <tr>
+                  <th className="textc" scope="col" width="20">ลำดับ</th>
+                  <th className="textc" scope="col" width="200" >ส่วนราชการ</th>
+                  <th className="textc" scope='col' width="20">ไตรมาส</th>
+                  <th className="textc" scope='col'>ชื่อโครงการ</th>
+                  <th className="textc" scope="col" width="100">วันที่ส่ง</th>
+                  <th className="textc" scope="col" width="100">วันที่อัปเดต</th>
+                  <th className="textc" scope='col' width="170">รายละเอียด</th>
+                  <th className="textc" scope='col' width="120">แก้ไข</th>
+                  <th className="textc" scope='col' width="120">ลบข้อมูล</th>
+                  <th className="textc" scope='col' width="120">ไฟล์แนบ</th>
+                </tr>
+              </thead>
+              <tbody>
+                {eve.map((e, j) => {
+                  var rr = e.ev_id
+                  var qq = e.ev_qur
+                  var uu = e.us_id
+                  var ag
+
+                  if (uu === 10) {
+                    ag = "โรงพยาบาลกลาง";
+                  }
+                  else if (uu === 11) {
+                    ag = "โรงพยาบาลตากสิน"
+                  }
+                  else if (uu === 12) {
+                    ag = "โรงพยาบาลเจริญกรุงประชารักษ์"
+                  }
+                  else if (uu === 13) {
+                    ag = "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ"
+                  }
+                  else if (uu === 14) {
+                    ag = "โรงพยาบาลเวชการุณย์รัศมิ์"
+                  }
+                  else if (uu === 15) {
+                    ag = "โรงพยาบาลนคราภิบาลกรุงเทพมหานคร"
+                  }
+                  else if (uu === 16) {
+                    ag = "โรงพยาบาลราชพิพัฒน์"
+                  }
+                  else if (uu === 17) {
+                    ag = "โรงพยาบาลสิรินธร"
+                  }
+                  else if (uu === 18) {
+                    ag = "โรงพยาบาลผู้สูงอายุบางขุนเทียน"
+                  }
+                  else if (uu === 19) {
+                    ag = "โรงพยาบาลรัตนประชารักษ์"
+                  }
+                  else if (uu === 20) {
+                    ag = "โรงพยาบาลบางนากรุงเทพมหานคร"
+                  }
+                  else if (uu === 21) {
+                    ag = "สก."
+                  }
+                  else if (uu === 22) {
+                    ag = "ศบฉ."
+                  }
+
+                  return (
+                    <tr key={j}>
+                      <td>{e.fms_id}</td>
+                      <td>{ag}</td>
+                      <td>{e.ev_qur}</td>
+                      <td>{e.ev_name}</td>
+                      <td>{e.ed_date.split("T")[0]}</td>
+                      <td>{e.ed_update.split("T")[0]}</td>
+                      <td className="textc"><button onClick={e => detev(rr, uu, qq)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print" >รายละเอียด</button></td>
+                      <td className="textc"><button onClick={e => detev(rr, uu, qq)} type="button" className="btn btn-info" data-bs-toggle="modal" data-bs-target="#eventm" data-bs-whatever="@getbootstrap">แก้ไข</button></td>
+                      <td className="textc"><button onClick={e => { detev(rr, uu, qq), handledelev(rr) }} type="button" className="btn btn-danger">ลบข้อมูล</button></td>
+                      <td className="textc"><button onClick={() => { window.open(import.meta.env.VITE_APP_API + `/pdfs/${e.files}`) }} type="button" className="btn btn-outline-danger">PDF</button></td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+          <br /><br />
+          <div className="textc"><h3>สรุปผล</h3></div>
+          <br /><br />
+          {tsum}
+          <div className="textc">
+            <p className="fl">{qwe}</p>
+          </div>
+
+        </div>
       }
       else if (met === 3)
         a = <div>
@@ -2325,7 +2523,7 @@ const CalForm = () => {
           <br /><br /><br /><br /><br /><br />
         </div>
       else if (localStorage.getItem("token").split("$")[1] === "0" && fc === 0) {
-        console.log(qq14[hosi])
+        // console.log(qq14[hosi])
 
         var qqo
         if (n === "20" || n === "20.2" || n === "3_68" || n === "12_68") {
@@ -2369,6 +2567,18 @@ const CalForm = () => {
             <br /><br /> */}
             <div>หมายเหตุ:&nbsp;&nbsp; {f.map(ff => <a key={ff}><br />{ff}</a>)}</div>
             <br />
+
+            <div>เรียกดูรายหน่วยงาน:&nbsp;&nbsp; <select name="shos" id="shos" onChange={e => c1(e.target.value)}>
+              <option value={"23"}>ทุกหน่วยงาน</option>
+              {seleeh.map(a => {
+                return (
+                  <option value={a.key}>{a.value}</option>
+                )
+              })}
+            </select>
+            </div>
+            <br />
+
             <table className='table table-bordered border-primary'>
 
               <thead className="table-dark">
@@ -2448,7 +2658,7 @@ const CalForm = () => {
 
                           if (n === "33" || n === "32" || n === "31" || n === "30_68" || n === "32_68" || n === "33_68" || n === "34_68" || n === "35_68") {
                             counting = Number(cout2[ii])
-                          } 
+                          }
                           // else if (n === "23_68") {
                           //   counting = Number(cout2[ii])
                           // }
@@ -2489,9 +2699,9 @@ const CalForm = () => {
                       // console.log(n, rvf, i)
                     }
 
-                    console.log(rvf, 1)
+                    // console.log(rvf, 1)
 
-                    if(i === 1 && rvf === Infinity) {
+                    if (i === 1 && rvf === Infinity) {
                       rvf = 0
                     }
 
@@ -2500,7 +2710,7 @@ const CalForm = () => {
                     );
                   })}
 
-                  <td >{insum}</td>
+                  <td >{insums}</td>
                   <td colSpan="5"></td>
                 </tr>
               </tbody>
@@ -2630,6 +2840,18 @@ const CalForm = () => {
             <br /><br /> */}
             <div>หมายเหตุ:&nbsp;&nbsp; {f.map(ff => <a key={ff}><br />{ff}</a>)}</div>
             <br />
+
+            <div>เรียกดูรายหน่วยงาน:&nbsp;&nbsp; <select name="shos" id="shos" onChange={e => c1(e.target.value)}>
+              <option value={"23"}>ทุกหน่วยงาน</option>
+              {seleeh.map(a => {
+                return (
+                  <option value={a.key}>{a.value}</option>
+                )
+              })}
+            </select>
+            </div>
+            <br />
+
             <table className='table table-bordered border-primary'>
 
               <thead className="table-dark">
@@ -3002,6 +3224,18 @@ const CalForm = () => {
           <br /><br /> */}
             <div>หมายเหตุ:&nbsp;&nbsp; {f.map(ff => <a key={ff}><br />{ff}</a>)}</div>
             <br />
+
+            <div>เรียกดูรายหน่วยงาน:&nbsp;&nbsp; <select name="shos" id="shos" onChange={e => c1(e.target.value)}>
+              <option value={"23"}>ทุกหน่วยงาน</option>
+              {seleeh.map(a => {
+                return (
+                  <option value={a.key}>{a.value}</option>
+                )
+              })}
+            </select>
+            </div>
+            <br />
+
             <table className='table table-bordered border-primary'>
 
               <thead className="table-dark">
@@ -3240,6 +3474,18 @@ const CalForm = () => {
           <br /><br /> */}
             <div>หมายเหตุ:&nbsp;&nbsp; {f.map(ff => <a key={ff}><br />{ff}</a>)}</div>
             <br />
+
+            <div>เรียกดูรายหน่วยงาน:&nbsp;&nbsp; <select name="shos" id="shos" onChange={e => c1(e.target.value)}>
+              <option value={"23"}>ทุกหน่วยงาน</option>
+              {seleeh.map(a => {
+                return (
+                  <option value={a.key}>{a.value}</option>
+                )
+              })}
+            </select>
+            </div>
+            <br />
+
             <table className='table table-bordered border-primary'>
 
               <thead className="table-dark">
@@ -3359,9 +3605,9 @@ const CalForm = () => {
                       // console.log(n)
                     }
 
-                    console.log(rvf, 2)
+                    // console.log(rvf, 2)
 
-                    if(i === 1 && (rvf / props.length) === Infinity) {
+                    if (i === 1 && (rvf / props.length) === Infinity) {
                       rvf = 0
                     }
 
@@ -3370,7 +3616,7 @@ const CalForm = () => {
                     );
                   })}
 
-                  <td >{insum}</td>
+                  <td >{insums}</td>
                   <td colSpan="5"></td>
                 </tr>
               </tbody>
@@ -4047,9 +4293,9 @@ const CalForm = () => {
       document.getElementById("รวม*").value = q
     }
 
-    if(n === "23_68") {
+    if (n === "23_68") {
       // console.log(pr1,pr2)
-      q = ((pr1-pr2)/pr2)*100
+      q = ((pr1 - pr2) / pr2) * 100
     }
 
     return q
@@ -4143,7 +4389,7 @@ const CalForm = () => {
         console.log(uioo1, uioo2)
       }
 
-      
+
 
       // if (t[1] === 2 && numpa >= 2) {
       //   console.log(Number(exfill.map(a => (a.de_ans))[0]), uioo2, t[1], numpa, (Number(uioo2) + Number(exfill.map(a => (a.de_ans))[0])) >= Number(uioo1))
@@ -4190,10 +4436,10 @@ const CalForm = () => {
 
     }
 
-    if(n === "23_68") {
-      
-      var q = ((uioo1-uioo2)/uioo2)*100
-      console.log(uioo1,q)
+    if (n === "23_68") {
+
+      var q = ((uioo1 - uioo2) / uioo2) * 100
+      // console.log(uioo1,q)
       if (q >= 0) {
         h = "ผ่าน"
       } else {
@@ -4301,7 +4547,7 @@ const CalForm = () => {
       are = (((p2 / p1) ** (-1)) * 100).toFixed(2)
       sare = (((pp2 / pp1) ** (-1)) * 100).toFixed(2)
       oo = (((po2 / po1) ** (-1)) * 100).toFixed(2)
-    } else if (n === "39" || n === "15" || n === "48" || n === "49_68"  || n === "39_68" || n === "48_68" || n === "43_68") {
+    } else if (n === "39" || n === "15" || n === "48" || n === "49_68" || n === "39_68" || n === "48_68" || n === "43_68") {
       are = (((p2 / p1) ** (-1))).toFixed(2)
       sare = (((pp2 / pp1) ** (-1))).toFixed(2)
       oo = (((po2 / po1) ** (-1))).toFixed(2)
@@ -4330,6 +4576,7 @@ const CalForm = () => {
       oo = 0
     }
     if (fc === 1) {
+
       if (lg.includes(sessionStorage.getItem("hos"))) {
         // var loo = sessionStorage.getItem("hos") + "_" + sessionStorage.getItem("qur").split("_")
         var loo = lg.split("_")
