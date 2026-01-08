@@ -8,6 +8,7 @@ const Navbar = () => {
     localStorage.removeItem("name");
     localStorage.removeItem("department");
     localStorage.removeItem("token");
+    localStorage.removeItem("new");
     window.location = "/";
   }
 
@@ -30,9 +31,11 @@ const Navbar = () => {
         <li style={{ float: "right" }}><a className="red" href='' onClick={handleLogout}>ออกจากระบบ</a></li>
         <li style={{ float: "right" }}><a className="active">ส่วนราชการ: {a}</a></li>
         <li className='navli'><a className='navli a' href="form">ตัวชี้วัดทั้งหมด</a></li>
-        <li className='navli'><a className='navli a' href="fillup">รายงานตัวชี้วัด</a></li>
-        <li className='navli'><a className='navli a' href="addevent">รายงานโครงการ</a></li>
+        <li className='navli'><a className='navli a' href="fillup">รายงานโครงการ</a></li>
+        {/* <li className='navli'><a className='navli a' href="addevent">รายงานโครงการ</a></li> */}
         <li className='navli'><a className='navli a' href="calform">สรุปผลตัวชี้วัด</a></li>
+        <li className='navli'><a className='navli a' href="newapp">รายงานผลตัวชี้วัด</a></li>
+        <li className='navli'><a className='navli a' href="dashboard">Dashboard</a></li>
       </>
     } else if (c === "1") {
       b = <>
@@ -56,6 +59,9 @@ const Navbar = () => {
         <li className='navli'><a className='navli a' href="useredit">แก้ไขผู้ใช้งาน</a></li>
         {/* <li className='navli'><a className='navli a' href="dashboard">รายงานตัวชี้วัด</a></li> */}
         <li className='navli'><a className='navli a' href="calform">สรุปผลตัวชี้วัด</a></li>
+        <li className='navli'><a className='navli a' href="dashboard">Dashboard</a></li>
+
+        <li className='navli'><a className='navli a' href="newapp">รายงานผลตัวชี้วัด</a></li>
       </>
     }
   }

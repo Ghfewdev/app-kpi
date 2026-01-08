@@ -24,6 +24,33 @@ const Login = () => {
           // alert("sucess");
           localStorage.setItem("name", data.name);
           localStorage.setItem("id", data.id);
+          if (data.id === 10) {
+              localStorage.setItem("new", 1);
+          } else if (data.id === 11) {
+              localStorage.setItem("new", 2);
+          } else if (data.id === 12) {
+              localStorage.setItem("new", 3);
+          } else if (data.id === 13) {
+              localStorage.setItem("new", 4);
+          } else if (data.id === 14) {
+              localStorage.setItem("new", 5);
+          } else if (data.id === 15) {
+              localStorage.setItem("new", 6);
+          } else if (data.id === 16) {
+              localStorage.setItem("new", 7);
+          } else if (data.id === 17) {
+              localStorage.setItem("new", 8);
+          } else if (data.id === 18) {
+              localStorage.setItem("new", 9);
+          } else if (data.id === 19) {
+              localStorage.setItem("new", 10);
+          } else if (data.id === 20) {
+              localStorage.setItem("new", 11);
+          } else if (data.id === 21) {
+              localStorage.setItem("new", 12);
+          } else if (data.id === 22) {
+              localStorage.setItem("new", 13);
+          }
           localStorage.setItem("department", data.agency)
           localStorage.setItem("token", data.token);
           window.location = "/";

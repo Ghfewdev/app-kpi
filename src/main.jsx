@@ -19,6 +19,8 @@ import '@fontsource/roboto/700.css';
 import UserEdit from './Page/UserEdit.jsx'
 import AddEvevt from './Page/AddEvevt.jsx'
 import PostEv from './Component/PostEv.jsx'
+import NewApp from './Page/NewApp.jsx'
+import Dash2 from './Page/dash2.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -37,6 +39,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='useradd' element={<UserAdd />} />
       <Route path='addevent' element={<AddEvevt/>} />
       <Route path='postev' element={<PostEv />} />
+      <Route path='newapp' element={<NewApp />} />
+      <Route path='dash2' element={<Dash2 />} />
     </Routes>
   </BrowserRouter>
 )

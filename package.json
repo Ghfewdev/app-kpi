@@ -30,7 +30,7 @@
     "react-hook-form": "^7.45.4",
     "react-router-dom": "^6.13.0",
     "react-scripts": "^5.0.1",
-    "recharts": "^2.7.2",
+    "recharts": "^2.15.4",
     "styled-components": "^5.3.11"
   },
   "devDependencies": {

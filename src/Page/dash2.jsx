@@ -15,13 +15,12 @@ const Dashboard = () => {
   const [summary, setSummary] = useState({});
   const [data, setData] = useState([]);
 
-  const [fiscalYear, setFiscalYear] = useState("2026");
+  const [fiscalYear, setFiscalYear] = useState("2568");
   const [quarter, setQuarter] = useState("Q1");
 
 
   const fetchSummary = async () => {
     setLoading(true);
-    console.log(data)
     try {
       const res = await axios.get("http://localhost:3000/api/kpi-summary", {
         params: {
@@ -105,8 +104,8 @@ const Dashboard = () => {
               onChange={(e) => setFiscalYear(e.target.value)}
             >
 
-              <option>2026</option>
-              <option>2027</option>
+              <option>2568</option>
+              <option>2569</option>
             </select>
           </div>
 

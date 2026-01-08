@@ -340,3 +340,226 @@
 .hidden {
   visibility: hidden;
 }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 3 คอลัมน์เท่ากัน */
+    gap: 1rem; /* เทียบกับ gap-4 ของ Tailwind (~16px) */
+}
+
+.a1 {
+  min-height: 100vh; 
+
+background-color: rgb(243,244,246); 
+
+padding: 1.5rem;
+}
+
+.a2 {
+  margin-bottom: 1.5rem; 
+
+font-size: 1.875rem; 
+
+line-height: 2.25rem; 
+
+font-weight: 700; 
+
+color: rgb(29,78,216);
+}
+
+.a3 {
+  margin-bottom: 1.5rem; 
+
+display: grid; 
+
+grid-template-columns: repeat(2, minmax(0, 1fr)); 
+
+gap: 1rem;
+}
+
+.a4 {
+  margin-top: 0.25rem; 
+
+width: 100%; 
+
+border-radius: 0.25rem; 
+
+border-width: 1px; 
+
+padding: 0.5rem;
+}
+
+.a5 {
+  border-radius: 0.25rem; 
+
+background-color: rgb(37,99,235); 
+
+padding-left: 1rem; 
+
+padding-right: 1rem; 
+
+padding-top: 0.5rem; 
+
+padding-bottom: 0.5rem; 
+
+color: rgb(255,255,255); 
+
+box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 3px 0 rgb(0,0,0,0.1), 0 1px 2px -1px rgb(0,0,0,0.1);
+}
+
+.a6 {
+  margin-top: 2rem; 
+
+gap: 1rem;
+}
+
+.a7 {
+  border-radius: 0.25rem; 
+
+background-color: rgb(255,255,255); 
+
+padding: 1rem; 
+
+box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 3px 0 rgb(0,0,0,0.1), 0 1px 2px -1px rgb(0,0,0,0.1);
+}
+
+.a8 {
+  font-size: 1.125rem; 
+
+line-height: 1.75rem; 
+
+font-weight: 600;
+}
+
+.a9 {
+  font-size: 1.5rem; 
+
+line-height: 2rem; 
+
+font-weight: 700; 
+
+color: rgb(37,99,235);
+}
+
+/* Modal background */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeIn 0.2s ease;
+}
+
+/* Modal box */
+.modal-box {
+  background: #fff;
+  width: 90%;
+  max-width: 420px;
+  padding: 20px 24px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+  animation: scaleIn 0.22s ease;
+}
+
+.modal-box2 {
+    background: #fff;
+  width: 90%;
+  max-width: auto;
+  padding: 20px 24px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+  animation: scaleIn 0.22s ease;
+
+  /* เพิ่มส่วนนี้ */
+  max-height: 90vh;      /* สูงสุดไม่เกินจอ */
+  overflow-y: auto;      /* scroll แนวตั้ง */
+}
+
+/* Close button */
+.modal-close-btn {
+  margin-top: 18px;
+  width: 100%;
+  padding: 10px;
+  background: #2563eb;
+  border: none;
+  color: white;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.modal-close-btn:hover {
+  background: #1e4fc9;
+}
+
+/* Example inside modal */
+.modal-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.modal-text {
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+/* Button to open modal */
+.open-btn {
+  padding: 10px 16px;
+  background: #16a34a;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.open-btn:hover {
+  background: #12863e;
+}
+
+.edit-btn {
+  padding: 10px 16px;
+  background: #c99916;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.edit-btn:hover {
+  background: #afa999;
+}
+
+.open-btn2 {
+  padding: 10px 16px;
+  background: #16a34a;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  width: 100%;
+}
+
+.col4 {
+  display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr)); 
+gap: 1rem; 
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
