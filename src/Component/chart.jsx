@@ -34,14 +34,17 @@ const IndicatorCumulativeChart = ({
             case "A*B":
                 return A * B;
 
-            case "((A-B)/B )*100":
+            case "((A-B)/B)*100":
                 return B !== 0 ? ((A - B) / B) * 100 : 0;
 
-            case "(A/B)x1.25":
+            case "(A/B)*1.25":
                 return B !== 0 ? (A / B) * 1.25 : 0;
 
             case "A-B":
                 return A - B;
+
+            case "A/B":
+                return A / B;
 
             default:
                 console.warn("Unknown formula:", formula);
@@ -105,7 +108,18 @@ const IndicatorCumulativeChart = ({
 
 
     return (
-        <div style={{ width: "100%", height: 350 }}>
+
+        <div
+  style={{
+    width: "100%",
+    height: 350,
+    display: "flex",
+    justifyContent: "center", // จัดกลางแนวนอน
+    alignItems: "center",     // จัดกลางแนวตั้ง
+  }}
+>
+
+        <div style={{ width: "70%", height: "100%" }}>
             <ResponsiveContainer>
                 <LineChart data={chartData}>
                     <XAxis dataKey="quarter" />
@@ -138,6 +152,7 @@ const IndicatorCumulativeChart = ({
                     )}
                 </LineChart>
             </ResponsiveContainer>
+        </div>
         </div>
     );
 };

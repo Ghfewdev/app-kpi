@@ -50,6 +50,10 @@ const Login = () => {
               localStorage.setItem("new", 12);
           } else if (data.id === 22) {
               localStorage.setItem("new", 13);
+          } else if (data.id === 23) {
+              localStorage.setItem("new", 14);
+          } else if (data.id === 24) {
+              localStorage.setItem("new", 15);
           }
           localStorage.setItem("department", data.agency)
           localStorage.setItem("token", data.token);

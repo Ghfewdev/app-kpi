@@ -457,7 +457,7 @@ color: rgb(37,99,235);
 .modal-box {
   background: #fff;
   width: 90%;
-  max-width: 420px;
+  max-width: 90%;
   padding: 20px 24px;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);

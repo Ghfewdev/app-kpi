@@ -104,9 +104,8 @@ const Dashboard = () => {
               value={fiscalYear}
               onChange={(e) => setFiscalYear(e.target.value)}
             >
-
-              <option>2026</option>
-              <option>2027</option>
+              <option value={2026}>2569</option>
+              <option value={2027}>2570</option>
             </select>
           </div>
 
