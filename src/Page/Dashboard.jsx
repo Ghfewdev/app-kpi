@@ -23,7 +23,7 @@ const Dashboard = () => {
     setLoading(true);
     console.log(data)
     try {
-      const res = await axios.get("http://localhost:3000/api/kpi-summary", {
+      const res = await axios.get(import.meta.env.VITE_APP_API + "/api/kpi-summary", {
         params: {
           fiscal_year: fiscalYear,
           quarter: quarter,

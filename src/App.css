@@ -462,6 +462,9 @@ color: rgb(37,99,235);
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
   animation: scaleIn 0.22s ease;
+
+  max-height: 90vh;      /* สูงสุดไม่เกินจอ */
+  overflow-y: auto;      /* scroll แนวตั้ง */
 }
 
 .modal-box2 {

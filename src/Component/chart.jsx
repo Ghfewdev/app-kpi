@@ -76,7 +76,7 @@ const IndicatorCumulativeChart = ({
 
         setLoading(true);
 
-        const url = `http://localhost:3000/api/indicatorde/${year}/${agencyId}/${indicatorId}`;
+        const url = `${import.meta.env.VITE_APP_API}/api/indicatorde/${year}/${agencyId}/${indicatorId}`;
 
         fetch(url)
             .then(res => res.json())

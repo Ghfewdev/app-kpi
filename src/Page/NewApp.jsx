@@ -80,7 +80,7 @@ function App() {
   };
 
   const showdetail = (val) => {
-    fetch(`http://localhost:3000/api/indicatorde/${year}/${localStorage.getItem("new")}/${val}`)
+    fetch(`${import.meta.env.VITE_APP_API}/api/indicatorde/${year}/${localStorage.getItem("new")}/${val}`)
       .then((res) => res.json())
       .then((d) => setDetailq(d));
 
@@ -188,7 +188,7 @@ function App() {
 
     if (confirm("ต้องการแก้ไขหรือไม่ !\n") == true) {
 
-      axios.put(`http://localhost:3000/api/indicator-reports/${id}`, {
+      axios.put(`${import.meta.env.VITE_APP_API}/api/indicator-reports/${id}`, {
         value_a: detailq[index]?.value_a,
         value_b: detailq[index]?.value_b,
         form_data: detailq[index]?.form_data, // 🔥 สำคัญ
@@ -272,10 +272,10 @@ function App() {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/indicator/${localStorage.getItem("new")}`)
+    fetch(`${import.meta.env.VITE_APP_API}/api/indicator/${localStorage.getItem("new")}`)
       .then((res) => res.json())
       .then((d) => setData(d));
-    fetch(`http://localhost:3000/api/check/${localStorage.getItem("new")}`)
+    fetch(`${import.meta.env.VITE_APP_API}/api/check/${localStorage.getItem("new")}`)
       .then((res) => res.json())
       .then((d) => setCheck(d));
   }, []);
