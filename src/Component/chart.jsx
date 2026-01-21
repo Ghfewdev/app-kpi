@@ -76,7 +76,13 @@ const IndicatorCumulativeChart = ({
 
         setLoading(true);
 
-        const url = `${import.meta.env.VITE_APP_API}/api/indicatorde/${year}/${agencyId}/${indicatorId}`;
+        var url = `${import.meta.env.VITE_APP_API}/api/indicatorde/${year}/${agencyId}/${indicatorId}`;
+
+        if (agencyId === 0) {
+            url = `${import.meta.env.VITE_APP_API}/api/admin/indicatorde/${year}/${indicatorId}`;
+        }
+
+        console.log(url)
 
         fetch(url)
             .then(res => res.json())
@@ -110,49 +116,49 @@ const IndicatorCumulativeChart = ({
     return (
 
         <div
-  style={{
-    width: "100%",
-    height: 350,
-    display: "flex",
-    justifyContent: "center", // จัดกลางแนวนอน
-    alignItems: "center",     // จัดกลางแนวตั้ง
-  }}
->
+            style={{
+                width: "100%",
+                height: 350,
+                display: "flex",
+                justifyContent: "center", // จัดกลางแนวนอน
+                alignItems: "center",     // จัดกลางแนวตั้ง
+            }}
+        >
 
-        <div style={{ width: "70%", height: "100%" }}>
-            <ResponsiveContainer>
-                <LineChart data={chartData}>
-                    <XAxis dataKey="quarter" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
+            <div style={{ width: "70%", height: "100%" }}>
+                <ResponsiveContainer>
+                    <LineChart data={chartData}>
+                        <XAxis dataKey="quarter" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
 
-                    <Line
-                        type="monotone"
-                        dataKey="cumulativeAvg"
-                        name="ค่าเฉลี่ยสะสม"
-                        strokeWidth={3}
-                    />
-
-                    {/* Target */}
-                    {targetValue !== undefined && (
-                        <ReferenceLine
-                            y={targetValue}
-                            stroke="red"
-                            strokeDasharray="5 5"
-                            label={{
-                                value: `Target ${targetValue}`,
-                                position: "bottom",
-                                // dy: 8,
-                                fill: "red",
-                                fontSize: 12
-                            }}
+                        <Line
+                            type="monotone"
+                            dataKey="cumulativeAvg"
+                            name="ค่าเฉลี่ยสะสม"
+                            strokeWidth={3}
                         />
 
-                    )}
-                </LineChart>
-            </ResponsiveContainer>
-        </div>
+                        {/* Target */}
+                        {targetValue !== undefined && (
+                            <ReferenceLine
+                                y={targetValue}
+                                stroke="red"
+                                strokeDasharray="5 5"
+                                label={{
+                                    value: `Target ${targetValue}`,
+                                    position: "bottom",
+                                    // dy: 8,
+                                    fill: "red",
+                                    fontSize: 12
+                                }}
+                            />
+
+                        )}
+                    </LineChart>
+                </ResponsiveContainer>
+            </div>
         </div>
     );
 };

@@ -141,8 +141,7 @@ function App() {
   const submitData = async (event) => {
     event.preventDefault();
 
-    if (confirm("ต้องการส่งรายงานหรือไม่ !\n") == true) {
-      var jso
+    var jso
 
       if (values == {}) {
         jso = null;
@@ -150,7 +149,11 @@ function App() {
         jso = values;
       }
 
-      const fill = [
+      if (sb === 0) {
+        setSb(null)
+      }
+
+    const fill = [
         {
           indicator_id: indi,
           agency_id: localStorage.getItem("new"),
@@ -165,6 +168,11 @@ function App() {
           // updated_at: ,
         }
       ];
+
+      console.log(fill)
+
+    if (confirm("ต้องการส่งรายงานหรือไม่ !\n") == true) {
+      
 
       try {
         const res = await postForms(fill);
@@ -358,8 +366,8 @@ function App() {
                       handleChangee(index, "value_a", e.target.value)
                     }
                   />
-
-                  <div hidden={!item.value_b}>
+                  <br />
+                  <div hidden={!item.value_b || item.value_b === "0.00"}>
                     <label className="mt-2"> B : &nbsp;<br /></label>
                     <input
                       type="number"
@@ -436,10 +444,10 @@ function App() {
                   <td>{item.year + 543}</td>
                   <td>{qq + 1}</td>
                   <td>
-                    <button disabled={q === 4} className="open-btn" onClick={() => { setOpen(true), setValues({}), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]) }}>ตอบตัวชี้วัด</button>
+                    <button disabled={q === 4} className="open-btn" onClick={() => { setSa(0), setSb(0), setOpen(true), setValues({}), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]) }}>ตอบตัวชี้วัด</button>
                   </td>
                   <td>
-                    <button disabled={q === 0} className="edit-btn" onClick={e => { setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]), showdetail(item.id), setOpen2(true) }}>การส่งตัวชี้วัด</button>
+                    <button disabled={q === 0} className="edit-btn" onClick={e => { setSa(0), setSb(0), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]), showdetail(item.id), setOpen2(true) }}>การส่งตัวชี้วัด</button>
                   </td>
                 </tr>
               );
