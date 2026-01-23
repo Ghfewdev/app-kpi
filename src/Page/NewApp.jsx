@@ -299,6 +299,8 @@ function App() {
 
       <Modal isOpen={open} onClose={() => setOpen(false)}>
         <h2 className="modal-title">ตอบตัวชี้วัด {head} ไตรมาสที่ {qt + 1} ปีงบ {year + 543}</h2>
+        รายละเอียด: <br />
+        {detail[4]} <br />
         หมายเหตุ: <br />
         {String(detail[0]).split(", ")[0]} <br />
         {String(detail[0]).split(", ")[1]} <br />
@@ -344,9 +346,6 @@ function App() {
                 <h2 className="modal-title">
                   ตัวชี้วัด {head} ไตรมาสที่ {index + 1} ปีงบ {year + 543}
                 </h2>
-
-
-
                 หมายเหตุ: <br />
                 {String(detail[0]).split(", ")[0]} <br />
                 {String(detail[0]).split(", ")[1]} <br />
@@ -444,10 +443,10 @@ function App() {
                   <td>{item.year + 543}</td>
                   <td>{qq + 1}</td>
                   <td>
-                    <button disabled={q === 4} className="open-btn" onClick={() => { setSa(0), setSb(0), setOpen(true), setValues({}), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]) }}>ตอบตัวชี้วัด</button>
+                    <button disabled={q === 4} className="open-btn" onClick={() => { setSa(0), setSb(0), setOpen(true), setValues({}), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]), console.log(item.detail) }}>ตอบตัวชี้วัด</button>
                   </td>
                   <td>
-                    <button disabled={q === 0} className="edit-btn" onClick={e => { setSa(0), setSb(0), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]), showdetail(item.id), setOpen2(true) }}>การส่งตัวชี้วัด</button>
+                    <button disabled={q === 0} className="edit-btn" onClick={e => { setSa(0), setSb(0), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]), showdetail(item.id), setOpen2(true), console.log(item.detail) }}>การส่งตัวชี้วัด</button>
                   </td>
                 </tr>
               );
