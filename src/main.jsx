@@ -21,6 +21,9 @@ import AddEvevt from './Page/AddEvevt.jsx'
 import PostEv from './Component/PostEv.jsx'
 import NewApp from './Page/NewApp.jsx'
 import Dash2 from './Page/dash2.jsx'
+import Addev from './Page/AddEv69.jsx'
+import Test from './Page/test.jsx'
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -41,6 +44,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='postev' element={<PostEv />} />
       <Route path='newapp' element={<NewApp />} />
       <Route path='dash2' element={<Dash2 />} />
+      <Route path='addev2' element={<Addev />} />
+      <Route path='test' element={<Test />} />
     </Routes>
   </BrowserRouter>
 )

@@ -554,11 +554,7 @@ const AddEvevt = () => {
             document.getElementById("dbu").hidden = true
         }
 
-
-
-
     }
-
 
     useEffect(() => {
         fetchUserDataForm();

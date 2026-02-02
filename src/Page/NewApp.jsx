@@ -7,6 +7,9 @@ import Authen from "../Component/Authen";
 import Modal2 from "../Component/modal2";
 import IndicatorCumulativeChart from "../Component/chart";
 import axios from "axios";
+import EventModal from "../Component/EventModal";
+import EventForm from "../Component/EventForm";
+import EventListModal from "../Component/EventListModal";
 
 function App() {
   Authen();
@@ -28,6 +31,9 @@ function App() {
   const [values, setValues] = useState({});
   const [indi, setIndi] = useState(0);
   const [detailq, setDetailq] = useState([]);
+  const [open3, setOpen3] = useState(false);
+  const [openList, setOpenList] = useState(false);
+
   // const [nv, setNv] = useState([]);
 
   const cbv = (value) => {
@@ -143,36 +149,36 @@ function App() {
 
     var jso
 
-      if (values == {}) {
-        jso = null;
-      } else {
-        jso = values;
-      }
+    if (values == {}) {
+      jso = null;
+    } else {
+      jso = values;
+    }
 
-      if (sb === 0) {
-        setSb(null)
-      }
+    if (sb === 0) {
+      setSb(null)
+    }
 
     const fill = [
-        {
-          indicator_id: indi,
-          agency_id: localStorage.getItem("new"),
-          fiscal_year: year,
-          quarter: "Q" + String(qt + 1),
-          value_a: sa,
-          value_b: sb,
-          calculated_value: null,
-          form_data: jso,
-          status: "SUBMITTED",
-          updated_by: localStorage.getItem("new"),
-          // updated_at: ,
-        }
-      ];
+      {
+        indicator_id: indi,
+        agency_id: localStorage.getItem("new"),
+        fiscal_year: year,
+        quarter: "Q" + String(qt + 1),
+        value_a: sa,
+        value_b: sb,
+        calculated_value: null,
+        form_data: jso,
+        status: "SUBMITTED",
+        updated_by: localStorage.getItem("new"),
+        // updated_at: ,
+      }
+    ];
 
-      console.log(fill)
+    console.log(fill)
 
     if (confirm("ต้องการส่งรายงานหรือไม่ !\n") == true) {
-      
+
 
       try {
         const res = await postForms(fill);
@@ -223,17 +229,17 @@ function App() {
   const handleChangee = (index, field, value) => {
     const newData = [...detailq];
 
-  newData[index] = {
-    ...newData[index],
-    [field]: value,
-    form_data: newData[index]?.form_data
-      ? typeof newData[index].form_data === "string"
-        ? JSON.parse(newData[index].form_data)
-        : newData[index].form_data
-      : {},
-  };
+    newData[index] = {
+      ...newData[index],
+      [field]: value,
+      form_data: newData[index]?.form_data
+        ? typeof newData[index].form_data === "string"
+          ? JSON.parse(newData[index].form_data)
+          : newData[index].form_data
+        : {},
+    };
 
-  setDetailq(newData);
+    setDetailq(newData);
   };
 
   const handleFormDataChange = (index, key, value) => {
@@ -296,6 +302,10 @@ function App() {
     <>
       <Navbar />
 
+      <EventListModal
+        open={openList}
+        onClose={() => setOpenList(false)}
+      />
 
       <Modal isOpen={open} onClose={() => setOpen(false)}>
         <h2 className="modal-title">ตอบตัวชี้วัด {head} ไตรมาสที่ {qt + 1} ปีงบ {year + 543}</h2>
@@ -326,6 +336,10 @@ function App() {
           <button type="submit" className="open-btn2" >รายงานตัวชี้วัด</button>
         </form>
       </Modal>
+
+      <EventModal open={open3} onClose={() => setOpen3(false)}>
+        <EventForm onSuccess={() => setOpen3(false)} />
+      </EventModal>
 
       <Modal2 isOpen={open2} onClose={() => setOpen2(false)}>
         <div className="col4">
@@ -413,11 +427,13 @@ function App() {
             <tr>
               <th>รหัส</th>
               <th>ชื่อ</th>
-              <th>องค์ประกอบที่</th>
-              <th>ปีงบ</th>
+              {/* <th>องค์ประกอบที่</th>
+              <th>ปีงบ</th> */}
               <th>ไตรมาส</th>
               <th>ส่งตัวชี้วัด</th>
-              <th>รายละเอียด</th>
+              <th>โครงการ</th>
+              <th>ดูโครงการ</th>
+              <th>ดูตัวชี้วัด</th>
             </tr>
           </thead>
 
@@ -439,11 +455,20 @@ function App() {
                 <tr key={i}>
                   <td>{item.code}</td>
                   <td>{item.name}</td>
-                  <td>{item.type}</td>
-                  <td>{item.year + 543}</td>
+                  {/* <td>{item.type}</td>
+                  <td>{item.year + 543}</td> */}
                   <td>{qq + 1}</td>
                   <td>
-                    <button disabled={q === 4} className="open-btn" onClick={() => { setSa(0), setSb(0), setOpen(true), setValues({}), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]), console.log(item.detail) }}>ตอบตัวชี้วัด</button>
+                    <button disabled={q === 4} className="open-btn" onClick={() => { setSa(0), setSb(0), setOpen(true), setValues({}), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]) }}>ตอบตัวชี้วัด</button>
+                  </td>
+                  <td>
+
+                    <button className="btn btn-dark" onClick={() => { sessionStorage.setItem("fmid", item.id), setOpen3(true) }}>➕ เพิ่มกิจกรรม</button>
+                  </td>
+                  <td>
+                    <button className="btn btn-secondary" onClick={() => { sessionStorage.setItem("fmid", item.id), setOpenList(true)} }>
+                      ดูรายการโครงการ
+                    </button>
                   </td>
                   <td>
                     <button disabled={q === 0} className="edit-btn" onClick={e => { setSa(0), setSb(0), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]), showdetail(item.id), setOpen2(true), console.log(item.detail) }}>การส่งตัวชี้วัด</button>

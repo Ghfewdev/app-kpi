@@ -4873,7 +4873,8 @@ const CalForm = () => {
           </div>
         </div>
 
-      </div><div className='d-none d-print-block'>{pagePrint(printf)}</div>
+      </div>
+      <div className='d-none d-print-block'>{pagePrint(printf)}</div>
 
 
 

@@ -414,8 +414,8 @@ function App2() {
             <tr>
               <th>รหัส</th>
               <th>ชื่อ</th>
-              <th>องค์ประกอบที่</th>
-              <th>ปีงบ</th>
+              <th>ที่</th>
+              {/* <th>ปีงบ</th> */}
               <th>ไตรมาสที่ส่ง</th>
               {/* <th>ส่งตัวชี้วัด</th> */}
               <th>รายละเอียด</th>
@@ -441,7 +441,7 @@ function App2() {
                   <td>{item.code}</td>
                   <td>{item.name}</td>
                   <td>{item.type}</td>
-                  <td>{item.year + 543}</td>
+                  {/* <td>{item.year + 543}</td> */}
                   <td>{qq}</td>
                   {/* <td>
                     <button disabled={q === 4} className="open-btn" onClick={() => { setSa(0), setSb(0), setOpen(true), setValues({}), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]) }}>ตอบตัวชี้วัด</button>
