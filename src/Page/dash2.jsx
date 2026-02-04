@@ -7,10 +7,12 @@ import Authlevel from "../Component/Authlevel";
 import Modal2 from "../Component/modal2";
 import IndicatorCumulativeChart from "../Component/chart";
 import axios from "axios";
+import EventListModal from "../Component/EventListModal";
 
 function App2() {
   Authlevel();
 
+  const [users, setUsers] = useState([]);
   const [data, setData] = useState([]);
   const [check, setCheck] = useState([]);
   const [open, setOpen] = useState(false);
@@ -28,6 +30,7 @@ function App2() {
   const [values, setValues] = useState({});
   const [indi, setIndi] = useState(0);
   const [detailq, setDetailq] = useState([]);
+  const [openList, setOpenList] = useState(false);
   // const [nv, setNv] = useState([]);
 
   const cbv = (value) => {
@@ -83,8 +86,14 @@ function App2() {
     fetch(`${import.meta.env.VITE_APP_API}/api/admin/indicatorde/${year}/${val}`)
       .then((res) => res.json())
       .then((d) => setDetailq(d));
+    console.log(`${import.meta.env.VITE_APP_API}/api/admin/indicatorde/${year}/${val}`)
+  }
 
-    console.log(detail)
+  const showdetail2 = (val) => {
+    fetch(`${import.meta.env.VITE_APP_API}/api/admin/indicatorde/${year}/${sessionStorage.getItem("fmid")}/${val}`)
+      .then((res) => res.json())
+      .then((d) => setDetailq(d));
+    console.log(`${import.meta.env.VITE_APP_API}/api/admin/indicatorde/${year}/${sessionStorage.getItem("fmid")}/${val}`)
   }
 
   const handleSubmit = (event) => {
@@ -143,36 +152,36 @@ function App2() {
 
     var jso
 
-      if (values == {}) {
-        jso = null;
-      } else {
-        jso = values;
-      }
+    if (values == {}) {
+      jso = null;
+    } else {
+      jso = values;
+    }
 
-      if (sb === 0) {
-        setSb(null)
-      }
+    if (sb === 0) {
+      setSb(null)
+    }
 
     const fill = [
-        {
-          indicator_id: indi,
-          agency_id: localStorage.getItem("new"),
-          fiscal_year: year,
-          quarter: "Q" + String(qt + 1),
-          value_a: sa,
-          value_b: sb,
-          calculated_value: null,
-          form_data: jso,
-          status: "SUBMITTED",
-          updated_by: localStorage.getItem("new"),
-          // updated_at: ,
-        }
-      ];
+      {
+        indicator_id: indi,
+        agency_id: localStorage.getItem("new"),
+        fiscal_year: year,
+        quarter: "Q" + String(qt + 1),
+        value_a: sa,
+        value_b: sb,
+        calculated_value: null,
+        form_data: jso,
+        status: "SUBMITTED",
+        updated_by: localStorage.getItem("new"),
+        // updated_at: ,
+      }
+    ];
 
-      console.log(fill)
+    console.log(fill)
 
     if (confirm("ต้องการส่งรายงานหรือไม่ !\n") == true) {
-      
+
 
       try {
         const res = await postForms(fill);
@@ -223,17 +232,17 @@ function App2() {
   const handleChangee = (index, field, value) => {
     const newData = [...detailq];
 
-  newData[index] = {
-    ...newData[index],
-    [field]: value,
-    form_data: newData[index]?.form_data
-      ? typeof newData[index].form_data === "string"
-        ? JSON.parse(newData[index].form_data)
-        : newData[index].form_data
-      : {},
-  };
+    newData[index] = {
+      ...newData[index],
+      [field]: value,
+      form_data: newData[index]?.form_data
+        ? typeof newData[index].form_data === "string"
+          ? JSON.parse(newData[index].form_data)
+          : newData[index].form_data
+        : {},
+    };
 
-  setDetailq(newData);
+    setDetailq(newData);
   };
 
   const handleFormDataChange = (index, key, value) => {
@@ -286,6 +295,10 @@ function App2() {
     fetch(`${import.meta.env.VITE_APP_API}/api/checks`)
       .then((res) => res.json())
       .then((d) => setCheck(d));
+    fetch(`${import.meta.env.VITE_APP_API}/users`)
+      .then((res) => res.json())
+      .then((d) => setUsers(d));
+
   }, []);
 
   const checkMap = Object.fromEntries(
@@ -326,7 +339,23 @@ function App2() {
       </Modal>
 
       <Modal2 isOpen={open2} onClose={() => setOpen2(false)}>
+        <label>เลือกหน่อยงาน</label>: 
+        <select onChange={e => showdetail2(e.target.value)}>
+          <option value={""}>
+            ทั้งหมด
+          </option>
+          {detailq.map((a, i) => {
+            return (
+              <option key={a} value={a.agency_id} >
+                {a.agency_name}
+              </option>
+            )
+          })}
+        </select>
+<br />
+        <br />
         <div className="col4">
+
           {detailq.map((item, index) => {
             // const sa = values[item.id]?.sa || "";
             // const sb = values[item.id]?.sb || "";
@@ -340,71 +369,78 @@ function App2() {
               trc = "ผ่าน"
 
             return (
-              <div key={item.id} className="mb-4 border p-3 rounded">
-                <h2 className="modal-title">
-                  ตัวชี้วัด {head} ไตรมาสที่ {index + 1} ปีงบ {year + 543}
-                </h2>
+              <div>
+                <div key={item.id} className="mb-4 border p-3 rounded">
+                  <h2 className="modal-title">
+                    ตัวชี้วัด {head} ไตรมาสที่ {item.quarter} ปีงบ {year + 543} <label className="text-primary">{item.agency_name}</label>
+                  </h2>
 
+                  {/* หน่วยงาน: {item.agency_name} */}
+                  {/* <br /> */}
+                  หมายเหตุ: <br />
+                  {String(detail[0]).split(", ")[0]} <br />
+                  {String(detail[0]).split(", ")[1]} <br />
+                  {/* {detail[3]} <br /> */}
+                  สูตรคำนวณ: {detail[1]} <br />
+                  ค่าเป้าหมาย: {Number(detail[2]).toFixed(0)}
+                  <br /><br />
 
-
-                หมายเหตุ: <br />
-                {String(detail[0]).split(", ")[0]} <br />
-                {String(detail[0]).split(", ")[1]} <br />
-                {/* {detail[3]} <br /> */}
-                สูตรคำนวณ: {detail[1]} <br />
-                ค่าเป้าหมาย: {Number(detail[2]).toFixed(0)}
-                <br /><br />
-
-                <form onSubmit={(e) => updateReport(e, item.report_id, index)}>
-                  <label> A : &nbsp;<br /></label>
-                  <input
-                    type="number"
-                    step="0.1"
-                    min={0}
-                    value={detailq[index]?.value_a || ""}
-                    onChange={(e) =>
-                      handleChangee(index, "value_a", e.target.value)
-                    }
-                  />
-                  <br />
-                  <div hidden={!item.value_b || item.value_b === "0.00"}>
-                    <label className="mt-2"> B : &nbsp;<br /></label>
+                  <form onSubmit={(e) => updateReport(e, item.report_id, index)}>
+                    <label> A : &nbsp;<br /></label>
                     <input
                       type="number"
                       step="0.1"
                       min={0}
-                      value={detailq[index]?.value_b || ""}
+                      value={detailq[index]?.value_a || ""}
                       onChange={(e) =>
-                        handleChangee(index, "value_b", e.target.value)
+                        handleChangee(index, "value_a", e.target.value)
                       }
                     />
-                  </div>
-                  <br hidden={item.value_b} />
-                  <br />
-                  ผลลัพธ์: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input className="text-center" value={res.toFixed(2)}></input> <br />
-                  การประเมิน: <input className="text-center mt-2 mb-2" value={trc}></input> <br />
-                  <hr />
-                  <div>
-                    {renderInputse(detailq[index]?.form_data, index)}
-                  </div>
+                    <br />
+                    <div hidden={!item.value_b}>
+                      <label className="mt-2"> B : &nbsp;<br /></label>
+                      <input
+                        type="number"
+                        step="0.1"
+                        min={0}
+                        value={detailq[index]?.value_b || ""}
+                        onChange={(e) =>
+                          handleChangee(index, "value_b", e.target.value)
+                        }
+                      />
+                    </div>
+                    <br hidden={item.value_b} />
+                    <br />
+                    ผลลัพธ์: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input className="text-center" value={res.toFixed(2)}></input> <br />
+                    การประเมิน: <input className="text-center mt-2 mb-2" value={trc}></input> <br />
+                    <hr />
+                    <div>
+                      {renderInputse(detailq[index]?.form_data, index)}
+                    </div>
 
-                  <br />
-                  <button type="submit" className="open-btn2">
-                    แก้ใขรายงานไตรมาส {item.quarter}
-                  </button>
-                </form>
+                    <br />
+                    <button type="submit" className="open-btn2">
+                      แก้ใขรายงานไตรมาส {item.quarter}
+                    </button>
+                  </form>
+                </div>
               </div>
 
             );
           })}
         </div>
-        <IndicatorCumulativeChart
+        {/* <IndicatorCumulativeChart
           year={year}
           agencyId={0}
           indicatorId={indi}
-        />
+        /> */}
 
       </Modal2>
+
+      <EventListModal
+              open={openList}
+              onClose={() => setOpenList(false)}
+            />
 
       <div style={{ padding: 20 }}>
         <h1>รายละเอียดตัวชี้ทั้งหมด</h1>
@@ -416,8 +452,9 @@ function App2() {
               <th>ชื่อ</th>
               <th>ที่</th>
               {/* <th>ปีงบ</th> */}
-              <th>ไตรมาสที่ส่ง</th>
+              {/* <th>ไตรมาสที่ส่ง</th> */}
               {/* <th>ส่งตัวชี้วัด</th> */}
+              <th>ดูโครงการ</th>
               <th>รายละเอียด</th>
             </tr>
           </thead>
@@ -442,12 +479,17 @@ function App2() {
                   <td>{item.name}</td>
                   <td>{item.type}</td>
                   {/* <td>{item.year + 543}</td> */}
-                  <td>{qq}</td>
+                  {/* <td>{qq}</td> */}
                   {/* <td>
                     <button disabled={q === 4} className="open-btn" onClick={() => { setSa(0), setSb(0), setOpen(true), setValues({}), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]) }}>ตอบตัวชี้วัด</button>
                   </td> */}
                   <td>
-                    <button disabled={q === 0} className="edit-btn" onClick={e => { setSa(0), setSb(0), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]), showdetail(item.id), setOpen2(true) }}>การส่งตัวชี้วัด</button>
+                    <button className="btn btn-secondary" onClick={() => { sessionStorage.setItem("fmid", item.id), setOpenList(true)} }>
+                      ดูรายการโครงการ
+                    </button>
+                  </td>
+                  <td>
+                    <button disabled={q === 0} className="edit-btn" onClick={e => { sessionStorage.setItem("fmid", item.id), setSa(0), setSb(0), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]), showdetail(item.id), setOpen2(true) }}>การส่งตัวชี้วัด</button>
                   </td>
                 </tr>
               );

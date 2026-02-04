@@ -157,7 +157,7 @@ export default function EventForm({
             <input name="evname" value={form.evname} onChange={handleChange} required />
 
             <label>ลำดับโครงการ</label>
-            <input name="fmsid" type="number" value={form.fmsid} onChange={handleChange} required />
+            <input name="fmsid" value={form.fmsid} onChange={handleChange} required />
 
             <label>ผู้รับผิดชอบ</label>
             <input name="evres" value={form.evres} onChange={handleChange} required />
@@ -214,14 +214,15 @@ export default function EventForm({
             <input type="file" accept="application/pdf" onChange={(e) => setPdfFile(e.target.files[0])} />
 
             <label className="confirm">
-                <input type="checkbox" onClick={e => {
+                <label for="chk1" className="text-danger h4"> ***ยืนยันข้อมูลถูกต้อง*** {"==>>"} </label>
+                <input type="checkbox" className="form-check-input h4" id="chk1" onClick={e => {
                     setForm(prev => ({
                         ...prev,
                         fmid: sessionStorage.getItem("fmid"),
                         submitid: localStorage.getItem("new")
                     })), console.log(form)
                 }} checked={confirm} onChange={(e) => setConfirm(e.target.checked)} />
-                ยืนยันข้อมูลถูกต้อง
+                
             </label>
 
             <button disabled={loading}>

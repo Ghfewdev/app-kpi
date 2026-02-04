@@ -22,7 +22,7 @@ import PostEv from './Component/PostEv.jsx'
 import NewApp from './Page/NewApp.jsx'
 import Dash2 from './Page/dash2.jsx'
 import Addev from './Page/AddEv69.jsx'
-import Test from './Page/test.jsx'
+// import Test from './Page/test.jsx'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -45,7 +45,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='newapp' element={<NewApp />} />
       <Route path='dash2' element={<Dash2 />} />
       <Route path='addev2' element={<Addev />} />
-      <Route path='test' element={<Test />} />
+      {/* <Route path='test' element={<Test />} /> */}
     </Routes>
   </BrowserRouter>
 )

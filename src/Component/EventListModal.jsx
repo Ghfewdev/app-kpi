@@ -12,6 +12,19 @@ export default function EventListModal({ open, onClose }) {
     const usid = localStorage.getItem("new");
     const fmid = sessionStorage.getItem("fmid");
 
+    const showdetail = (val) => {
+        fetch(`${import.meta.env.VITE_APP_API}/api/event/res/${val}/${fmid}`)
+            .then((res) => res.json())
+            .then((d) => setEvents(d));
+
+    }
+
+    var dep = ["โรงพยาบาลกลาง", "โรงพยาบาลตากสิน", "โรงพยาบาลเจริญกรุงประชารักษ์", 
+        "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ", "โรงพยาบาลเวชการุณย์รัศมิ์", "โรงพยาบาลนคราภิบาลกรุงเทพมหานคร",
+        "โรงพยาบาลราชพิพัฒน์", "โรงพยาบาลสิรินธร", "โรงพยาบาลผู้สูงอายุบางขุนเทียน", "โรงพยาบาลรัตนประชารักษ์",
+        "โรงพยาบาลบางนากรุงเทพมหานคร", "สก.", "ศบฉ.", "สพบ"
+    ]
+
     useEffect(() => {
         if (!open || !usid || !fmid) return;
 
@@ -39,6 +52,21 @@ export default function EventListModal({ open, onClose }) {
                 <button className="modal-close" onClick={onClose}>✕</button>
 
                 <h2>รายการโครงการ / กิจกรรม</h2>
+                <div hidden={localStorage.getItem("new") !== "14"}>
+                <label>เลือกหน่อยงาน</label>: &nbsp;
+                <select onChange={e => showdetail(e.target.value)}>
+                    <option value={"14"}>
+                        ทั้งหมด
+                    </option>
+                    {events.map((a, i) => {
+                        return (
+                            <option key={a} value={a.submitid} >
+                                {dep[i+1]}
+                            </option>
+                        )
+                    })}
+                </select>
+                </div>
 
                 {loading ? (
                     <p>กำลังโหลดข้อมูล...</p>

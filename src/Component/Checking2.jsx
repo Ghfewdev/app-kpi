@@ -18,7 +18,7 @@ export default function CheckingMatrix() {
   // Fetch API
   // =========================
   useEffect(() => {
-    fetch("http://localhost:3000/api/checking")
+    fetch(import.meta.env.VITE_APP_API+"/api/checking")
       .then(res => res.json())
       .then(setData)
       .catch(err => console.error(err));

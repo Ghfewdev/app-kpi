@@ -26,7 +26,7 @@ function App() {
   const [cv, setCv] = useState(true);
   const [c, setC] = useState("");
   const [sa, setSa] = useState(0);
-  const [sb, setSb] = useState(0);
+  const [sb, setSb] = useState(null);
   const [sc, setSc] = useState(null);
   const [values, setValues] = useState({});
   const [indi, setIndi] = useState(0);
@@ -154,6 +154,8 @@ function App() {
     } else {
       jso = values;
     }
+
+    console.log(sb)
 
     if (sb === 0) {
       setSb(null)
@@ -380,7 +382,7 @@ function App() {
                     }
                   />
                   <br />
-                  <div hidden={!item.value_b || item.value_b === "0.00"}>
+                  <div hidden={!item.value_b}>
                     <label className="mt-2"> B : &nbsp;<br /></label>
                     <input
                       type="number"
@@ -471,7 +473,7 @@ function App() {
                     </button>
                   </td>
                   <td>
-                    <button disabled={q === 0} className="edit-btn" onClick={e => { setSa(0), setSb(0), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]), showdetail(item.id), setOpen2(true), console.log(item.detail) }}>การส่งตัวชี้วัด</button>
+                    <button disabled={q === 0} className="edit-btn" onClick={e => { setSa(0), setSb(0), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]), showdetail(item.id), setOpen2(true) }}>การส่งตัวชี้วัด</button>
                   </td>
                 </tr>
               );
