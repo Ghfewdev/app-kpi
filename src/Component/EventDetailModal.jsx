@@ -118,6 +118,7 @@ export default function EventDetailModal({ open, event, onClose }) {
                 )}>
                     🖨️ พิมพ์รายงาน
                 </button>
+                {/* <button onClick={e => console.log(event)}>ddd</button> */}
                 <button className="modal-close-btn" onClick={onClose}>ปิด</button>
             </div>
 

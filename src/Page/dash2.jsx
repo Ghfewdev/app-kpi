@@ -31,6 +31,7 @@ function App2() {
   const [indi, setIndi] = useState(0);
   const [detailq, setDetailq] = useState([]);
   const [openList, setOpenList] = useState(false);
+  const [list, setList] = useState([]);
   // const [nv, setNv] = useState([]);
 
   const cbv = (value) => {
@@ -85,7 +86,9 @@ function App2() {
   const showdetail = (val) => {
     fetch(`${import.meta.env.VITE_APP_API}/api/admin/indicatorde/${year}/${val}`)
       .then((res) => res.json())
-      .then((d) => setDetailq(d));
+      .then((d) => {setDetailq(d), 
+        setList(d)
+      });
     console.log(`${import.meta.env.VITE_APP_API}/api/admin/indicatorde/${year}/${val}`)
   }
 
@@ -344,7 +347,7 @@ function App2() {
           <option value={""}>
             ทั้งหมด
           </option>
-          {detailq.map((a, i) => {
+          {list.map((a, i) => {
             return (
               <option key={a} value={a.agency_id} >
                 {a.agency_name}

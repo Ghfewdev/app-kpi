@@ -9,6 +9,8 @@ export default function EventListModal({ open, onClose }) {
     const [viewEvent, setViewEvent] = useState(null);
     const [editEvent, setEditEvent] = useState(null);
 
+    const [list, setList] = useState([]);
+
     const usid = localStorage.getItem("new");
     const fmid = sessionStorage.getItem("fmid");
 
@@ -35,7 +37,8 @@ export default function EventListModal({ open, onClose }) {
         )
             .then((res) => res.json())
             .then((data) => {
-                setEvents(Array.isArray(data) ? data : []);
+                setEvents(Array.isArray(data) ? data : []), 
+                setList(Array.isArray(data) ? data : []);
             })
             .catch((err) => {
                 console.error("FETCH EVENT ERROR:", err);
@@ -58,10 +61,10 @@ export default function EventListModal({ open, onClose }) {
                     <option value={"14"}>
                         ทั้งหมด
                     </option>
-                    {events.map((a, i) => {
+                    {list.map((a, i) => {
                         return (
                             <option key={a} value={a.submitid} >
-                                {dep[i+1]}
+                                {dep[a.submitid-1]}
                             </option>
                         )
                     })}
