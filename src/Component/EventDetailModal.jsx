@@ -8,7 +8,7 @@ export default function EventDetailModal({ open, event, onClose }) {
 
         const dp = val;
         const qur = Number(sessionStorage.getItem("qur")) || dp.qur;
-        const ag = sessionStorage.getItem("ag");
+        // const ag = sessionStorage.getItem("ag");
 
         //   const img = dp.image_file || "noimg.PNG";
         const img = dp.id;
@@ -21,12 +21,18 @@ export default function EventDetailModal({ open, event, onClose }) {
             "ชะลอ",
         ];
 
+        const dep = ["โรงพยาบาลกลาง", "โรงพยาบาลตากสิน", "โรงพยาบาลเจริญกรุงประชารักษ์", 
+        "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ", "โรงพยาบาลเวชการุณย์รัศมิ์", "โรงพยาบาลนคราภิบาลกรุงเทพมหานคร",
+        "โรงพยาบาลราชพิพัฒน์", "โรงพยาบาลสิรินธร", "โรงพยาบาลผู้สูงอายุบางขุนเทียน", "โรงพยาบาลรัตนประชารักษ์",
+        "โรงพยาบาลบางนากรุงเทพมหานคร", "สก.", "ศบฉ.", "สพบ"
+    ]
+
         return (
             <div className="fonts col-print-12">
 
                 <div className="mb-3">
                     <b>แบบรายงานความก้าวหน้ารายโครงการ / กิจกรรม</b><br />
-                    <b>ส่วนราชการ:</b> {ag}
+                    <b>ส่วนราชการ:</b> {dep[Number(dp.submitid-1)]}
                 </div>
 
                 <div className="mb-2">

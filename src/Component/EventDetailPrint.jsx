@@ -9,6 +9,12 @@ export default function pagePrint(val) {
   const quarterCheck = (q) => (dp.qur >= q ? "☑" : "☐")
   const statusCheck = (s) => (dp.evstatus === s ? "☑" : "☐")
 
+  var dep = ["โรงพยาบาลกลาง", "โรงพยาบาลตากสิน", "โรงพยาบาลเจริญกรุงประชารักษ์", 
+        "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ", "โรงพยาบาลเวชการุณย์รัศมิ์", "โรงพยาบาลนคราภิบาลกรุงเทพมหานคร",
+        "โรงพยาบาลราชพิพัฒน์", "โรงพยาบาลสิรินธร", "โรงพยาบาลผู้สูงอายุบางขุนเทียน", "โรงพยาบาลรัตนประชารักษ์",
+        "โรงพยาบาลบางนากรุงเทพมหานคร", "สก.", "ศบฉ.", "สพบ"
+    ]
+
 
   const html = `
   <html>
@@ -58,7 +64,7 @@ export default function pagePrint(val) {
     <h3 class="center">แบบรายงานความก้าวหน้ารายโครงการ / กิจกรรม</h3>
 
     <div class="section">
-      ส่วนราชการ <span class="line">${sessionStorage.getItem("ag") || ""}</span>
+      ส่วนราชการ <span class="line">${dep[Number(dp.submitid-1)]}</span>
     </div>
 
     <div class="section">

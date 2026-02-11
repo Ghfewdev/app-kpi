@@ -11,7 +11,7 @@ import EventModal from "../Component/EventModal";
 import EventForm from "../Component/EventForm";
 import EventListModal from "../Component/EventListModal";
 
-function App() {
+function NewApp() {
   Authen();
 
   const [data, setData] = useState([]);
@@ -26,7 +26,7 @@ function App() {
   const [cv, setCv] = useState(true);
   const [c, setC] = useState("");
   const [sa, setSa] = useState(0);
-  const [sb, setSb] = useState(null);
+  const [sb, setSb] = useState(0);
   const [sc, setSc] = useState(null);
   const [values, setValues] = useState({});
   const [indi, setIndi] = useState(0);
@@ -90,7 +90,7 @@ function App() {
       .then((res) => res.json())
       .then((d) => setDetailq(d));
 
-    console.log(detail)
+    // console.log(detail)
   }
 
   const handleSubmit = (event) => {
@@ -155,10 +155,12 @@ function App() {
       jso = values;
     }
 
-    console.log(sb)
+    // console.log(sb)
 
-    if (sb === 0) {
-      setSb(null)
+    var tsb = sb
+
+    if (sb === 0 || sb === 0.00) {
+      tsb = null
     }
 
     const fill = [
@@ -168,7 +170,7 @@ function App() {
         fiscal_year: year,
         quarter: "Q" + String(qt + 1),
         value_a: sa,
-        value_b: sb,
+        value_b: tsb,
         calculated_value: null,
         form_data: jso,
         status: "SUBMITTED",
@@ -177,7 +179,7 @@ function App() {
       }
     ];
 
-    console.log(fill)
+    // console.log(fill)
 
     if (confirm("ต้องการส่งรายงานหรือไม่ !\n") == true) {
 
@@ -358,7 +360,7 @@ function App() {
               trc = "ผ่าน"
 
             return (
-              <div key={item.id} className="mb-4 border p-3 rounded">
+              <div key={index} className="mb-4 border p-3 rounded">
                 <h2 className="modal-title">
                   ตัวชี้วัด {head} ไตรมาสที่ {index + 1} ปีงบ {year + 543}
                 </h2>
@@ -396,8 +398,8 @@ function App() {
                   </div>
                   <br hidden={item.value_b} />
                   <br />
-                  ผลลัพธ์: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input className="text-center" value={res.toFixed(2)}></input> <br />
-                  การประเมิน: <input className="text-center mt-2 mb-2" value={trc}></input> <br />
+                  ผลลัพธ์: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input className="text-center" readOnly value={res.toFixed(2)}></input> <br />
+                  การประเมิน: <input readOnly className="text-center mt-2 mb-2" value={trc}></input> <br />
                   <hr />
                   <div>
                     {renderInputse(detailq[index]?.form_data, index)}
@@ -487,4 +489,4 @@ function App() {
   );
 }
 
-export default App;
+export default NewApp;

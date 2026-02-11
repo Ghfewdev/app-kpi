@@ -373,7 +373,7 @@ function App2() {
 
             return (
               <div>
-                <div key={item.id} className="mb-4 border p-3 rounded">
+                <div key={index} className="mb-4 border p-3 rounded">
                   <h2 className="modal-title">
                     ตัวชี้วัด {head} ไตรมาสที่ {item.quarter} ปีงบ {year + 543} <label className="text-primary">{item.agency_name}</label>
                   </h2>

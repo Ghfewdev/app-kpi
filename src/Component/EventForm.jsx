@@ -173,16 +173,16 @@ export default function EventForm({
 
             <label>งบประมาณที่ได้รับ</label>
             <div className="grid3">
-                <input name="dc1" placeholder="กทม." value={form.dc1} onChange={handleChange} />
-                <input name="dc2" placeholder="เงินบำรุง" value={form.dc2} onChange={handleChange} />
-                <input name="dc3" placeholder="อื่นๆ" value={form.dc3} onChange={handleChange} />
+                <input name="dc1" type="number" placeholder="กทม." value={form.dc1} onChange={handleChange} />
+                <input name="dc2" type="number" placeholder="เงินบำรุง" value={form.dc2} onChange={handleChange} />
+                <input name="dc3" type="number" placeholder="อื่นๆ" value={form.dc3} onChange={handleChange} />
             </div>
 
             <label>งบประมาณที่ใช้</label>
             <div className="grid3">
-                <input name="dd1" placeholder="กทม." value={form.dd1} onChange={handleChange} />
-                <input name="dd2" placeholder="เงินบำรุง" value={form.dd2} onChange={handleChange} />
-                <input name="dd3" placeholder="อื่นๆ" value={form.dd3} onChange={handleChange} />
+                <input name="dd1" type="number" placeholder="กทม." value={form.dd1} onChange={handleChange} />
+                <input name="dd2" type="number" placeholder="เงินบำรุง" value={form.dd2} onChange={handleChange} />
+                <input name="dd3" type="number" placeholder="อื่นๆ" value={form.dd3} onChange={handleChange} />
             </div>
 
             <label>วัตถุประสงค์</label>
@@ -214,7 +214,7 @@ export default function EventForm({
             <input type="file" accept="application/pdf" onChange={(e) => setPdfFile(e.target.files[0])} />
 
             <label className="confirm">
-                <label for="chk1" className="text-danger h4"> ***ยืนยันข้อมูลถูกต้อง*** {"==>>"} </label>
+                <label htmlFor="chk1" className="text-danger h4"> ***ยืนยันข้อมูลถูกต้อง*** {"==>>"} </label>
                 <input type="checkbox" className="form-check-input h4" id="chk1" onClick={e => {
                     setForm(prev => ({
                         ...prev,
