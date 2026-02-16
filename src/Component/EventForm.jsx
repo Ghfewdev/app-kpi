@@ -114,6 +114,7 @@ export default function EventForm({
 
         const method = mode === "add" ? "POST" : "PUT";
 
+
         try {
             const res = await fetch(url, {
                 method,

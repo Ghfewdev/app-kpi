@@ -46,6 +46,9 @@ const IndicatorCumulativeChart = ({
             case "A/B":
                 return A / B;
 
+            case "A+B":
+                return A + B;
+
             default:
                 console.warn("Unknown formula:", formula);
                 return 0;

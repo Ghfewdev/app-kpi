@@ -272,6 +272,7 @@ function NewApp() {
       case "A/B": return A / B;
       case "(A/B)*1.25": return (A / B) * 1.25;
       case "A-B": return A - B;
+      case "A+B": return A + B;
       default: return 0;
     }
   };

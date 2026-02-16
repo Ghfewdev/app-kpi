@@ -86,7 +86,8 @@ function App2() {
   const showdetail = (val) => {
     fetch(`${import.meta.env.VITE_APP_API}/api/admin/indicatorde/${year}/${val}`)
       .then((res) => res.json())
-      .then((d) => {setDetailq(d), 
+      .then((d) => {
+        setDetailq(d),
         setList(d)
       });
     console.log(`${import.meta.env.VITE_APP_API}/api/admin/indicatorde/${year}/${val}`)
@@ -274,6 +275,7 @@ function App2() {
       case "A/B": return A / B;
       case "(A/B)*1.25": return (A / B) * 1.25;
       case "A-B": return A - B;
+      case "A+B": return A + B;
       default: return 0;
     }
   };
@@ -342,7 +344,7 @@ function App2() {
       </Modal>
 
       <Modal2 isOpen={open2} onClose={() => setOpen2(false)}>
-        <label>เลือกหน่อยงาน</label>: 
+        <label>เลือกหน่อยงาน</label>:
         <select onChange={e => showdetail2(e.target.value)}>
           <option value={""}>
             ทั้งหมด
@@ -355,7 +357,7 @@ function App2() {
             )
           })}
         </select>
-<br />
+        <br />
         <br />
         <div className="col4">
 
@@ -414,8 +416,8 @@ function App2() {
                     </div>
                     <br hidden={item.value_b} />
                     <br />
-                    ผลลัพธ์: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input className="text-center" value={res.toFixed(2)}></input> <br />
-                    การประเมิน: <input className="text-center mt-2 mb-2" value={trc}></input> <br />
+                    ผลลัพธ์: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input readOnly className="text-center" value={res.toFixed(2)}></input> <br />
+                    การประเมิน: <input readOnly className="text-center mt-2 mb-2" value={trc}></input> <br />
                     <hr />
                     <div>
                       {renderInputse(detailq[index]?.form_data, index)}
@@ -441,9 +443,9 @@ function App2() {
       </Modal2>
 
       <EventListModal
-              open={openList}
-              onClose={() => setOpenList(false)}
-            />
+        open={openList}
+        onClose={() => setOpenList(false)}
+      />
 
       <div style={{ padding: 20 }}>
         <h1>รายละเอียดตัวชี้ทั้งหมด</h1>
@@ -487,7 +489,7 @@ function App2() {
                     <button disabled={q === 4} className="open-btn" onClick={() => { setSa(0), setSb(0), setOpen(true), setValues({}), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]) }}>ตอบตัวชี้วัด</button>
                   </td> */}
                   <td>
-                    <button className="btn btn-secondary" onClick={() => { sessionStorage.setItem("fmid", item.id), setOpenList(true)} }>
+                    <button className="btn btn-secondary" onClick={() => { sessionStorage.setItem("fmid", item.id), setOpenList(true) }}>
                       ดูรายการโครงการ
                     </button>
                   </td>
