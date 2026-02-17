@@ -21,7 +21,7 @@ export default function EventListModal({ open, onClose }) {
 
     }
 
-    var dep = ["โรงพยาบาลกลาง", "โรงพยาบาลตากสิน", "โรงพยาบาลเจริญกรุงประชารักษ์", 
+    var dep = ["โรงพยาบาลกลาง", "โรงพยาบาลตากสิน", "โรงพยาบาลเจริญกรุงประชารักษ์",
         "โรงพยาบาลหลวงพ่อทวีศักดิ์ ชุตินธฺโร อุทิศ", "โรงพยาบาลเวชการุณย์รัศมิ์", "โรงพยาบาลนคราภิบาลกรุงเทพมหานคร",
         "โรงพยาบาลราชพิพัฒน์", "โรงพยาบาลสิรินธร", "โรงพยาบาลผู้สูงอายุบางขุนเทียน", "โรงพยาบาลรัตนประชารักษ์",
         "โรงพยาบาลบางนากรุงเทพมหานคร", "สก.", "ศบฉ.", "สพบ"
@@ -37,8 +37,8 @@ export default function EventListModal({ open, onClose }) {
         )
             .then((res) => res.json())
             .then((data) => {
-                setEvents(Array.isArray(data) ? data : []), 
-                setList(Array.isArray(data) ? data : []);
+                setEvents(Array.isArray(data) ? data : []),
+                    setList(Array.isArray(data) ? data : []);
             })
             .catch((err) => {
                 console.error("FETCH EVENT ERROR:", err);
@@ -56,19 +56,22 @@ export default function EventListModal({ open, onClose }) {
 
                 <h2>รายการโครงการ / กิจกรรม</h2>
                 <div hidden={localStorage.getItem("new") !== "14"}>
-                <label>เลือกหน่อยงาน</label>: &nbsp;
-                <select onChange={e => showdetail(e.target.value)}>
-                    <option value={"14"}>
-                        ทั้งหมด
-                    </option>
-                    {list.map((a, i) => {
-                        return (
-                            <option key={a} value={a.submitid} >
-                                {dep[a.submitid-1]}
-                            </option>
-                        )
-                    })}
-                </select>
+                    <label>เลือกหน่อยงาน</label>: &nbsp;
+                    <select onChange={e => showdetail(e.target.value)}>
+                        <option value={"14"}>
+                            ทั้งหมด
+                        </option>
+                        {list
+                            .filter((item, index, self) =>
+                                index === self.findIndex(t => t.submitid === item.submitid)
+                            )
+                            .map((a) => (
+                                <option key={a.submitid} value={a.submitid}>
+                                    {dep[a.submitid - 1]}
+                                </option>
+                            ))
+                        }
+                    </select>
                 </div>
 
                 {loading ? (

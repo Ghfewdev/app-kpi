@@ -23,6 +23,7 @@
     "chartjs-gauge": "^0.3.0",
     "chartjs-plugin-datalabels": "^2.2.0",
     "echarts": "^5.4.3",
+    "file-saver": "^2.0.5",
     "html-react-parser": "^4.0.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
@@ -31,7 +32,8 @@
     "react-router-dom": "^6.13.0",
     "react-scripts": "^5.0.1",
     "recharts": "^2.15.4",
-    "styled-components": "^5.3.11"
+    "styled-components": "^5.3.11",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",

@@ -8,6 +8,7 @@ import Modal2 from "../Component/modal2";
 import IndicatorCumulativeChart from "../Component/chart";
 import axios from "axios";
 import EventListModal from "../Component/EventListModal";
+import IndicatorSummaryModal from "../Component/IndicatorSummaryModal";
 
 function App2() {
   Authlevel();
@@ -32,6 +33,9 @@ function App2() {
   const [detailq, setDetailq] = useState([]);
   const [openList, setOpenList] = useState(false);
   const [list, setList] = useState([]);
+  const [reports, setReports] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [codes, setCodes] = useState("")
   // const [nv, setNv] = useState([]);
 
   const cbv = (value) => {
@@ -41,6 +45,19 @@ function App2() {
       setBv(true);
     }
   }
+
+  const openModal = async (years, code, indicatorId) => {
+    const res = await fetch(
+      `${import.meta.env.VITE_APP_API}/api/admin/indicatorde/${years}/${indicatorId}`
+    );
+
+
+    const data = await res.json();
+
+    setCodes(code)
+    setReports(data);
+    setShowModal(true);
+  };
 
   const ccv = (value) => {
     if (value === "") {
@@ -88,7 +105,7 @@ function App2() {
       .then((res) => res.json())
       .then((d) => {
         setDetailq(d),
-        setList(d)
+          setList(d)
       });
     console.log(`${import.meta.env.VITE_APP_API}/api/admin/indicatorde/${year}/${val}`)
   }
@@ -314,7 +331,13 @@ function App2() {
     <>
       <Navbar />
 
-
+      {showModal && (
+        <IndicatorSummaryModal
+          reports={reports}
+          onClose={() => setShowModal(false)}
+          code={codes}
+        />
+      )}
       <Modal isOpen={open} onClose={() => setOpen(false)}>
         <h2 className="modal-title">ตอบตัวชี้วัด {head} ไตรมาสที่ {qt + 1} ปีงบ {year + 543}</h2>
         หมายเหตุ: <br />
@@ -461,6 +484,7 @@ function App2() {
               {/* <th>ส่งตัวชี้วัด</th> */}
               <th>ดูโครงการ</th>
               <th>รายละเอียด</th>
+              <th>สรุปผล</th>
             </tr>
           </thead>
 
@@ -495,6 +519,11 @@ function App2() {
                   </td>
                   <td>
                     <button disabled={q === 0} className="edit-btn" onClick={e => { sessionStorage.setItem("fmid", item.id), setSa(0), setSb(0), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]), showdetail(item.id), setOpen2(true) }}>การส่งตัวชี้วัด</button>
+                  </td>
+                  <td>
+                    <button className="btn btn-info" onClick={() => openModal(year, item.code, item.id)}>
+                      สรุปผล
+                    </button>
                   </td>
                 </tr>
               );

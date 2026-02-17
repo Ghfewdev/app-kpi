@@ -160,7 +160,10 @@ function NewApp() {
     var tsb = sb
 
     if (sb === 0 || sb === 0.00) {
-      tsb = null
+      if (bv)
+        tsb = 0
+      else
+        tbs = null
     }
 
     const fill = [
@@ -385,7 +388,7 @@ function NewApp() {
                     }
                   />
                   <br />
-                  <div hidden={!item.value_b}>
+                  <div hidden={item.value_b === null}>
                     <label className="mt-2"> B : &nbsp;<br /></label>
                     <input
                       type="number"
@@ -471,7 +474,7 @@ function NewApp() {
                     <button className="btn btn-dark" onClick={() => { sessionStorage.setItem("fmid", item.id), setOpen3(true) }}>➕ เพิ่มกิจกรรม</button>
                   </td>
                   <td>
-                    <button className="btn btn-secondary" onClick={() => { sessionStorage.setItem("fmid", item.id), setOpenList(true)} }>
+                    <button className="btn btn-secondary" onClick={() => { sessionStorage.setItem("fmid", item.id), setOpenList(true) }}>
                       ดูรายการโครงการ
                     </button>
                   </td>

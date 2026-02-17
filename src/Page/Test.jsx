@@ -1,28 +1,35 @@
 import { useState } from "react";
-import EventModal from "../Component/EventModal";
-import EventForm from "../Component/EventForm";
-import EventListModal from "../Component/EventListModal";
+import IndicatorSummaryModal from "../Component/IndicatorSummaryModal";
 
+export default function IndicatorPage() {
+  const [reports, setReports] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
-export default function Test() {
-    const [open, setOpen] = useState(false);
-    const [openList, setOpenList] = useState(false);
-
-    return (
-        <>
-            <button onClick={() => setOpen(true)}>➕ เพิ่มกิจกรรม</button>
-            <button onClick={() => setOpenList(true)}>
-                ดูรายการโครงการ
-            </button>
-
-            <EventListModal
-                open={openList}
-                onClose={() => setOpenList(false)}
-            />
-
-            <EventModal open={open} onClose={() => setOpen(false)}>
-                <EventForm onSuccess={() => setOpen(false)} />
-            </EventModal>
-        </>
+  const openModal = async (year, indicatorId) => {
+    const res = await fetch(
+      `http://localhost:3000/api/admin/indicatorde/${year}/${indicatorId}`
     );
+
+    const data = await res.json();
+
+    setReports(data);
+    setShowModal(true);
+  };
+
+  return (
+    <div>
+
+      <button onClick={() => openModal(2026, 21)}>
+        ดูสรุปปี 2026
+      </button>
+
+      {showModal && (
+        <IndicatorSummaryModal
+          reports={reports}
+          onClose={() => setShowModal(false)}
+        />
+      )}
+
+    </div>
+  );
 }

@@ -76,7 +76,7 @@ export default function pagePrint(val) {
     </div>
 
     <div class="section">
-      หน่วยงานที่รับผิดชอบ <span class="line"></span>
+      หน่วยงานที่รับผิดชอบ <span class="line">${dp.evres || ""}</span>
     </div>
 
     <div class="section">
@@ -89,18 +89,13 @@ export default function pagePrint(val) {
     </div>
 
     <div class="section">
-      <b>รายละเอียดการดำเนินงานในไตรมาสนี้</b>
-      <div class="box">${dp.evres || ""}</div>
-    </div>
-
-    <div class="section">
       <b>วัตถุประสงค์</b>
-      <div class="box">${dp.evtarget || ""}</div>
+      <div class="box">${dp.evpoint || ""}</div>
     </div>
 
     <div class="section">
       <b>เป้าหมาย</b>
-      <div class="box">${dp.evpoint || ""}</div>
+      <div class="box">${dp.evtarget || ""}</div>
     </div>
 
     <div class="section">
@@ -125,6 +120,16 @@ export default function pagePrint(val) {
           <td>${dp.budget_dd3}</td>
         </tr>
       </table>
+    </div>
+
+    <div style="break-after:page"></div>
+
+    <div class="section">
+      <b>รายละเอียดการดำเนินงานรายไตรมาส</b>
+      <div class="box">${dp.result_q1 || ""}</div>
+      <div hidden = {dp.result_q2} class="box">${dp.result_q2 || ""}</div>
+      <div hidden = {dp.result_q3}  class="box">${dp.result_q3 || ""}</div>
+      <div hidden = {dp.result_q4}  class="box">${dp.result_q4 || ""}</div>
     </div>
 
     <div class="section">
