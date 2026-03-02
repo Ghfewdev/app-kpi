@@ -64,27 +64,30 @@ export default function Alledit({ reports, detail, onClose }) {
 
     const handleSave = async (row) => {
 
-        try {
+        if (confirm("ต้องการแก้ไขหรือไม่ !\n") == true) {
 
-            const payload = {
-                value_a: row.value_a,
-                updated_by: row.agency_id
-            };
+            try {
 
-            if (showB) {
-                payload.value_b = row.value_b;
+                const payload = {
+                    value_a: row.value_a,
+                    updated_by: row.agency_id
+                };
+
+                if (showB) {
+                    payload.value_b = row.value_b;
+                }
+
+                await axios.put(
+                    `${import.meta.env.VITE_APP_API}/api/indicator-reports/${row.report_id}`,
+                    payload
+                );
+
+                alert("บันทึกสำเร็จ");
+
+            } catch (err) {
+                console.error(err);
+                alert("บันทึกไม่สำเร็จ");
             }
-
-            await axios.put(
-                `${import.meta.env.VITE_APP_API}/api/indicator-reports/${row.report_id}`,
-                payload
-            );
-
-            alert("บันทึกสำเร็จ");
-
-        } catch (err) {
-            console.error(err);
-            alert("บันทึกไม่สำเร็จ");
         }
 
     };
@@ -229,8 +232,8 @@ export default function Alledit({ reports, detail, onClose }) {
                                             <td>รวม</td>
                                             <td>{sumA}</td>
                                             {showB && <td>{sumB}</td>}
-                                            <td className={pass ? "text-success" : "text-danger"}>
-                                                <b>{summaryValue.toFixed(2)}</b>
+                                            <td >
+                                                <button className={pass ? "text-white btn btn-sm bg-success" : "text-white btn btn-sm bg-danger"}>{summaryValue.toFixed(2)}</button>
                                             </td>
                                             <td>-</td>
                                         </tr>
