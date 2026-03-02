@@ -9,6 +9,7 @@ import IndicatorCumulativeChart from "../Component/chart";
 import axios from "axios";
 import EventListModal from "../Component/EventListModal";
 import IndicatorSummaryModal from "../Component/IndicatorSummaryModal";
+import Alledit from "../Component/alledit";
 
 function App2() {
   Authlevel();
@@ -35,8 +36,10 @@ function App2() {
   const [list, setList] = useState([]);
   const [reports, setReports] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [codes, setCodes] = useState("")
+  const [showModal2, setShowModal2] = useState(false);
+  const [codes, setCodes] = useState([])
   // const [nv, setNv] = useState([]);
+
 
   const cbv = (value) => {
     if (value === null) {
@@ -56,7 +59,8 @@ function App2() {
 
     setCodes(code)
     setReports(data);
-    setShowModal(true);
+    // setShowModal(true);
+    setShowModal2(true);
   };
 
   const ccv = (value) => {
@@ -273,7 +277,7 @@ function App2() {
       ...newData[index].form_data,
       [key]: value,
     };
-    console.log(detailq)
+    // console.log(detailq)
     setDetailq(newData);
   };
 
@@ -331,13 +335,22 @@ function App2() {
     <>
       <Navbar />
 
-      {showModal && (
+      {showModal2 && (
+        <Alledit
+          reports={reports}
+          onClose={() => setShowModal2(false)}
+        detail={codes}
+        />
+      )}
+
+      {/* {showModal && (
         <IndicatorSummaryModal
           reports={reports}
           onClose={() => setShowModal(false)}
           code={codes}
         />
-      )}
+      )} */}
+
       <Modal isOpen={open} onClose={() => setOpen(false)}>
         <h2 className="modal-title">ตอบตัวชี้วัด {head} ไตรมาสที่ {qt + 1} ปีงบ {year + 543}</h2>
         หมายเหตุ: <br />
@@ -483,7 +496,7 @@ function App2() {
               {/* <th>ไตรมาสที่ส่ง</th> */}
               {/* <th>ส่งตัวชี้วัด</th> */}
               <th>ดูโครงการ</th>
-              <th>รายละเอียด</th>
+              {/* <th>รายละเอียด</th> */}
               <th>สรุปผล</th>
             </tr>
           </thead>
@@ -517,11 +530,11 @@ function App2() {
                       ดูรายการโครงการ
                     </button>
                   </td>
-                  <td>
+                  {/* <td>
                     <button disabled={q === 0} className="edit-btn" onClick={e => { sessionStorage.setItem("fmid", item.id), setSa(0), setSb(0), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]), showdetail(item.id), setOpen2(true) }}>การส่งตัวชี้วัด</button>
-                  </td>
+                  </td> */}
                   <td>
-                    <button className="btn btn-info" onClick={() => openModal(year, item.code, item.id)}>
+                    <button className="btn btn-info" onClick={() => openModal(year, item, item.id)}>
                       สรุปผล
                     </button>
                   </td>

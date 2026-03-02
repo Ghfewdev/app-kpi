@@ -3,7 +3,8 @@ import { buildSummaryTable } from "../utils/indicatorUtils";
 export default function IndicatorSummaryModal({ reports, code, onClose }) {
     const data = buildSummaryTable(reports);
 
-    // console.log(reports)
+    console.log("reports", reports)
+    console.log("data", data)
 
     const count = data.length || 1; // กันหาร 0
 

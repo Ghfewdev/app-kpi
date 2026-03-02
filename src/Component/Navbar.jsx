@@ -33,7 +33,7 @@ const Navbar = () => {
         {/* <li className='navli'><a className='navli a' href="form">ตัวชี้วัดทั้งหมด</a></li> */}
         {/* <li className='navli'><a className='navli a' href="addevent">รายงานโครงการ</a></li> */}
         {/* <li className='navli'><a className='navli a' href="addevent">รายงานโครงการ</a></li> */}
-        {/* <li className='navli'><a className='navli a' href="calform">สรุปผลตัวชี้วัด</a></li> */}
+        <li className='navli'><a className='navli a' href="calform">สรุปผลตัวชี้วัด 2567-2568</a></li>
         <li className='navli'><a className='navli a' href="newapp">รายงานผลตัวชี้วัด</a></li>
         <li className='navli'><a className='navli a' href="dashboard">Dashboard</a></li>
       </>
@@ -59,7 +59,7 @@ const Navbar = () => {
         {/* <li className='navli'><a className='navli a' href="addform">เพิ่มตัวชี้วัด</a></li> */}
         <li className='navli'><a className='navli a' href="useredit">แก้ไขผู้ใช้งาน</a></li>
         {/* <li className='navli'><a className='navli a' href="dashboard">รายงานตัวชี้วัด</a></li> */}
-        {/* <li className='navli'><a className='navli a' href="calform">สรุปผลตัวชี้วัด</a></li> */}
+        <li className='navli'><a className='navli a' href="calform">สรุปผลตัวชี้วัด 2567-2568</a></li>
         <li className='navli'><a className='navli a' href="dashboard">Dashboard</a></li>
 
         <li className='navli'><a className='navli a' href="newapp">รายงานผลตัวชี้วัด</a></li>

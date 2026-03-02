@@ -155,7 +155,7 @@ function NewApp() {
       jso = values;
     }
 
-    // console.log(sb)
+    console.log(sb)
 
     var tsb = sb
 
@@ -163,8 +163,10 @@ function NewApp() {
       if (bv)
         tsb = 0
       else
-        tbs = null
+        tsb = null
     }
+
+    console.log(tsb)
 
     const fill = [
       {
