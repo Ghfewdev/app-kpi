@@ -10,6 +10,7 @@ import axios from "axios";
 import EventModal from "../Component/EventModal";
 import EventForm from "../Component/EventForm";
 import EventListModal from "../Component/EventListModal";
+import Alledit from "../Component/Alledit";
 
 function NewApp() {
   Authen();
@@ -33,8 +34,25 @@ function NewApp() {
   const [detailq, setDetailq] = useState([]);
   const [open3, setOpen3] = useState(false);
   const [openList, setOpenList] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
+  const [reports, setReports] = useState([]);
+  const [codes, setCodes] = useState([])
 
   // const [nv, setNv] = useState([]);
+
+  const openModal = async (years, code, indicatorId) => {
+    const res = await fetch(
+      `${import.meta.env.VITE_APP_API}/api/admin/indicatorde/${years}/${indicatorId}/${localStorage.getItem("new")}`
+    );
+
+
+    const data = await res.json();
+
+    setCodes(code)
+    setReports(data);
+    // setShowModal(true);
+    setShowModal2(true);
+  };
 
   const cbv = (value) => {
     if (value === null) {
@@ -312,6 +330,14 @@ function NewApp() {
     <>
       <Navbar />
 
+      {showModal2 && (
+              <Alledit
+                reports={reports}
+                onClose={() => setShowModal2(false)}
+              detail={codes}
+              />
+            )}
+
       <EventListModal
         open={openList}
         onClose={() => setOpenList(false)}
@@ -444,6 +470,7 @@ function NewApp() {
               <th>โครงการ</th>
               <th>ดูโครงการ</th>
               <th>ดูตัวชี้วัด</th>
+              <th>สรุปผล</th>
             </tr>
           </thead>
 
@@ -469,20 +496,30 @@ function NewApp() {
                   <td>{item.year + 543}</td> */}
                   <td>{qq + 1}</td>
                   <td>
-                    <button disabled={q === 4} className="open-btn" onClick={() => { setSa(0), setSb(0), setOpen(true), setValues({}), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]) }}>ตอบตัวชี้วัด</button>
+                    <button disabled={q === 4} className="open-btn" onClick={() => { setSa(0), setSb(0), setOpen(true), setValues({}), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]) }}>
+                      ส่ง
+                      </button>
                   </td>
                   <td>
 
-                    <button className="btn btn-dark" onClick={() => { sessionStorage.setItem("fmid", item.id), setOpen3(true) }}>➕ เพิ่มกิจกรรม</button>
+                    <button className="btn btn-dark" onClick={() => { sessionStorage.setItem("fmid", item.id), setOpen3(true) }}>
+                      ➕ เพิ่ม</button>
                   </td>
                   <td>
-                    <button className="btn btn-secondary" onClick={() => { sessionStorage.setItem("fmid", item.id), setOpenList(true) }}>
-                      ดูรายการโครงการ
+                    <button className="btn btn-primary" onClick={() => { sessionStorage.setItem("fmid", item.id), setOpenList(true) }}>
+                      ดูรายการ
                     </button>
                   </td>
                   <td>
-                    <button disabled={q === 0} className="edit-btn" onClick={e => { setSa(0), setSb(0), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]), showdetail(item.id), setOpen2(true) }}>การส่งตัวชี้วัด</button>
+                    <button disabled={q === 0} className="edit-btn" onClick={e => { setSa(0), setSb(0), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]), showdetail(item.id), setOpen2(true) }}>
+                      ที่ส่งมา
+                      </button>
                   </td>
+                  <td>
+                  <button disabled={q === 0} className="edit-btn2" onClick={() => openModal(year, item, item.id)}>
+                      สรุปผล
+                    </button>
+                    </td>
                 </tr>
               );
             })}

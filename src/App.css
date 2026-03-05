@@ -551,7 +551,17 @@
 
 .edit-btn {
   padding: 10px 16px;
-  background: #c99916;
+  background: #b154b4;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.edit-btn2 {
+  padding: 10px 16px;
+  background: #1669c9;
   border: none;
   color: white;
   border-radius: 8px;

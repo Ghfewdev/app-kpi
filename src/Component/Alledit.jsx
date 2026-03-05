@@ -8,6 +8,8 @@ export default function Alledit({ reports, detail, onClose }) {
     const [quarterFilter, setQuarterFilter] = useState("all");
     const [agencyFilter, setAgencyFilter] = useState("all");
 
+    const [edits, setEdits] = useState(false);
+
     console.log(detail.variable_b_name)
     const showB = detail?.variable_b_name !== null;
 
@@ -195,7 +197,7 @@ export default function Alledit({ reports, detail, onClose }) {
 
                     <table className="table table-bordered text-center">
 
-                        <thead>
+                        <thead className="table-info">
                             <tr>
                                 <th>หน่วยงาน</th>
                                 <th>ไตรมาส</th>
@@ -227,16 +229,7 @@ export default function Alledit({ reports, detail, onClose }) {
                                 return (
                                     <>
 
-                                        <tr key={"sum-" + agency} className="table-secondary">
-                                            <td><b><u>{agency}</u></b></td>
-                                            <td>รวม</td>
-                                            <td>{sumA}</td>
-                                            {showB && <td>{sumB}</td>}
-                                            <td >
-                                                <button className={pass ? "text-white btn btn-sm bg-success" : "text-white btn btn-sm bg-danger"}>{summaryValue.toFixed(2)}</button>
-                                            </td>
-                                            <td>-</td>
-                                        </tr>
+
 
                                         {rows.map((r) => {
 
@@ -260,7 +253,9 @@ export default function Alledit({ reports, detail, onClose }) {
                                                                 handleChange(index, "value_a", e.target.value)
                                                             }
                                                             style={{ width: 100 }}
+                                                            hidden={!edits}
                                                         />
+                                                        <span hidden={edits}>{r.value_a}</span>
                                                     </td>
 
                                                     {showB && (
@@ -272,7 +267,9 @@ export default function Alledit({ reports, detail, onClose }) {
                                                                     handleChange(index, "value_b", e.target.value)
                                                                 }
                                                                 style={{ width: 100 }}
+                                                                hidden={!edits}
                                                             />
+                                                            <span hidden={edits}>{r.value_b}</span>
                                                         </td>
                                                     )}
 
@@ -281,17 +278,34 @@ export default function Alledit({ reports, detail, onClose }) {
                                                     </td>
 
                                                     <td>
+                                                        <label htmlFor="ed">
+                                                            <input id="ed" checked={edits} onClick={e => setEdits(!edits)} type="checkbox" className="h-10 w-10 accent-black hover:accent-pink-500" />
+                                                        </label>
+                                                        &nbsp; : &nbsp;
                                                         <button
                                                             className="btn btn-primary btn-sm"
                                                             onClick={() => handleSave(r)}
+                                                            disabled={!edits}
                                                         >
-                                                            บันทึก
+                                                            แก้ไข
                                                         </button>
+                                                        
                                                     </td>
 
                                                 </tr>
                                             );
                                         })}
+
+                                        <tr key={"sum-" + agency} className="table-primary">
+                                            <td><b><u>{agency}</u></b></td>
+                                            <td>รวม</td>
+                                            <td>{sumA}</td>
+                                            {showB && <td>{sumB}</td>}
+                                            <td >
+                                                <button className={pass ? "text-white btn btn-sm bg-success" : "text-white btn btn-sm bg-danger"}>{summaryValue.toFixed(2)}</button>
+                                            </td>
+                                            <td>-</td>
+                                        </tr>
 
                                     </>
                                 );
@@ -305,7 +319,7 @@ export default function Alledit({ reports, detail, onClose }) {
                                 const value = calc(grandA, grandB, reports[0]?.formula);
 
                                 return (
-                                    <tr className="table-dark">
+                                    <tr className="table-secondary">
                                         <td>รวมทั้งหมด</td>
                                         <td>-</td>
                                         <td>{grandA}</td>

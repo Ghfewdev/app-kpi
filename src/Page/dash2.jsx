@@ -9,7 +9,7 @@ import IndicatorCumulativeChart from "../Component/chart";
 import axios from "axios";
 import EventListModal from "../Component/EventListModal";
 import IndicatorSummaryModal from "../Component/IndicatorSummaryModal";
-import Alledit from "../Component/alledit";
+import Alledit from "../Component/Alledit";
 
 function App2() {
   Authlevel();
@@ -526,7 +526,7 @@ function App2() {
                     <button disabled={q === 4} className="open-btn" onClick={() => { setSa(0), setSb(0), setOpen(true), setValues({}), setIndi(item.id), setQt(q), setHead(item.code), setYear(item.year), cbv(item.variable_b_name), setC(item.form), ccv(item.form), setDetail([item.description, item.formula, item.target_value, item.form, item.detail, item.operator]) }}>ตอบตัวชี้วัด</button>
                   </td> */}
                   <td>
-                    <button className="btn btn-secondary" onClick={() => { sessionStorage.setItem("fmid", item.id), setOpenList(true) }}>
+                    <button className="btn btn-primary" onClick={() => { sessionStorage.setItem("fmid", item.id), setOpenList(true) }}>
                       ดูรายการโครงการ
                     </button>
                   </td>
