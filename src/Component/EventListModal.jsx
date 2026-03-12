@@ -8,11 +8,33 @@ export default function EventListModal({ open, onClose }) {
 
     const [viewEvent, setViewEvent] = useState(null);
     const [editEvent, setEditEvent] = useState(null);
+    const [updateEvent, setUpdateEvent] = useState(null);
 
     const [list, setList] = useState([]);
 
     const usid = localStorage.getItem("new");
     const fmid = sessionStorage.getItem("fmid");
+
+    const handleDelete = async (id) => {
+    if (!confirm("ยืนยันการลบ?")) return;
+
+    try {
+      const res = await fetch(`${import.meta.env.VITE_APP_API}/api/event/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("ลบไม่สำเร็จ");
+      }
+
+      alert("ลบสำเร็จ")
+      location.reload();
+
+    } catch (err) {
+      console.error(err);
+      alert("Delete error");
+    }
+  };
 
     const showdetail = (val) => {
         fetch(`${import.meta.env.VITE_APP_API}/api/event/res/${val}/${fmid}`)
@@ -95,6 +117,7 @@ export default function EventListModal({ open, onClose }) {
                                     <td>Q{ev.qur}</td>
                                     <td>{statusText(ev.evstatus)}</td>
                                     <td className="actions">
+                                        <div className="mb-2">
                                         <button
                                             className="btn btn-info"
                                             onClick={() => setViewEvent(ev)}
@@ -103,14 +126,32 @@ export default function EventListModal({ open, onClose }) {
                                         </button>
                                         &emsp;
                                         <button
+                                            className="btn btn-primary"
+                                            onClick={() => setUpdateEvent(ev)}
+                                            hidden={ev.qur === 4}
+                                        >
+                                            อัพเดท Q{ev.qur+1}
+                                        </button>
+                                        </div>
+                                        
+                                        {/* &emsp; */}
+                                        <div>
+                                        <button
                                             className="btn btn-warning"
                                             onClick={() => setEditEvent(ev)}
                                         >
                                             แก้ไข
                                         </button>
                                         &emsp;
+                                        <button
+                                            className="btn btn-dark"
+                                            onClick={() => handleDelete(ev.id)}
+                                        >
+                                            ลบ
+                                        </button>
+                                        &emsp;
                                         <button disabled={!ev.pdf_file} onClick={() => { window.open(`${import.meta.env.VITE_APP_API}/api/file/pdf/${ev.id}`) }} type="button" className="btn btn-danger">PDF</button>
-
+</div>
                                     </td>
                                 </tr>
                             ))}
@@ -163,6 +204,38 @@ export default function EventListModal({ open, onClose }) {
 
                         />
                         <button className="modal-close-btn" onClick={() => setEditEvent(null)}>ปิด</button>
+                    </div>
+
+                </div>
+
+            )}
+
+            {updateEvent && (
+                <div className="modal-backdrop">
+                    <div className="modal-box modal-lg">
+                        {/* <button
+                            className="modal-close"
+                            onClick={() => setEditEvent(null)}
+                        >
+                            ✕
+                        </button> */}
+
+                        <EventForm
+                            mode="update"
+                            eventId={updateEvent.id}
+                            initialData={updateEvent}
+                            onSuccess={() => {
+                                setUpdateEvent(null);
+                                // reload list
+                                fetch(
+                                    `${import.meta.env.VITE_APP_API}/api/event/res/${usid}/${fmid}`
+                                )
+                                    .then(res => res.json())
+                                    .then(data => setEvents(data || []));
+                            }}
+
+                        />
+                        <button className="modal-close-btn" onClick={() => setUpdateEvent(null)}>ปิด</button>
                     </div>
 
                 </div>

@@ -24,7 +24,7 @@ export default function pagePrint(val) {
     <style>
       body {
         font-family: "TH Sarabun New", Tahoma;
-        font-size: 16px;
+        font-size: 16pt;
         margin: 30px;
       }
       .center { text-align: center; }

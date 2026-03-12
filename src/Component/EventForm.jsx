@@ -65,6 +65,33 @@ export default function EventForm({
                 et: initialData.summary_status || 1,
             });
         }
+
+        if (mode === "update" && initialData) {
+            setForm({
+                fmid: initialData.fmid || "",
+                submitid: initialData.submitid || "",
+                fmsid: initialData.fmsid || "",
+                qur: initialData.qur+1 || "",
+                evname: initialData.evname || "",
+                evres: initialData.evres || "",
+                evstatus: initialData.evstatus || 4,
+                dc1: initialData.budget_dc1 || "",
+                dc2: initialData.budget_dc2 || "",
+                dc3: initialData.budget_dc3 || "",
+                dd1: initialData.budget_dd1 || "",
+                dd2: initialData.budget_dd2 || "",
+                dd3: initialData.budget_dd3 || "",
+                evpoint: initialData.evpoint || "",
+                evtarget: initialData.evtarget || "",
+                result1: initialData.result_q1 || "",
+                result2: initialData.result_q2 || "",
+                result3: initialData.result_q3 || "",
+                result4: initialData.result_q4 || "",
+                problem: initialData.problem || "",
+                et: initialData.summary_status || 1,
+            });
+        }
+
     }, [mode, initialData]);
 
     const handleChange = (e) => {
@@ -108,11 +135,11 @@ export default function EventForm({
         if (pdfFile) fd.append("pdf", pdfFile);
 
         const url =
-            mode === "add"
+            mode === "add" || "update"
                 ? `${import.meta.env.VITE_APP_API}/api/event/add`
                 : `${import.meta.env.VITE_APP_API}/api/event/${eventId}`;
 
-        const method = mode === "add" ? "POST" : "PUT";
+        const method = mode === "add" || "update" ? "POST" : "PUT";
 
 
         try {
@@ -124,7 +151,7 @@ export default function EventForm({
             const json = await res.json();
 
             if (json.status === "ok") {
-                alert(mode === "add" ? "บันทึกสำเร็จ" : "อัปเดตสำเร็จ");
+                alert(mode === "add" || "update" ? "บันทึกสำเร็จ" : "อัปเดตสำเร็จ");
                 onSuccess?.();
             }
             else {
@@ -144,7 +171,7 @@ export default function EventForm({
     ================================ */
     return (
         <form className="form" onSubmit={handleSubmit}>
-            <h2>{mode === "add" ? "เพิ่มโครงการ / กิจกรรม" : "แก้ไขโครงการ / กิจกรรม"}</h2>
+            <h2>{mode === "add" || "update" ? "เพิ่มโครงการ / กิจกรรม" : "แก้ไขโครงการ / กิจกรรม"}</h2>
 
             <label>ไตรมาส</label>
             <select name="qur" value={form.qur} onChange={handleChange}>
@@ -227,7 +254,7 @@ export default function EventForm({
             </label>
 
             <button disabled={loading}>
-                {loading ? "กำลังบันทึก..." : mode === "add" ? "บันทึก" : "อัปเดต"}
+                {loading ? "กำลังบันทึก..." : mode === "add" || "update" ? "บันทึก" : "อัปเดต"}
             </button>
         </form>
     );

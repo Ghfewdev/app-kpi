@@ -10,7 +10,7 @@ export default function Alledit({ reports, detail, onClose }) {
 
     const [edits, setEdits] = useState(false);
 
-    console.log(detail.variable_b_name)
+    // console.log(detail.variable_b_name)
     const showB = detail?.variable_b_name !== null;
 
     const calc = (a, b, formula) => {
@@ -225,6 +225,7 @@ export default function Alledit({ reports, detail, onClose }) {
 
                                 const summaryValue = calc(sumA, sumB, rows[0].formula);
                                 const pass = checkPass(summaryValue, rows[0].operator, rows[0].target_value);
+                                
 
                                 return (
                                     <>
@@ -299,8 +300,8 @@ export default function Alledit({ reports, detail, onClose }) {
                                         <tr key={"sum-" + agency} className="table-primary">
                                             <td><b><u>{agency}</u></b></td>
                                             <td>รวม</td>
-                                            <td>{sumA}</td>
-                                            {showB && <td>{sumB}</td>}
+                                            <td>{sumA.toFixed(2)}</td>
+                                            {showB && <td>{sumB.toFixed(2)}</td>}
                                             <td >
                                                 <button className={pass ? "text-white btn btn-sm bg-success" : "text-white btn btn-sm bg-danger"}>{summaryValue.toFixed(2)}</button>
                                             </td>
@@ -318,13 +319,20 @@ export default function Alledit({ reports, detail, onClose }) {
 
                                 const value = calc(grandA, grandB, reports[0]?.formula);
 
+                                const pass = checkPass(value, reports[0]?.operator, reports[0]?.target_value);
+                                
+
                                 return (
                                     <tr className="table-secondary">
                                         <td>รวมทั้งหมด</td>
                                         <td>-</td>
-                                        <td>{grandA}</td>
-                                        {showB && <td>{grandB}</td>}
-                                        <td>{value.toFixed(2)}</td>
+                                        <td>{grandA.toFixed(2)}</td>
+                                        {showB && <td>{grandB.toFixed(2)}</td>}
+                                        <td>
+                                            <button className={pass ? "text-white btn btn-sm bg-success" : "text-white btn btn-sm bg-danger"}>
+                                                {value.toFixed(2)}
+                                                </button>
+                                                </td>
                                         <td>-</td>
                                     </tr>
                                 );
