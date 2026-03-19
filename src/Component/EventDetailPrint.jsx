@@ -126,10 +126,10 @@ export default function pagePrint(val) {
 
     <div class="section">
       <b>รายละเอียดการดำเนินงานรายไตรมาส</b>
-      <div class="box">${dp.result_q1 || ""}</div>
-      <div hidden = {dp.result_q2} class="box">${dp.result_q2 || ""}</div>
-      <div hidden = {dp.result_q3}  class="box">${dp.result_q3 || ""}</div>
-      <div hidden = {dp.result_q4}  class="box">${dp.result_q4 || ""}</div>
+      ${dp.qur >= 1 ? `<div class="box">ไตรมาส 1 : ${dp.result_q1}</div>` : ""}
+${dp.qur >= 2 ? `<div class="box">ไตรมาส 2 : ${dp.result_q2}</div>` : ""}
+${dp.qur >= 3 ? `<div class="box">ไตรมาส 3 : ${dp.result_q3}</div>` : ""}
+${dp.qur >= 4 ? `<div class="box">ไตรมาส 4 : ${dp.result_q4}</div>` : ""}
     </div>
 
     <div class="section">

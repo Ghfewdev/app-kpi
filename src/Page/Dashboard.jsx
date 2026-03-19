@@ -1,14 +1,24 @@
-import React, { useEffect, useState } from 'react'
-import Navbar from '../Component/Navbar';
-import Footer from '../Component/Footer';
-import "chartjs-gauge";
-import Authen from '../Component/Authen';
-import axios from "axios";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from "recharts";
+"use client";
 
+import React, { useEffect, useState } from "react";
+import Navbar from "../Component/Navbar";
+import Footer from "../Component/Footer";
+import Authen from "../Component/Authen";
+import axios from "axios";
+
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  ReferenceLine,
+  Cell,
+} from "recharts";
 
 const Dashboard = () => {
-
   Authen();
 
   const [loading, setLoading] = useState(true);
@@ -18,17 +28,51 @@ const Dashboard = () => {
   const [fiscalYear, setFiscalYear] = useState("2026");
   const [quarter, setQuarter] = useState("Q1");
 
+  // =========================
+  // ✅ FORMULA (ใช้ value_a / value_b)
+  // =========================
+  function calculate(A, B, formula) {
+    if (B === 0 && formula.includes("B")) return 0;
 
+    switch (formula) {
+      case "(A/B)*100": return (A / B) * 100;
+      case "(A+B)/2": return (A + B) / 2;
+      case "A": return A;
+      case "A*B": return A * B;
+      case "((A-B)/B)*100": return ((A - B) / B) * 100;
+      case "A/B": return A / B;
+      case "(A/B)*1.25": return (A / B) * 1.25;
+      case "A-B": return A - B;
+      case "A+B": return A + B;
+      default: return 0;
+    }
+  }
+
+  function checkPass(result, target, operator) {
+    switch (operator) {
+      case ">=": return result >= target;
+      case "<=": return result <= target;
+      case ">": return result > target;
+      case "<": return result < target;
+      default: return false;
+    }
+  }
+
+  // =========================
+  // ✅ FETCH DATA
+  // =========================
   const fetchSummary = async () => {
     setLoading(true);
-    console.log(data)
     try {
-      const res = await axios.get(import.meta.env.VITE_APP_API + "/api/kpi-summary", {
-        params: {
-          fiscal_year: fiscalYear,
-          quarter: quarter,
-        },
-      });
+      const res = await axios.get(
+        import.meta.env.VITE_APP_API + "/api/kpi-summary",
+        {
+          params: {
+            fiscal_year: fiscalYear,
+            quarter: quarter,
+          },
+        }
+      );
 
       const { data: detail, ...summaryOnly } = res.data;
 
@@ -40,77 +84,129 @@ const Dashboard = () => {
     setLoading(false);
   };
 
+  // =========================
+  // ✅ SUMMARY BAR
+  // =========================
   const datag = Object.entries(summary)
     .filter(([key]) => key !== "indicators ทั้งหมด")
     .map(([agency, info]) => ({
       name: agency,
-      sent: info.sent,
-      pass: info.pass,
       percent: Number(info.persent),
     }));
 
+  // =========================
+  // ✅ GROUP BY TYPE + KPI
+  // =========================
+  function buildCharts(data) {
+    const grouped = {};
 
-  function transformSummary(summary) {
-    const result = {};
-
-    summary.data.forEach(item => {
+    data.forEach((item) => {
+      const type = item.type;
       const code = item.indicators_code;
-      const agency = item.agency_name;
 
-      if (!result[code]) {
-        result[code] = {};
-      }
+      // 🔥 ใช้ value_a / value_b (ตัวจริง)
+      const A = Number(item.value_a);
+      const B = Number(item.value_b);
 
-      result[code][agency] = {
-        actual_value: Number(item.actual_value),
-        target_value: Number(item.target_value),
-      };
+      const result = calculate(A, B, item.formula);
+      const target = Number(item.target_value);
+      const pass = checkPass(result, target, item.operator);
+
+      if (!grouped[type]) grouped[type] = {};
+      if (!grouped[type][code]) grouped[type][code] = [];
+
+      grouped[type][code].push({
+        name: item.agency_name,
+        result,
+        target,
+        pass,
+      });
     });
 
-    return result;
+    return grouped;
   }
 
-  const indicators = transformSummary({ data });
+  const groupedCharts = buildCharts(data);
 
-  const charts = Object.entries(indicators).map(([kpi, agencyList]) => ({
-    kpi,
-    data: Object.entries(agencyList).map(([agency, values]) => ({
-      name: agency,
-      actual_value: Number(values.actual_value),
-      target_value: Number(values.target_value),
-    })),
-  }));
+  // =========================
+  // ✅ COMPONENT CHART
+  // =========================
+  const ChartSection = ({ title, charts }) => (
+    <>
+      <div className="text-center bg-success text-white p-2 m-2 border border-dark rounded">
+        <span className="fs-1">{title}</span>
+      </div>
+      <div className="grid-container">
+        {Object.entries(charts || {}).map(([kpi, list]) => (
+          <div key={kpi}>
+            <h5>
+              ตัวชี้วัด: {kpi} | เป้าหมาย: {list[0]?.target}
+            </h5>
 
+            <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={list}>
+                <XAxis dataKey="name" />
 
+                <YAxis
+                  domain={[0, list[0]?.target || 0]}
+                  tickFormatter={(v) => v.toFixed(2)}
+                />
+
+                <Tooltip formatter={(v) => v.toFixed(2)} />
+                <Legend />
+
+                <Bar dataKey="result" name="ผลลัพธ์">
+                  {list.map((entry, index) => (
+                    <Cell
+                      key={index}
+                      fill={entry.pass ? "#22c55e" : "#ef4444"}
+                    />
+                  ))}
+                </Bar>
+
+                <ReferenceLine
+                  y={list[0]?.target}
+                  stroke="#000"
+                  strokeDasharray="4 4"
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+
+  // =========================
+  // ✅ LOAD
+  // =========================
   useEffect(() => {
-
     fetchSummary();
-
-  }, [])
-
+  }, []);
 
   return (
     <div>
       <Navbar />
+
       <div className="a1">
         <h1 className="a2">📊 KPI DASHBOARD</h1>
 
         {/* FILTER */}
         <div className="a3">
           <div>
-            <label className="font-semibold">ปีงบประมาณ</label>
+            <label>ปีงบประมาณ</label>
             <select
               className="a4"
               value={fiscalYear}
               onChange={(e) => setFiscalYear(e.target.value)}
             >
-              <option value={2026}>2569</option>
-              <option value={2027}>2570</option>
+              <option value="2026">2569</option>
+              <option value="2027">2570</option>
             </select>
           </div>
 
           <div>
-            <label className="font-semibold">ไตรมาส</label>
+            <label>ไตรมาส</label>
             <select
               className="a4"
               value={quarter}
@@ -124,10 +220,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <button
-          onClick={fetchSummary}
-          className="a5"
-        >
+        <button onClick={fetchSummary} className="a5">
           🔍 Load Data
         </button>
 
@@ -136,114 +229,50 @@ const Dashboard = () => {
           {Object.entries(summary).map(([key, val]) => {
             if (key === "indicators ทั้งหมด") {
               return (
-                <div key={key} className="a7">
+                <div key={key} className="a7 mb-4">
                   <h2 className="a8">ตัวชี้วัดทั้งหมด</h2>
                   <p className="a9">{val}</p>
                 </div>
               );
             }
+            return null;
           })}
 
-          <br />
+          {/* BAR SUMMARY */}
 
+          <div className="text-center bg-success text-white p-2 m-2 border border-dark rounded">
+            <span className="fs-1">เปอร์เซ็นต์การผ่านของทุกหน่วยงาน</span>
+          </div>
           <ResponsiveContainer width="100%" height={350}>
             <BarChart data={datag}>
               <XAxis dataKey="name" />
               <YAxis unit="%" />
-              <Tooltip formatter={(v) => `${v.toFixed(2)}`} />
-              <Bar dataKey="percent" name="% สำเร็จ" fill="#3a564cff" label={{position: 'top', formatter: (value) => value.toFixed(2)}} radius={[10, 10, 0, 0]} />
+              <Tooltip formatter={(v) => v.toFixed(2)} />
+
+              <Bar
+                dataKey="percent"
+                name="% สำเร็จ"
+                fill="rgb(112, 212, 99)"
+                label={{
+                  position: "top",
+                  formatter: (v) => v.toFixed(2),
+                }}
+              />
             </BarChart>
           </ResponsiveContainer>
 
-          <br />
-
-
-          <div className="grid-container">
-            {charts.map(({ kpi, data }) => (
-              <div key={kpi} className="">
-
-                <h4 className="">
-                  ตัวชี้วัด: {kpi} เป้าหมาย: {data[0].target_value}
-                </h4>
-
-                <ResponsiveContainer width="100%" height={250}>
-                  <BarChart data={data}>
-                    <XAxis dataKey="name" />
-                    <YAxis domain={[0, data[0].target_value]}  unit="" />
-                    <Tooltip formatter={(v) => `${v.toFixed(2)}`} />
-                    <Legend />
-
-                    <Bar
-                      dataKey="actual_value"
-                      name="ผลลัพธ์"
-                      fill="#34d399"
-                      radius={[10, 10, 0, 0]}
-                      label={{position: 'top', formatter: (value) => value.toFixed(2)}}
-                    />
-
-                    <ReferenceLine
-                      y = {data[0].target_value}
-                      stroke="#ef4444"
-                      strokeWidth={3}
-                      strokeDasharray="4 4"
-                      
-                    // label={data[0].target_value}
-                    
-                    />
-
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            ))}
-          </div>
-
+          {/* TYPE */}
+          <ChartSection title="ตัวชี้วัดประเภทที่ 1.1" charts={groupedCharts["1.1"]} />
+          <ChartSection title="ตัวชี้วัดประเภทที่ 1.2" charts={groupedCharts["1.2"]} />
+          <ChartSection title="ตัวชี้วัดประเภทที่ 2" charts={groupedCharts["2"]} />
+          <ChartSection title="ตัวชี้วัดประเภทที่ 3" charts={groupedCharts["3"]} />
         </div>
-        
-
-        {/* TABLE */}
-        {/* <h2 className="text-xl font-bold mt-10 mb-4">📄 รายละเอียดตัวชี้วัด</h2>
-
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <table className="w-full text-sm bg-white shadow rounded">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="p-2">หน่วยงาน</th>
-                <th className="p-2">Indicator</th>
-                <th className="p-2">Formula</th>
-                <th className="p-2">Actual</th>
-                <th className="p-2">Target</th>
-                <th className="p-2">Passed</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((r, idx) => (
-                <tr key={idx} className="border-t">
-                  <td className="p-2">{r.agency_name}</td>
-                  <td className="p-2">
-                    {r.indicators_code} - {r.indicators_name}
-                  </td>
-                  <td className="p-2">{r.formula}</td>
-                  <td className="p-2">{r.actual_value}</td>
-                  <td className="p-2">{r.target_value}</td>
-                  <td className="p-2">
-                    {r.passed ? (
-                      <span className="text-green-600 font-bold">✔</span>
-                    ) : (
-                      <span className="text-red-600 font-bold">✘</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )} */}
       </div>
+
       <Footer />
       <br />
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

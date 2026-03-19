@@ -3,13 +3,14 @@
 import React, { useEffect, useState } from "react";
 import {
     ResponsiveContainer,
-    LineChart,
-    Line,
+    BarChart,
+    Bar,
     XAxis,
     YAxis,
     Tooltip,
     Legend,
-    ReferenceLine
+    ReferenceLine,
+    Cell
 } from "recharts";
 
 const IndicatorCumulativeChart = ({
@@ -24,50 +25,37 @@ const IndicatorCumulativeChart = ({
         switch (formula) {
             case "(A/B)*100":
                 return B !== 0 ? (A / B) * 100 : 0;
-
             case "(A+B)/2":
                 return (A + B) / 2;
-
             case "A":
                 return A;
-
             case "A*B":
                 return A * B;
-
             case "((A-B)/B)*100":
                 return B !== 0 ? ((A - B) / B) * 100 : 0;
-
             case "(A/B)*1.25":
                 return B !== 0 ? (A / B) * 1.25 : 0;
-
             case "A-B":
                 return A - B;
-
             case "A/B":
-                return A / B;
-
+                return B !== 0 ? A / B : 0;
             case "A+B":
                 return A + B;
-
             default:
                 console.warn("Unknown formula:", formula);
                 return 0;
         }
     };
 
-    const buildCumulativeAvg = (rows) => {
-        let sum = 0;
-
-        return rows.map((item, index) => {
+    const buildQuarterData = (rows) => {
+        return rows.map((item) => {
             const A = Number(item.value_a);
             const B = Number(item.value_b);
 
             const value = calculateByFormula(A, B, item.formula);
-            sum += value;
 
             return {
                 quarter: item.quarter,
-                cumulativeAvg: Number((sum / (index + 1)).toFixed(2)),
                 value: Number(value.toFixed(2)),
                 target: Number(item.target_value)
             };
@@ -79,18 +67,15 @@ const IndicatorCumulativeChart = ({
 
         setLoading(true);
 
-        var url = `${import.meta.env.VITE_APP_API}/api/indicatorde/${year}/${agencyId}/${indicatorId}`;
+        let url = `${import.meta.env.VITE_APP_API}/api/indicatorde/${year}/${agencyId}/${indicatorId}`;
 
         if (agencyId === 0) {
             url = `${import.meta.env.VITE_APP_API}/api/admin/indicatorde/${year}/${indicatorId}`;
         }
 
-        console.log(url)
-
         fetch(url)
             .then(res => res.json())
             .then(result => {
-                // กัน Q สลับลำดับ
                 const order = ["Q1", "Q2", "Q3", "Q4"];
                 result.sort(
                     (a, b) =>
@@ -109,41 +94,40 @@ const IndicatorCumulativeChart = ({
     if (loading) return <p>กำลังโหลดข้อมูล...</p>;
     if (!data.length) return null;
 
-    const chartData = buildCumulativeAvg(data);
+    const chartData = buildQuarterData(data);
     const targetValue = chartData[0]?.target;
 
-
-
-
-
     return (
-
         <div
             style={{
                 width: "100%",
                 height: 350,
                 display: "flex",
-                justifyContent: "center", // จัดกลางแนวนอน
-                alignItems: "center",     // จัดกลางแนวตั้ง
+                justifyContent: "center",
+                alignItems: "center",
             }}
         >
-
             <div style={{ width: "70%", height: "100%" }}>
                 <ResponsiveContainer>
-                    <LineChart data={chartData}>
+                    <BarChart data={chartData}>
                         <XAxis dataKey="quarter" />
                         <YAxis />
                         <Tooltip />
                         <Legend />
 
-                        <Line
-                            type="monotone"
-                            dataKey="cumulativeAvg"
-                            name="ค่าเฉลี่ยสะสม"
-                            strokeWidth={3}
-                        />
+                        <Bar dataKey="value" name="ค่ารายไตรมาส">
+                            {chartData.map((entry, index) => (
+                                <Cell
+                                    key={`cell-${index}`}
+                                    fill={
+                                        entry.value >= entry.target
+                                            ? "#16a34a" // เขียว (ผ่าน)
+                                            : "#dc2626" // แดง (ไม่ผ่าน)
+                                    }
+                                />
+                            ))}
+                        </Bar>
 
-                        {/* Target */}
                         {targetValue !== undefined && (
                             <ReferenceLine
                                 y={targetValue}
@@ -151,15 +135,13 @@ const IndicatorCumulativeChart = ({
                                 strokeDasharray="5 5"
                                 label={{
                                     value: `Target ${targetValue}`,
-                                    position: "bottom",
-                                    // dy: 8,
+                                    position: "top",
                                     fill: "red",
                                     fontSize: 12
                                 }}
                             />
-
                         )}
-                    </LineChart>
+                    </BarChart>
                 </ResponsiveContainer>
             </div>
         </div>
