@@ -24,6 +24,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [summary, setSummary] = useState({});
   const [data, setData] = useState([]);
+  const [openKeys, setOpenKeys] = useState(["1.1"]);
 
   const [fiscalYear, setFiscalYear] = useState("2026");
   const [quarter, setQuarter] = useState("Q1");
@@ -47,6 +48,14 @@ const Dashboard = () => {
       default: return 0;
     }
   }
+
+  const toggle = (key) => {
+    setOpenKeys((prev) =>
+      prev.includes(key)
+        ? prev.filter((k) => k !== key) // ปิด
+        : [...prev, key] // เปิดเพิ่ม
+    );
+  };
 
   function checkPass(result, target, operator) {
     switch (operator) {
@@ -78,6 +87,7 @@ const Dashboard = () => {
 
       setSummary(summaryOnly);
       setData(detail);
+      console.log(datat)
     } catch (err) {
       console.error(err);
     }
@@ -88,11 +98,15 @@ const Dashboard = () => {
   // ✅ SUMMARY BAR
   // =========================
   const datag = Object.entries(summary)
-    .filter(([key]) => key !== "indicators ทั้งหมด")
+    .filter(([key]) => key !== "indicators ทั้งหมด" && key !== "type")
     .map(([agency, info]) => ({
       name: agency,
       percent: Number(info.persent),
     }));
+
+  const datat = Object.entries(summary)
+    .filter(([key]) => key === "type" || key === "indicators ทั้งหมด")
+    ;
 
   // =========================
   // ✅ GROUP BY TYPE + KPI
@@ -110,6 +124,7 @@ const Dashboard = () => {
 
       const result = calculate(A, B, item.formula);
       const target = Number(item.target_value);
+      const ind = String(item.indicators_name);
       const pass = checkPass(result, target, item.operator);
 
       if (!grouped[type]) grouped[type] = {};
@@ -120,6 +135,7 @@ const Dashboard = () => {
         result,
         target,
         pass,
+        ind
       });
     });
 
@@ -131,51 +147,71 @@ const Dashboard = () => {
   // =========================
   // ✅ COMPONENT CHART
   // =========================
-  const ChartSection = ({ title, charts }) => (
-    <>
-      <div className="text-center bg-success text-white p-2 m-2 border border-dark rounded">
-        <span className="fs-1">{title}</span>
-      </div>
-      <div className="grid-container">
-        {Object.entries(charts || {}).map(([kpi, list]) => (
-          <div key={kpi}>
-            <h5>
-              ตัวชี้วัด: {kpi} | เป้าหมาย: {list[0]?.target}
-            </h5>
 
-            <ResponsiveContainer width="100%" height={250}>
-              <BarChart data={list}>
-                <XAxis dataKey="name" />
+  const ChartSection = ({ title, charts, open, onToggle }) => {
+    return (
+      <div className="mb-1">
+        <div
+          className="d-flex justify-content-between align-items-center bg-success text-white p-2 border border-dark rounded"
+          style={{ cursor: "pointer" }}
+          onClick={onToggle}
+        >
+          <span className="fs-5">{title}</span>
+          <span className="fs-5">{open ? "▲" : "▼"}</span>
+        </div>
 
-                <YAxis
-                  domain={[0, list[0]?.target || 0]}
-                  tickFormatter={(v) => v.toFixed(2)}
-                />
+        {open && (
+          <div className="grid-container mt-2">
+            {Object.entries(charts || {}).map(([kpi, list]) => {
+              // console.log(list)
+              return (
+                <div key={kpi} className="mb-3 p-2 border rounded">
+                  <h6>
+                    ตัวชี้วัด: {kpi} | เป้าหมาย: {list[0]?.target}
+                  </h6>
+                  <p className="fonts">
+                    {list[0]?.ind}
+                  </p>
 
-                <Tooltip formatter={(v) => v.toFixed(2)} />
-                <Legend />
 
-                <Bar dataKey="result" name="ผลลัพธ์">
-                  {list.map((entry, index) => (
-                    <Cell
-                      key={index}
-                      fill={entry.pass ? "#22c55e" : "#ef4444"}
-                    />
-                  ))}
-                </Bar>
+                  <ResponsiveContainer width="90%" height={120}>
+                    <BarChart data={list}>
+                      <XAxis dataKey="name" />
 
-                <ReferenceLine
-                  y={list[0]?.target}
-                  stroke="#000"
-                  strokeDasharray="4 4"
-                />
-              </BarChart>
-            </ResponsiveContainer>
+                      <YAxis
+                        domain={[0, list[0]?.target || 0]}
+                        tickFormatter={(v) => v.toFixed(2)}
+                      />
+
+                      <Tooltip formatter={(v) => v.toFixed(2)} />
+                      {/* <Legend /> */}
+
+                      <Bar dataKey="result" name="ผลลัพธ์">
+                        {list.map((entry, index) => (
+                          <Cell
+                            key={index}
+                            fill={entry.pass ? "#22c55e" : "#ef4444"}
+                          />
+                        ))}
+
+                      </Bar>
+
+                      <ReferenceLine
+                        y={list[0]?.target}
+                        stroke="#000"
+                        strokeDasharray="4 4"
+                      />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              )
+            })}
           </div>
-        ))}
+        )}
       </div>
-    </>
-  );
+    );
+  };
+
 
   // =========================
   // ✅ LOAD
@@ -226,7 +262,7 @@ const Dashboard = () => {
 
         {/* SUMMARY */}
         <div className="a6">
-          {Object.entries(summary).map(([key, val]) => {
+          {/* {Object.entries(summary).map(([key, val]) => {
             if (key === "indicators ทั้งหมด") {
               return (
                 <div key={key} className="a7 mb-4">
@@ -236,36 +272,104 @@ const Dashboard = () => {
               );
             }
             return null;
-          })}
+          })} */}
 
           {/* BAR SUMMARY */}
 
-          <div className="text-center bg-success text-white p-2 m-2 border border-dark rounded">
-            <span className="fs-1">เปอร์เซ็นต์การผ่านของทุกหน่วยงาน</span>
-          </div>
-          <ResponsiveContainer width="100%" height={350}>
-            <BarChart data={datag}>
-              <XAxis dataKey="name" />
-              <YAxis unit="%" />
-              <Tooltip formatter={(v) => v.toFixed(2)} />
 
-              <Bar
-                dataKey="percent"
-                name="% สำเร็จ"
-                fill="rgb(112, 212, 99)"
-                label={{
-                  position: "top",
-                  formatter: (v) => v.toFixed(2),
-                }}
-              />
-            </BarChart>
-          </ResponsiveContainer>
+          <div>
+            <div className="row">
+              <div className="col-8 m-3 p-2 border rounded">
+                <div className="text-center bg-success text-white p-2 mb-2 border border-dark rounded">
+                  <span className="fs-3">สัดส่วนการบรรลุผลสำเร็จตัวชี้วัด</span>
+                </div>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={datag}>
+                    <XAxis dataKey="name" />
+                    <YAxis unit="%" />
+                    <Tooltip formatter={(v) => v.toFixed(2)} />
+
+                    <Bar
+                      dataKey="percent"
+                      name="% สำเร็จ"
+                      fill="rgb(112, 212, 99)"
+                    // label={{
+                    //   position: "top",
+                    //   formatter: (v) => v.toFixed(2),
+                    // }}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="col m-3 p-2 border rounded">
+                <div className="text-center bg-success text-white p-2 mb-2 border border-dark rounded">
+                  <span className="fs-3">ประเภทตัวชี้วัด</span>
+                </div>
+                {Object.entries(summary).map(([key, val]) => {
+                  if (key === "indicators ทั้งหมด") {
+                    return (
+                      <div key={key} className="a7 mb-1">
+                        <h2 className="a8">ตัวชี้วัดทั้งหมด</h2>
+                        <p className="a9">{val}</p>
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
+
+                {Object.entries(summary).map(([key, val]) => {
+                  if (key === "type") {
+                    console.log(val)
+                    return (
+                      <div key={key} className="a7 mb-1">
+                        <div className="row">
+                        <h2 className="a8 col">องค์ประกอบที่ 1.1: <br /><span className="text-primary">{val.type1}</span></h2>
+                        <h2 className="a8 col">องค์ประกอบที่ 1.2: <br /><span className="text-primary">{val.type2}</span></h2>
+                        </div>
+                        <div className="row">
+                        <h2 className="a8 col">องค์ประกอบที่ 2: <br /><span className="text-primary">{val.type3}</span></h2>
+                        <h2 className="a8 col">ตัวชี้วัดงานประจำ: <br /><span className="text-primary">{val.type3}</span></h2>
+                        </div>
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
+
+                {/* {datat[0]} */}
+              </div>
+              {/* <div className="col">
+                One of three columns
+              </div> */}
+            </div>
+          </div>
+
 
           {/* TYPE */}
-          <ChartSection title="ตัวชี้วัดประเภทที่ 1.1" charts={groupedCharts["1.1"]} />
-          <ChartSection title="ตัวชี้วัดประเภทที่ 1.2" charts={groupedCharts["1.2"]} />
-          <ChartSection title="ตัวชี้วัดประเภทที่ 2" charts={groupedCharts["2"]} />
-          <ChartSection title="ตัวชี้วัดประเภทที่ 3" charts={groupedCharts["3"]} />
+          <ChartSection
+            title="องค์ประกอบที่ 1.1"
+            charts={groupedCharts["1.1"]}
+            open={openKeys.includes("1.1")}
+            onToggle={() => toggle("1.1")}
+          />
+          <ChartSection
+            title="องค์ประกอบที่ 1.2"
+            charts={groupedCharts["1.2"]}
+            open={openKeys.includes("1.2")}
+            onToggle={() => toggle("1.2")}
+          />
+          <ChartSection
+            title="องค์ประกอบที่ 2"
+            charts={groupedCharts["2"]}
+            open={openKeys.includes("2")}
+            onToggle={() => toggle("2")}
+          />
+          <ChartSection
+            title="ตัวชี้วัดงานประจำ"
+            charts={groupedCharts["3"]}
+            open={openKeys.includes("3")}
+            onToggle={() => toggle("3")}
+          />
         </div>
       </div>
 
