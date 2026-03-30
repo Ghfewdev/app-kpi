@@ -17,6 +17,7 @@ import {
   ReferenceLine,
   Cell,
 } from "recharts";
+import KPIProgress from "../Component/Pc";
 
 const Dashboard = () => {
   Authen();
@@ -57,6 +58,39 @@ const Dashboard = () => {
     );
   };
 
+  function countPassedFast(datat) {
+    const passed = datat.filter(d => d.passed).length;
+    return [passed, datat.length];
+  }
+
+  function getAllPassed(data) {
+    return Object.entries(data)
+        .filter(([key]) => key !== "indicators ทั้งหมด" && key !== "data" && key !== "type")
+        .map(([agencyName, value]) => {
+            // return {
+            //     agency: agencyName,
+            //     result: [value.pass || 0, value.sent ?? 0, value.must ?? 13]
+            // };
+            return [value.pass || 0, value.sent ?? 0, value.must ?? 13]
+        });
+}
+
+function sumAll(data) {
+    return Object.entries(data)
+        .filter(([key]) => key !== "indicators ทั้งหมด" && key !== "data" && key !== "type")
+        .reduce(
+            (acc, [_, value]) => {
+                acc.pass += value.pass || 0;
+                acc.sent += value.sent ?? 0;
+                acc.must += value.must ?? 13;
+                return acc;
+            },
+            { pass: 0, sent: 0, must: 0 }
+        );
+}
+
+
+
   function checkPass(result, target, operator) {
     switch (operator) {
       case ">=": return result >= target;
@@ -71,6 +105,10 @@ const Dashboard = () => {
   // ✅ FETCH DATA
   // =========================
   const fetchSummary = async () => {
+
+    // console.log(getAllPassed(summary))
+    console.log(sumAll(summary))
+
     setLoading(true);
     try {
       const res = await axios.get(
@@ -87,7 +125,7 @@ const Dashboard = () => {
 
       setSummary(summaryOnly);
       setData(detail);
-      console.log(datat)
+      // console.log(datat)
     } catch (err) {
       console.error(err);
     }
@@ -260,6 +298,14 @@ const Dashboard = () => {
           🔍 Load Data
         </button>
 
+        {/* {countPassedFast(data)[0]}
+        <br />
+        {countPassedFast(data)[1]}
+        <br /> */}
+
+        
+        {/* {getAllPassed(summary)} */}
+
         {/* SUMMARY */}
         <div className="a6">
           {/* {Object.entries(summary).map(([key, val]) => {
@@ -283,7 +329,8 @@ const Dashboard = () => {
                 <div className="text-center bg-success text-white p-2 mb-2 border border-dark rounded">
                   <span className="fs-3">สัดส่วนการบรรลุผลสำเร็จตัวชี้วัด</span>
                 </div>
-                <ResponsiveContainer width="100%" height={300}>
+                <br />
+                <ResponsiveContainer width="95%" height={300}>
                   <BarChart data={datag}>
                     <XAxis dataKey="name" />
                     <YAxis unit="%" />
@@ -309,8 +356,9 @@ const Dashboard = () => {
                   if (key === "indicators ทั้งหมด") {
                     return (
                       <div key={key} className="a7 mb-1">
-                        <h2 className="a8">ตัวชี้วัดทั้งหมด</h2>
-                        <p className="a9">{val}</p>
+                        <h2 className="a8">ตัวชี้วัดทั้งหมด: <span className="text-primary">{val}</span></h2>
+                        
+                        <KPIProgress data={summary} />
                       </div>
                     );
                   }
@@ -319,16 +367,16 @@ const Dashboard = () => {
 
                 {Object.entries(summary).map(([key, val]) => {
                   if (key === "type") {
-                    console.log(val)
+                    // console.log(val)
                     return (
                       <div key={key} className="a7 mb-1">
                         <div className="row">
-                        <h2 className="a8 col">องค์ประกอบที่ 1.1: <br /><span className="text-primary">{val.type1}</span></h2>
-                        <h2 className="a8 col">องค์ประกอบที่ 1.2: <br /><span className="text-primary">{val.type2}</span></h2>
+                          <h2 className="a8 col">องค์ประกอบที่ 1.1: <br /><span className="text-primary">{val.type1}</span></h2>
+                          <h2 className="a8 col">องค์ประกอบที่ 1.2: <br /><span className="text-primary">{val.type2}</span></h2>
                         </div>
                         <div className="row">
-                        <h2 className="a8 col">องค์ประกอบที่ 2: <br /><span className="text-primary">{val.type3}</span></h2>
-                        <h2 className="a8 col">ตัวชี้วัดงานประจำ: <br /><span className="text-primary">{val.type3}</span></h2>
+                          <h2 className="a8 col">องค์ประกอบที่ 2: <br /><span className="text-primary">{val.type3}</span></h2>
+                          <h2 className="a8 col">ตัวชี้วัดงานประจำ: <br /><span className="text-primary">{val.type3}</span></h2>
                         </div>
                       </div>
                     );
