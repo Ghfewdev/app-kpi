@@ -37,8 +37,8 @@ export default function CheckingMatrix() {
           yearFilter === "ALL"
             ? true
             : yearFilter === "NULL"
-            ? d.fiscal_year === null
-            : d.fiscal_year === Number(yearFilter)
+              ? d.fiscal_year === null
+              : d.fiscal_year === Number(yearFilter)
         )
     );
 

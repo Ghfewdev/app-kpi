@@ -374,7 +374,7 @@ function NewApp() {
       </Modal>
 
       <EventModal open={open3} onClose={() => setOpen3(false)}>
-        <EventForm onSuccess={() => setOpen3(false)} />
+        <EventForm mode="add" onSuccess={() => setOpen3(false)} />
       </EventModal>
 
       <Modal2 isOpen={open2} onClose={() => setOpen2(false)}>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function EventForm({
-    mode = "add",          // "add" | "edit"
+    mode,          // "add" | "edit" | "update"
     initialData = null,    // ข้อมูลเดิมตอน edit
     eventId = null,
     onSuccess,
@@ -135,11 +135,11 @@ export default function EventForm({
         if (pdfFile) fd.append("pdf", pdfFile);
 
         const url =
-            mode === "add" || "update"
+            mode === "add" || mode === "update"
                 ? `${import.meta.env.VITE_APP_API}/api/event/add`
                 : `${import.meta.env.VITE_APP_API}/api/event/${eventId}`;
 
-        const method = mode === "add" || "update" ? "POST" : "PUT";
+        const method = mode === "add" || mode === "update" ? "POST" : "PUT";
 
 
         try {
@@ -151,7 +151,7 @@ export default function EventForm({
             const json = await res.json();
 
             if (json.status === "ok") {
-                alert(mode === "add" || "update" ? "บันทึกสำเร็จ" : "อัปเดตสำเร็จ");
+                alert(mode === "add" || mode === "update" ? "บันทึกสำเร็จ" : "อัปเดตสำเร็จ");
                 onSuccess?.();
             }
             else {
@@ -171,7 +171,7 @@ export default function EventForm({
     ================================ */
     return (
         <form className="form" onSubmit={handleSubmit}>
-            <h2>{mode === "add" || "update" ? "เพิ่มโครงการ / กิจกรรม" : "แก้ไขโครงการ / กิจกรรม"}</h2>
+            <h2>{mode === "add" || mode === "update" ? "เพิ่มโครงการ / กิจกรรม" : "แก้ไขโครงการ / กิจกรรม"}</h2>
 
             <label>ไตรมาส</label>
             <select name="qur" value={form.qur} onChange={handleChange}>
@@ -254,7 +254,7 @@ export default function EventForm({
             </label>
 
             <button disabled={loading}>
-                {loading ? "กำลังบันทึก..." : mode === "add" || "update" ? "บันทึก" : "อัปเดต"}
+                {loading ? "กำลังบันทึก..." : mode === "add" || mode === "update" ? "บันทึก" : "อัปเดต"}
             </button>
         </form>
     );

@@ -16,25 +16,25 @@ export default function EventListModal({ open, onClose }) {
     const fmid = sessionStorage.getItem("fmid");
 
     const handleDelete = async (id) => {
-    if (!confirm("ยืนยันการลบ?")) return;
+        if (!confirm("ยืนยันการลบ?")) return;
 
-    try {
-      const res = await fetch(`${import.meta.env.VITE_APP_API}/api/event/${id}`, {
-        method: "DELETE",
-      });
+        try {
+            const res = await fetch(`${import.meta.env.VITE_APP_API}/api/event/${id}`, {
+                method: "DELETE",
+            });
 
-      if (!res.ok) {
-        throw new Error("ลบไม่สำเร็จ");
-      }
+            if (!res.ok) {
+                throw new Error("ลบไม่สำเร็จ");
+            }
 
-      alert("ลบสำเร็จ")
-      location.reload();
+            alert("ลบสำเร็จ")
+            location.reload();
 
-    } catch (err) {
-      console.error(err);
-      alert("Delete error");
-    }
-  };
+        } catch (err) {
+            console.error(err);
+            alert("Delete error");
+        }
+    };
 
     const showdetail = (val) => {
         fetch(`${import.meta.env.VITE_APP_API}/api/event/res/${val}/${fmid}`)
@@ -118,40 +118,40 @@ export default function EventListModal({ open, onClose }) {
                                     <td>{statusText(ev.evstatus)}</td>
                                     <td className="actions">
                                         <div className="mb-2">
-                                        <button
-                                            className="btn btn-info"
-                                            onClick={() => setViewEvent(ev)}
-                                        >
-                                            รายละเอียด
-                                        </button>
-                                        &emsp;
-                                        <button
-                                            className="btn btn-primary"
-                                            onClick={() => setUpdateEvent(ev)}
-                                            hidden={ev.qur === 4}
-                                        >
-                                            อัพเดท Q{ev.qur+1}
-                                        </button>
+                                            <button
+                                                className="btn btn-info"
+                                                onClick={() => setViewEvent(ev)}
+                                            >
+                                                รายละเอียด
+                                            </button>
+                                            &emsp;
+                                            <button
+                                                className="btn btn-primary"
+                                                onClick={() => setUpdateEvent(ev)}
+                                                hidden={ev.qur === 4}
+                                            >
+                                                อัพเดท Q{ev.qur + 1}
+                                            </button>
                                         </div>
-                                        
+
                                         {/* &emsp; */}
                                         <div>
-                                        <button
-                                            className="btn btn-warning"
-                                            onClick={() => setEditEvent(ev)}
-                                        >
-                                            แก้ไข
-                                        </button>
-                                        &emsp;
-                                        <button
-                                            className="btn btn-dark"
-                                            onClick={() => handleDelete(ev.id)}
-                                        >
-                                            ลบ
-                                        </button>
-                                        &emsp;
-                                        <button disabled={!ev.pdf_file} onClick={() => { window.open(`${import.meta.env.VITE_APP_API}/api/file/pdf/${ev.id}`) }} type="button" className="btn btn-danger">PDF</button>
-</div>
+                                            <button
+                                                className="btn btn-warning"
+                                                onClick={() => setEditEvent(ev)}
+                                            >
+                                                แก้ไข
+                                            </button>
+                                            &emsp;
+                                            <button
+                                                className="btn btn-dark"
+                                                onClick={() => handleDelete(ev.id)}
+                                            >
+                                                ลบ
+                                            </button>
+                                            &emsp;
+                                            <button disabled={!ev.pdf_file} onClick={() => { window.open(`${import.meta.env.VITE_APP_API}/api/file/pdf/${ev.id}`) }} type="button" className="btn btn-danger">PDF</button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
